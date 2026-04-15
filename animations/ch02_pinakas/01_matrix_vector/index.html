@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Μητρώο × Διάνυσμα — Animation</title>
+<link rel="stylesheet" href="../../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$']]}}</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+<header class="page-header">
+  <div class="type-badge badge-animation">▶ Animation</div>
+  <h1>Γραμμική Μεταμόρφωση — $A\mathbf{x}$</h1>
+  <p class="chapter-label">Κεφάλαιο 2 · Άλγεβρα Πινάκων · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+<div class="info-card">
+  <h2>Τι δείχνει αυτό το animation;</h2>
+  <p>Σύρε το διάνυσμα $\mathbf{x}$ (πορτοκαλί) και δες πώς ο πίνακας $A$ το
+     μεταμορφώνει στο $A\mathbf{x}$ (πράσινο). Αλλαγή στοιχείων πίνακα μέσω
+     των sliders.</p>
+</div>
+<div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:0.8rem">
+  <label style="font-family:sans-serif;font-size:0.85rem">
+    $a_{11}$: <span id="a11v">2</span>
+    <input type="range" id="a11" min="-3" max="3" step="0.1" value="2" style="width:100px;accent-color:#0082b4">
+  </label>
+  <label style="font-family:sans-serif;font-size:0.85rem">
+    $a_{12}$: <span id="a12v">1</span>
+    <input type="range" id="a12" min="-3" max="3" step="0.1" value="1" style="width:100px;accent-color:#0082b4">
+  </label>
+  <label style="font-family:sans-serif;font-size:0.85rem">
+    $a_{21}$: <span id="a21v">0</span>
+    <input type="range" id="a21" min="-3" max="3" step="0.1" value="0" style="width:100px;accent-color:#0082b4">
+  </label>
+  <label style="font-family:sans-serif;font-size:0.85rem">
+    $a_{22}$: <span id="a22v">1.5</span>
+    <input type="range" id="a22" min="-3" max="3" step="0.1" value="1.5" style="width:100px;accent-color:#0082b4">
+  </label>
+</div>
+<div class="canvas-wrap" id="cc"></div>
+<div id="result" class="info-card" style="border-left-color:#008c46;margin-top:0.8rem">
+  <h2>Αποτέλεσμα</h2><p id="rtext">—</p>
+</div>
+</main>
+<footer>Μαθηματικά Ι — ΑΣΠΕΤΕ · <a href="https://github.com/nikmatz/Book1" style="color:#0082b4">github.com/nikmatz/Book1</a></footer>
+<script>
+let vx=1.5, vy=1, dragging=false;
+const getA=()=>({a11:+a11.value,a12:+a12.value,a21:+a21.value,a22:+a22.value});
+['a11','a12','a21','a22'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',function(){
+    document.getElementById(id+'v').textContent=this.value;
+  });
+});
+new p5(p=>{
+  const S=55, cx=220, cy=200;
+  const ts=(wx,wy)=>[cx+wx*S, cy-wy*S];
+  const tw=(sx,sy)=>[(sx-cx)/S, (cy-sy)/S];
+  function arrow(x1,y1,x2,y2,col,lbl,lw=2.5){
+    p.push(); p.stroke(col); p.strokeWeight(lw); p.fill(col);
+    p.line(x1,y1,x2,y2);
+    const a=Math.atan2(y2-y1,x2-x1);
+    p.translate(x2,y2); p.rotate(a);
+    p.triangle(0,0,-10,-4,-10,4); p.pop();
+    if(lbl){ p.noStroke(); p.fill(col); p.textSize(14); p.textStyle(p.ITALIC);
+      const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy)||1;
+      p.text(lbl,x2+10*dy/len,y2-10*dx/len); }
+  }
+  p.setup=()=>{ let c=p.createCanvas(440,400); c.parent('cc'); p.textFont('Georgia'); };
+  p.draw=()=>{
+    p.background(250);
+    // Grid
+    p.stroke(220); p.strokeWeight(0.7);
+    for(let i=-4;i<=4;i++){
+      let [x1,y1]=ts(i,-4),[x2,y2]=ts(i,4); p.line(x1,y1,x2,y2);
+      let [x3,y3]=ts(-4,i),[x4,y4]=ts(4,i); p.line(x3,y3,x4,y4);
+    }
+    p.stroke(160); p.strokeWeight(1.5);
+    let [ax1,ay1]=ts(-4,0),[ax2,ay2]=ts(4,0); p.line(ax1,ay1,ax2,ay2);
+    let [bx1,by1]=ts(0,-4),[bx2,by2]=ts(0,4); p.line(bx1,by1,bx2,by2);
+    const {a11,a12,a21,a22}=getA();
+    const rx=a11*vx+a12*vy, ry=a21*vx+a22*vy;
+    const [o1,o2]=ts(0,0),[vx2,vy2]=ts(vx,vy),[rx2,ry2]=ts(rx,ry);
+    arrow(o1,o2,vx2,vy2,p.color('#be5000'),'x',3);
+    arrow(o1,o2,rx2,ry2,p.color('#008c46'),'Ax',3);
+    // Drag handle
+    p.fill(p.color('#be5000')); p.noStroke(); p.circle(vx2,vy2,12);
+    // Readout
+    document.getElementById('rtext').innerHTML=
+      `$A = \\begin{pmatrix}${a11} & ${a12}\\\\ ${a21} & ${a22}\\end{pmatrix}$, &ensp;`+
+      `$\\mathbf{x} = (${vx.toFixed(1)},\\,${vy.toFixed(1)})$, &ensp;`+
+      `$A\\mathbf{x} = (${rx.toFixed(2)},\\,${ry.toFixed(2)})$`;
+    if(window.MathJax) MathJax.typeset([document.getElementById('rtext')]);
+  };
+  p.mousePressed=()=>{ const [px,py]=ts(vx,vy); if(p.dist(p.mouseX,p.mouseY,px,py)<14) dragging=true; };
+  p.mouseDragged=()=>{ if(dragging){ [vx,vy]=tw(p.mouseX,p.mouseY); vx=Math.max(-4,Math.min(4,vx)); vy=Math.max(-4,Math.min(4,vy)); } };
+  p.mouseReleased=()=>{ dragging=false; };
+},document.getElementById('cc'));
+</script>
+</body></html>

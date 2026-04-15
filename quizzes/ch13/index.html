@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κουίζ: Ορισμένο Ολοκλήρωμα</title>
+  <link rel="stylesheet" href="../../../_shared/book.css">
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <style>
+    .quiz-question{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+    .q-num{font-size:.78rem;font-family:sans-serif;font-weight:700;color:#c85000;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .quiz-question p{font-size:1.05rem;margin-bottom:.8rem}
+    .quiz-question label{display:block;padding:.45rem .7rem;margin:.25rem 0;border-radius:6px;cursor:pointer;border:1px solid #e8edf2;transition:background .15s}
+    .quiz-question label:hover{background:#f0f4ff}
+    label.correct{background:#d4edda!important;border-color:#28a745!important}
+    label.wrong{background:#f8d7da!important;border-color:#dc3545!important}
+    .explanation{margin-top:.8rem;padding:.8rem 1rem;background:#fffbf0;border-left:4px solid #c85000;border-radius:0 6px 6px 0;font-size:.95rem}
+    .hidden{display:none}
+    .btn{background:#c85000;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:600;margin:.4rem .3rem}
+    .btn:hover{background:#a54000}
+    .btn-secondary{background:#004080}
+    .btn-secondary:hover{background:#003060}
+    #score-box{background:#fff;border:2px solid #c85000;border-radius:10px;padding:1.5rem;text-align:center;margin-top:1.5rem;display:none}
+    #score-box h2{color:#c85000;font-size:1.6rem}
+    .progress-bar{background:#eee;border-radius:6px;height:10px;margin:1rem 0}
+    .progress-fill{background:#c85000;height:10px;border-radius:6px;transition:width .4s}
+    .info-card{background:#fff;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  </style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#c85000 60%,#be5000)">
+  <div class="type-badge badge-quiz">✓ Κουίζ</div>
+  <h1>Ορισμένο Ολοκλήρωμα</h1>
+  <p class="chapter-label">Κεφάλαιο 13 · Ορισμένο Ολοκλήρωμα · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+  <div class="info-card">
+    <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
+    <p>10 ερωτήσεις για Riemann, ιδιότητες ορισμένου ολοκληρώματος και γεωμετρική ερμηνεία.</p>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <form id="quiz-form">
+<div class="quiz-question" id="q1">
+  <div class="q-num">Ερώτηση 1 / 10</div>
+  <p>$\int_0^2 3x^2\,dx=$</p>
+  <label><input type="radio" name="q1" value="0"> α) 4</label>
+  <label><input type="radio" name="q1" value="1"> β) 6</label>
+  <label><input type="radio" name="q1" value="2"> γ) 8</label>
+  <label><input type="radio" name="q1" value="3"> δ) 12</label>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> γ) 8<br><em>$\int_0^2 3x^2dx=[x^3]_0^2=8-0=8$.</em></div>
+</div>
+
+<div class="quiz-question" id="q2">
+  <div class="q-num">Ερώτηση 2 / 10</div>
+  <p>$\int_a^b f(x)\,dx = -\int_b^a f(x)\,dx$.</p>
+  <label><input type="radio" name="q2" value="1"> Σωστό</label>
+  <label><input type="radio" name="q2" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Ιδιότητα: αντιστροφή ορίων αλλάζει πρόσημο.</em></div>
+</div>
+
+<div class="quiz-question" id="q3">
+  <div class="q-num">Ερώτηση 3 / 10</div>
+  <p>Αν $f(x)\geq0$ σε $[a,b]$, τότε $\int_a^b f(x)\,dx$:</p>
+  <label><input type="radio" name="q3" value="0"> α) μπορεί να είναι αρνητικό</label>
+  <label><input type="radio" name="q3" value="1"> β) είναι το εμβαδόν μεταξύ $f$ και άξονα $x$</label>
+  <label><input type="radio" name="q3" value="2"> γ) είναι πάντα 0</label>
+  <label><input type="radio" name="q3" value="3"> δ) εξαρτάται από $f'$</label>
+  <div class="explanation hidden" id="exp3"><strong>✓ Απάντηση:</strong> β) είναι το εμβαδόν μεταξύ $f$ και άξονα $x$<br><em>$f\geq0$: το ορισμένο ολοκλήρωμα ισούται με το εμβαδόν κάτω από την $f$.</em></div>
+</div>
+
+<div class="quiz-question" id="q4">
+  <div class="q-num">Ερώτηση 4 / 10</div>
+  <p>$\int_a^a f(x)\,dx=$</p>
+  <label><input type="radio" name="q4" value="0"> α) $f(a)$</label>
+  <label><input type="radio" name="q4" value="1"> β) $f'(a)$</label>
+  <label><input type="radio" name="q4" value="2"> γ) 0</label>
+  <label><input type="radio" name="q4" value="3"> δ) $2f(a)$</label>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> γ) 0<br><em>Όταν τα δύο όρια ολοκλήρωσης ταυτίζονται, το ολοκλήρωμα είναι 0.</em></div>
+</div>
+
+<div class="quiz-question" id="q5">
+  <div class="q-num">Ερώτηση 5 / 10</div>
+  <p>$\int_{-1}^{1} x^3\,dx = 0$, γιατί ο $x^3$ είναι περιττή συνάρτηση.</p>
+  <label><input type="radio" name="q5" value="1"> Σωστό</label>
+  <label><input type="radio" name="q5" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp5"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Περιττή $f$: $\int_{-a}^{a}f(x)dx=0$.</em></div>
+</div>
+
+<div class="quiz-question" id="q6">
+  <div class="q-num">Ερώτηση 6 / 10</div>
+  <p>Ποια είναι η αδιτίβα ιδιότητα;</p>
+  <label><input type="radio" name="q6" value="0"> α) $\int_a^b(f+g)=\int_a^bf+\int_a^bg$</label>
+  <label><input type="radio" name="q6" value="1"> β) $\int_a^cf=\int_a^bf+\int_b^cf$</label>
+  <label><input type="radio" name="q6" value="2"> γ) $\int_a^b cf=c\int_a^bf$</label>
+  <label><input type="radio" name="q6" value="3"> δ) Όλες οι παραπάνω</label>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> δ) Όλες οι παραπάνω<br><em>Όλες ισχύουν: γραμμικότητα, αδιτίβα ιδιότητα ως προς όρια, ομογένεια.</em></div>
+</div>
+
+<div class="quiz-question" id="q7">
+  <div class="q-num">Ερώτηση 7 / 10</div>
+  <p>Το άθροισμα Riemann $\sum_{i=1}^n f(x_i^*)\Delta x_i$ αντιπροσωπεύει:</p>
+  <label><input type="radio" name="q7" value="0"> α) την ακριβή τιμή του ολοκληρώματος</label>
+  <label><input type="radio" name="q7" value="1"> β) προσέγγιση εμβαδού με ορθογώνια</label>
+  <label><input type="radio" name="q7" value="2"> γ) την παράγωγο</label>
+  <label><input type="radio" name="q7" value="3"> δ) τη μέση τιμή</label>
+  <div class="explanation hidden" id="exp7"><strong>✓ Απάντηση:</strong> β) προσέγγιση εμβαδού με ορθογώνια<br><em>Riemann sum: προσέγγιση του εμβαδού με $n$ ορθογώνια. Στο όριο ($n\to\infty$) δίνει το ακριβές ολοκλήρωμα.</em></div>
+</div>
+
+<div class="quiz-question" id="q8">
+  <div class="q-num">Ερώτηση 8 / 10</div>
+  <p>$\int_0^\pi \sin x\,dx=$</p>
+  <label><input type="radio" name="q8" value="0"> α) 0</label>
+  <label><input type="radio" name="q8" value="1"> β) 1</label>
+  <label><input type="radio" name="q8" value="2"> γ) 2</label>
+  <label><input type="radio" name="q8" value="3"> δ) $\pi$</label>
+  <div class="explanation hidden" id="exp8"><strong>✓ Απάντηση:</strong> γ) 2<br><em>$[-\cos x]_0^\pi=-\cos\pi+\cos0=1+1=2$.</em></div>
+</div>
+
+<div class="quiz-question" id="q9">
+  <div class="q-num">Ερώτηση 9 / 10</div>
+  <p>Αν $f\leq g$ σε $[a,b]$, τότε $\int_a^bf\leq\int_a^bg$.</p>
+  <label><input type="radio" name="q9" value="1"> Σωστό</label>
+  <label><input type="radio" name="q9" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp9"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Μονοτονία ολοκληρώματος: $f\leq g$ $\Rightarrow$ $\int_a^bf(x)dx\leq\int_a^bg(x)dx$.</em></div>
+</div>
+
+<div class="quiz-question" id="q10">
+  <div class="q-num">Ερώτηση 10 / 10</div>
+  <p>Η μέση τιμή της $f$ στο $[a,b]$ είναι:</p>
+  <label><input type="radio" name="q10" value="0"> α) $f((a+b)/2)$</label>
+  <label><input type="radio" name="q10" value="1"> β) $\dfrac{f(a)+f(b)}{2}$</label>
+  <label><input type="radio" name="q10" value="2"> γ) $\dfrac{1}{b-a}\int_a^bf(x)dx$</label>
+  <label><input type="radio" name="q10" value="3"> δ) $\dfrac{\int_a^bf}{\int_a^bg}$</label>
+  <div class="explanation hidden" id="exp10"><strong>✓ Απάντηση:</strong> γ) $\dfrac{1}{b-a}\int_a^bf(x)dx$<br><em>Μέση τιμή: $\bar f=\dfrac{1}{b-a}\int_a^bf(x)dx$.</em></div>
+</div>
+
+
+  </form>
+  <div style="text-align:center;margin:1.5rem 0">
+    <button class="btn" onclick="checkAll()">Έλεγχος Απαντήσεων</button>
+    <button class="btn btn-secondary" onclick="resetQuiz()">Εκ Νέου</button>
+  </div>
+  <div id="score-box">
+    <h2 id="score-text"></h2>
+    <p id="score-detail"></p>
+  </div>
+</main>
+<script>
+const ANSWERS = [2,1,1,2,1,3,1,2,1,2];
+const N = 10;
+
+function checkAll(){
+  let score=0;
+  for(let i=1;i<=N;i++){
+    const sel=document.querySelector(`input[name=q${i}]:checked`);
+    const expEl=document.getElementById(`exp${i}`);
+    const labels=document.querySelectorAll(`#q${i} label`);
+    labels.forEach(l=>l.classList.remove('correct','wrong'));
+    if(sel){
+      const correct=(parseInt(sel.value)===parseInt(ANSWERS[i-1]));
+      if(correct){score++;sel.parentElement.classList.add('correct');}
+      else{sel.parentElement.classList.add('wrong');
+            labels.forEach(l=>{
+              if(parseInt(l.querySelector('input').value)===parseInt(ANSWERS[i-1]))l.classList.add('correct');
+            });
+      }
+    }
+    expEl.classList.remove('hidden');
+  }
+  const pct=Math.round(score/N*100);
+  document.getElementById('prog').style.width=pct+'%';
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  const emoji=pct>=90?'🏆':pct>=70?'👍':pct>=50?'📚':'💪';
+  document.getElementById('score-text').textContent=emoji+' '+score+'/'+N+' ('+pct+'%)';
+  document.getElementById('score-detail').textContent=
+    pct>=90?'Άριστα! Εξαιρετική κατανόηση.':
+    pct>=70?'Πολύ καλά! Μικρές επαναλήψεις χρειάζονται.':
+    pct>=50?'Καλά, αλλά χρειάζεσαι περισσότερη εξάσκηση.':'Επανάλαβε τη θεωρία του κεφαλαίου.';
+  box.scrollIntoView({behavior:'smooth'});
+  if(typeof MathJax!=='undefined')MathJax.typesetPromise();
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-form').reset();
+  document.querySelectorAll('.explanation').forEach(e=>e.classList.add('hidden'));
+  document.querySelectorAll('label').forEach(l=>l.classList.remove('correct','wrong'));
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('score-box').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// live progress
+document.addEventListener('change',function(e){
+  if(e.target.type==='radio'){
+    const answered=new Set([...document.querySelectorAll('input[type=radio]:checked')].map(r=>r.name)).size;
+    document.getElementById('prog').style.width=(answered/N*100)+'%';
+  }
+});
+</script>
+</body>
+</html>

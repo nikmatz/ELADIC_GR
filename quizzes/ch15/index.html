@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κουίζ: Τεχνικές Ολοκλήρωσης</title>
+  <link rel="stylesheet" href="../../../_shared/book.css">
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <style>
+    .quiz-question{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+    .q-num{font-size:.78rem;font-family:sans-serif;font-weight:700;color:#c85000;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .quiz-question p{font-size:1.05rem;margin-bottom:.8rem}
+    .quiz-question label{display:block;padding:.45rem .7rem;margin:.25rem 0;border-radius:6px;cursor:pointer;border:1px solid #e8edf2;transition:background .15s}
+    .quiz-question label:hover{background:#f0f4ff}
+    label.correct{background:#d4edda!important;border-color:#28a745!important}
+    label.wrong{background:#f8d7da!important;border-color:#dc3545!important}
+    .explanation{margin-top:.8rem;padding:.8rem 1rem;background:#fffbf0;border-left:4px solid #c85000;border-radius:0 6px 6px 0;font-size:.95rem}
+    .hidden{display:none}
+    .btn{background:#c85000;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:600;margin:.4rem .3rem}
+    .btn:hover{background:#a54000}
+    .btn-secondary{background:#004080}
+    .btn-secondary:hover{background:#003060}
+    #score-box{background:#fff;border:2px solid #c85000;border-radius:10px;padding:1.5rem;text-align:center;margin-top:1.5rem;display:none}
+    #score-box h2{color:#c85000;font-size:1.6rem}
+    .progress-bar{background:#eee;border-radius:6px;height:10px;margin:1rem 0}
+    .progress-fill{background:#c85000;height:10px;border-radius:6px;transition:width .4s}
+    .info-card{background:#fff;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  </style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#c85000 60%,#be5000)">
+  <div class="type-badge badge-quiz">✓ Κουίζ</div>
+  <h1>Τεχνικές Ολοκλήρωσης</h1>
+  <p class="chapter-label">Κεφάλαιο 15 · Τεχνικές Ολοκλήρωσης · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+  <div class="info-card">
+    <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
+    <p>10 ερωτήσεις για ολοκλήρωση κατά μέρη, μερικά κλάσματα και τριγωνομετρικές αντικαταστάσεις.</p>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <form id="quiz-form">
+<div class="quiz-question" id="q1">
+  <div class="q-num">Ερώτηση 1 / 10</div>
+  <p>Ολοκλήρωση κατά μέρη: $\int u\,dv=$</p>
+  <label><input type="radio" name="q1" value="0"> α) $uv+\int v\,du$</label>
+  <label><input type="radio" name="q1" value="1"> β) $uv-\int v\,du$</label>
+  <label><input type="radio" name="q1" value="2"> γ) $u\,dv-v\,du$</label>
+  <label><input type="radio" name="q1" value="3"> δ) $\int v\,du$</label>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> β) $uv-\int v\,du$<br><em>$\int u\,dv=uv-\int v\,du$ (τύπος ολοκλήρωσης κατά μέρη).</em></div>
+</div>
+
+<div class="quiz-question" id="q2">
+  <div class="q-num">Ερώτηση 2 / 10</div>
+  <p>$\int x e^x\,dx=$</p>
+  <label><input type="radio" name="q2" value="0"> α) $xe^x+C$</label>
+  <label><input type="radio" name="q2" value="1"> β) $x^2e^x/2+C$</label>
+  <label><input type="radio" name="q2" value="2"> γ) $xe^x-e^x+C$</label>
+  <label><input type="radio" name="q2" value="3"> δ) $e^x(x+1)+C$</label>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> γ) $xe^x-e^x+C$<br><em>$u=x$, $dv=e^xdx$: $\int xe^xdx=xe^x-\int e^xdx=xe^x-e^x+C=(x-1)e^x+C$.</em></div>
+</div>
+
+<div class="quiz-question" id="q3">
+  <div class="q-num">Ερώτηση 3 / 10</div>
+  <p>Για $\int\dfrac{dx}{x^2-1}$ χρησιμοποιούμε μερικά κλάσματα.</p>
+  <label><input type="radio" name="q3" value="1"> Σωστό</label>
+  <label><input type="radio" name="q3" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp3"><strong>✓ Απάντηση:</strong> Σωστό<br><em>$\frac{1}{x^2-1}=\frac{1}{(x-1)(x+1)}=\frac{A}{x-1}+\frac{B}{x+1}$: μερικά κλάσματα.</em></div>
+</div>
+
+<div class="quiz-question" id="q4">
+  <div class="q-num">Ερώτηση 4 / 10</div>
+  <p>$\int\dfrac{1}{x^2+1}dx=$</p>
+  <label><input type="radio" name="q4" value="0"> α) $\ln(x^2+1)+C$</label>
+  <label><input type="radio" name="q4" value="1"> β) $\arctan x+C$</label>
+  <label><input type="radio" name="q4" value="2"> γ) $\dfrac{1}{2x}+C$</label>
+  <label><input type="radio" name="q4" value="3"> δ) $\dfrac{x}{x^2+1}+C$</label>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) $\arctan x+C$<br><em>Βασικό ολοκλήρωμα: $\int\frac{dx}{x^2+1}=\arctan x+C$.</em></div>
+</div>
+
+<div class="quiz-question" id="q5">
+  <div class="q-num">Ερώτηση 5 / 10</div>
+  <p>Για $\int\sqrt{1-x^2}\,dx$ χρησιμοποιούμε:</p>
+  <label><input type="radio" name="q5" value="0"> α) $u=1-x^2$</label>
+  <label><input type="radio" name="q5" value="1"> β) $x=\sin\theta$</label>
+  <label><input type="radio" name="q5" value="2"> γ) $x=\tan\theta$</label>
+  <label><input type="radio" name="q5" value="3"> δ) ολοκλήρωση κατά μέρη</label>
+  <div class="explanation hidden" id="exp5"><strong>✓ Απάντηση:</strong> β) $x=\sin\theta$<br><em>$x=\sin\theta$: $1-x^2=1-\sin^2\theta=\cos^2\theta$, απλοποιεί τη ρίζα.</em></div>
+</div>
+
+<div class="quiz-question" id="q6">
+  <div class="q-num">Ερώτηση 6 / 10</div>
+  <p>$\int\ln x\,dx=$</p>
+  <label><input type="radio" name="q6" value="0"> α) $\dfrac{1}{x}+C$</label>
+  <label><input type="radio" name="q6" value="1"> β) $x\ln x+C$</label>
+  <label><input type="radio" name="q6" value="2"> γ) $x\ln x-x+C$</label>
+  <label><input type="radio" name="q6" value="3"> δ) $\ln^2 x+C$</label>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> γ) $x\ln x-x+C$<br><em>Κ.μ.μ: $u=\ln x$, $dv=dx$: $\int\ln x\,dx=x\ln x-\int x\cdot\frac{1}{x}dx=x\ln x-x+C$.</em></div>
+</div>
+
+<div class="quiz-question" id="q7">
+  <div class="q-num">Ερώτηση 7 / 10</div>
+  <p>$\int\dfrac{P(x)}{Q(x)}dx$ με $\deg P\geq\deg Q$: πρώτα κάνουμε πολυωνυμική διαίρεση.</p>
+  <label><input type="radio" name="q7" value="1"> Σωστό</label>
+  <label><input type="radio" name="q7" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp7"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Αν βαθμός παρονομαστή ≤ αριθμητή, πρώτα διαίρεση, μετά μερικά κλάσματα.</em></div>
+</div>
+
+<div class="quiz-question" id="q8">
+  <div class="q-num">Ερώτηση 8 / 10</div>
+  <p>$\int\dfrac{2x}{(x^2+1)^2}dx=$</p>
+  <label><input type="radio" name="q8" value="0"> α) $\arctan x+C$</label>
+  <label><input type="radio" name="q8" value="1"> β) $\dfrac{-1}{x^2+1}+C$</label>
+  <label><input type="radio" name="q8" value="2"> γ) $\dfrac{1}{(x^2+1)^2}+C$</label>
+  <label><input type="radio" name="q8" value="3"> δ) $\ln(x^2+1)+C$</label>
+  <div class="explanation hidden" id="exp8"><strong>✓ Απάντηση:</strong> β) $\dfrac{-1}{x^2+1}+C$<br><em>$u=x^2+1$, $du=2x\,dx$: $\int\frac{2x}{(x^2+1)^2}dx=\int u^{-2}du=-u^{-1}+C=\frac{-1}{x^2+1}+C$.</em></div>
+</div>
+
+<div class="quiz-question" id="q9">
+  <div class="q-num">Ερώτηση 9 / 10</div>
+  <p>$\int_0^{\pi/2}\sin^2x\,dx=$</p>
+  <label><input type="radio" name="q9" value="0"> α) $\pi/2$</label>
+  <label><input type="radio" name="q9" value="1"> β) $\pi/4$</label>
+  <label><input type="radio" name="q9" value="2"> γ) $1$</label>
+  <label><input type="radio" name="q9" value="3"> δ) $0$</label>
+  <div class="explanation hidden" id="exp9"><strong>✓ Απάντηση:</strong> β) $\pi/4$<br><em>$\sin^2x=\frac{1-\cos2x}{2}$: $\int_0^{\pi/2}\frac{1-\cos2x}{2}dx=\left[\frac{x}{2}-\frac{\sin2x}{4}\right]_0^{\pi/2}=\frac{\pi}{4}$.</em></div>
+</div>
+
+<div class="quiz-question" id="q10">
+  <div class="q-num">Ερώτηση 10 / 10</div>
+  <p>Η μέθοδος μερικών κλασμάτων εφαρμόζεται μόνο σε ρητές συναρτήσεις.</p>
+  <label><input type="radio" name="q10" value="1"> Σωστό</label>
+  <label><input type="radio" name="q10" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp10"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Μερικά κλάσματα: ανάλυση ρητής $P(x)/Q(x)$ σε απλούστερα κλάσματα.</em></div>
+</div>
+
+
+  </form>
+  <div style="text-align:center;margin:1.5rem 0">
+    <button class="btn" onclick="checkAll()">Έλεγχος Απαντήσεων</button>
+    <button class="btn btn-secondary" onclick="resetQuiz()">Εκ Νέου</button>
+  </div>
+  <div id="score-box">
+    <h2 id="score-text"></h2>
+    <p id="score-detail"></p>
+  </div>
+</main>
+<script>
+const ANSWERS = [1,2,1,1,1,2,1,1,1,1];
+const N = 10;
+
+function checkAll(){
+  let score=0;
+  for(let i=1;i<=N;i++){
+    const sel=document.querySelector(`input[name=q${i}]:checked`);
+    const expEl=document.getElementById(`exp${i}`);
+    const labels=document.querySelectorAll(`#q${i} label`);
+    labels.forEach(l=>l.classList.remove('correct','wrong'));
+    if(sel){
+      const correct=(parseInt(sel.value)===parseInt(ANSWERS[i-1]));
+      if(correct){score++;sel.parentElement.classList.add('correct');}
+      else{sel.parentElement.classList.add('wrong');
+            labels.forEach(l=>{
+              if(parseInt(l.querySelector('input').value)===parseInt(ANSWERS[i-1]))l.classList.add('correct');
+            });
+      }
+    }
+    expEl.classList.remove('hidden');
+  }
+  const pct=Math.round(score/N*100);
+  document.getElementById('prog').style.width=pct+'%';
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  const emoji=pct>=90?'🏆':pct>=70?'👍':pct>=50?'📚':'💪';
+  document.getElementById('score-text').textContent=emoji+' '+score+'/'+N+' ('+pct+'%)';
+  document.getElementById('score-detail').textContent=
+    pct>=90?'Άριστα! Εξαιρετική κατανόηση.':
+    pct>=70?'Πολύ καλά! Μικρές επαναλήψεις χρειάζονται.':
+    pct>=50?'Καλά, αλλά χρειάζεσαι περισσότερη εξάσκηση.':'Επανάλαβε τη θεωρία του κεφαλαίου.';
+  box.scrollIntoView({behavior:'smooth'});
+  if(typeof MathJax!=='undefined')MathJax.typesetPromise();
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-form').reset();
+  document.querySelectorAll('.explanation').forEach(e=>e.classList.add('hidden'));
+  document.querySelectorAll('label').forEach(l=>l.classList.remove('correct','wrong'));
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('score-box').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// live progress
+document.addEventListener('change',function(e){
+  if(e.target.type==='radio'){
+    const answered=new Set([...document.querySelectorAll('input[type=radio]:checked')].map(r=>r.name)).size;
+    document.getElementById('prog').style.width=(answered/N*100)+'%';
+  }
+});
+</script>
+</body>
+</html>

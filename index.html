@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELADIC_GR — Μαθηματικά Ι · ΑΣΠΕΤΕ</title>
+  <style>
+    :root {
+      --aspblue:#004080; --bookorange:#c85000; --bookgreen:#008c46;
+      --bg:#f5f7fa; --card:#fff; --shadow:0 2px 12px rgba(0,0,0,.10);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:#1a1a1a;line-height:1.7}
+    header{background:linear-gradient(135deg,var(--aspblue) 55%,#0060a0);color:#fff;padding:2.5rem 2rem 2rem;border-bottom:3px solid #b48c00}
+    header h1{font-size:2rem;letter-spacing:-.02em}
+    header p{opacity:.8;font-size:.95rem;margin-top:.4rem}
+    .badge{display:inline-block;background:#b48c00;color:#fff;padding:.2em .8em;border-radius:4px;font-size:.72rem;font-family:sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.8rem}
+    main{max-width:1100px;margin:0 auto;padding:2rem 1.2rem 4rem}
+    .section-title{font-size:1.3rem;color:var(--aspblue);margin:2rem 0 1rem;border-bottom:2px solid #dde3ea;padding-bottom:.4rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
+    .card{background:var(--card);border-radius:10px;box-shadow:var(--shadow);padding:1.2rem 1.4rem;border-top:4px solid var(--aspblue);transition:transform .15s}
+    .card:hover{transform:translateY(-2px)}
+    .card-num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:var(--bookorange);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
+    .card h3{font-size:1.05rem;color:var(--aspblue);margin-bottom:.35rem}
+    .card p{font-size:.88rem;color:#555;margin-bottom:.9rem}
+    .card-links{display:flex;gap:.5rem;flex-wrap:wrap}
+    .btn-quiz{background:var(--bookorange);color:#fff;padding:.3em .9em;border-radius:5px;text-decoration:none;font-size:.82rem;font-family:sans-serif;font-weight:600}
+    .btn-quiz:hover{background:#a54000}
+    footer{text-align:center;padding:2rem;font-size:.83rem;color:#888;font-family:sans-serif}
+  </style>
+</head>
+<body>
+<header>
+  <div class="badge">ΑΣΠΕΤΕ · Μαθηματικά Ι</div>
+  <h1>ELADIC_GR — Ψηφιακό Εκπαιδευτικό Υλικό</h1>
+  <p>Διαδραστικά Κουίζ Αυτοαξιολόγησης · 21 Κεφάλαια · 10+ Ερωτήσεις ανά Κεφάλαιο</p>
+</header>
+<main>
+  <div class="section-title">Κουίζ Αυτοαξιολόγησης — Επιλέξτε Κεφάλαιο</div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-num">Κεφ. 0</div>
+      <h3>Μαθηματικό Υπόβαθρο</h3>
+      <p>Αριθμητικά σύνολα, ανισότητες, τριγωνομετρία, μιγαδικοί</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch00/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 1</div>
+      <h3>Γραμμικοί Χώροι</h3>
+      <p>Διανυσματικοί χώροι, βάση, διάσταση, υποχώροι</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch01/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 2</div>
+      <h3>Άλγεβρα Πινάκων</h3>
+      <p>Πράξεις, ορίζουσα, αντίστροφος, τάξη</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch02/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 3</div>
+      <h3>Γραμμικά Συστήματα</h3>
+      <p>Gauss, Rouché-Capelli, LU παραγοντοποίηση</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch03/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 4</div>
+      <h3>Γραμμικοί Μετασχηματισμοί</h3>
+      <p>Πυρήνας, εικόνα, μήτρα αναπαράστασης</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch04/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 5</div>
+      <h3>Ιδιοτιμές</h3>
+      <p>Χαρακτηριστικό πολυώνυμο, ιδιοδιανύσματα</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch05/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 6</div>
+      <h3>Διαγωνοποίηση</h3>
+      <p>Διαγωνοποίηση, SVD, συμμετρικοί πίνακες</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch06/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 6β</div>
+      <h3>Δυναμικά Συστήματα</h3>
+      <p>Αλυσίδες Markov, φασικά πορτρέτα</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch06b/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 7</div>
+      <h3>Συναρτήσεις</h3>
+      <p>Πεδίο ορισμού, αντίστροφη, σύνθεση</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch07/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 8</div>
+      <h3>Όρια & Συνέχεια</h3>
+      <p>Υπολογισμός ορίων, θεωρήματα συνέχειας</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch08/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 9</div>
+      <h3>Παράγωγος</h3>
+      <p>Κανόνες παραγώγισης, αλυσίδα, εφαπτομένη</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch09/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 10</div>
+      <h3>Μονοτονία & Ακρότατα</h3>
+      <p>Taylor, κυρτότητα, θεώρημα μέσης τιμής</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch10/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 11</div>
+      <h3>Εφαρμογές Παραγώγου</h3>
+      <p>L'Hôpital, Newton, ασύμπτωτες</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch11/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 12</div>
+      <h3>Αόριστο Ολοκλήρωμα</h3>
+      <p>Αντιπαραγώγιση, αντικατάσταση</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch12/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 13</div>
+      <h3>Ορισμένο Ολοκλήρωμα</h3>
+      <p>Riemann, εμβαδόν, ιδιότητες</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch13/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 14</div>
+      <h3>Θεμελιώδες Θεώρημα</h3>
+      <p>Σύνδεση παραγώγου-ολοκληρώματος</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch14/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 15</div>
+      <h3>Τεχνικές Ολοκλήρωσης</h3>
+      <p>Κ.μ.μ., μερικά κλάσματα, τριγ. αντικ.</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch15/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 16</div>
+      <h3>Εφαρμογές Ολοκληρωμάτων</h3>
+      <p>Εμβαδά, όγκοι, αριθμητική ολοκλήρωση</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch16/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 17</div>
+      <h3>Γενικευμένα Ολοκλ.</h3>
+      <p>Σύγκλιση ανάρμοστων ολοκληρωμάτων</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch17/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 18</div>
+      <h3>Ακολουθίες & Σειρές</h3>
+      <p>Σύγκλιση, κριτήρια, γεωμετρικές σειρές</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch18/">✓ Κουίζ</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-num">Κεφ. 19</div>
+      <h3>Διαφορικές Εξισώσεις</h3>
+      <p>Χωριζόμενες, γραμμικές 1ης & 2ης τάξης</p>
+      <div class="card-links">
+        <a class="btn-quiz" href="quizzes/ch19/">✓ Κουίζ</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>Μαθηματικά Ι — ΑΣΠΕΤΕ · <a href="https://github.com/nikmatz/ELADIC_GR">GitHub</a></footer>
+</body>
+</html>

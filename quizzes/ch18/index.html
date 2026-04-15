@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κουίζ: Ακολουθίες και Σειρές</title>
+  <link rel="stylesheet" href="../../../_shared/book.css">
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <style>
+    .quiz-question{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+    .q-num{font-size:.78rem;font-family:sans-serif;font-weight:700;color:#c85000;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .quiz-question p{font-size:1.05rem;margin-bottom:.8rem}
+    .quiz-question label{display:block;padding:.45rem .7rem;margin:.25rem 0;border-radius:6px;cursor:pointer;border:1px solid #e8edf2;transition:background .15s}
+    .quiz-question label:hover{background:#f0f4ff}
+    label.correct{background:#d4edda!important;border-color:#28a745!important}
+    label.wrong{background:#f8d7da!important;border-color:#dc3545!important}
+    .explanation{margin-top:.8rem;padding:.8rem 1rem;background:#fffbf0;border-left:4px solid #c85000;border-radius:0 6px 6px 0;font-size:.95rem}
+    .hidden{display:none}
+    .btn{background:#c85000;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:600;margin:.4rem .3rem}
+    .btn:hover{background:#a54000}
+    .btn-secondary{background:#004080}
+    .btn-secondary:hover{background:#003060}
+    #score-box{background:#fff;border:2px solid #c85000;border-radius:10px;padding:1.5rem;text-align:center;margin-top:1.5rem;display:none}
+    #score-box h2{color:#c85000;font-size:1.6rem}
+    .progress-bar{background:#eee;border-radius:6px;height:10px;margin:1rem 0}
+    .progress-fill{background:#c85000;height:10px;border-radius:6px;transition:width .4s}
+    .info-card{background:#fff;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  </style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#c85000 60%,#be5000)">
+  <div class="type-badge badge-quiz">✓ Κουίζ</div>
+  <h1>Ακολουθίες και Σειρές</h1>
+  <p class="chapter-label">Κεφάλαιο 18 · Ακολουθίες & Σειρές · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+  <div class="info-card">
+    <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
+    <p>10 ερωτήσεις για σύγκλιση ακολουθιών, σειρές και κριτήρια σύγκλισης.</p>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <form id="quiz-form">
+<div class="quiz-question" id="q1">
+  <div class="q-num">Ερώτηση 1 / 10</div>
+  <p>$\lim_{n\to\infty}\dfrac{1}{n}=$</p>
+  <label><input type="radio" name="q1" value="0"> α) 1</label>
+  <label><input type="radio" name="q1" value="1"> β) $\infty$</label>
+  <label><input type="radio" name="q1" value="2"> γ) $-1$</label>
+  <label><input type="radio" name="q1" value="3"> δ) 0</label>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> δ) 0<br><em>$1/n\to0$ καθώς $n\to\infty$.</em></div>
+</div>
+
+<div class="quiz-question" id="q2">
+  <div class="q-num">Ερώτηση 2 / 10</div>
+  <p>Κάθε φθίνουσα και κάτω φραγμένη ακολουθία συγκλίνει.</p>
+  <label><input type="radio" name="q2" value="1"> Σωστό</label>
+  <label><input type="radio" name="q2" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Μονότονη φραγμένη $\Rightarrow$ συγκλίνει (θεώρημα μονότονης σύγκλισης).</em></div>
+</div>
+
+<div class="quiz-question" id="q3">
+  <div class="q-num">Ερώτηση 3 / 10</div>
+  <p>Γεωμετρική σειρά $\sum_{n=0}^\infty ar^n$ συγκλίνει αν:</p>
+  <label><input type="radio" name="q3" value="0"> α) $r>1$</label>
+  <label><input type="radio" name="q3" value="1"> β) $|r|<1$</label>
+  <label><input type="radio" name="q3" value="2"> γ) $r=1$</label>
+  <label><input type="radio" name="q3" value="3"> δ) $a>0$</label>
+  <div class="explanation hidden" id="exp3"><strong>✓ Απάντηση:</strong> β) $|r|<1$<br><em>Γεωμετρική σειρά: συγκλίνει $\Leftrightarrow$ $|r|<1$, και τότε $\sum=\dfrac{a}{1-r}$.</em></div>
+</div>
+
+<div class="quiz-question" id="q4">
+  <div class="q-num">Ερώτηση 4 / 10</div>
+  <p>Κριτήριο D'Alembert (ratio test): αν $\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_n}\right|=L<1$, τότε $\sum a_n$:</p>
+  <label><input type="radio" name="q4" value="0"> α) αποκλίνει</label>
+  <label><input type="radio" name="q4" value="1"> β) συγκλίνει απολύτως</label>
+  <label><input type="radio" name="q4" value="2"> γ) είναι άγνωστο</label>
+  <label><input type="radio" name="q4" value="3"> δ) ταλαντεύεται</label>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) συγκλίνει απολύτως<br><em>D'Alembert: $L<1\Rightarrow$ απόλυτη σύγκλιση. $L>1\Rightarrow$ απόκλιση. $L=1\Rightarrow$ αδιευκρίνιστο.</em></div>
+</div>
+
+<div class="quiz-question" id="q5">
+  <div class="q-num">Ερώτηση 5 / 10</div>
+  <p>Αν $\sum a_n$ συγκλίνει, τότε $a_n\to0$.</p>
+  <label><input type="radio" name="q5" value="1"> Σωστό</label>
+  <label><input type="radio" name="q5" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp5"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Αναγκαία συνθήκη σύγκλισης: $\lim_{n\to\infty}a_n=0$. Αν $a_n\not\to0$, η σειρά αποκλίνει.</em></div>
+</div>
+
+<div class="quiz-question" id="q6">
+  <div class="q-num">Ερώτηση 6 / 10</div>
+  <p>$\sum_{n=1}^\infty\dfrac{1}{n^2}$ είναι:</p>
+  <label><input type="radio" name="q6" value="0"> α) Αρμονική σειρά — αποκλίνει</label>
+  <label><input type="radio" name="q6" value="1"> β) $p$-σειρά με $p=2>1$ — συγκλίνει</label>
+  <label><input type="radio" name="q6" value="2"> γ) Τηλεσκοπική — συγκλίνει σε 1</label>
+  <label><input type="radio" name="q6" value="3"> δ) Γεωμετρική</label>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> β) $p$-σειρά με $p=2>1$ — συγκλίνει<br><em>$p$-σειρά $\sum\frac{1}{n^p}$: συγκλίνει αν $p>1$. Για $p=2$: $\sum\frac{1}{n^2}=\frac{\pi^2}{6}$.</em></div>
+</div>
+
+<div class="quiz-question" id="q7">
+  <div class="q-num">Ερώτηση 7 / 10</div>
+  <p>Αρμονική σειρά $\sum_{n=1}^\infty\dfrac{1}{n}$:</p>
+  <label><input type="radio" name="q7" value="0"> α) Συγκλίνει σε $\ln 2$</label>
+  <label><input type="radio" name="q7" value="1"> β) Συγκλίνει σε 1</label>
+  <label><input type="radio" name="q7" value="2"> γ) Αποκλίνει</label>
+  <label><input type="radio" name="q7" value="3"> δ) Ταλαντεύεται</label>
+  <div class="explanation hidden" id="exp7"><strong>✓ Απάντηση:</strong> γ) Αποκλίνει<br><em>Αρμονική σειρά $\sum\frac{1}{n}$ αποκλίνει (ιστορικό: Oresme, 14ος αι.).</em></div>
+</div>
+
+<div class="quiz-question" id="q8">
+  <div class="q-num">Ερώτηση 8 / 10</div>
+  <p>Κριτήριο ολοκλήρωσης: $\sum_{n=1}^\infty f(n)$ και $\int_1^\infty f(x)dx$ έχουν ίδια συμπεριφορά (σύγκλιση/απόκλιση).</p>
+  <label><input type="radio" name="q8" value="1"> Σωστό</label>
+  <label><input type="radio" name="q8" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp8"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Κριτήριο ολοκλήρωσης (Cauchy-Maclaurin): ισχύει αν $f$ θετική, φθίνουσα, συνεχής.</em></div>
+</div>
+
+<div class="quiz-question" id="q9">
+  <div class="q-num">Ερώτηση 9 / 10</div>
+  <p>Το εναλλάσσουσες $\sum_{n=1}^\infty\dfrac{(-1)^{n+1}}{n}$ συγκλίνει σε:</p>
+  <label><input type="radio" name="q9" value="0"> α) $\ln 2$</label>
+  <label><input type="radio" name="q9" value="1"> β) $\pi/4$</label>
+  <label><input type="radio" name="q9" value="2"> γ) 0</label>
+  <label><input type="radio" name="q9" value="3"> δ) 1</label>
+  <div class="explanation hidden" id="exp9"><strong>✓ Απάντηση:</strong> α) $\ln 2$<br><em>Θεώρημα Leibniz + Taylor: $\sum_{n=1}^\infty\frac{(-1)^{n+1}}{n}=\ln 2$.</em></div>
+</div>
+
+<div class="quiz-question" id="q10">
+  <div class="q-num">Ερώτηση 10 / 10</div>
+  <p>$\sum_{n=0}^\infty\dfrac{1}{2^n}=$</p>
+  <label><input type="radio" name="q10" value="0"> α) 1</label>
+  <label><input type="radio" name="q10" value="1"> β) 2</label>
+  <label><input type="radio" name="q10" value="2"> γ) $\infty$</label>
+  <label><input type="radio" name="q10" value="3"> δ) $1/2$</label>
+  <div class="explanation hidden" id="exp10"><strong>✓ Απάντηση:</strong> β) 2<br><em>Γεωμετρική: $a=1$, $r=1/2$, $|r|<1$: $\sum=\frac{1}{1-1/2}=2$.</em></div>
+</div>
+
+
+  </form>
+  <div style="text-align:center;margin:1.5rem 0">
+    <button class="btn" onclick="checkAll()">Έλεγχος Απαντήσεων</button>
+    <button class="btn btn-secondary" onclick="resetQuiz()">Εκ Νέου</button>
+  </div>
+  <div id="score-box">
+    <h2 id="score-text"></h2>
+    <p id="score-detail"></p>
+  </div>
+</main>
+<script>
+const ANSWERS = [3,1,1,1,1,1,2,1,0,1];
+const N = 10;
+
+function checkAll(){
+  let score=0;
+  for(let i=1;i<=N;i++){
+    const sel=document.querySelector(`input[name=q${i}]:checked`);
+    const expEl=document.getElementById(`exp${i}`);
+    const labels=document.querySelectorAll(`#q${i} label`);
+    labels.forEach(l=>l.classList.remove('correct','wrong'));
+    if(sel){
+      const correct=(parseInt(sel.value)===parseInt(ANSWERS[i-1]));
+      if(correct){score++;sel.parentElement.classList.add('correct');}
+      else{sel.parentElement.classList.add('wrong');
+            labels.forEach(l=>{
+              if(parseInt(l.querySelector('input').value)===parseInt(ANSWERS[i-1]))l.classList.add('correct');
+            });
+      }
+    }
+    expEl.classList.remove('hidden');
+  }
+  const pct=Math.round(score/N*100);
+  document.getElementById('prog').style.width=pct+'%';
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  const emoji=pct>=90?'🏆':pct>=70?'👍':pct>=50?'📚':'💪';
+  document.getElementById('score-text').textContent=emoji+' '+score+'/'+N+' ('+pct+'%)';
+  document.getElementById('score-detail').textContent=
+    pct>=90?'Άριστα! Εξαιρετική κατανόηση.':
+    pct>=70?'Πολύ καλά! Μικρές επαναλήψεις χρειάζονται.':
+    pct>=50?'Καλά, αλλά χρειάζεσαι περισσότερη εξάσκηση.':'Επανάλαβε τη θεωρία του κεφαλαίου.';
+  box.scrollIntoView({behavior:'smooth'});
+  if(typeof MathJax!=='undefined')MathJax.typesetPromise();
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-form').reset();
+  document.querySelectorAll('.explanation').forEach(e=>e.classList.add('hidden'));
+  document.querySelectorAll('label').forEach(l=>l.classList.remove('correct','wrong'));
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('score-box').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// live progress
+document.addEventListener('change',function(e){
+  if(e.target.type==='radio'){
+    const answered=new Set([...document.querySelectorAll('input[type=radio]:checked')].map(r=>r.name)).size;
+    document.getElementById('prog').style.width=(answered/N*100)+'%';
+  }
+});
+</script>
+</body>
+</html>

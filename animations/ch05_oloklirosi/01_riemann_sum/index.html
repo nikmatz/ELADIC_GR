@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Άθροισμα Riemann — Animation</title>
+  <link rel="stylesheet" href="../../../_shared/book.css">
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="type-badge badge-animation">▶ Animation</div>
+  <h1>Άθροισμα Riemann — Ορισμένο Ολοκλήρωμα</h1>
+  <p class="chapter-label">Κεφάλαιο 5 · Ολοκλήρωση · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+
+<main>
+  <div class="info-card">
+    <h2>Πώς λειτουργεί;</h2>
+    <p>Το ορισμένο ολοκλήρωμα $\displaystyle\int_a^b f(x)\,dx$ ορίζεται ως το
+       <strong>όριο αθροισμάτων Riemann</strong> καθώς $n\to\infty$.
+       Χρησιμοποίησε το slider για να αλλάξεις τον αριθμό $n$ υποδιαστημάτων
+       και δες πώς το εμβαδόν συγκλίνει στο ακριβές ολοκλήρωμα.</p>
+  </div>
+
+  <div class="canvas-wrap" id="canvas-container"></div>
+
+  <div class="controls">
+    <label style="font-family:'Helvetica Neue',sans-serif; font-size:0.9rem">
+      $n =$ <span id="n-val" style="font-weight:700;color:#0082b4">5</span> υποδιαστήματα
+    </label>
+    <input type="range" id="n-slider" min="1" max="80" value="5"
+           style="width:200px; accent-color:#0082b4">
+  </div>
+
+  <div class="info-card" id="result-card" style="border-left-color:#008c46; margin-top:0.8rem">
+    <h2 id="result-text">Εκτίμηση: —</h2>
+    <p style="font-size:0.87rem;color:#555">
+      Ακριβές: $\displaystyle\int_0^{\pi} \sin x\,dx = 2$
+      &nbsp;·&nbsp; Σφάλμα: <span id="error-text">—</span>
+    </p>
+  </div>
+
+  <div class="info-card" style="margin-top:1rem; border-left-color:#be5000">
+    <h2>Ορισμός</h2>
+    <p>$\displaystyle S_n = \sum_{i=1}^{n} f(x_i^*)\,\Delta x$, &ensp;
+       όπου $\Delta x = \dfrac{b-a}{n}$ και $x_i^* \in [x_{i-1}, x_i]$.</p>
+  </div>
+</main>
+
+<footer>Μαθηματικά Ι — ΑΣΠΕΤΕ · <a href="https://github.com/nikmatz/Book1" style="color:#0082b4">github.com/nikmatz/Book1</a></footer>
+
+<script>
+const slider = document.getElementById('n-slider');
+const nVal = document.getElementById('n-val');
+const resultText = document.getElementById('result-text');
+const errorText = document.getElementById('error-text');
+let n = 5;
+
+// f(x) = sin(x), integral from 0 to PI = 2
+const f = x => Math.sin(x);
+const a = 0, b = Math.PI;
+const exact = 2;
+
+new p5(function(p) {
+  const W = 500, H = 320;
+  const PAD = { l:50, r:20, t:20, b:40 };
+  const CW = W - PAD.l - PAD.r;
+  const CH = H - PAD.t - PAD.b;
+
+  function toScreen(x, y) {
+    return [
+      PAD.l + (x - a) / (b - a) * CW,
+      PAD.t + CH - y / 1.05 * CH
+    ];
+  }
+
+  p.setup = function() {
+    let cnv = p.createCanvas(W, H);
+    cnv.parent('canvas-container');
+  };
+
+  p.draw = function() {
+    p.background(250);
+    // Shaded rectangles
+    let dx = (b - a) / n;
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+      let xi = a + i * dx + dx / 2; // midpoint rule
+      let yi = f(xi);
+      sum += yi * dx;
+      let [sx, sy] = toScreen(a + i * dx, 0);
+      let [sx2, sy2] = toScreen(a + (i+1) * dx, yi);
+      p.fill(p.color(0, 130, 180, 80));
+      p.stroke(p.color(0, 130, 180));
+      p.strokeWeight(0.8);
+      p.rect(sx, sy2, sx2 - sx, sy - sy2);
+    }
+    // Curve
+    p.noFill(); p.stroke(p.color('#be5000')); p.strokeWeight(2.5);
+    p.beginShape();
+    for (let x = a; x <= b; x += 0.02) {
+      let [sx, sy] = toScreen(x, f(x));
+      p.vertex(sx, sy);
+    }
+    p.endShape();
+    // Axes
+    p.stroke(100); p.strokeWeight(1.5);
+    let [ox, oy] = toScreen(a, 0);
+    let [ex, ey] = toScreen(b, 0);
+    p.line(ox - 5, oy, ex + 5, oy);  // x-axis
+    let [ox2, oy2] = toScreen(a, 0);
+    let [ox3, oy3] = toScreen(a, 1.05);
+    p.line(ox2, oy2, ox3, oy3);     // y-axis
+
+    // Labels
+    p.noStroke(); p.fill(80); p.textSize(11);
+    p.textFont('Helvetica Neue, Arial, sans-serif');
+    p.textAlign(p.CENTER);
+    let [lx, ly] = toScreen(a, 0); p.text('0', lx, ly + 16);
+    let [rx, ry] = toScreen(b, 0); p.text('π', rx, ry + 16);
+    p.textAlign(p.RIGHT);
+    let [yx, yy] = toScreen(a, 1); p.text('1', yx - 6, yy + 4);
+
+    // Update DOM
+    nVal.textContent = n;
+    resultText.textContent = `Εκτίμηση: S${n} ≈ ${sum.toFixed(5)}`;
+    let err = Math.abs(sum - exact);
+    errorText.textContent = `|S${n} − 2| = ${err.toFixed(5)}`;
+  };
+}, document.getElementById('canvas-container'));
+
+slider.addEventListener('input', function() {
+  n = parseInt(this.value);
+});
+</script>
+</body>
+</html>

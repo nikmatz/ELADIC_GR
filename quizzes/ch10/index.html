@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κουίζ: Μονοτονία, Κυρτότητα και Ακρότατα</title>
+  <link rel="stylesheet" href="../../../_shared/book.css">
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <style>
+    .quiz-question{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+    .q-num{font-size:.78rem;font-family:sans-serif;font-weight:700;color:#c85000;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .quiz-question p{font-size:1.05rem;margin-bottom:.8rem}
+    .quiz-question label{display:block;padding:.45rem .7rem;margin:.25rem 0;border-radius:6px;cursor:pointer;border:1px solid #e8edf2;transition:background .15s}
+    .quiz-question label:hover{background:#f0f4ff}
+    label.correct{background:#d4edda!important;border-color:#28a745!important}
+    label.wrong{background:#f8d7da!important;border-color:#dc3545!important}
+    .explanation{margin-top:.8rem;padding:.8rem 1rem;background:#fffbf0;border-left:4px solid #c85000;border-radius:0 6px 6px 0;font-size:.95rem}
+    .hidden{display:none}
+    .btn{background:#c85000;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:600;margin:.4rem .3rem}
+    .btn:hover{background:#a54000}
+    .btn-secondary{background:#004080}
+    .btn-secondary:hover{background:#003060}
+    #score-box{background:#fff;border:2px solid #c85000;border-radius:10px;padding:1.5rem;text-align:center;margin-top:1.5rem;display:none}
+    #score-box h2{color:#c85000;font-size:1.6rem}
+    .progress-bar{background:#eee;border-radius:6px;height:10px;margin:1rem 0}
+    .progress-fill{background:#c85000;height:10px;border-radius:6px;transition:width .4s}
+    .info-card{background:#fff;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  </style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#c85000 60%,#be5000)">
+  <div class="type-badge badge-quiz">✓ Κουίζ</div>
+  <h1>Μονοτονία, Κυρτότητα και Ακρότατα</h1>
+  <p class="chapter-label">Κεφάλαιο 10 · Μελέτη Συνάρτησης · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+  <div class="info-card">
+    <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
+    <p>10 ερωτήσεις για μονοτονία, ακρότατα, κυρτότητα και πολυώνυμο Taylor.</p>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <form id="quiz-form">
+<div class="quiz-question" id="q1">
+  <div class="q-num">Ερώτηση 1 / 10</div>
+  <p>Αν $f'(x)>0$ σε $(a,b)$, τότε $f$:</p>
+  <label><input type="radio" name="q1" value="0"> α) φθίνει</label>
+  <label><input type="radio" name="q1" value="1"> β) αυξάνει</label>
+  <label><input type="radio" name="q1" value="2"> γ) έχει ακρότατο</label>
+  <label><input type="radio" name="q1" value="3"> δ) είναι σταθερή</label>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> β) αυξάνει<br><em>$f'>0$ $\Rightarrow$ $f$ γνησίως αύξουσα σε $(a,b)$.</em></div>
+</div>
+
+<div class="quiz-question" id="q2">
+  <div class="q-num">Ερώτηση 2 / 10</div>
+  <p>Αν $f'(c)=0$, τότε $c$ είναι αναγκαστικά τοπικό ακρότατο.</p>
+  <label><input type="radio" name="q2" value="1"> Σωστό</label>
+  <label><input type="radio" name="q2" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> Λάθος<br><em>$f'(c)=0$ είναι αναγκαία αλλά όχι ικανή συνθήκη. Π.χ. $f(x)=x^3$ στο $x=0$: $f'(0)=0$ αλλά σημείο καμπής.</em></div>
+</div>
+
+<div class="quiz-question" id="q3">
+  <div class="q-num">Ερώτηση 3 / 10</div>
+  <p>Κριτήριο 2ης παραγώγου: αν $f'(c)=0$ και $f''(c)>0$, τότε $c$ είναι:</p>
+  <label><input type="radio" name="q3" value="0"> α) τοπικό μέγιστο</label>
+  <label><input type="radio" name="q3" value="1"> β) τοπικό ελάχιστο</label>
+  <label><input type="radio" name="q3" value="2"> γ) σημείο καμπής</label>
+  <label><input type="radio" name="q3" value="3"> δ) αδύνατο να κριθεί</label>
+  <div class="explanation hidden" id="exp3"><strong>✓ Απάντηση:</strong> β) τοπικό ελάχιστο<br><em>$f'(c)=0$ + $f''(c)>0$ $\Rightarrow$ τοπικό ελάχιστο (κοίλη καμπύλη από κάτω).</em></div>
+</div>
+
+<div class="quiz-question" id="q4">
+  <div class="q-num">Ερώτηση 4 / 10</div>
+  <p>Αν $f''(x)>0$ σε $(a,b)$, τότε $f$:</p>
+  <label><input type="radio" name="q4" value="0"> α) είναι κοίλη</label>
+  <label><input type="radio" name="q4" value="1"> β) είναι κυρτή</label>
+  <label><input type="radio" name="q4" value="2"> γ) φθίνει</label>
+  <label><input type="radio" name="q4" value="3"> δ) αυξάνει</label>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) είναι κυρτή<br><em>$f''>0$ $\Rightarrow$ $f'$ αυξάνει $\Rightarrow$ η γραφική παράσταση είναι κυρτή (κοίλη προς τα πάνω).</em></div>
+</div>
+
+<div class="quiz-question" id="q5">
+  <div class="q-num">Ερώτηση 5 / 10</div>
+  <p>Σε σημείο καμπής, η $f''$ αλλάζει πρόσημο.</p>
+  <label><input type="radio" name="q5" value="1"> Σωστό</label>
+  <label><input type="radio" name="q5" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp5"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Σημείο καμπής: αλλαγή κυρτότητας/κοιλότητας $\Leftrightarrow$ $f''$ αλλάζει πρόσημο.</em></div>
+</div>
+
+<div class="quiz-question" id="q6">
+  <div class="q-num">Ερώτηση 6 / 10</div>
+  <p>Το πολυώνυμο Taylor $P_n(x)$ της $f$ γύρω από $x=a$ ικανοποιεί:</p>
+  <label><input type="radio" name="q6" value="0"> α) $P_n(a)=f(a)$ μόνο</label>
+  <label><input type="radio" name="q6" value="1"> β) $P_n^{(k)}(a)=f^{(k)}(a)$ για $k=0,\ldots,n$</label>
+  <label><input type="radio" name="q6" value="2"> γ) $P_n(x)=f(x)$ παντού</label>
+  <label><input type="radio" name="q6" value="3"> δ) $P_n'(a)=0$</label>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> β) $P_n^{(k)}(a)=f^{(k)}(a)$ για $k=0,\ldots,n$<br><em>Το πολυώνυμο Taylor έχει ίδιες παραγώγους με $f$ μέχρι βαθμό $n$ στο $a$.</em></div>
+</div>
+
+<div class="quiz-question" id="q7">
+  <div class="q-num">Ερώτηση 7 / 10</div>
+  <p>Η $f(x)=x^4-4x^2$ έχει τοπικά ακρότατα στα:</p>
+  <label><input type="radio" name="q7" value="0"> α) $x=0$ μόνο</label>
+  <label><input type="radio" name="q7" value="1"> β) $x=\pm\sqrt{2}$ μόνο</label>
+  <label><input type="radio" name="q7" value="2"> γ) $x=0$ και $x=\pm\sqrt{2}$</label>
+  <label><input type="radio" name="q7" value="3"> δ) δεν έχει ακρότατα</label>
+  <div class="explanation hidden" id="exp7"><strong>✓ Απάντηση:</strong> γ) $x=0$ και $x=\pm\sqrt{2}$<br><em>$f'=4x^3-8x=4x(x^2-2)=0$: $x=0,\pm\sqrt{2}$. Κριτήριο $f''$: $f''(0)=-8<0$ (μέγιστο), $f''(\pm\sqrt{2})=16>0$ (ελάχιστα).</em></div>
+</div>
+
+<div class="quiz-question" id="q8">
+  <div class="q-num">Ερώτηση 8 / 10</div>
+  <p>Αν $f$ συνεχής σε $[a,b]$, έχει απόλυτο μέγιστο και ελάχιστο στο $[a,b]$.</p>
+  <label><input type="radio" name="q8" value="1"> Σωστό</label>
+  <label><input type="radio" name="q8" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp8"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Θεώρημα Weierstrass: συνεχής σε κλειστό φραγμένο $\Rightarrow$ επιτυγχάνει απόλυτο max/min.</em></div>
+</div>
+
+<div class="quiz-question" id="q9">
+  <div class="q-num">Ερώτηση 9 / 10</div>
+  <p>Θεώρημα Μέσης Τιμής: αν $f$ συνεχής σε $[a,b]$ και παραγ. σε $(a,b)$, τότε υπάρχει $c$ με:</p>
+  <label><input type="radio" name="q9" value="0"> α) $f(c)=0$</label>
+  <label><input type="radio" name="q9" value="1"> β) $f'(c)=\dfrac{f(b)-f(a)}{b-a}$</label>
+  <label><input type="radio" name="q9" value="2"> γ) $f'(c)=0$</label>
+  <label><input type="radio" name="q9" value="3"> δ) $f(c)=\dfrac{f(a)+f(b)}{2}$</label>
+  <div class="explanation hidden" id="exp9"><strong>✓ Απάντηση:</strong> β) $f'(c)=\dfrac{f(b)-f(a)}{b-a}$<br><em>ΘΜΤ (Lagrange): $\exists c\in(a,b)$ με $f'(c)=\dfrac{f(b)-f(a)}{b-a}$ (η εφαπτομένη παράλληλη στη χορδή).</em></div>
+</div>
+
+<div class="quiz-question" id="q10">
+  <div class="q-num">Ερώτηση 10 / 10</div>
+  <p>Αν $f'(x)=0$ για κάθε $x$ σε $(a,b)$, τότε $f$:</p>
+  <label><input type="radio" name="q10" value="0"> α) μηδενίζεται</label>
+  <label><input type="radio" name="q10" value="1"> β) αυξάνει</label>
+  <label><input type="radio" name="q10" value="2"> γ) είναι σταθερή</label>
+  <label><input type="radio" name="q10" value="3"> δ) έχει ακρότατο</label>
+  <div class="explanation hidden" id="exp10"><strong>✓ Απάντηση:</strong> γ) είναι σταθερή<br><em>$f'=0$ παντού $\Rightarrow$ $f$ σταθερή (από ΘΜΤ).</em></div>
+</div>
+
+
+  </form>
+  <div style="text-align:center;margin:1.5rem 0">
+    <button class="btn" onclick="checkAll()">Έλεγχος Απαντήσεων</button>
+    <button class="btn btn-secondary" onclick="resetQuiz()">Εκ Νέου</button>
+  </div>
+  <div id="score-box">
+    <h2 id="score-text"></h2>
+    <p id="score-detail"></p>
+  </div>
+</main>
+<script>
+const ANSWERS = [1,0,1,1,1,1,2,1,1,2];
+const N = 10;
+
+function checkAll(){
+  let score=0;
+  for(let i=1;i<=N;i++){
+    const sel=document.querySelector(`input[name=q${i}]:checked`);
+    const expEl=document.getElementById(`exp${i}`);
+    const labels=document.querySelectorAll(`#q${i} label`);
+    labels.forEach(l=>l.classList.remove('correct','wrong'));
+    if(sel){
+      const correct=(parseInt(sel.value)===parseInt(ANSWERS[i-1]));
+      if(correct){score++;sel.parentElement.classList.add('correct');}
+      else{sel.parentElement.classList.add('wrong');
+            labels.forEach(l=>{
+              if(parseInt(l.querySelector('input').value)===parseInt(ANSWERS[i-1]))l.classList.add('correct');
+            });
+      }
+    }
+    expEl.classList.remove('hidden');
+  }
+  const pct=Math.round(score/N*100);
+  document.getElementById('prog').style.width=pct+'%';
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  const emoji=pct>=90?'🏆':pct>=70?'👍':pct>=50?'📚':'💪';
+  document.getElementById('score-text').textContent=emoji+' '+score+'/'+N+' ('+pct+'%)';
+  document.getElementById('score-detail').textContent=
+    pct>=90?'Άριστα! Εξαιρετική κατανόηση.':
+    pct>=70?'Πολύ καλά! Μικρές επαναλήψεις χρειάζονται.':
+    pct>=50?'Καλά, αλλά χρειάζεσαι περισσότερη εξάσκηση.':'Επανάλαβε τη θεωρία του κεφαλαίου.';
+  box.scrollIntoView({behavior:'smooth'});
+  if(typeof MathJax!=='undefined')MathJax.typesetPromise();
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-form').reset();
+  document.querySelectorAll('.explanation').forEach(e=>e.classList.add('hidden'));
+  document.querySelectorAll('label').forEach(l=>l.classList.remove('correct','wrong'));
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('score-box').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// live progress
+document.addEventListener('change',function(e){
+  if(e.target.type==='radio'){
+    const answered=new Set([...document.querySelectorAll('input[type=radio]:checked')].map(r=>r.name)).size;
+    document.getElementById('prog').style.width=(answered/N*100)+'%';
+  }
+});
+</script>
+</body>
+</html>

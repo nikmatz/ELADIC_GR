@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κουίζ: Γραμμικοί Μετασχηματισμοί</title>
+  <link rel="stylesheet" href="../../../_shared/book.css">
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <style>
+    .quiz-question{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+    .q-num{font-size:.78rem;font-family:sans-serif;font-weight:700;color:#c85000;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .quiz-question p{font-size:1.05rem;margin-bottom:.8rem}
+    .quiz-question label{display:block;padding:.45rem .7rem;margin:.25rem 0;border-radius:6px;cursor:pointer;border:1px solid #e8edf2;transition:background .15s}
+    .quiz-question label:hover{background:#f0f4ff}
+    label.correct{background:#d4edda!important;border-color:#28a745!important}
+    label.wrong{background:#f8d7da!important;border-color:#dc3545!important}
+    .explanation{margin-top:.8rem;padding:.8rem 1rem;background:#fffbf0;border-left:4px solid #c85000;border-radius:0 6px 6px 0;font-size:.95rem}
+    .hidden{display:none}
+    .btn{background:#c85000;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:600;margin:.4rem .3rem}
+    .btn:hover{background:#a54000}
+    .btn-secondary{background:#004080}
+    .btn-secondary:hover{background:#003060}
+    #score-box{background:#fff;border:2px solid #c85000;border-radius:10px;padding:1.5rem;text-align:center;margin-top:1.5rem;display:none}
+    #score-box h2{color:#c85000;font-size:1.6rem}
+    .progress-bar{background:#eee;border-radius:6px;height:10px;margin:1rem 0}
+    .progress-fill{background:#c85000;height:10px;border-radius:6px;transition:width .4s}
+    .info-card{background:#fff;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  </style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#c85000 60%,#be5000)">
+  <div class="type-badge badge-quiz">✓ Κουίζ</div>
+  <h1>Γραμμικοί Μετασχηματισμοί</h1>
+  <p class="chapter-label">Κεφάλαιο 4 · Γραμμικές Απεικονίσεις · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+  <div class="info-card">
+    <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
+    <p>10 ερωτήσεις για ορισμό, πυρήνα, εικόνα, μήτρα αναπαράστασης και αλλαγή βάσης.</p>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <form id="quiz-form">
+<div class="quiz-question" id="q1">
+  <div class="q-num">Ερώτηση 1 / 10</div>
+  <p>Κάθε γραμμικός μετασχηματισμός στέλνει το μηδενικό διάνυσμα στο μηδενικό.</p>
+  <label><input type="radio" name="q1" value="1"> Σωστό</label>
+  <label><input type="radio" name="q1" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> Σωστό<br><em>$T(0)=T(0\cdot v)=0\cdot T(v)=0$. Βασική ιδιότητα.</em></div>
+</div>
+
+<div class="quiz-question" id="q2">
+  <div class="q-num">Ερώτηση 2 / 10</div>
+  <p>Ο πυρήνας (kernel) του $T: V\to W$ είναι:</p>
+  <label><input type="radio" name="q2" value="0"> α) το σύνολο $\{T(v): v\in V\}$</label>
+  <label><input type="radio" name="q2" value="1"> β) το σύνολο $\{v\in V: T(v)=0\}$</label>
+  <label><input type="radio" name="q2" value="2"> γ) ο χώρος $W$</label>
+  <label><input type="radio" name="q2" value="3"> δ) το σύνολο $\{T(v): T(v)\neq 0\}$</label>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> β) το σύνολο $\{v\in V: T(v)=0\}$<br><em>$\ker T=\{v\in V: T(v)=0_W\}$. Η εικόνα (image) είναι $\{T(v): v\in V\}$.</em></div>
+</div>
+
+<div class="quiz-question" id="q3">
+  <div class="q-num">Ερώτηση 3 / 10</div>
+  <p>Ο $T$ είναι 1-1 (ένα προς ένα) αν και μόνο αν:</p>
+  <label><input type="radio" name="q3" value="0"> α) $\mathrm{Im}(T)=W$</label>
+  <label><input type="radio" name="q3" value="1"> β) $\ker T=\{0\}$</label>
+  <label><input type="radio" name="q3" value="2"> γ) $\dim V=\dim W$</label>
+  <label><input type="radio" name="q3" value="3"> δ) $T(v)\neq 0$ για κάθε $v$</label>
+  <div class="explanation hidden" id="exp3"><strong>✓ Απάντηση:</strong> β) $\ker T=\{0\}$<br><em>$T$ 1-1 $\Leftrightarrow$ $\ker T=\{0\}$ (μηδενικός πυρήνας).</em></div>
+</div>
+
+<div class="quiz-question" id="q4">
+  <div class="q-num">Ερώτηση 4 / 10</div>
+  <p>Ο βαθμός μηδενισμού (nullity) + η τάξη (rank) ενός γ.μ. $T:V\to W$ ισούνται με $\dim V$.</p>
+  <label><input type="radio" name="q4" value="1"> Σωστό</label>
+  <label><input type="radio" name="q4" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Θεώρημα Rank-Nullity: $\dim(\ker T)+\dim(\mathrm{Im}T)=\dim V$.</em></div>
+</div>
+
+<div class="quiz-question" id="q5">
+  <div class="q-num">Ερώτηση 5 / 10</div>
+  <p>Αν $T: \mathbb{R}^3\to\mathbb{R}^2$ και $\mathrm{rank}(T)=2$, τότε $\dim(\ker T)=$</p>
+  <label><input type="radio" name="q5" value="0"> α) 0</label>
+  <label><input type="radio" name="q5" value="1"> β) 1</label>
+  <label><input type="radio" name="q5" value="2"> γ) 2</label>
+  <label><input type="radio" name="q5" value="3"> δ) 3</label>
+  <div class="explanation hidden" id="exp5"><strong>✓ Απάντηση:</strong> β) 1<br><em>$\dim(\ker T)=\dim(\mathbb{R}^3)-\mathrm{rank}(T)=3-2=1$.</em></div>
+</div>
+
+<div class="quiz-question" id="q6">
+  <div class="q-num">Ερώτηση 6 / 10</div>
+  <p>Η μήτρα αναπαράστασης του $T$ εξαρτάται από:</p>
+  <label><input type="radio" name="q6" value="0"> α) μόνο τον $T$</label>
+  <label><input type="radio" name="q6" value="1"> β) τις βάσεις του $V$ και $W$</label>
+  <label><input type="radio" name="q6" value="2"> γ) μόνο τη βάση του $W$</label>
+  <label><input type="radio" name="q6" value="3"> δ) τη διάσταση του $V$</label>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> β) τις βάσεις του $V$ και $W$<br><em>Η μήτρα αναπαράστασης αλλάζει ανάλογα με τις επιλεγμένες βάσεις στους χώρους εκκίνησης και προορισμού.</em></div>
+</div>
+
+<div class="quiz-question" id="q7">
+  <div class="q-num">Ερώτηση 7 / 10</div>
+  <p>Ένας γραμμικός μετασχηματισμός $T:V\to V$ με $\ker T=\{0\}$ είναι ισομορφισμός αν $\dim V<\infty$.</p>
+  <label><input type="radio" name="q7" value="1"> Σωστό</label>
+  <label><input type="radio" name="q7" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp7"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Σε πεπερασμένη διάσταση, 1-1 $\Leftrightarrow$ επί $\Leftrightarrow$ ισομορφισμός.</em></div>
+</div>
+
+<div class="quiz-question" id="q8">
+  <div class="q-num">Ερώτηση 8 / 10</div>
+  <p>Η αλλαγή βάσης από $\mathcal{B}$ σε $\mathcal{B}'$ γίνεται μέσω:</p>
+  <label><input type="radio" name="q8" value="0"> α) της ορίζουσας</label>
+  <label><input type="radio" name="q8" value="1"> β) του πίνακα μετάβασης $P$</label>
+  <label><input type="radio" name="q8" value="2"> γ) της ανάστροφης αντικατάστασης</label>
+  <label><input type="radio" name="q8" value="3"> δ) του Gauss</label>
+  <div class="explanation hidden" id="exp8"><strong>✓ Απάντηση:</strong> β) του πίνακα μετάβασης $P$<br><em>Ο πίνακας μετάβασης $P$ μετασχηματίζει τις συντεταγμένες: $[v]_{\mathcal{B}'}=P^{-1}[v]_{\mathcal{B}}$.</em></div>
+</div>
+
+<div class="quiz-question" id="q9">
+  <div class="q-num">Ερώτηση 9 / 10</div>
+  <p>Αν $T: \mathbb{R}^2\to\mathbb{R}^2$ είναι περιστροφή κατά $90°$, τότε ο πίνακας αναπαράστασης ως προς τη συνήθη βάση είναι:</p>
+  <label><input type="radio" name="q9" value="0"> α) $\begin{pmatrix}0&-1\\1&0\end{pmatrix}$</label>
+  <label><input type="radio" name="q9" value="1"> β) $\begin{pmatrix}1&0\\0&-1\end{pmatrix}$</label>
+  <label><input type="radio" name="q9" value="2"> γ) $\begin{pmatrix}0&1\\-1&0\end{pmatrix}$</label>
+  <label><input type="radio" name="q9" value="3"> δ) $\begin{pmatrix}-1&0\\0&1\end{pmatrix}$</label>
+  <div class="explanation hidden" id="exp9"><strong>✓ Απάντηση:</strong> α) $\begin{pmatrix}0&-1\\1&0\end{pmatrix}$<br><em>Περιστροφή κατά $\theta=90°$: $R=\begin{pmatrix}\cos90°&-\sin90°\\\sin90°&\cos90°\end{pmatrix}=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$.</em></div>
+</div>
+
+<div class="quiz-question" id="q10">
+  <div class="q-num">Ερώτηση 10 / 10</div>
+  <p>Ο μηδενικός μετασχηματισμός $T(v)=0$ είναι γραμμικός.</p>
+  <label><input type="radio" name="q10" value="1"> Σωστό</label>
+  <label><input type="radio" name="q10" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp10"><strong>✓ Απάντηση:</strong> Σωστό<br><em>$T(\lambda u+\mu v)=0=\lambda\cdot0+\mu\cdot0=\lambda T(u)+\mu T(v)$. Ικανοποιεί τις γραμμικές ιδιότητες.</em></div>
+</div>
+
+
+  </form>
+  <div style="text-align:center;margin:1.5rem 0">
+    <button class="btn" onclick="checkAll()">Έλεγχος Απαντήσεων</button>
+    <button class="btn btn-secondary" onclick="resetQuiz()">Εκ Νέου</button>
+  </div>
+  <div id="score-box">
+    <h2 id="score-text"></h2>
+    <p id="score-detail"></p>
+  </div>
+</main>
+<script>
+const ANSWERS = [1,1,1,1,1,1,1,1,0,1];
+const N = 10;
+
+function checkAll(){
+  let score=0;
+  for(let i=1;i<=N;i++){
+    const sel=document.querySelector(`input[name=q${i}]:checked`);
+    const expEl=document.getElementById(`exp${i}`);
+    const labels=document.querySelectorAll(`#q${i} label`);
+    labels.forEach(l=>l.classList.remove('correct','wrong'));
+    if(sel){
+      const correct=(parseInt(sel.value)===parseInt(ANSWERS[i-1]));
+      if(correct){score++;sel.parentElement.classList.add('correct');}
+      else{sel.parentElement.classList.add('wrong');
+            labels.forEach(l=>{
+              if(parseInt(l.querySelector('input').value)===parseInt(ANSWERS[i-1]))l.classList.add('correct');
+            });
+      }
+    }
+    expEl.classList.remove('hidden');
+  }
+  const pct=Math.round(score/N*100);
+  document.getElementById('prog').style.width=pct+'%';
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  const emoji=pct>=90?'🏆':pct>=70?'👍':pct>=50?'📚':'💪';
+  document.getElementById('score-text').textContent=emoji+' '+score+'/'+N+' ('+pct+'%)';
+  document.getElementById('score-detail').textContent=
+    pct>=90?'Άριστα! Εξαιρετική κατανόηση.':
+    pct>=70?'Πολύ καλά! Μικρές επαναλήψεις χρειάζονται.':
+    pct>=50?'Καλά, αλλά χρειάζεσαι περισσότερη εξάσκηση.':'Επανάλαβε τη θεωρία του κεφαλαίου.';
+  box.scrollIntoView({behavior:'smooth'});
+  if(typeof MathJax!=='undefined')MathJax.typesetPromise();
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-form').reset();
+  document.querySelectorAll('.explanation').forEach(e=>e.classList.add('hidden'));
+  document.querySelectorAll('label').forEach(l=>l.classList.remove('correct','wrong'));
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('score-box').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// live progress
+document.addEventListener('change',function(e){
+  if(e.target.type==='radio'){
+    const answered=new Set([...document.querySelectorAll('input[type=radio]:checked')].map(r=>r.name)).size;
+    document.getElementById('prog').style.width=(answered/N*100)+'%';
+  }
+});
+</script>
+</body>
+</html>

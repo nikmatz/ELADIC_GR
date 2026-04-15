@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κουίζ: Θεμελιώδες Θεώρημα Λογισμού</title>
+  <link rel="stylesheet" href="../../../_shared/book.css">
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <style>
+    .quiz-question{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+    .q-num{font-size:.78rem;font-family:sans-serif;font-weight:700;color:#c85000;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .quiz-question p{font-size:1.05rem;margin-bottom:.8rem}
+    .quiz-question label{display:block;padding:.45rem .7rem;margin:.25rem 0;border-radius:6px;cursor:pointer;border:1px solid #e8edf2;transition:background .15s}
+    .quiz-question label:hover{background:#f0f4ff}
+    label.correct{background:#d4edda!important;border-color:#28a745!important}
+    label.wrong{background:#f8d7da!important;border-color:#dc3545!important}
+    .explanation{margin-top:.8rem;padding:.8rem 1rem;background:#fffbf0;border-left:4px solid #c85000;border-radius:0 6px 6px 0;font-size:.95rem}
+    .hidden{display:none}
+    .btn{background:#c85000;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:600;margin:.4rem .3rem}
+    .btn:hover{background:#a54000}
+    .btn-secondary{background:#004080}
+    .btn-secondary:hover{background:#003060}
+    #score-box{background:#fff;border:2px solid #c85000;border-radius:10px;padding:1.5rem;text-align:center;margin-top:1.5rem;display:none}
+    #score-box h2{color:#c85000;font-size:1.6rem}
+    .progress-bar{background:#eee;border-radius:6px;height:10px;margin:1rem 0}
+    .progress-fill{background:#c85000;height:10px;border-radius:6px;transition:width .4s}
+    .info-card{background:#fff;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  </style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#c85000 60%,#be5000)">
+  <div class="type-badge badge-quiz">✓ Κουίζ</div>
+  <h1>Θεμελιώδες Θεώρημα Λογισμού</h1>
+  <p class="chapter-label">Κεφάλαιο 14 · Θεμελιώδες Θεώρημα · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+  <div class="info-card">
+    <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
+    <p>10 ερωτήσεις για το ΘΘΛ, τη σχέση παραγώγου-ολοκληρώματος και εφαρμογές.</p>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <form id="quiz-form">
+<div class="quiz-question" id="q1">
+  <div class="q-num">Ερώτηση 1 / 10</div>
+  <p>ΘΘΛ (1ο μέρος): αν $F(x)=\int_a^x f(t)dt$, τότε $F'(x)=$</p>
+  <label><input type="radio" name="q1" value="0"> α) $f(a)$</label>
+  <label><input type="radio" name="q1" value="1"> β) $f(x)$</label>
+  <label><input type="radio" name="q1" value="2"> γ) $f(x)-f(a)$</label>
+  <label><input type="radio" name="q1" value="3"> δ) $\int_a^xf'(t)dt$</label>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> β) $f(x)$<br><em>1ο μέρος ΘΘΛ: $\dfrac{d}{dx}\int_a^xf(t)dt=f(x)$ (αν $f$ συνεχής).</em></div>
+</div>
+
+<div class="quiz-question" id="q2">
+  <div class="q-num">Ερώτηση 2 / 10</div>
+  <p>ΘΘΛ (2ο μέρος): $\int_a^b f(x)dx=$</p>
+  <label><input type="radio" name="q2" value="0"> α) $F(a)-F(b)$</label>
+  <label><input type="radio" name="q2" value="1"> β) $F(b)-F(a)$</label>
+  <label><input type="radio" name="q2" value="2"> γ) $F'(b)-F'(a)$</label>
+  <label><input type="radio" name="q2" value="3"> δ) $F(b)\cdot F(a)$</label>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> β) $F(b)-F(a)$<br><em>2ο μέρος ΘΘΛ: $\int_a^bf(x)dx=F(b)-F(a)$ όπου $F'=f$.</em></div>
+</div>
+
+<div class="quiz-question" id="q3">
+  <div class="q-num">Ερώτηση 3 / 10</div>
+  <p>Το ΘΘΛ συνδέει τη διαφόριση με την ολοκλήρωση.</p>
+  <label><input type="radio" name="q3" value="1"> Σωστό</label>
+  <label><input type="radio" name="q3" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp3"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Θεμελιώδης σύνδεση: ολοκλήρωση και παραγώγιση είναι αντίστροφες πράξεις.</em></div>
+</div>
+
+<div class="quiz-question" id="q4">
+  <div class="q-num">Ερώτηση 4 / 10</div>
+  <p>$\dfrac{d}{dx}\int_0^{x^2}\cos t\,dt=$</p>
+  <label><input type="radio" name="q4" value="0"> α) $\cos(x^2)$</label>
+  <label><input type="radio" name="q4" value="1"> β) $2x\cos(x^2)$</label>
+  <label><input type="radio" name="q4" value="2"> γ) $\sin(x^2)$</label>
+  <label><input type="radio" name="q4" value="3"> δ) $2x\sin(x^2)$</label>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) $2x\cos(x^2)$<br><em>Κανόνας αλυσίδας + ΘΘΛ: $\dfrac{d}{dx}\int_0^{g(x)}f(t)dt=f(g(x))\cdot g'(x)=\cos(x^2)\cdot2x$.</em></div>
+</div>
+
+<div class="quiz-question" id="q5">
+  <div class="q-num">Ερώτηση 5 / 10</div>
+  <p>$\int_1^3(2x+1)dx=$</p>
+  <label><input type="radio" name="q5" value="0"> α) 8</label>
+  <label><input type="radio" name="q5" value="1"> β) 10</label>
+  <label><input type="radio" name="q5" value="2"> γ) 12</label>
+  <label><input type="radio" name="q5" value="3"> δ) 14</label>
+  <div class="explanation hidden" id="exp5"><strong>✓ Απάντηση:</strong> γ) 12<br><em>$[x^2+x]_1^3=(9+3)-(1+1)=12-2=10$. Άρα 10.</em></div>
+</div>
+
+<div class="quiz-question" id="q6">
+  <div class="q-num">Ερώτηση 6 / 10</div>
+  <p>Η $F(x)=\int_a^xf(t)dt$ είναι πρωτεύουσα της $f$.</p>
+  <label><input type="radio" name="q6" value="1"> Σωστό</label>
+  <label><input type="radio" name="q6" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Εκ του ΘΘΛ (1ο μέρος): $F'(x)=f(x)$, άρα $F$ πρωτεύουσα.</em></div>
+</div>
+
+<div class="quiz-question" id="q7">
+  <div class="q-num">Ερώτηση 7 / 10</div>
+  <p>$\int_0^1 e^x\,dx=$</p>
+  <label><input type="radio" name="q7" value="0"> α) $e-1$</label>
+  <label><input type="radio" name="q7" value="1"> β) $e$</label>
+  <label><input type="radio" name="q7" value="2"> γ) 1</label>
+  <label><input type="radio" name="q7" value="3"> δ) $e+1$</label>
+  <div class="explanation hidden" id="exp7"><strong>✓ Απάντηση:</strong> α) $e-1$<br><em>$[e^x]_0^1=e^1-e^0=e-1$.</em></div>
+</div>
+
+<div class="quiz-question" id="q8">
+  <div class="q-num">Ερώτηση 8 / 10</div>
+  <p>Αν $f$ συνεχής και $\int_0^3f(x)dx=7$, $\int_0^2f(x)dx=3$, τότε $\int_2^3f(x)dx=$</p>
+  <label><input type="radio" name="q8" value="0"> α) 4</label>
+  <label><input type="radio" name="q8" value="1"> β) 10</label>
+  <label><input type="radio" name="q8" value="2"> γ) $-4$</label>
+  <label><input type="radio" name="q8" value="3"> δ) $21$</label>
+  <div class="explanation hidden" id="exp8"><strong>✓ Απάντηση:</strong> α) 4<br><em>Αδιτίβα: $\int_0^3=\int_0^2+\int_2^3 \Rightarrow \int_2^3=7-3=4$.</em></div>
+</div>
+
+<div class="quiz-question" id="q9">
+  <div class="q-num">Ερώτηση 9 / 10</div>
+  <p>$\int_a^b f(x)dx = \int_a^b f(t)dt$ (η μεταβλητή ολοκλήρωσης είναι βουβή).</p>
+  <label><input type="radio" name="q9" value="1"> Σωστό</label>
+  <label><input type="radio" name="q9" value="0"> Λάθος</label>
+  <div class="explanation hidden" id="exp9"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Η μεταβλητή ολοκλήρωσης (dummy variable) δεν επηρεάζει το αποτέλεσμα.</em></div>
+</div>
+
+<div class="quiz-question" id="q10">
+  <div class="q-num">Ερώτηση 10 / 10</div>
+  <p>$\dfrac{d}{dx}\int_x^5\sin(t^2)dt=$</p>
+  <label><input type="radio" name="q10" value="0"> α) $\sin(x^2)$</label>
+  <label><input type="radio" name="q10" value="1"> β) $-\sin(x^2)$</label>
+  <label><input type="radio" name="q10" value="2"> γ) $\sin(25)$</label>
+  <label><input type="radio" name="q10" value="3"> δ) $\cos(x^2)$</label>
+  <div class="explanation hidden" id="exp10"><strong>✓ Απάντηση:</strong> β) $-\sin(x^2)$<br><em>$\int_x^5=-\int_5^x$, άρα $\dfrac{d}{dx}(-\int_5^x\sin t^2 dt)=-\sin(x^2)$.</em></div>
+</div>
+
+
+  </form>
+  <div style="text-align:center;margin:1.5rem 0">
+    <button class="btn" onclick="checkAll()">Έλεγχος Απαντήσεων</button>
+    <button class="btn btn-secondary" onclick="resetQuiz()">Εκ Νέου</button>
+  </div>
+  <div id="score-box">
+    <h2 id="score-text"></h2>
+    <p id="score-detail"></p>
+  </div>
+</main>
+<script>
+const ANSWERS = [1,1,1,1,2,1,0,0,1,1];
+const N = 10;
+
+function checkAll(){
+  let score=0;
+  for(let i=1;i<=N;i++){
+    const sel=document.querySelector(`input[name=q${i}]:checked`);
+    const expEl=document.getElementById(`exp${i}`);
+    const labels=document.querySelectorAll(`#q${i} label`);
+    labels.forEach(l=>l.classList.remove('correct','wrong'));
+    if(sel){
+      const correct=(parseInt(sel.value)===parseInt(ANSWERS[i-1]));
+      if(correct){score++;sel.parentElement.classList.add('correct');}
+      else{sel.parentElement.classList.add('wrong');
+            labels.forEach(l=>{
+              if(parseInt(l.querySelector('input').value)===parseInt(ANSWERS[i-1]))l.classList.add('correct');
+            });
+      }
+    }
+    expEl.classList.remove('hidden');
+  }
+  const pct=Math.round(score/N*100);
+  document.getElementById('prog').style.width=pct+'%';
+  const box=document.getElementById('score-box');
+  box.style.display='block';
+  const emoji=pct>=90?'🏆':pct>=70?'👍':pct>=50?'📚':'💪';
+  document.getElementById('score-text').textContent=emoji+' '+score+'/'+N+' ('+pct+'%)';
+  document.getElementById('score-detail').textContent=
+    pct>=90?'Άριστα! Εξαιρετική κατανόηση.':
+    pct>=70?'Πολύ καλά! Μικρές επαναλήψεις χρειάζονται.':
+    pct>=50?'Καλά, αλλά χρειάζεσαι περισσότερη εξάσκηση.':'Επανάλαβε τη θεωρία του κεφαλαίου.';
+  box.scrollIntoView({behavior:'smooth'});
+  if(typeof MathJax!=='undefined')MathJax.typesetPromise();
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-form').reset();
+  document.querySelectorAll('.explanation').forEach(e=>e.classList.add('hidden'));
+  document.querySelectorAll('label').forEach(l=>l.classList.remove('correct','wrong'));
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('score-box').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// live progress
+document.addEventListener('change',function(e){
+  if(e.target.type==='radio'){
+    const answered=new Set([...document.querySelectorAll('input[type=radio]:checked')].map(r=>r.name)).size;
+    document.getElementById('prog').style.width=(answered/N*100)+'%';
+  }
+});
+</script>
+</body>
+</html>

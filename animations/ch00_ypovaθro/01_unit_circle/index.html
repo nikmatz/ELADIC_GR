@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Μοναδιαίος Κύκλος — Animation</title>
+<link rel="stylesheet" href="../../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$']]}}</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+<header class="page-header">
+  <div class="type-badge badge-animation">▶ Animation</div>
+  <h1>Μοναδιαίος Κύκλος & Τριγωνομετρία</h1>
+  <p class="chapter-label">Κεφάλαιο 0 · Μαθηματικό Υπόβαθρο · Μαθηματικά Ι — ΑΣΠΕΤΕ</p>
+</header>
+<main>
+<div class="info-card">
+  <h2>Πώς λειτουργεί;</h2>
+  <p>Σύρε το σημείο $P$ πάνω στον μοναδιαίο κύκλο και δες πώς αλλάζουν
+  το $\cos\theta$ (οριζόντια προβολή) και το $\sin\theta$ (κατακόρυφη προβολή).
+  Παρατήρησε τη γωνία $\theta$ σε ακτίνια και μοίρες.</p>
+</div>
+<div class="canvas-wrap" id="cc"></div>
+<div class="controls">
+  <button class="btn btn-ghost" onclick="resetAngle()">↺ Επαναφορά</button>
+</div>
+<div class="info-card" style="border-left-color:#be5000; margin-top:1rem">
+  <h2>Βασικές ταυτότητες</h2>
+  <p>$\sin^2\theta + \cos^2\theta = 1$ &nbsp;·&nbsp;
+     $\tan\theta = \dfrac{\sin\theta}{\cos\theta}$ &nbsp;·&nbsp;
+     $\sin(\theta+2\pi)=\sin\theta$</p>
+</div>
+</main>
+<footer>Μαθηματικά Ι — ΑΣΠΕΤΕ · <a href="https://github.com/nikmatz/Book1" style="color:#0082b4">github.com/nikmatz/Book1</a></footer>
+<script>
+let angle = 0.6, dragging = false;
+function resetAngle(){ angle=0.6; }
+new p5(p=>{
+  const R=130, cx=180, cy=190;
+  p.setup=()=>{ let c=p.createCanvas(360,380); c.parent('cc'); p.textFont('Georgia'); };
+  p.draw=()=>{
+    p.background(250);
+    // Grid
+    p.stroke(220); p.strokeWeight(0.7);
+    [-1,0,1].forEach(v=>{
+      p.line(cx+v*R,20,cx+v*R,360);
+      p.line(20,cy-v*R,340,cy-v*R);
+    });
+    // Axes
+    p.stroke(160); p.strokeWeight(1.5);
+    p.line(20,cy,340,cy); p.line(cx,20,cx,360);
+    // Circle
+    p.noFill(); p.stroke(p.color('#0082b4')); p.strokeWeight(2);
+    p.circle(cx,cy,2*R);
+    // Point P
+    const px=cx+R*Math.cos(angle), py=cy-R*Math.sin(angle);
+    // Projections
+    p.stroke(p.color('#008c46')); p.strokeWeight(1.5); p.drawingContext.setLineDash([4,4]);
+    p.line(px,cy,px,py); // sin vertical
+    p.line(cx,cy,px,cy); // cos horizontal
+    p.drawingContext.setLineDash([]);
+    // Radius line
+    p.stroke(p.color('#be5000')); p.strokeWeight(2.5);
+    p.line(cx,cy,px,py);
+    // Angle arc
+    p.noFill(); p.stroke(p.color('#be5000')); p.strokeWeight(1.5);
+    p.arc(cx,cy,50,50,Math.atan2(0,1),-angle,false);
+    // Point
+    p.fill(p.color('#be5000')); p.noStroke(); p.circle(px,py,10);
+    // Labels
+    p.noStroke();
+    const cos=Math.cos(angle), sin=Math.sin(angle);
+    // cos label
+    p.fill(p.color('#008c46')); p.textSize(13); p.textAlign(p.CENTER);
+    p.text('cos θ = '+cos.toFixed(3), cx+(px-cx)/2, cy+18);
+    // sin label
+    p.textAlign(p.LEFT);
+    p.text('sin θ = '+sin.toFixed(3), px+8, cy-(py-cy)/2);
+    // θ readout
+    p.fill(p.color('#be5000')); p.textAlign(p.LEFT);
+    p.textSize(12);
+    p.text('θ = '+(angle*180/Math.PI).toFixed(1)+'°  = '+angle.toFixed(3)+' rad', 12, 22);
+    p.text('P = ('+cos.toFixed(2)+', '+sin.toFixed(2)+')', 12, 38);
+    // Drag handle
+    if(p.dist(p.mouseX,p.mouseY,px,py)<14){ p.fill(255,200); p.noStroke(); p.circle(px,py,20); }
+  };
+  p.mousePressed=()=>{ if(p.dist(p.mouseX,p.mouseY,cx+R*Math.cos(angle),cy-R*Math.sin(angle))<18) dragging=true; };
+  p.mouseDragged=()=>{ if(dragging){ angle=Math.atan2(-(p.mouseY-cy),p.mouseX-cx); } };
+  p.mouseReleased=()=>{ dragging=false; };
+},document.getElementById('cc'));
+</script>
+</body></html>
