@@ -30,7 +30,15 @@
         @media(max-width:600px){.grid-2{grid-template-columns:1fr}}
         .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-family:Georgia,serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
         .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
-    </style>
+    
+    .expl-section{margin-top:1.5rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
+    .expl-toggle{width:100%;background:#004080;color:#fff;border:none;padding:.7rem 1rem;text-align:left;cursor:pointer;font-size:.9rem;font-family:Georgia,serif}
+    .expl-toggle:hover{background:#003060}
+    .expl-body{display:none;padding:1rem;background:#fffbf0;font-size:.9rem;line-height:1.7}
+    .expl-body.open{display:block}
+    .expl-body h3{color:#004080;margin-bottom:.5rem;font-size:.95rem}
+    .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
+  </style>
 </head>
 <body>
     <header>
@@ -88,9 +96,26 @@
         </div>
     </div>
 
-    <div class="author-stamp">
-        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
-        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    
+<div class="expl-section" style="max-width:980px;margin:0 auto 1rem auto;padding:0 1rem">
+  <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Ορίζουσα 2×2 ▼</button>
+  <div class="expl-body" id="explBody">
+    <h3>Ορίζουσα 2×2</h3>
+    <p>Η ορίζουσα det(A) μετρά πόσο ένας μετασχηματισμός αλλάζει εμβαδόν (σε 2D).</p>
+    <div class="formula">det[[a,b],[c,d]] = ad − bc &nbsp;·&nbsp; det(A)≠0 ⟺ Α αντιστρέψιμος</div>
+    <p>Γεωμετρικά: |det(A)| = εμβαδόν παραλληλογράμμου που σχηματίζουν οι στήλες. Πρόσημο: θετικό=διατήρηση προσανατολισμού, αρνητικό=αντιστροφή.</p>
+  </div>
+</div>
+<script>
+document.getElementById('explBtn').addEventListener('click',function(){
+  var b=document.getElementById('explBody');
+  var open=b.classList.toggle('open');
+  this.textContent=open?'📐 Θεωρία & Αιτιολόγηση — Ορίζουσα 2×2 ▲':'📐 Θεωρία & Αιτιολόγηση — Ορίζουσα 2×2 ▼';
+});
+</script>
+<div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι — Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
+        <span>Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
     </div>
 
     <script>

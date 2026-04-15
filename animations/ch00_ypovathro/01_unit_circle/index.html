@@ -90,8 +90,25 @@ new p5(p=>{
   p.mouseReleased=()=>{ dragging=false; };
 },document.getElementById('cc'));
 </script>
+
+<div class="expl-section" style="max-width:980px;margin:0 auto 1rem auto;padding:0 1rem">
+  <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Μοναδιαίος Κύκλος & Βασικές Γωνίες ▼</button>
+  <div class="expl-body" id="explBody">
+    <h3>Μοναδιαίος Κύκλος & Βασικές Γωνίες</h3>
+    <p>Ο <strong>μοναδιαίος κύκλος</strong> έχει κέντρο (0,0) και ακτίνα r=1.</p>
+    <div class="formula">Για κάθε γωνία θ: &nbsp; sin(θ) = τεταγμένη (y) &nbsp;·&nbsp; cos(θ) = τετμημένη (x)</div>
+    <p>sin²(θ) + cos²(θ) = 1 (Θεώρημα Πυθαγόρα). Χρησιμοποιήστε τον κύκλο για να απομνημονεύσετε τιμές σε 30°, 45°, 60°, 90°.</p>
+  </div>
+</div>
+<script>
+document.getElementById('explBtn').addEventListener('click',function(){
+  var b=document.getElementById('explBody');
+  var open=b.classList.toggle('open');
+  this.textContent=open?'📐 Θεωρία & Αιτιολόγηση — Μοναδιαίος Κύκλος & Βασικές Γωνίες ▲':'📐 Θεωρία & Αιτιολόγηση — Μοναδιαίος Κύκλος & Βασικές Γωνίες ▼';
+});
+</script>
 <div class="author-stamp">
-  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
-  <span class="stamp-author">Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι — Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
+  <span class="stamp-author">Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
 </div>
 </body></html>

@@ -1,1 +1,197 @@
-<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Κανόνας L'Hôpital</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Georgia,serif;background:#f5f7fa}header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}.container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}canvas{border:2px solid #dde3ea;border-radius:10px;display:block;margin:1.5rem auto}.btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;margin:.2rem}.control-group{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem}.info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem}.author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;border-top:3px solid #c85000;margin-top:2rem}</style></head><body><header><h1>Κανόνας L'Hôpital</h1><p>Κεφάλαιο 11: Απροσδιόριστες μορφές</p></header><div class="container"><div class="info-box"><strong>Εκπαιδευτικός Στόχος:</strong> Αν lim f/g είναι 0/0 ή ∞/∞, τότε lim f/g = lim f'/g'</div><div class="control-group"><button class="btn" id="ex1">sin(x)/x, x→0</button><button class="btn" id="ex2">(eˣ-1)/x, x→0</button><button class="btn" id="ex3">(x²-1)/(x-1), x→1</button></div><canvas id="canvas" width="700" height="450"></canvas><div class="info-box" id="result"></div></div><div class="author-stamp"><span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span><span>Νίκος Ματζάκος, Αναπλ. Καθηγητής · Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span></div><script>const canvas=document.getElementById('canvas');const ctx=canvas.getContext('2d');let ex=0;const examples=[{num:x=>Math.sin(x),den:x=>x,num_prime:x=>Math.cos(x),den_prime:x=>1,pt:0.0001,name:'sin(x)/x'},{num:x=>Math.exp(x)-1,den:x=>x,num_prime:x=>Math.exp(x),den_prime:x=>1,pt:0.0001,name:'(eˣ-1)/x'},{num:x=>x*x-1,den:x=>x-1,num_prime:x=>2*x,den_prime:x=>1,pt:1,name:'(x²-1)/(x-1)'}];function setEx(i){ex=i;updateDisplay();}document.getElementById('ex1').addEventListener('click',()=>setEx(0));document.getElementById('ex2').addEventListener('click',()=>setEx(1));document.getElementById('ex3').addEventListener('click',()=>setEx(2));function updateDisplay(){ctx.clearRect(0,0,canvas.width,canvas.height);const example=examples[ex];const cx=canvas.width/2;const cy=canvas.height/2;const sx=canvas.width*0.7/6;const sy=canvas.height*0.7/3;ctx.strokeStyle='#333';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx,canvas.height*0.15);ctx.lineTo(cx,canvas.height*0.85);ctx.stroke();ctx.beginPath();ctx.moveTo(canvas.width*0.15,cy);ctx.lineTo(canvas.width*0.85,cy);ctx.stroke();ctx.strokeStyle='#c85000';ctx.lineWidth=2.5;ctx.beginPath();for(let x=-3;x<=3;x+=0.05){const px=cx+x*sx;const py=cy-(example.num(x)/example.den(x))*sy;if(x===-3)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();ctx.strokeStyle='#008c46';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.beginPath();for(let x=-3;x<=3;x+=0.05){const px=cx+x*sx;const py=cy-(example.num_prime(x)/example.den_prime(x))*sy;if(x===-3)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();ctx.setLineDash([]);const limit=example.num_prime(example.pt)/example.den_prime(example.pt);document.getElementById('result').innerHTML=`<strong>${example.name}:</strong><br>lim = ${limit.toFixed(3)} (L'Hôpital)`;}updateDisplay();</script></body></html>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κανόνας L'Hôpital</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+    header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+    header h1{font-size:1.3rem}header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+    .container{max-width:980px;margin:0 auto;padding:1.5rem 1rem}
+    .layout{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start}
+    canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff}
+    .panel{flex:1;min-width:270px}
+    .panel h2{color:#004080;font-size:1rem;margin-bottom:.8rem;border-bottom:2px solid #dde3ea;padding-bottom:.3rem}
+    select{width:100%;padding:.4rem;border:1.5px solid #dde3ea;border-radius:6px;font-family:Georgia;margin-bottom:.8rem}
+    .slider-group{margin-bottom:.8rem}.slider-group label{display:block;font-size:.85rem;color:#444;margin-bottom:.3rem}
+    input[type=range]{width:100%;accent-color:#c85000}
+    .result-box{background:#fff;border:2px solid #dde3ea;border-radius:8px;padding:.8rem 1rem;margin-bottom:.6rem;font-size:.9rem;line-height:1.8}
+    .result-box .lbl{font-size:.75rem;color:#888;text-transform:uppercase;margin-bottom:.3rem}
+    .formula-box{background:#fffbf0;border-left:4px solid #c85000;padding:.7rem 1rem;border-radius:0 6px 6px 0;font-size:.95rem;margin-bottom:.8rem;font-style:italic}
+    .indeter{display:inline-block;background:#d32f2f;color:#fff;border-radius:4px;padding:.1rem .4rem;font-size:.85rem}
+    .expl-section{margin-top:1.5rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
+    .expl-toggle{width:100%;background:#004080;color:#fff;border:none;padding:.7rem 1rem;text-align:left;cursor:pointer;font-size:.9rem;font-family:Georgia}
+    .expl-toggle:hover{background:#003060}
+    .expl-body{display:none;padding:1rem;background:#fffbf0;font-size:.9rem;line-height:1.7}
+    .expl-body.open{display:block}
+    .expl-body h3{color:#004080;margin-bottom:.5rem}
+    .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
+    .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+    .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Κανόνας L'Hôpital — Άρση Αοριστιών</h1>
+  <p>Κεφάλαιο 11 · Εφαρμογές Παραγώγου · Μορφές 0/0 και ∞/∞</p>
+</header>
+<div class="container">
+  <div class="layout">
+    <canvas id="cv" width="520" height="400"></canvas>
+    <div class="panel">
+      <h2>Παραδείγματα Αοριστιών</h2>
+      <div class="slider-group">
+        <label>Επέλεξε Όριο:</label>
+        <select id="selEx">
+          <option value="0">lim sin(x)/x, x→0 &nbsp;[0/0]</option>
+          <option value="1">lim (eˣ−1)/x, x→0 &nbsp;[0/0]</option>
+          <option value="2">lim (1−cos x)/x², x→0 &nbsp;[0/0]</option>
+          <option value="3">lim x·ln(x), x→0⁺ &nbsp;[0·∞]</option>
+          <option value="4">lim x/eˣ, x→∞ &nbsp;[∞/∞]</option>
+          <option value="5">lim (ln x)/x, x→∞ &nbsp;[∞/∞]</option>
+        </select>
+      </div>
+      <div class="slider-group">
+        <label>x → a: &nbsp; x = <strong id="xVal">0.50</strong></label>
+        <input type="range" id="slX" min="-3" max="3" step="0.01" value="0.5">
+      </div>
+      <div class="formula-box" id="limitFormula">—</div>
+      <div class="result-box">
+        <div class="lbl">Αριθμητής f(x) / Παρονομαστής g(x)</div>
+        <div id="fgVal">—</div>
+      </div>
+      <div class="result-box">
+        <div class="lbl">f(x)/g(x) &nbsp; vs &nbsp; f′(x)/g′(x)</div>
+        <div id="lhVal">—</div>
+      </div>
+      <div class="result-box" style="border-color:#008c46">
+        <div class="lbl">Πραγματικό Όριο</div>
+        <div id="trueLimit" style="font-weight:bold;color:#008c46">—</div>
+      </div>
+    </div>
+  </div>
+  <div class="expl-section">
+    <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Κανόνας L'Hôpital ▼</button>
+    <div class="expl-body" id="explBody">
+      <h3>Κανόνας L'Hôpital (Λοπιτάλ)</h3>
+      <p>Αν lim f(x) = 0 και lim g(x) = 0 (ή και τα δύο ±∞) τότε:</p>
+      <div class="formula">lim[x→a] f(x)/g(x) = lim[x→a] f′(x)/g′(x) &nbsp; (εφόσον το δεξί όριο υπάρχει)</div>
+      <p>Ο κανόνας εφαρμόζεται επαναλαμβανόμενα μέχρι να αρθεί η αοριστία. Άλλες μορφές (0·∞, ∞−∞, 0⁰, 1^∞, ∞⁰) αναχάγονται σε 0/0 ή ∞/∞.</p>
+      <div class="formula">Προϋπόθεση: f, g παραγωγίσιμες γύρω από a και g′(x) ≠ 0 κοντά στο a</div>
+      <p>Παρατηρήστε στο γράφημα: καθώς x→a, f(x)/g(x) (κόκκινο) και f′(x)/g′(x) (μπλε) πλησιάζουν στο ίδιο όριο.</p>
+    </div>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+const P={l:50,r:20,t:20,b:40};
+const EXAMPLES=[
+  {label:'sin(x)/x → 0',f:x=>Math.sin(x),g:x=>x,fp:x=>Math.cos(x),gp:x=>1,a:0,lim:1,form:'0/0',xr:[-2,2]},
+  {label:'(eˣ−1)/x → 0',f:x=>Math.exp(x)-1,g:x=>x,fp:x=>Math.exp(x),gp:x=>1,a:0,lim:1,form:'0/0',xr:[-2,2]},
+  {label:'(1−cos x)/x² → 0',f:x=>1-Math.cos(x),g:x=>x*x,fp:x=>Math.sin(x),gp:x=>2*x,a:0,lim:0.5,form:'0/0',xr:[-2,2]},
+  {label:'x·ln(x) → 0⁺',f:x=>x>0?Math.log(x):NaN,g:x=>x>0?1/x:NaN,fp:x=>x>0?1/x:NaN,gp:x=>x>0?-1/(x*x):NaN,a:0,lim:0,form:'0·∞',xr:[0.01,1.5]},
+  {label:'x/eˣ → ∞',f:x=>x,g:x=>Math.exp(x),fp:x=>1,gp:x=>Math.exp(x),a:Infinity,lim:0,form:'∞/∞',xr:[0,8]},
+  {label:'(ln x)/x → ∞',f:x=>Math.log(x),g:x=>x,fp:x=>1/x,gp:x=>1,a:Infinity,lim:0,form:'∞/∞',xr:[1,15]}
+];
+function getEx(){return EXAMPLES[parseInt(document.getElementById('selEx').value)];}
+function scX(x,a,b){return P.l+(x-a)/(b-a)*(W-P.l-P.r);}
+function scY(y,a,b){return H-P.b-(y-a)/(b-a)*(H-P.t-P.b);}
+function draw(){
+  const ex=getEx();
+  const xr=ex.xr;
+  const x=parseFloat(document.getElementById('slX').value);
+  // clamp x to range
+  const xc=Math.max(xr[0]+0.01,Math.min(xr[1]-0.01,x));
+  let ymi=1e9,yma=-1e9;
+  for(let i=0;i<=300;i++){
+    const xi=xr[0]+(xr[1]-xr[0])*i/300;
+    try{const r=ex.f(xi)/ex.g(xi);if(isFinite(r)&&Math.abs(r)<50){if(r<ymi)ymi=r;if(r>yma)yma=r;}}catch(e){}
+    try{const r=ex.fp(xi)/ex.gp(xi);if(isFinite(r)&&Math.abs(r)<50){if(r<ymi)ymi=r;if(r>yma)yma=r;}}catch(e){}
+  }
+  const pd=(yma-ymi)*0.2;ymi-=pd;yma+=pd;
+  if(!isFinite(ymi)||!isFinite(yma)||yma-ymi<0.01){ymi=-2;yma=2;}
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='#eef0f5';ctx.lineWidth=1;
+  for(let i=0;i<=8;i++){
+    const px=scX(xr[0]+(xr[1]-xr[0])*i/8,xr[0],xr[1]);
+    ctx.beginPath();ctx.moveTo(px,P.t);ctx.lineTo(px,H-P.b);ctx.stroke();
+    const py=scY(ymi+(yma-ymi)*i/8,ymi,yma);
+    ctx.beginPath();ctx.moveTo(P.l,py);ctx.lineTo(W-P.r,py);ctx.stroke();
+  }
+  ctx.strokeStyle='#888';ctx.lineWidth=1.5;
+  const y0p=scY(0,ymi,yma);if(y0p>P.t&&y0p<H-P.b){ctx.beginPath();ctx.moveTo(P.l,y0p);ctx.lineTo(W-P.r,y0p);ctx.stroke();}
+  // f/g curve (red)
+  ctx.strokeStyle='#c85000';ctx.lineWidth=2.5;ctx.setLineDash([]);
+  ctx.beginPath();let st=false;
+  for(let i=0;i<=600;i++){
+    const xi=xr[0]+(xr[1]-xr[0])*i/600;
+    if(Math.abs(xi-ex.a)<0.05){st=false;continue;}
+    try{const r=ex.f(xi)/ex.g(xi);if(!isFinite(r)||Math.abs(r)>200){st=false;continue;}
+      const px=scX(xi,xr[0],xr[1]),py=scY(r,ymi,yma);
+      if(!st){ctx.moveTo(px,py);st=true;}else ctx.lineTo(px,py);}catch(e){st=false;}
+  }
+  ctx.stroke();
+  // f'/g' curve (blue dashed)
+  ctx.strokeStyle='rgba(0,64,128,0.8)';ctx.lineWidth=2;ctx.setLineDash([6,4]);
+  ctx.beginPath();st=false;
+  for(let i=0;i<=600;i++){
+    const xi=xr[0]+(xr[1]-xr[0])*i/600;
+    if(Math.abs(xi-ex.a)<0.05){st=false;continue;}
+    try{const r=ex.fp(xi)/ex.gp(xi);if(!isFinite(r)||Math.abs(r)>200){st=false;continue;}
+      const px=scX(xi,xr[0],xr[1]),py=scY(r,ymi,yma);
+      if(!st){ctx.moveTo(px,py);st=true;}else ctx.lineTo(px,py);}catch(e){st=false;}
+  }
+  ctx.stroke();ctx.setLineDash([]);
+  // horizontal line at true limit
+  if(isFinite(ex.lim)){
+    const py=scY(ex.lim,ymi,yma);
+    ctx.strokeStyle='rgba(0,140,70,0.5)';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(P.l,py);ctx.lineTo(W-P.r,py);ctx.stroke();ctx.setLineDash([]);
+  }
+  // moving x point
+  const pxc=scX(xc,xr[0],xr[1]);
+  ctx.strokeStyle='rgba(128,0,128,0.5)';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(pxc,P.t);ctx.lineTo(pxc,H-P.b);ctx.stroke();ctx.setLineDash([]);
+  // labels
+  ctx.font='11px Georgia';ctx.textAlign='left';ctx.fillStyle='#c85000';
+  ctx.fillRect(P.l+5,P.t+6,20,3);ctx.fillText('f/g',P.l+30,P.t+11);
+  ctx.fillStyle='rgba(0,64,128,0.9)';ctx.fillRect(P.l+5,P.t+19,20,3);
+  ctx.fillText("f'/g'",P.l+30,P.t+24);
+  ctx.fillStyle='rgba(0,140,70,1)';ctx.fillRect(P.l+5,P.t+32,20,3);
+  ctx.fillText('Όριο='+ex.lim,P.l+30,P.t+37);
+  // axis labels
+  ctx.fillStyle='#555';ctx.textAlign='center';
+  for(let v=Math.ceil(xr[0]);v<=Math.floor(xr[1]);v++) ctx.fillText(v,scX(v,xr[0],xr[1]),H-P.b+13);
+  // panel
+  document.getElementById('xVal').textContent=xc.toFixed(3);
+  document.getElementById('limitFormula').textContent='lim[x→'+( isFinite(ex.a)?ex.a:'∞')+'] '+ex.label+' &nbsp;['+ex.form+']';
+  try{
+    const fv=ex.f(xc),gv=ex.g(xc);
+    document.getElementById('fgVal').innerHTML='f(x)=<b>'+fv.toFixed(5)+'</b> &nbsp; g(x)=<b>'+gv.toFixed(5)+'</b>';
+    const fg=fv/gv, lh=ex.fp(xc)/ex.gp(xc);
+    document.getElementById('lhVal').innerHTML='f/g=<b>'+(isFinite(fg)?fg.toFixed(5):'∞/0')+'</b> &nbsp; f′/g′=<b>'+(isFinite(lh)?lh.toFixed(5):'—')+'</b>';
+  }catch(e){document.getElementById('fgVal').textContent='—';document.getElementById('lhVal').textContent='—';}
+  document.getElementById('trueLimit').textContent=isFinite(ex.lim)?ex.lim:'∞';
+}
+document.getElementById('slX').addEventListener('input',draw);
+document.getElementById('selEx').addEventListener('change',()=>{
+  const ex=getEx();
+  document.getElementById('slX').min=ex.xr[0];
+  document.getElementById('slX').max=ex.xr[1];
+  document.getElementById('slX').value=(ex.xr[0]+ex.xr[1])/2;
+  draw();
+});
+document.getElementById('explBtn').addEventListener('click',()=>{
+  const b=document.getElementById('explBody');const open=b.classList.toggle('open');
+  document.getElementById('explBtn').textContent=open?"📐 Θεωρία & Αιτιολόγηση — Κανόνας L'Hôpital ▲":"📐 Θεωρία & Αιτιολόγηση — Κανόνας L'Hôpital ▼";
+});
+draw();
+</script>
+<div class="author-stamp">
+  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι — Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
+  <span>Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
+</div>
+</body>
+</html>

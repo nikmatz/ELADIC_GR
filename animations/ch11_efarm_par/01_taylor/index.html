@@ -1,1 +1,197 @@
-<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Ανάπτυγμα Taylor</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Georgia,serif;background:#f5f7fa}header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}header h1{font-size:1.3rem}.container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}canvas{border:2px solid #dde3ea;border-radius:10px;display:block;margin:1.5rem auto}.btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer}input[type=range]{width:100%;accent-color:#c85000}.control-group{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem}.info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem}.author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;border-top:3px solid #c85000;margin-top:2rem}.stamp-book{color:#ffd080;font-weight:bold}</style></head><body><header><h1>Ανάπτυγμα Taylor</h1><p>Κεφάλαιο 11: Προσέγγιση συναρτήσεων</p></header><div class="container"><div class="info-box"><strong>Εκπαιδευτικός Στόχος:</strong> Το ανάπτυγμα Taylor προσεγγίζει μια συνάρτηση με πολυώνυμο. Όσο μεγαλύτερος ο βαθμός, τόσο καλύτερη η προσέγγιση κοντά στο κέντρο a.</div><div class="control-group"><label>Βαθμός n: <span id="n-val">1</span></label><input type="range" id="n" min="0" max="8" step="1" value="1"><br><label>Κέντρο a: <span id="a-val">0</span></label><input type="range" id="a" min="-2" max="2" step="0.5" value="0"></div><canvas id="canvas" width="700" height="450"></canvas></div><div class="author-stamp"><span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span><span>Νίκος Ματζάκος, Αναπλ. Καθηγητής · Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span></div><script>const canvas=document.getElementById('canvas');const ctx=canvas.getContext('2d');let n=1,a=0;document.getElementById('n').addEventListener('input',(e)=>{n=parseInt(e.target.value);document.getElementById('n-val').textContent=n;updateDisplay();});document.getElementById('a').addEventListener('input',(e)=>{a=parseFloat(e.target.value);document.getElementById('a-val').textContent=a.toFixed(1);updateDisplay();});function f(x){return Math.exp(x);}function taylor(x,n,a){let result=1;let term=1;for(let k=1;k<=n;k++){term*=(x-a)/k;result+=term;}return result;}function updateDisplay(){ctx.clearRect(0,0,canvas.width,canvas.height);const cx=canvas.width/2;const cy=canvas.height/2;const sx=canvas.width*0.7/5;const sy=canvas.height*0.7/4;ctx.strokeStyle='#333';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx,canvas.height*0.1);ctx.lineTo(cx,canvas.height*0.9);ctx.stroke();ctx.beginPath();ctx.moveTo(canvas.width*0.15,cy);ctx.lineTo(canvas.width*0.85,cy);ctx.stroke();ctx.strokeStyle='#c85000';ctx.lineWidth=2.5;ctx.beginPath();for(let x=-3;x<=3;x+=0.05){const px=cx+x*sx;const py=cy-f(x)*sy;if(x===-3)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();ctx.strokeStyle='#008c46';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.beginPath();for(let x=-2;x<=4;x+=0.05){const px=cx+x*sx;const py=cy-taylor(x,n,a)*sy;if(x===-2)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#333';ctx.font='bold 11px Georgia';ctx.fillText(`f(x)=eˣ`,canvas.width*0.2,canvas.height*0.15);ctx.fillText(`Tₙ(x)`,canvas.width*0.2,canvas.height*0.25);}updateDisplay();</script></body></html>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ανάπτυγμα Taylor</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+    header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+    header h1{font-size:1.3rem}header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+    .container{max-width:980px;margin:0 auto;padding:1.5rem 1rem}
+    .layout{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start}
+    canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff}
+    .panel{flex:1;min-width:260px}
+    .panel h2{color:#004080;font-size:1rem;margin-bottom:.8rem;border-bottom:2px solid #dde3ea;padding-bottom:.3rem}
+    .slider-group{margin-bottom:.8rem}.slider-group label{display:block;font-size:.85rem;color:#444;margin-bottom:.3rem}
+    input[type=range]{width:100%;accent-color:#c85000}
+    select{width:100%;padding:.4rem;border:1.5px solid #dde3ea;border-radius:6px;font-family:Georgia;margin-bottom:.8rem}
+    .result-box{background:#fff;border:2px solid #dde3ea;border-radius:8px;padding:.8rem 1rem;margin-bottom:.6rem;font-size:.88rem;line-height:1.6}
+    .result-box .lbl{font-size:.75rem;color:#888;text-transform:uppercase;margin-bottom:.3rem}
+    .poly-display{font-size:.82rem;background:#fffbf0;border-left:4px solid #c85000;padding:.6rem .8rem;border-radius:0 6px 6px 0;margin-bottom:.6rem;word-break:break-word;line-height:1.7}
+    .expl-section{margin-top:1.5rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
+    .expl-toggle{width:100%;background:#004080;color:#fff;border:none;padding:.7rem 1rem;text-align:left;cursor:pointer;font-size:.9rem;font-family:Georgia}
+    .expl-toggle:hover{background:#003060}
+    .expl-body{display:none;padding:1rem;background:#fffbf0;font-size:.9rem;line-height:1.7}
+    .expl-body.open{display:block}
+    .expl-body h3{color:#004080;margin-bottom:.5rem;font-size:.95rem}
+    .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
+    .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+    .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Ανάπτυγμα Taylor — Πολυωνυμική Προσέγγιση</h1>
+  <p>Κεφάλαιο 11 · Εφαρμογές Παραγώγου · Σύγκλιση πολυωνύμου Taylor προς f(x)</p>
+</header>
+<div class="container">
+  <div class="layout">
+    <canvas id="cv" width="520" height="400"></canvas>
+    <div class="panel">
+      <h2>Παράμετροι</h2>
+      <div class="slider-group">
+        <label>Συνάρτηση f(x):</label>
+        <select id="selF">
+          <option value="sin">f(x) = sin(x)</option>
+          <option value="cos">f(x) = cos(x)</option>
+          <option value="exp">f(x) = eˣ</option>
+          <option value="ln">f(x) = ln(1+x)</option>
+          <option value="atan">f(x) = arctan(x)</option>
+        </select>
+      </div>
+      <div class="slider-group">
+        <label>Σημείο ανάπτυξης a = <strong id="aVal">0.00</strong></label>
+        <input type="range" id="slA" min="-1.5" max="1.5" step="0.1" value="0">
+      </div>
+      <div class="slider-group">
+        <label>Βαθμός n = <strong id="nVal">3</strong></label>
+        <input type="range" id="slN" min="1" max="12" step="1" value="3">
+      </div>
+      <div class="poly-display" id="polyDisplay">—</div>
+      <div class="result-box">
+        <div class="lbl">Σφάλμα |f(1) − Tₙ(1)|</div>
+        <div id="errDisplay">—</div>
+      </div>
+      <div class="result-box" style="border-color:#008c46">
+        <div class="lbl">Ακτίνα Σύγκλισης</div>
+        <div id="convDisplay">—</div>
+      </div>
+    </div>
+  </div>
+  <div class="expl-section">
+    <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Ανάπτυγμα Taylor ▼</button>
+    <div class="expl-body" id="explBody">
+      <h3>Πολυώνυμο Taylor βαθμού n γύρω από x = a</h3>
+      <div class="formula">Tₙ(x) = Σₖ₌₀ⁿ f⁽ᵏ⁾(a)/k! · (x−a)ᵏ = f(a) + f′(a)(x−a) + f″(a)/2!(x−a)² + ⋯</div>
+      <p>Η <strong>πορτοκαλί καμπύλη</strong> είναι η f(x) και η <strong>μπλε</strong> το πολυώνυμο Tₙ(x). Αυξήστε το n για να δείτε πόσο καλά προσεγγίζει η Taylor την f.</p>
+      <div class="formula">Υπόλοιπο Lagrange: Rₙ(x) = f⁽ⁿ⁺¹⁾(ξ)/(n+1)! · (x−a)ⁿ⁺¹</div>
+      <p>Για sin, cos, eˣ η σύγκλιση είναι παντού (R=∞). Για ln(1+x) μόνο για |x−a| &lt; 1.</p>
+    </div>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+const P={l:50,r:20,t:20,b:40};
+function fact(n){let r=1;for(let i=2;i<=n;i++)r*=i;return r;}
+function nthDeriv(f,a,n){
+  if(n===0)return f(a);
+  const h=1e-3;
+  function d(f,x,k){if(k===0)return f(x);return(d(f,x+h,k-1)-d(f,x-h,k-1))/(2*h);}
+  return d(f,a,n);
+}
+function taylorVal(f,a,n,x){
+  let s=0,xma=1;
+  for(let k=0;k<=n;k++){s+=nthDeriv(f,a,k)/fact(k)*xma;xma*=(x-a);}
+  return s;
+}
+const FN={
+  sin:{f:x=>Math.sin(x),conv:'∞',xr:[-4,4]},
+  cos:{f:x=>Math.cos(x),conv:'∞',xr:[-4,4]},
+  exp:{f:x=>Math.exp(x),conv:'∞',xr:[-3,3]},
+  ln:{f:x=>Math.log(1+x),conv:'|x+1|<1',xr:[-0.95,2.5]},
+  atan:{f:x=>Math.atan(x),conv:'|x|≤1',xr:[-3,3]}
+};
+function getFn(){return FN[document.getElementById('selF').value];}
+function scX(x,a,b){return P.l+(x-a)/(b-a)*(W-P.l-P.r);}
+function scY(y,a,b){return H-P.b-(y-a)/(b-a)*(H-P.t-P.b);}
+function draw(){
+  const fn=getFn(),xr=fn.xr;
+  const a=parseFloat(document.getElementById('slA').value);
+  const n=parseInt(document.getElementById('slN').value);
+  let ymi=1e9,yma=-1e9;
+  for(let i=0;i<=300;i++){
+    const x=xr[0]+(xr[1]-xr[0])*i/300;
+    try{const y=fn.f(x);if(isFinite(y)){if(y<ymi)ymi=y;if(y>yma)yma=y;}}catch(e){}
+    try{const y=taylorVal(fn.f,a,n,x);if(isFinite(y)&&Math.abs(y)<200){if(y<ymi)ymi=y;if(y>yma)yma=y;}}catch(e){}
+  }
+  const pd=(yma-ymi)*0.18;ymi-=pd;yma+=pd;
+  if(!isFinite(ymi)||!isFinite(yma)||yma-ymi<0.1){ymi=-3;yma=3;}
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='#eef0f5';ctx.lineWidth=1;
+  for(let i=0;i<=8;i++){
+    const px=scX(xr[0]+(xr[1]-xr[0])*i/8,xr[0],xr[1]);
+    ctx.beginPath();ctx.moveTo(px,P.t);ctx.lineTo(px,H-P.b);ctx.stroke();
+    const py=scY(ymi+(yma-ymi)*i/8,ymi,yma);
+    ctx.beginPath();ctx.moveTo(P.l,py);ctx.lineTo(W-P.r,py);ctx.stroke();
+  }
+  ctx.strokeStyle='#888';ctx.lineWidth=1.5;
+  const y0=scY(0,ymi,yma);if(y0>P.t&&y0<H-P.b){ctx.beginPath();ctx.moveTo(P.l,y0);ctx.lineTo(W-P.r,y0);ctx.stroke();}
+  const x0=scX(0,xr[0],xr[1]);if(x0>P.l&&x0<W-P.r){ctx.beginPath();ctx.moveTo(x0,P.t);ctx.lineTo(x0,H-P.b);ctx.stroke();}
+  ctx.fillStyle='#555';ctx.font='10px Georgia';ctx.textAlign='center';
+  for(let v=Math.ceil(xr[0]);v<=Math.floor(xr[1]);v++)ctx.fillText(v,scX(v,xr[0],xr[1]),H-P.b+13);
+  // Taylor polynomial
+  ctx.strokeStyle='rgba(0,64,128,0.9)';ctx.lineWidth=2.2;ctx.setLineDash([]);
+  ctx.beginPath();let st=false;
+  for(let i=0;i<=600;i++){
+    const x=xr[0]+(xr[1]-xr[0])*i/600;
+    const y=taylorVal(fn.f,a,n,x);
+    if(!isFinite(y)||Math.abs(y)>1000){st=false;continue;}
+    const px=scX(x,xr[0],xr[1]),py=scY(y,ymi,yma);
+    if(!st){ctx.moveTo(px,py);st=true;}else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+  // f(x)
+  ctx.strokeStyle='#c85000';ctx.lineWidth=2.5;st=false;
+  ctx.beginPath();
+  for(let i=0;i<=600;i++){
+    const x=xr[0]+(xr[1]-xr[0])*i/600;
+    try{const y=fn.f(x);if(!isFinite(y)){st=false;continue;}
+      const px=scX(x,xr[0],xr[1]),py=scY(y,ymi,yma);
+      if(!st){ctx.moveTo(px,py);st=true;}else ctx.lineTo(px,py);}catch(e){st=false;}
+  }
+  ctx.stroke();
+  // vertical line at a
+  const pa=scX(a,xr[0],xr[1]);
+  ctx.strokeStyle='rgba(0,64,128,0.4)';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(pa,P.t);ctx.lineTo(pa,H-P.b);ctx.stroke();ctx.setLineDash([]);
+  try{const ya=fn.f(a);if(isFinite(ya)){
+    ctx.fillStyle='#004080';ctx.beginPath();ctx.arc(pa,scY(ya,ymi,yma),5,0,2*Math.PI);ctx.fill();
+  }}catch(e){}
+  // legend
+  ctx.font='11px Georgia';ctx.textAlign='left';
+  ctx.fillStyle='rgba(200,80,0,1)';ctx.fillRect(P.l+5,P.t+6,20,3);ctx.fillText('f(x)',P.l+30,P.t+11);
+  ctx.fillStyle='rgba(0,64,128,0.9)';ctx.fillRect(P.l+5,P.t+19,20,3);ctx.fillText('T'+n+'(x)',P.l+30,P.t+24);
+  // panel
+  document.getElementById('aVal').textContent=a.toFixed(2);
+  document.getElementById('nVal').textContent=n;
+  // poly label (simplified)
+  let terms=[];
+  for(let k=0;k<=Math.min(n,5);k++){
+    const c=nthDeriv(fn.f,a,k)/fact(k);
+    if(Math.abs(c)<1e-8)continue;
+    const cs=(c>=0&&terms.length?'+':'')+c.toFixed(3);
+    if(k===0)terms.push(cs);
+    else if(k===1)terms.push(cs+(a===0?'x':`(x${a>=0?'−'+a.toFixed(1):'+'+(-a).toFixed(1)})`));
+    else terms.push(cs+(a===0?`x^${k}`:`(x${a>=0?'−'+a.toFixed(1):'+'+(-a).toFixed(1)})^${k}`));
+  }
+  if(n>5)terms.push('…');
+  document.getElementById('polyDisplay').textContent='Tₙ = '+(terms.join(' ')||'0');
+  try{const xtest=1;const err=Math.abs(fn.f(xtest)-taylorVal(fn.f,a,n,xtest));
+    document.getElementById('errDisplay').innerHTML='<b>'+err.toFixed(7)+'</b>';}catch(e){document.getElementById('errDisplay').textContent='—';}
+  document.getElementById('convDisplay').textContent='R = '+fn.conv;
+}
+['slA','slN','selF'].forEach(id=>document.getElementById(id).addEventListener('input',draw));
+document.getElementById('explBtn').addEventListener('click',()=>{
+  const b=document.getElementById('explBody');const open=b.classList.toggle('open');
+  document.getElementById('explBtn').textContent=open?'📐 Θεωρία & Αιτιολόγηση — Ανάπτυγμα Taylor ▲':'📐 Θεωρία & Αιτιολόγηση — Ανάπτυγμα Taylor ▼';
+});
+draw();
+</script>
+<div class="author-stamp">
+  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι — Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
+  <span>Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
+</div>
+</body>
+</html>

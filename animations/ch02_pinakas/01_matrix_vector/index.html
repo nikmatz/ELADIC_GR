@@ -98,8 +98,25 @@ new p5(p=>{
   p.mouseReleased=()=>{ dragging=false; };
 },document.getElementById('cc'));
 </script>
+
+<div class="expl-section" style="max-width:980px;margin:0 auto 1rem auto;padding:0 1rem">
+  <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Πολλαπλασιασμός Μητρώου × Διάνυσμα ▼</button>
+  <div class="expl-body" id="explBody">
+    <h3>Πολλαπλασιασμός Μητρώου × Διάνυσμα</h3>
+    <p>Το γινόμενο Ax (Α: m×n, x: n×1) δίνει νέο διάνυσμα y = Ax (m×1).</p>
+    <div class="formula">yᵢ = Σⱼ Aᵢⱼ·xⱼ &nbsp;·&nbsp; Γεωμετρικά: γραμμικός μετασχηματισμός του x</div>
+    <p>Κάθε στήλη του Α δείχνει πού πηγαίνει το αντίστοιχο βάσης διάνυσμα. Μετακινήστε x για να δείτε πώς αλλάζει το Ax.</p>
+  </div>
+</div>
+<script>
+document.getElementById('explBtn').addEventListener('click',function(){
+  var b=document.getElementById('explBody');
+  var open=b.classList.toggle('open');
+  this.textContent=open?'📐 Θεωρία & Αιτιολόγηση — Πολλαπλασιασμός Μητρώου × Διάνυσμα ▲':'📐 Θεωρία & Αιτιολόγηση — Πολλαπλασιασμός Μητρώου × Διάνυσμα ▼';
+});
+</script>
 <div class="author-stamp">
-  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
-  <span class="stamp-author">Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι — Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
+  <span class="stamp-author">Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
 </div>
 </body></html>

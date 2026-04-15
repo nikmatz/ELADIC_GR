@@ -1,1 +1,297 @@
-<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Τοπικά Ακρότατα</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Georgia,serif;background:#f5f7fa}header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}.container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}canvas{border:2px solid #dde3ea;border-radius:10px;display:block;margin:1.5rem auto}.info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem;margin-bottom:1rem}.author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;border-top:3px solid #c85000;margin-top:2rem}</style></head><body><header><h1>Τοπικά Ακρότατα</h1><p>Κεφάλαιο 10</p></header><div class="container"><div class="info-box"><strong>Εκπαιδευτικός Στόχος:</strong> Βρίσκουμε ακρότατα από f'=0, μετά χρησιμοποιούμε δεύτερη παράγωγο (f''>0 min, f''<0 max) ή πρώτη παράγωγο (αλλαγή προσήμου).</div><canvas id="canvas" width="700" height="500"></canvas></div><div class="author-stamp"><span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span><span>Νίκος Ματζάκος, Αναπλ. Καθηγητής · Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span></div><script>const canvas=document.getElementById('canvas');const ctx=canvas.getContext('2d');function f(x){return x*x*x-3*x+1;}function f_prime(x){return 3*x*x-3;}function f_double_prime(x){return 6*x;}function updateDisplay(){ctx.clearRect(0,0,canvas.width,canvas.height);const cx=canvas.width/2;const cy=canvas.height/2;const sx=canvas.width*0.7/5;const sy=canvas.height*0.7/8;ctx.strokeStyle='#333';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx,canvas.height*0.1);ctx.lineTo(cx,canvas.height*0.9);ctx.stroke();ctx.beginPath();ctx.moveTo(canvas.width*0.15,cy);ctx.lineTo(canvas.width*0.85,cy);ctx.stroke();ctx.strokeStyle='#c85000';ctx.lineWidth=2.5;ctx.beginPath();for(let x=-2.5;x<=2.5;x+=0.05){const px=cx+x*sx;const py=cy-f(x)*sy;if(x===-2.5)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();const critPoints=[-1,1];for(let cp of critPoints){const px=cx+cp*sx;const py=cy-f(cp)*sy;const fpp=f_double_prime(cp);if(fpp>0){ctx.fillStyle='#008c46';ctx.beginPath();ctx.arc(px,py,6,0,2*Math.PI);ctx.fill();}else{ctx.fillStyle='#d32f2f';ctx.beginPath();ctx.arc(px,py,6,0,2*Math.PI);ctx.fill();}}}updateDisplay();</script></body></html>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Τοπικά Ακρότατα</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+    header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+    header h1{font-size:1.3rem}header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+    .container{max-width:980px;margin:0 auto;padding:1.5rem 1rem}
+    .layout{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start}
+    canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff}
+    .panel{flex:1;min-width:270px}
+    .panel h2{color:#004080;font-size:1rem;margin-bottom:.8rem;border-bottom:2px solid #dde3ea;padding-bottom:.3rem}
+    .slider-group{margin-bottom:.8rem}
+    .slider-group label{display:block;font-size:.85rem;color:#444;margin-bottom:.3rem}
+    input[type=range]{width:100%;accent-color:#c85000}
+    select{width:100%;padding:.4rem;border:1.5px solid #dde3ea;border-radius:6px;font-family:Georgia;margin-bottom:.8rem}
+    .result-box{background:#fff;border:2px solid #dde3ea;border-radius:8px;padding:.8rem 1rem;margin-bottom:.6rem;font-size:.9rem}
+    .result-box .lbl{font-size:.75rem;color:#888;text-transform:uppercase;margin-bottom:.3rem}
+    .crit-list{list-style:none;font-size:.9rem;margin-top:.4rem}
+    .crit-list li{padding:.25rem 0;border-bottom:1px solid #eee}
+    .crit-list li:last-child{border-bottom:none}
+    .btn{background:#004080;color:#fff;border:none;padding:.45rem 1rem;border-radius:6px;cursor:pointer;font-size:.85rem;margin:.2rem}
+    .btn:hover{background:#003060}
+    .btn.orange{background:#c85000}.btn.orange:hover{background:#a54000}
+    /* Explanation toggle */
+    .expl-section{margin-top:1.5rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
+    .expl-toggle{width:100%;background:#004080;color:#fff;border:none;padding:.7rem 1rem;text-align:left;cursor:pointer;font-size:.9rem;font-family:Georgia}
+    .expl-toggle:hover{background:#003060}
+    .expl-body{display:none;padding:1rem;background:#fffbf0;font-size:.9rem;line-height:1.7}
+    .expl-body.open{display:block}
+    .expl-body h3{color:#004080;margin-bottom:.5rem;font-size:.95rem}
+    .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
+    .legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.82rem;margin-top:.5rem}
+    .leg-item{display:flex;align-items:center;gap:.4rem}
+    .leg-dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+    .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+    .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Τοπικά & Ολικά Ακρότατα</h1>
+  <p>Κεφάλαιο 10 · Εφαρμογές Παραγώγου · Κριτήριο 1ης και 2ης Παραγώγου</p>
+</header>
+<div class="container">
+  <div class="layout">
+    <canvas id="cv" width="520" height="400"></canvas>
+    <div class="panel">
+      <h2>Παράμετροι</h2>
+      <div class="slider-group">
+        <label>Συνάρτηση:</label>
+        <select id="selF">
+          <option value="cubic">f(x) = x³ − 3x + 1</option>
+          <option value="quartic">f(x) = x⁴ − 4x²</option>
+          <option value="sine">f(x) = sin(x) + 0.5·sin(2x)</option>
+          <option value="cubic2">f(x) = 2x³ − 9x² + 12x − 3</option>
+        </select>
+      </div>
+      <div class="slider-group">
+        <label>Θέση x = <strong id="xVal">0.00</strong></label>
+        <input type="range" id="slX" min="-3" max="3" step="0.05" value="0">
+      </div>
+      <div class="result-box">
+        <div class="lbl">Τιμές στο x</div>
+        <div id="fInfo" style="font-size:.9rem;line-height:1.6">—</div>
+      </div>
+      <div class="result-box">
+        <div class="lbl">Κρίσιμα Σημεία (f ′= 0)</div>
+        <ul class="crit-list" id="critList"></ul>
+      </div>
+      <div class="legend">
+        <div class="leg-item"><span class="leg-dot" style="background:#008c46"></span>Τοπ. Ελάχιστο (f ″> 0)</div>
+        <div class="leg-item"><span class="leg-dot" style="background:#d32f2f"></span>Τοπ. Μέγιστο (f ″< 0)</div>
+        <div class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Σημείο Καμπής (f ″= 0)</div>
+      </div>
+      <div style="margin-top:.8rem">
+        <button class="btn orange" id="btnDerivs">Εμφάνιση f ′(x)</button>
+        <button class="btn" id="btnReset">Επαναφορά</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="expl-section">
+    <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Κριτήρια Ακροτάτων ▼</button>
+    <div class="expl-body" id="explBody">
+      <h3>Εύρεση Τοπικών Ακροτάτων</h3>
+      <p>Ένα σημείο x₀ είναι <strong>κρίσιμο</strong> αν f ′(x₀) = 0 ή δεν υπάρχει.</p>
+
+      <div class="formula">Κριτήριο 1ης Παραγώγου: αν f ′ αλλάζει πρόσημο στο x₀, τότε x₀ ακρότατο.<br>
+      f ′: + → − ⟹ τοπικό μέγιστο · f ′: − → + ⟹ τοπικό ελάχιστο</div>
+
+      <div class="formula">Κριτήριο 2ης Παραγώγου: αν f ′(x₀) = 0, τότε:<br>
+      f ″(x₀) &gt; 0 ⟹ τοπικό ελάχιστο &nbsp;·&nbsp; f ″(x₀) &lt; 0 ⟹ τοπικό μέγιστο<br>
+      f ″(x₀) = 0 ⟹ αδιάφορο (ελέγξτε με 1η παράγωγο ή ανωτέρα τάξη)</div>
+
+      <p>Μετακινήστε το slider για να δείτε πώς αλλάζουν f(x), f ′(x), f ″(x) σε κάθε σημείο. Στα κρίσιμα σημεία η εφαπτομένη είναι οριζόντια (f ′= 0).</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const W = cv.width, H = cv.height;
+const P = {l:50, r:20, t:20, b:40};
+let showDerivs = false;
+
+const FUNCS = {
+  cubic:  { f: x => x*x*x - 3*x + 1,   fp: x => 3*x*x - 3,      fpp: x => 6*x,         range:[-2.5,2.5] },
+  quartic:{ f: x => x*x*x*x - 4*x*x,   fp: x => 4*x*x*x - 8*x,  fpp: x => 12*x*x - 8,  range:[-2.5,2.5] },
+  sine:   { f: x => Math.sin(x)+0.5*Math.sin(2*x), fp: x=>Math.cos(x)+Math.cos(2*x), fpp:x=>-Math.sin(x)-2*Math.sin(2*x), range:[-3,3] },
+  cubic2: { f: x => 2*x*x*x-9*x*x+12*x-3, fp: x=>6*x*x-18*x+12, fpp:x=>12*x-18,        range:[-0.5,3.5] }
+};
+
+function getFn() { return FUNCS[document.getElementById('selF').value]; }
+
+function scX(x, xmin, xmax){ return P.l + (x-xmin)/(xmax-xmin)*(W-P.l-P.r); }
+function scY(y, ymin, ymax){ return H-P.b - (y-ymin)/(ymax-ymin)*(H-P.t-P.b); }
+
+function findCritical(fn, xmin, xmax){
+  const pts = [];
+  const dx = 0.01;
+  for(let x=xmin+dx; x<xmax-dx; x+=dx){
+    if(Math.sign(fn.fp(x-dx)) !== Math.sign(fn.fp(x+dx))){
+      // refine with bisection
+      let a=x-dx, b=x+dx;
+      for(let i=0;i<20;i++){
+        const m=(a+b)/2;
+        if(fn.fp(a)*fn.fp(m)<=0) b=m; else a=m;
+      }
+      const xc=(a+b)/2;
+      if(pts.length===0 || Math.abs(xc-pts[pts.length-1])>0.1) pts.push(xc);
+    }
+  }
+  return pts;
+}
+
+function draw(){
+  const fn = getFn();
+  const [xmin,xmax] = fn.range;
+  const x0 = parseFloat(document.getElementById('slX').value);
+
+  // compute y range
+  let ymin=Infinity, ymax=-Infinity;
+  for(let x=xmin;x<=xmax;x+=0.02){
+    const y=fn.f(x); if(y<ymin)ymin=y; if(y>ymax)ymax=y;
+    if(showDerivs){const yp=fn.fp(x); if(yp<ymin)ymin=yp; if(yp>ymax)ymax=yp;}
+  }
+  const pad=(ymax-ymin)*0.15;
+  ymin-=pad; ymax+=pad;
+
+  ctx.clearRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle='#eef0f5'; ctx.lineWidth=1;
+  const xstep = (xmax-xmin)/6, ystep=(ymax-ymin)/6;
+  for(let x=Math.ceil(xmin/xstep)*xstep; x<=xmax; x+=xstep){
+    const px=scX(x,xmin,xmax);
+    ctx.beginPath();ctx.moveTo(px,P.t);ctx.lineTo(px,H-P.b);ctx.stroke();
+  }
+  for(let y=Math.ceil(ymin/ystep)*ystep; y<=ymax; y+=ystep){
+    const py=scY(y,ymin,ymax);
+    ctx.beginPath();ctx.moveTo(P.l,py);ctx.lineTo(W-P.r,py);ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle='#888'; ctx.lineWidth=1.5;
+  const y0px=scY(0,ymin,ymax);
+  const x0px=scX(0,xmin,xmax);
+  if(y0px>P.t && y0px<H-P.b){
+    ctx.beginPath();ctx.moveTo(P.l,y0px);ctx.lineTo(W-P.r,y0px);ctx.stroke();
+  }
+  if(x0px>P.l && x0px<W-P.r){
+    ctx.beginPath();ctx.moveTo(x0px,P.t);ctx.lineTo(x0px,H-P.b);ctx.stroke();
+  }
+
+  // Axis labels
+  ctx.fillStyle='#555';ctx.font='11px Georgia';ctx.textAlign='center';
+  for(let x=Math.ceil(xmin);x<=Math.floor(xmax);x++){
+    const px=scX(x,xmin,xmax);
+    const py=Math.min(H-P.b+14, Math.max(H-P.b+14,y0px>P.t&&y0px<H-P.b?y0px+14:H-P.b+14));
+    ctx.fillText(x,px,H-P.b+14);
+  }
+
+  // f'(x) if toggled
+  if(showDerivs){
+    ctx.strokeStyle='rgba(0,140,70,0.6)';ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+    ctx.beginPath();
+    for(let i=0;i<=400;i++){
+      const x=xmin+(xmax-xmin)*i/400;
+      const px=scX(x,xmin,xmax), py=scY(fn.fp(x),ymin,ymax);
+      i?ctx.lineTo(px,py):ctx.moveTo(px,py);
+    }
+    ctx.stroke();ctx.setLineDash([]);
+  }
+
+  // Shaded region showing sign of f'
+  const crit = findCritical(fn, xmin, xmax);
+  const breakPts = [xmin, ...crit, xmax];
+  for(let i=0;i<breakPts.length-1;i++){
+    const xm=(breakPts[i]+breakPts[i+1])/2;
+    const sign=fn.fp(xm);
+    ctx.fillStyle=sign>0?'rgba(0,140,70,0.07)':'rgba(200,80,0,0.07)';
+    ctx.fillRect(scX(breakPts[i],xmin,xmax),P.t,scX(breakPts[i+1],xmin,xmax)-scX(breakPts[i],xmin,xmax),H-P.t-P.b);
+  }
+
+  // Main curve f(x)
+  ctx.strokeStyle='#c85000';ctx.lineWidth=2.5;ctx.setLineDash([]);
+  ctx.beginPath();
+  for(let i=0;i<=400;i++){
+    const x=xmin+(xmax-xmin)*i/400;
+    const px=scX(x,xmin,xmax), py=scY(fn.f(x),ymin,ymax);
+    i?ctx.lineTo(px,py):ctx.moveTo(px,py);
+  }
+  ctx.stroke();
+
+  // Critical points
+  const critList = document.getElementById('critList');
+  critList.innerHTML = '';
+  for(const xc of crit){
+    const yc=fn.f(xc), fpp=fn.fpp(xc);
+    const type = Math.abs(fpp)<0.01?'Σ.Καμπής':fpp>0?'Τοπ.Ελάχιστο':'Τοπ.Μέγιστο';
+    const col = Math.abs(fpp)<0.01?'#f59e0b':fpp>0?'#008c46':'#d32f2f';
+    const px=scX(xc,xmin,xmax), py=scY(yc,ymin,ymax);
+    ctx.fillStyle=col;
+    ctx.beginPath();ctx.arc(px,py,7,0,2*Math.PI);ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(px,py,7,0,2*Math.PI);ctx.stroke();
+    const li=document.createElement('li');
+    li.innerHTML=`<span style="color:${col};font-weight:bold">${type}</span>: x=${xc.toFixed(3)}, f=${yc.toFixed(3)}<br><small>f ″=${fpp.toFixed(3)}</small>`;
+    critList.appendChild(li);
+  }
+
+  // Moving point & tangent
+  const yx = fn.f(x0), ypx=fn.fp(x0), yppx=fn.fpp(x0);
+  const px0=scX(x0,xmin,xmax), py0=scY(yx,ymin,ymax);
+  // tangent line
+  const tlen=0.8;
+  ctx.strokeStyle='rgba(0,64,128,0.7)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+  ctx.beginPath();
+  ctx.moveTo(scX(x0-tlen,xmin,xmax), scY(yx+ypx*(-tlen),ymin,ymax));
+  ctx.lineTo(scX(x0+tlen,xmin,xmax), scY(yx+ypx*tlen,ymin,ymax));
+  ctx.stroke();ctx.setLineDash([]);
+  // point
+  ctx.fillStyle='#004080';
+  ctx.beginPath();ctx.arc(px0,py0,6,0,2*Math.PI);ctx.fill();
+
+  // Info panel
+  document.getElementById('fInfo').innerHTML =
+    `f(${x0.toFixed(2)}) = <b>${yx.toFixed(4)}</b><br>` +
+    `f ′(${x0.toFixed(2)}) = <b>${ypx.toFixed(4)}</b><br>` +
+    `f ″(${x0.toFixed(2)}) = <b>${yppx.toFixed(4)}</b>`;
+  document.getElementById('xVal').textContent = x0.toFixed(2);
+}
+
+document.getElementById('slX').addEventListener('input', draw);
+document.getElementById('selF').addEventListener('change', ()=>{
+  // adapt slider range
+  const r = getFn().range;
+  document.getElementById('slX').min = r[0];
+  document.getElementById('slX').max = r[1];
+  document.getElementById('slX').value = (r[0]+r[1])/2;
+  draw();
+});
+document.getElementById('btnDerivs').addEventListener('click',()=>{
+  showDerivs=!showDerivs;
+  document.getElementById('btnDerivs').textContent = showDerivs ? 'Απόκρυψη f ′(x)' : 'Εμφάνιση f ′(x)';
+  draw();
+});
+document.getElementById('btnReset').addEventListener('click',()=>{
+  document.getElementById('selF').value='cubic';
+  document.getElementById('slX').min=-3;document.getElementById('slX').max=3;
+  document.getElementById('slX').value=0;
+  showDerivs=false;
+  document.getElementById('btnDerivs').textContent='Εμφάνιση f ′(x)';
+  draw();
+});
+document.getElementById('explBtn').addEventListener('click',()=>{
+  const b=document.getElementById('explBody');
+  const open=b.classList.toggle('open');
+  document.getElementById('explBtn').textContent = open
+    ? '📐 Θεωρία & Αιτιολόγηση — Κριτήρια Ακροτάτων ▲'
+    : '📐 Θεωρία & Αιτιολόγηση — Κριτήρια Ακροτάτων ▼';
+});
+draw();
+</script>
+
+<div class="author-stamp">
+  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι — Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
+  <span>Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
+</div>
+</body>
+</html>

@@ -15,7 +15,15 @@ input[type=range]{width:100%;accent-color:#c85000}
 .result-box{background:#fff;border:2px solid #004080;border-radius:8px;padding:.8rem;margin-bottom:.6rem;text-align:center}
 .result-box .val{font-size:1.3rem;font-weight:bold;color:#004080}.result-box .lbl{font-size:.75rem;color:#888;text-transform:uppercase}
 .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
-.stamp-book{font-style:italic;color:#ffd080;font-weight:bold}</style></head>
+.stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+    .expl-section{margin-top:1.5rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
+    .expl-toggle{width:100%;background:#004080;color:#fff;border:none;padding:.7rem 1rem;text-align:left;cursor:pointer;font-size:.9rem;font-family:Georgia,serif}
+    .expl-toggle:hover{background:#003060}
+    .expl-body{display:none;padding:1rem;background:#fffbf0;font-size:.9rem;line-height:1.7}
+    .expl-body.open{display:block}
+    .expl-body h3{color:#004080;margin-bottom:.5rem;font-size:.95rem}
+    .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
+  </style></head>
 <body>
 <header><h1>Γενικευμένα Ολοκληρώματα</h1><p>Κεφάλαιο 17 · Σύγκλιση και Απόκλιση — ∫₁^∞ 1/xᵖ dx</p></header>
 <div class="container"><div class="layout">
@@ -95,5 +103,22 @@ function draw(){
 ['slP','slB'].forEach(id=>document.getElementById(id).addEventListener('input',draw));
 draw();
 </script>
-<div class="author-stamp"><span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span><span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span></div>
+
+<div class="expl-section" style="max-width:980px;margin:0 auto 1rem auto;padding:0 1rem">
+  <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Γενικευμένα Ολοκληρώματα ▼</button>
+  <div class="expl-body" id="explBody">
+    <h3>Γενικευμένα Ολοκληρώματα</h3>
+    <p>Γενικευμένο: άπειρο όριο ∫ₐ^∞ f dx ή αδύνατο σημείο ∫ₐᵇ f dx με f→∞.</p>
+    <div class="formula">∫ₐ^∞f dx = lim[t→∞] ∫ₐᵗf dx &nbsp;·&nbsp; Συγκλίνει αν το όριο είναι πεπερασμένο, διαφορ. αν ±∞</div>
+    <p>Κρίσιμο: ∫₁^∞ x⁻ᵖdx συγκλίνει ⟺ p>1. Κριτήριο σύγκρισης: αν |f|≤g και ∫g συγκλίνει, τότε ∫f συγκλίνει.</p>
+  </div>
+</div>
+<script>
+document.getElementById('explBtn').addEventListener('click',function(){
+  var b=document.getElementById('explBody');
+  var open=b.classList.toggle('open');
+  this.textContent=open?'📐 Θεωρία & Αιτιολόγηση — Γενικευμένα Ολοκληρώματα ▲':'📐 Θεωρία & Αιτιολόγηση — Γενικευμένα Ολοκληρώματα ▼';
+});
+</script>
+<div class="author-stamp"><span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι — Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span><span>Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span></div>
 </body></html>
