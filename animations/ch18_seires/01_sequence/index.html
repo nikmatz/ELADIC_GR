@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Σύγκλιση Ακολουθίας</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 700px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 0 0 20px 0;
+            font-size: 24px;
+        }
+        .controls {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+        select, input[type="range"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="range"] {
+            flex: 1;
+        }
+        .slider-value {
+            font-weight: bold;
+            color: #2196F3;
+            min-width: 50px;
+            text-align: right;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #fafafa;
+            display: block;
+            margin: 20px 0;
+        }
+        .result-box {
+            background-color: #e8f5e9;
+            border: 2px solid #4CAF50;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        .result-box.diverging {
+            background-color: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+        .terms-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            background-color: #f5f5f5;
+        }
+        .terms-table th {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .terms-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .terms-table tr:hover {
+            background-color: #e3f2fd;
+        }
+        .author-stamp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            gap: 4px;
+        }
+        .stamp-book {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Σύγκλιση Ακολουθίας</h1>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="seqSelect">Ακολουθία aₙ:</label>
+                <select id="seqSelect">
+                    <option value="inv">aₙ = 1/n (σύγκλιση σε 0)</option>
+                    <option value="alt">aₙ = (−1)ⁿ/n (σύγκλιση σε 0, ταλάντωση)</option>
+                    <option value="euler">aₙ = (1+1/n)ⁿ (σύγκλιση σε e)</option>
+                    <option value="power">aₙ = rⁿ (εξαρτάται από r)</option>
+                </select>
+            </div>
+
+            <div id="rSliderDiv" class="control-group" style="display:none;">
+                <label for="rSlider">Παράμετρος r:</label>
+                <div class="slider-container">
+                    <input type="range" id="rSlider" min="-0.9" max="0.99" step="0.05" value="0.5">
+                    <span class="slider-value" id="rValue">0.50</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="nSlider">Μέγιστο n (πλήθος όρων):</label>
+                <div class="slider-container">
+                    <input type="range" id="nSlider" min="5" max="50" step="1" value="20">
+                    <span class="slider-value" id="nValue">20</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-box" id="resultBox">Σύγκλιση σε L = 0</div>
+
+        <canvas id="canvas" width="480" height="360"></canvas>
+
+        <table class="terms-table">
+            <thead>
+                <tr>
+                    <th>n</th>
+                    <th>aₙ</th>
+                    <th>n</th>
+                    <th>aₙ</th>
+                    <th>n</th>
+                    <th>aₙ</th>
+                </tr>
+            </thead>
+            <tbody id="termsBody">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const seqSelect = document.getElementById('seqSelect');
+        const nSlider = document.getElementById('nSlider');
+        const nValue = document.getElementById('nValue');
+        const rSlider = document.getElementById('rSlider');
+        const rValue = document.getElementById('rValue');
+        const rSliderDiv = document.getElementById('rSliderDiv');
+        const resultBox = document.getElementById('resultBox');
+        const termsBody = document.getElementById('termsBody');
+
+        const width = canvas.width;
+        const height = canvas.height;
+        const padding = 40;
+        const graphWidth = width - 2 * padding;
+        const graphHeight = height - 2 * padding;
+
+        const sequences = {
+            inv: { func: n => 1/n, limit: 0, name: 'aₙ = 1/n' },
+            alt: { func: n => (Math.pow(-1, n))/n, limit: 0, name: 'aₙ = (−1)ⁿ/n' },
+            euler: { func: n => Math.pow(1 + 1/n, n), limit: Math.E, name: 'aₙ = (1+1/n)ⁿ' },
+            power: { func: n => 0, limit: null, name: 'aₙ = rⁿ', dynamic: true }
+        };
+
+        function getSequence(type, n, r = 0) {
+            const seq = sequences[type];
+            if (type === 'power') {
+                return Math.pow(r, n);
+            }
+            return seq.func(n);
+        }
+
+        function drawAxis() {
+            ctx.fillStyle = '#fafafa';
+            ctx.fillRect(padding, padding, graphWidth, graphHeight);
+
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Grid
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= graphWidth; i += graphWidth / 10) {
+                ctx.beginPath();
+                ctx.moveTo(padding + i, padding);
+                ctx.lineTo(padding + i, height - padding);
+                ctx.stroke();
+            }
+
+            // X-axis labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i <= 10; i += 2) {
+                const x = padding + (i / 10) * graphWidth;
+                ctx.fillText((i * 5).toString(), x, height - padding + 15);
+            }
+
+            // Y-axis labels (will be dynamic)
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 10; i += 2) {
+                const y = height - padding - (i / 10) * graphHeight;
+                const val = (2 - (i / 5)).toFixed(1);
+                ctx.fillText(val, padding - 10, y + 4);
+            }
+
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            ctx.fillText('n', width - padding + 10, height - padding + 20);
+            ctx.textAlign = 'right';
+            ctx.fillText('aₙ', padding - 15, padding - 5);
+        }
+
+        function drawPoints(type, maxN, r) {
+            const points = [];
+            let minY = Infinity, maxY = -Infinity;
+
+            for (let n = 1; n <= maxN; n++) {
+                const an = getSequence(type, n, r);
+                points.push({ n, an });
+                minY = Math.min(minY, an);
+                maxY = Math.max(maxY, an);
+            }
+
+            // Add some padding
+            minY -= 0.2;
+            maxY += 0.2;
+
+            // Draw points
+            ctx.fillStyle = '#2196F3';
+            points.forEach(({ n, an }) => {
+                const px = padding + (n / (maxN + 2)) * graphWidth;
+                const py = height - padding - ((an - minY) / (maxY - minY)) * graphHeight;
+                
+                if (py >= padding && py <= height - padding) {
+                    ctx.beginPath();
+                    ctx.arc(px, py, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            });
+
+            // Draw limit line if it exists
+            const seq = sequences[type];
+            if (seq.limit !== null) {
+                ctx.strokeStyle = '#f44336';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                const limitPy = height - padding - ((seq.limit - minY) / (maxY - minY)) * graphHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding, limitPy);
+                ctx.lineTo(width - padding, limitPy);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Draw ε-band
+                const epsilon = 0.1;
+                ctx.fillStyle = 'rgba(244, 67, 54, 0.1)';
+                const band = (2 * epsilon / (maxY - minY)) * graphHeight;
+                ctx.fillRect(padding, limitPy - band, graphWidth, 2 * band);
+            }
+
+            return points;
+        }
+
+        function generateTermsTable(type, maxN, r) {
+            termsBody.innerHTML = '';
+            for (let i = 0; i < Math.min(maxN, 15); i += 3) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < 3; j++) {
+                    const n = i + j + 1;
+                    if (n <= maxN) {
+                        const an = getSequence(type, n, r);
+                        const row2 = document.createElement('tr');
+                        const tdN = document.createElement('td');
+                        const tdAn = document.createElement('td');
+                        tdN.textContent = n;
+                        tdAn.textContent = an.toFixed(4);
+                        row.appendChild(tdN);
+                        row.appendChild(tdAn);
+                    }
+                }
+                if (row.children.length > 0) {
+                    termsBody.appendChild(row);
+                }
+            }
+        }
+
+        function generateTermsTable2(type, maxN, r) {
+            termsBody.innerHTML = '';
+            let rowData = [];
+            
+            for (let n = 1; n <= maxN && n <= 10; n++) {
+                const an = getSequence(type, n, r);
+                rowData.push({ n, an: an.toFixed(4) });
+            }
+
+            for (let i = 0; i < rowData.length; i += 3) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < 3 && i + j < rowData.length; j++) {
+                    const tdN = document.createElement('td');
+                    const tdAn = document.createElement('td');
+                    tdN.textContent = rowData[i + j].n;
+                    tdAn.textContent = rowData[i + j].an;
+                    row.appendChild(tdN);
+                    row.appendChild(tdAn);
+                }
+                termsBody.appendChild(row);
+            }
+        }
+
+        function draw() {
+            const type = seqSelect.value;
+            const maxN = parseInt(nSlider.value);
+            const r = parseFloat(rSlider.value);
+
+            nValue.textContent = maxN.toString();
+            rValue.textContent = r.toFixed(2);
+
+            // Show/hide r slider
+            if (type === 'power') {
+                rSliderDiv.style.display = 'flex';
+            } else {
+                rSliderDiv.style.display = 'none';
+            }
+
+            ctx.clearRect(0, 0, width, height);
+            drawAxis();
+            const points = drawPoints(type, maxN, r);
+            generateTermsTable2(type, maxN, r);
+
+            // Update result box
+            const seq = sequences[type];
+            if (type === 'power') {
+                if (Math.abs(r) < 1) {
+                    resultBox.textContent = `Σύγκλιση σε L = 0 (|r| = ${Math.abs(r).toFixed(2)} < 1)`;
+                    resultBox.className = 'result-box';
+                } else if (Math.abs(r) === 1) {
+                    resultBox.textContent = `Αποκλίνουσα (|r| = 1, ταλάντωση)`;
+                    resultBox.className = 'result-box diverging';
+                } else {
+                    resultBox.textContent = `Αποκλίνουσα (|r| = ${Math.abs(r).toFixed(2)} > 1)`;
+                    resultBox.className = 'result-box diverging';
+                }
+            } else if (seq.limit !== null) {
+                resultBox.textContent = `Σύγκλιση σε L = ${seq.limit.toFixed(4)}`;
+                resultBox.className = 'result-box';
+            } else {
+                resultBox.textContent = 'Αποκλίνουσα';
+                resultBox.className = 'result-box diverging';
+            }
+        }
+
+        seqSelect.addEventListener('change', draw);
+        nSlider.addEventListener('input', draw);
+        rSlider.addEventListener('input', draw);
+
+        draw();
+    </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Μέθοδος Euler — Αριθμητική Λύση ΔΕ</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 700px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-style: italic;
+        }
+        .controls {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+        select, input[type="range"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="range"] {
+            flex: 1;
+        }
+        .slider-value {
+            font-weight: bold;
+            color: #2196F3;
+            min-width: 60px;
+            text-align: right;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #fafafa;
+            display: block;
+            margin: 20px 0;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            border-radius: 4px;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            font-weight: bold;
+            font-size: 16px;
+            color: #1976d2;
+        }
+        .legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        .exact { background-color: #ff9800; }
+        .euler { background-color: #2196F3; }
+        .author-stamp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            gap: 4px;
+        }
+        .stamp-book {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Μέθοδος Euler</h1>
+        <div class="subtitle">Αριθμητική Λύση Διαφορικής Εξίσωσης</div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="eqSelect">Διαφορική εξίσωση dy/dx = f(x,y), y(0) = y₀:</label>
+                <select id="eqSelect">
+                    <option value="exp">dy/dx = y (ακριβής: eˣ)</option>
+                    <option value="decexp">dy/dx = −y (ακριβής: e⁻ˣ)</option>
+                    <option value="x">dy/dx = x (ακριβής: x²/2)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="y0Slider">Αρχική συνθήκη y₀:</label>
+                <div class="slider-container">
+                    <input type="range" id="y0Slider" min="0.5" max="2" step="0.1" value="1">
+                    <span class="slider-value" id="y0Value">1.00</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="hSlider">Μέγεθος βήματος h:</label>
+                <div class="slider-container">
+                    <input type="range" id="hSlider" min="0.05" max="0.5" step="0.05" value="0.1">
+                    <span class="slider-value" id="hValue">0.10</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color exact"></div>
+                <span>Ακριβής λύση</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color euler"></div>
+                <span>Προσέγγιση Euler (βήματα)</span>
+            </div>
+        </div>
+
+        <canvas id="canvas" width="480" height="360"></canvas>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <div class="info-label">Προσέγγιση Euler σε x=2</div>
+                <div class="info-value" id="eulerValue">0.000</div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Σχετικό σφάλμα</div>
+                <div class="info-value" id="errorValue">0.00%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const eqSelect = document.getElementById('eqSelect');
+        const y0Slider = document.getElementById('y0Slider');
+        const y0Value = document.getElementById('y0Value');
+        const hSlider = document.getElementById('hSlider');
+        const hValue = document.getElementById('hValue');
+        const eulerValue = document.getElementById('eulerValue');
+        const errorValue = document.getElementById('errorValue');
+
+        const width = canvas.width;
+        const height = canvas.height;
+        const padding = 40;
+        const graphWidth = width - 2 * padding;
+        const graphHeight = height - 2 * padding;
+
+        const equations = {
+            exp: {
+                slope: (x, y) => y,
+                exact: (x, y0) => y0 * Math.exp(x),
+                name: 'dy/dx = y'
+            },
+            decexp: {
+                slope: (x, y) => -y,
+                exact: (x, y0) => y0 * Math.exp(-x),
+                name: 'dy/dx = −y'
+            },
+            x: {
+                slope: (x, y) => x,
+                exact: (x, y0) => y0 + x * x / 2,
+                name: 'dy/dx = x'
+            }
+        };
+
+        function drawAxis() {
+            ctx.fillStyle = '#fafafa';
+            ctx.fillRect(padding, padding, graphWidth, graphHeight);
+
+            // Grid
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (i / 10) * graphWidth;
+                const y = padding + (i / 10) * graphHeight;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i <= 10; i += 2) {
+                const x = padding + (i / 10) * graphWidth;
+                ctx.fillText((i * 0.2).toFixed(1), x, height - padding + 15);
+            }
+
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 10; i += 2) {
+                const y = padding + (i / 10) * graphHeight;
+                const val = (4 - (i / 5)).toFixed(1);
+                ctx.fillText(val, padding - 10, y + 4);
+            }
+
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            ctx.fillText('x', width - padding + 10, height - padding + 20);
+            ctx.textAlign = 'right';
+            ctx.fillText('y', padding - 15, padding - 5);
+        }
+
+        function xToPixel(x) {
+            return padding + (x / 2) * graphWidth;
+        }
+
+        function yToPixel(y) {
+            return height - padding - ((y) / 4) * graphHeight;
+        }
+
+        function eulerMethod(eq, y0, h) {
+            const steps = [];
+            let x = 0, y = y0;
+            steps.push({ x, y });
+
+            while (x < 2) {
+                const slope = eq.slope(x, y);
+                y = y + slope * h;
+                x = x + h;
+                steps.push({ x: Math.min(x, 2), y });
+            }
+
+            return steps;
+        }
+
+        function drawCurve(eq, y0, points, strokeStyle, isDashed = false) {
+            ctx.strokeStyle = strokeStyle;
+            ctx.lineWidth = 2;
+            if (isDashed) ctx.setLineDash([5, 5]);
+
+            ctx.beginPath();
+            let first = true;
+            points.forEach(({ x, y }) => {
+                const px = xToPixel(x);
+                const py = yToPixel(y);
+                if (first) {
+                    ctx.moveTo(px, py);
+                    first = false;
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            });
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function drawEulerSteps(steps) {
+            ctx.strokeStyle = '#2196F3';
+            ctx.lineWidth = 2;
+
+            // Draw vertical segments (for staircase)
+            for (let i = 0; i < steps.length - 1; i++) {
+                const x1 = xToPixel(steps[i].x);
+                const y1 = yToPixel(steps[i].y);
+                const x2 = xToPixel(steps[i + 1].x);
+                const y2 = yToPixel(steps[i + 1].y);
+
+                // Horizontal then vertical
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y1);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x2, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+        }
+
+        function draw() {
+            const eqName = eqSelect.value;
+            const eq = equations[eqName];
+            const y0 = parseFloat(y0Slider.value);
+            const h = parseFloat(hSlider.value);
+
+            y0Value.textContent = y0.toFixed(2);
+            hValue.textContent = h.toFixed(2);
+
+            ctx.clearRect(0, 0, width, height);
+            drawAxis();
+
+            // Draw exact solution
+            const exactPoints = [];
+            for (let x = 0; x <= 2; x += 0.02) {
+                exactPoints.push({ x, y: eq.exact(x, y0) });
+            }
+            drawCurve(eq, y0, exactPoints, '#ff9800', true);
+
+            // Euler method
+            const eulerPoints = eulerMethod(eq, y0, h);
+            drawEulerSteps(eulerPoints);
+            drawCurve(eq, y0, eulerPoints, '#2196F3');
+
+            // Calculate error at x=2
+            const eulerY2 = eulerPoints[eulerPoints.length - 1].y;
+            const exactY2 = eq.exact(2, y0);
+            const absError = Math.abs(eulerY2 - exactY2);
+            const relError = (absError / Math.abs(exactY2)) * 100;
+
+            eulerValue.textContent = eulerY2.toFixed(4);
+            errorValue.textContent = relError.toFixed(2) + '%';
+        }
+
+        eqSelect.addEventListener('change', draw);
+        y0Slider.addEventListener('input', draw);
+        hSlider.addEventListener('input', draw);
+
+        draw();
+    </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Τριγωνομετρικές Ταυτότητες — Μοναδιαίος Κύκλος</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+    header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+    header h1{font-size:1.3rem}
+    header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+    .container{max-width:900px;margin:0 auto;padding:1.5rem 1rem}
+    .layout{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start}
+    canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff}
+    .panel{flex:1;min-width:240px}
+    .panel h2{color:#004080;font-size:1rem;margin-bottom:.8rem;border-bottom:2px solid #dde3ea;padding-bottom:.3rem}
+    .formula{background:#fffbf0;border-left:4px solid #c85000;padding:.7rem 1rem;border-radius:0 8px 8px 0;font-size:.92rem;margin-bottom:.8rem}
+    .val-box{background:#fff;border:1.5px solid #dde3ea;border-radius:8px;padding:.8rem 1rem;margin-bottom:.6rem}
+    .val-box .lbl{font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+    .val-box .val{font-size:1.2rem;font-weight:bold;color:#004080}
+    .slider-group{margin-bottom:.9rem}
+    .slider-group label{display:block;font-size:.85rem;color:#444;margin-bottom:.3rem}
+    input[type=range]{width:100%;accent-color:#c85000}
+    .btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;font-size:.88rem;margin:.2rem}
+    .btn.orange{background:#c85000}
+    .btn.orange:hover{background:#a54000}
+    .btn:hover{background:#003060}
+    .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-family:Georgia,serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+    .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Τριγωνομετρικές Ταυτότητες</h1>
+  <p>Κεφάλαιο 0 · Μαθηματικό Υπόβαθρο · Γεωμετρική ερμηνεία ημιτόνου, συνημιτόνου, εφαπτομένης</p>
+</header>
+<div class="container">
+  <div class="layout">
+    <canvas id="cv" width="420" height="420"></canvas>
+    <div class="panel">
+      <h2>Τριγωνομετρία</h2>
+      <div class="slider-group">
+        <label>Γωνία θ = <strong id="degVal">45°</strong></label>
+        <input type="range" id="slTheta" min="0" max="360" step="1" value="45">
+      </div>
+      <div class="val-box">
+        <div class="lbl">ημ(θ) = sin(θ)</div>
+        <div class="val" id="sinVal">0.707</div>
+      </div>
+      <div class="val-box">
+        <div class="lbl">συν(θ) = cos(θ)</div>
+        <div class="val" id="cosVal">0.707</div>
+      </div>
+      <div class="val-box">
+        <div class="lbl">εφ(θ) = tan(θ)</div>
+        <div class="val" id="tanVal">1.000</div>
+      </div>
+      <div class="formula">sin²θ + cos²θ = 1</div>
+      <div class="formula" id="identityCheck" style="background:#e8f5e9;border-color:#28a745">✓ sin²+cos² = 1.000</div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem">
+        <button class="btn orange" id="btnAnim">▶ Κίνηση</button>
+        <button class="btn" id="btnQ1">1ο Τεταρτημόριο</button>
+        <button class="btn" id="btnSpecial">Ειδικές Γωνίες</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cv=document.getElementById('cv');
+const ctx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const CX=W/2,CY=H/2,R=160;
+let theta=Math.PI/4, animating=false, animId=null;
+const specialAngles=[0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330,360];
+let specialIdx=0;
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // Grid
+  ctx.strokeStyle='#eef0f5';ctx.lineWidth=1;
+  for(let i=-4;i<=4;i++){
+    ctx.beginPath();ctx.moveTo(CX+i*40,0);ctx.lineTo(CX+i*40,H);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,CY+i*40);ctx.lineTo(W,CY+i*40);ctx.stroke();
+  }
+  // Axes
+  ctx.strokeStyle='#888';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(0,CY);ctx.lineTo(W,CY);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(CX,0);ctx.lineTo(CX,H);ctx.stroke();
+  // Axis labels
+  ctx.fillStyle='#555';ctx.font='12px Georgia';ctx.textAlign='center';
+  ctx.fillText('1',CX+R,CY+14);ctx.fillText('-1',CX-R,CY+14);
+  ctx.textAlign='right';ctx.fillText('1',CX-5,CY-R+4);ctx.fillText('-1',CX-5,CY+R+4);
+  ctx.fillText('Re',W-10,CY-6);ctx.fillText('Im',CX+14,10);
+  // Circle
+  ctx.strokeStyle='#004080';ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(CX,CY,R,0,2*Math.PI);ctx.stroke();
+  // Point on circle
+  let px=CX+R*Math.cos(theta), py=CY-R*Math.sin(theta);
+  // Angle arc
+  ctx.strokeStyle='#c85000';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(CX,CY,35,0,-theta,theta<0);ctx.stroke();
+  // sin line (green) — vertical projection
+  ctx.strokeStyle='#008c46';ctx.lineWidth=2.5;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(px,CY);ctx.lineTo(px,py);ctx.stroke();
+  // cos line (red) — horizontal projection
+  ctx.strokeStyle='#c85000';ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(CX,CY);ctx.lineTo(px,CY);ctx.stroke();
+  // tan line (purple) — tangent at x=1
+  let tanVal=Math.tan(theta);
+  if(Math.abs(tanVal)<8){
+    ctx.strokeStyle='#7b2daa';ctx.lineWidth=2;ctx.setLineDash([5,4]);
+    ctx.beginPath();ctx.moveTo(CX+R,CY);ctx.lineTo(CX+R,CY-R*tanVal);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='#7b2daa';ctx.font='bold 12px Georgia';ctx.textAlign='left';
+    ctx.fillText('tan',CX+R+5,CY-R*tanVal/2);
+  }
+  ctx.setLineDash([]);
+  // Radius
+  ctx.strokeStyle='#004080';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(CX,CY);ctx.lineTo(px,py);ctx.stroke();
+  // Point
+  ctx.fillStyle='#004080';ctx.beginPath();ctx.arc(px,py,6,0,2*Math.PI);ctx.fill();
+  // Labels
+  ctx.fillStyle='#008c46';ctx.font='bold 13px Georgia';ctx.textAlign='left';
+  let sinLabelX=px+(Math.cos(theta)>0?8:-45);
+  ctx.fillText('sin',sinLabelX,(py+CY)/2+4);
+  ctx.fillStyle='#c85000';
+  ctx.fillText('cos',CX+(px-CX)/2-10,CY+(Math.sin(theta)>0?-8:18));
+  // Angle label
+  ctx.fillStyle='#c85000';ctx.font='bold 13px Georgia';ctx.textAlign='left';
+  let ad=theta*180/Math.PI;
+  ctx.fillText('θ='+ad.toFixed(0)+'°',CX+42,CY-5);
+  // Dashed projection lines
+  ctx.strokeStyle='#bbb';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,CY);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(CX,py);ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function update(){
+  let deg=parseFloat(document.getElementById('slTheta').value);
+  theta=deg*Math.PI/180;
+  document.getElementById('degVal').textContent=deg.toFixed(0)+'°';
+  let s=Math.sin(theta),c=Math.cos(theta),t=Math.tan(theta);
+  document.getElementById('sinVal').textContent=s.toFixed(4);
+  document.getElementById('cosVal').textContent=c.toFixed(4);
+  document.getElementById('tanVal').textContent=Math.abs(t)>100?'∞':t.toFixed(4);
+  let check=(s*s+c*c).toFixed(4);
+  document.getElementById('identityCheck').textContent='✓ sin²+cos² = '+check;
+  draw();
+}
+
+document.getElementById('slTheta').addEventListener('input',update);
+
+document.getElementById('btnAnim').addEventListener('click',()=>{
+  if(animating){animating=false;cancelAnimationFrame(animId);document.getElementById('btnAnim').textContent='▶ Κίνηση';}
+  else{
+    animating=true;document.getElementById('btnAnim').textContent='⏹ Σταματήσε';
+    let deg=0;
+    function step(){
+      if(!animating) return;
+      deg=(deg+1)%360;
+      document.getElementById('slTheta').value=deg;
+      update();
+      animId=requestAnimationFrame(step);
+    }
+    step();
+  }
+});
+
+document.getElementById('btnQ1').addEventListener('click',()=>{
+  document.getElementById('slTheta').value=45; update();
+});
+
+document.getElementById('btnSpecial').addEventListener('click',()=>{
+  specialIdx=(specialIdx+1)%specialAngles.length;
+  document.getElementById('slTheta').value=specialAngles[specialIdx];
+  update();
+});
+
+update();
+</script>
+
+<div class="author-stamp">
+  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+  <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+</div>
+</body>
+</html>

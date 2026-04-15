@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Θεμελιώδες Θεώρημα Λογισμού</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 0 0 15px 0;
+            font-size: 24px;
+        }
+        .formula {
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-style: italic;
+        }
+        .controls {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+        select, input[type="range"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="range"] {
+            flex: 1;
+        }
+        .slider-value {
+            font-weight: bold;
+            color: #f44336;
+            min-width: 60px;
+            text-align: right;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #fafafa;
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+            height: auto;
+        }
+        .canvas-container {
+            border: 1px solid #ddd;
+            padding: 5px;
+            background-color: #fff;
+        }
+        .canvas-label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+            text-align: center;
+            margin: 8px 0 0 0;
+        }
+        .interpretation {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #333;
+        }
+        .author-stamp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            gap: 4px;
+        }
+        .stamp-book {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Θεμελιώδες Θεώρημα Λογισμού</h1>
+        
+        <div class="formula">
+            F(x) = ∫₀ˣ f(t) dt  ⟹  F'(x) = f(x)
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="funcSelect">Συνάρτηση f(t):</label>
+                <select id="funcSelect">
+                    <option value="quad">f(t) = t² + 1</option>
+                    <option value="sin">f(t) = sin(t) + 1</option>
+                    <option value="exp">f(t) = 2t</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="xSlider">Τιμή x:</label>
+                <div class="slider-container">
+                    <input type="range" id="xSlider" min="0" max="3" step="0.05" value="1.5">
+                    <span class="slider-value" id="xValue">1.50</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+            <div class="canvas-container">
+                <canvas id="canvasTop" width="480" height="190"></canvas>
+                <div class="canvas-label">f(t) = ∫₀ˣ (εμβαδό με μπλε χρώμα)</div>
+            </div>
+            
+            <div class="canvas-container">
+                <canvas id="canvasBottom" width="480" height="190"></canvas>
+                <div class="canvas-label">F(x) = ∫₀ˣ f(t) dt (αθροιστική συνάρτηση)</div>
+            </div>
+        </div>
+
+        <div class="interpretation">
+            <strong>Θεώρημα:</strong> Η κλίση της συνάρτησης F(x) (κάτω γράφημα) ισούται με την τιμή f(x) (άνω γράφημα).
+            Η κόκκινη τελεία δείχνει ότι η κλίση της καμπύλης F(x) στο x είναι ακριβώς f(x).
+        </div>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const ctxTop = document.getElementById('canvasTop').getContext('2d');
+        const ctxBottom = document.getElementById('canvasBottom').getContext('2d');
+        const canvasTop = document.getElementById('canvasTop');
+        const canvasBottom = document.getElementById('canvasBottom');
+        const funcSelect = document.getElementById('funcSelect');
+        const xSlider = document.getElementById('xSlider');
+        const xValue = document.getElementById('xValue');
+
+        const wTop = canvasTop.width;
+        const hTop = canvasTop.height;
+        const wBottom = canvasBottom.width;
+        const hBottom = canvasBottom.height;
+
+        const padding = 35;
+        const graphWidth = wTop - 2 * padding;
+        const graphHeight = hTop - 2 * padding;
+        const graphWidthBottom = wBottom - 2 * padding;
+        const graphHeightBottom = hBottom - 2 * padding;
+
+        const functions = {
+            quad: t => t * t + 1,
+            sin: t => Math.sin(t) + 1,
+            exp: t => 2 * t
+        };
+
+        const funcFormulas = {
+            quad: 't² + 1',
+            sin: 'sin(t) + 1',
+            exp: '2t'
+        };
+
+        // Numerical integration
+        function integrate(func, a, b, n = 500) {
+            const h = (b - a) / n;
+            let sum = func(a) + func(b);
+            for (let i = 1; i < n; i++) {
+                const t = a + i * h;
+                sum += (i % 2 === 0 ? 2 : 4) * func(t);
+            }
+            return (h / 3) * sum;
+        }
+
+        function drawAxesTop(minY, maxY) {
+            // Background
+            ctxTop.fillStyle = '#fafafa';
+            ctxTop.fillRect(padding, padding, graphWidth, graphHeight);
+
+            // Grid
+            ctxTop.strokeStyle = '#ddd';
+            ctxTop.lineWidth = 1;
+            for (let i = 0; i <= 3; i += 0.5) {
+                const px = padding + (i / 3) * graphWidth;
+                ctxTop.beginPath();
+                ctxTop.moveTo(px, padding);
+                ctxTop.lineTo(px, hTop - padding);
+                ctxTop.stroke();
+            }
+
+            // Axes
+            ctxTop.strokeStyle = '#333';
+            ctxTop.lineWidth = 2;
+            ctxTop.beginPath();
+            ctxTop.moveTo(padding, padding);
+            ctxTop.lineTo(padding, hTop - padding);
+            ctxTop.lineTo(wTop - padding, hTop - padding);
+            ctxTop.stroke();
+
+            // Labels
+            ctxTop.fillStyle = '#333';
+            ctxTop.font = '12px Arial';
+            ctxTop.textAlign = 'center';
+            ctxTop.fillText('t', wTop - padding + 10, hTop - padding + 15);
+            ctxTop.textAlign = 'right';
+            ctxTop.fillText('f(t)', padding - 10, padding - 5);
+
+            // Tick labels on x-axis
+            for (let i = 0; i <= 3; i++) {
+                const px = padding + (i / 3) * graphWidth;
+                ctxTop.fillStyle = '#333';
+                ctxTop.font = '11px Arial';
+                ctxTop.textAlign = 'center';
+                ctxTop.fillText(i.toString(), px, hTop - padding + 15);
+            }
+
+            // Tick labels on y-axis
+            const step = (maxY - minY) / 4;
+            for (let i = 0; i <= 4; i++) {
+                const y = minY + i * step;
+                const py = hTop - padding - (i / 4) * graphHeight;
+                ctxTop.fillStyle = '#333';
+                ctxTop.font = '11px Arial';
+                ctxTop.textAlign = 'right';
+                ctxTop.fillText(y.toFixed(1), padding - 8, py + 4);
+            }
+        }
+
+        function drawAxesBottom(minY, maxY) {
+            // Background
+            ctxBottom.fillStyle = '#fafafa';
+            ctxBottom.fillRect(padding, padding, graphWidthBottom, graphHeightBottom);
+
+            // Grid
+            ctxBottom.strokeStyle = '#ddd';
+            ctxBottom.lineWidth = 1;
+            for (let i = 0; i <= 3; i += 0.5) {
+                const px = padding + (i / 3) * graphWidthBottom;
+                ctxBottom.beginPath();
+                ctxBottom.moveTo(px, padding);
+                ctxBottom.lineTo(px, hBottom - padding);
+                ctxBottom.stroke();
+            }
+
+            // Axes
+            ctxBottom.strokeStyle = '#333';
+            ctxBottom.lineWidth = 2;
+            ctxBottom.beginPath();
+            ctxBottom.moveTo(padding, padding);
+            ctxBottom.lineTo(padding, hBottom - padding);
+            ctxBottom.lineTo(wBottom - padding, hBottom - padding);
+            ctxBottom.stroke();
+
+            // Labels
+            ctxBottom.fillStyle = '#333';
+            ctxBottom.font = '12px Arial';
+            ctxBottom.textAlign = 'center';
+            ctxBottom.fillText('x', wBottom - padding + 10, hBottom - padding + 15);
+            ctxBottom.textAlign = 'right';
+            ctxBottom.fillText('F(x)', padding - 10, padding - 5);
+
+            // Tick labels on x-axis
+            for (let i = 0; i <= 3; i++) {
+                const px = padding + (i / 3) * graphWidthBottom;
+                ctxBottom.fillStyle = '#333';
+                ctxBottom.font = '11px Arial';
+                ctxBottom.textAlign = 'center';
+                ctxBottom.fillText(i.toString(), px, hBottom - padding + 15);
+            }
+
+            // Tick labels on y-axis
+            const step = (maxY - minY) / 4;
+            for (let i = 0; i <= 4; i++) {
+                const y = minY + i * step;
+                const py = hBottom - padding - (i / 4) * graphHeightBottom;
+                ctxBottom.fillStyle = '#333';
+                ctxBottom.font = '11px Arial';
+                ctxBottom.textAlign = 'right';
+                ctxBottom.fillText(y.toFixed(1), padding - 8, py + 4);
+            }
+        }
+
+        function tToPixelTop(t) {
+            return padding + (t / 3) * graphWidth;
+        }
+
+        function fToPixelTop(f, minY, maxY) {
+            return hTop - padding - ((f - minY) / (maxY - minY)) * graphHeight;
+        }
+
+        function xToPixelBottom(x) {
+            return padding + (x / 3) * graphWidthBottom;
+        }
+
+        function FToPixelBottom(F, minY, maxY) {
+            return hBottom - padding - ((F - minY) / (maxY - minY)) * graphHeightBottom;
+        }
+
+        function draw() {
+            const funcName = funcSelect.value;
+            const func = functions[funcName];
+            const x = parseFloat(xSlider.value);
+
+            xValue.textContent = x.toFixed(2);
+
+            // Draw top graph (f(t) with shaded area)
+            const maxF = 5;
+            const minF = -0.5;
+            drawAxesTop(minF, maxF);
+
+            // Shade area under f(t) from 0 to x
+            ctxTop.fillStyle = 'rgba(33, 150, 243, 0.3)';
+            const steps = 100;
+            for (let i = 0; i < steps; i++) {
+                const t1 = (i / steps) * x;
+                const t2 = ((i + 1) / steps) * x;
+                const f1 = func(t1);
+                const f2 = func(t2);
+                const fAvg = (f1 + f2) / 2;
+
+                const px1 = tToPixelTop(t1);
+                const px2 = tToPixelTop(t2);
+                const py = fToPixelTop(fAvg, minF, maxF);
+                const baseline = fToPixelTop(0, minF, maxF);
+
+                ctxTop.fillRect(px1, py, px2 - px1, baseline - py);
+            }
+
+            // Draw f(t) curve
+            ctxTop.strokeStyle = '#2196F3';
+            ctxTop.lineWidth = 2;
+            ctxTop.beginPath();
+            for (let t = 0; t <= 3; t += 0.02) {
+                const f = func(t);
+                const px = tToPixelTop(t);
+                const py = fToPixelTop(f, minF, maxF);
+                if (t === 0) ctxTop.moveTo(px, py);
+                else ctxTop.lineTo(px, py);
+            }
+            ctxTop.stroke();
+
+            // Draw vertical line at x
+            ctxTop.strokeStyle = '#f44336';
+            ctxTop.lineWidth = 2;
+            ctxTop.setLineDash([5, 5]);
+            ctxTop.beginPath();
+            const pxx = tToPixelTop(x);
+            ctxTop.moveTo(pxx, padding);
+            ctxTop.lineTo(pxx, hTop - padding);
+            ctxTop.stroke();
+
+            // Draw point on f(t) at x
+            ctxTop.fillStyle = '#f44336';
+            ctxTop.beginPath();
+            ctxTop.arc(pxx, fToPixelTop(func(x), minF, maxF), 5, 0, 2 * Math.PI);
+            ctxTop.fill();
+
+            ctxTop.setLineDash([]);
+
+            // Calculate F(x)
+            const FMax = integrate(func, 0, 3);
+            const Fx = integrate(func, 0, x);
+            const minFx = -0.5;
+
+            // Draw bottom graph (F(x) curve)
+            drawAxesBottom(minFx, FMax + 0.5);
+
+            // Draw F(x) curve
+            ctxBottom.strokeStyle = '#4CAF50';
+            ctxBottom.lineWidth = 2;
+            ctxBottom.beginPath();
+            for (let xx = 0; xx <= 3; xx += 0.05) {
+                const Fxx = integrate(func, 0, xx);
+                const pxx = xToPixelBottom(xx);
+                const py = FToPixelBottom(Fxx, minFx, FMax + 0.5);
+                if (xx === 0) ctxBottom.moveTo(pxx, py);
+                else ctxBottom.lineTo(pxx, py);
+            }
+            ctxBottom.stroke();
+
+            // Draw point on F(x) at current x
+            const pxCurrent = xToPixelBottom(x);
+            const pyFx = FToPixelBottom(Fx, minFx, FMax + 0.5);
+            ctxBottom.fillStyle = '#f44336';
+            ctxBottom.beginPath();
+            ctxBottom.arc(pxCurrent, pyFx, 5, 0, 2 * Math.PI);
+            ctxBottom.fill();
+
+            // Draw tangent line to F(x) at current x
+            const slope = func(x);
+            const tangentLength = 0.2;
+            const dx = tangentLength / Math.sqrt(1 + slope * slope);
+            const dy = slope * dx;
+
+            const x1 = x - dx;
+            const x2 = x + dx;
+            const y1 = Fx - slope * dx;
+            const y2 = Fx + slope * dx;
+
+            const px1 = xToPixelBottom(x1);
+            const px2 = xToPixelBottom(x2);
+            const py1 = FToPixelBottom(y1, minFx, FMax + 0.5);
+            const py2 = FToPixelBottom(y2, minFx, FMax + 0.5);
+
+            ctxBottom.strokeStyle = '#ff9800';
+            ctxBottom.lineWidth = 2;
+            ctxBottom.setLineDash([5, 5]);
+            ctxBottom.beginPath();
+            ctxBottom.moveTo(px1, py1);
+            ctxBottom.lineTo(px2, py2);
+            ctxBottom.stroke();
+            ctxBottom.setLineDash([]);
+
+            // Draw vertical line at x
+            ctxBottom.strokeStyle = '#f44336';
+            ctxBottom.lineWidth = 2;
+            ctxBottom.setLineDash([5, 5]);
+            ctxBottom.beginPath();
+            ctxBottom.moveTo(pxCurrent, padding);
+            ctxBottom.lineTo(pxCurrent, hBottom - padding);
+            ctxBottom.stroke();
+            ctxBottom.setLineDash([]);
+        }
+
+        funcSelect.addEventListener('change', draw);
+        xSlider.addEventListener('input', draw);
+
+        draw();
+    </script>
+</body>
+</html>

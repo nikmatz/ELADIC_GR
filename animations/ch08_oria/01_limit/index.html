@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Όριο Συνάρτησης</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+        header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+        header h1{font-size:1.3rem}
+        header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+        .container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}
+        canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff;display:block;margin:1.5rem auto}
+        .formula{background:#fffbf0;border-left:4px solid #c85000;padding:.7rem 1rem;border-radius:0 8px 8px 0;font-size:.9rem;margin-bottom:.8rem}
+        .btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;font-size:.88rem;margin:.2rem}
+        .btn.orange{background:#c85000}.btn:hover{background:#003060}.btn.orange:hover{background:#a54000}
+        input[type=range]{width:100%;accent-color:#c85000}
+        .control-group{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem;border:1px solid #dde3ea}
+        .control-group label{display:block;margin-top:.5rem;font-weight:bold;font-size:.9rem}
+        .slider-container{display:flex;align-items:center;gap:1rem;margin-top:.3rem}
+        .slider-value{min-width:50px;font-family:monospace;background:#f0f0f0;padding:.2rem .4rem;border-radius:4px;text-align:right}
+        .info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem;margin-bottom:1rem;border-radius:0 8px 8px 0}
+        .info-box strong{color:#004080}
+        .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-family:Georgia,serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+        .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Όριο Συνάρτησης - ε-δ Ορισμός</h1>
+        <p>Κεφάλαιο 8: Όρια - Προσέγγιση τιμής</p>
+    </header>
+
+    <div class="container">
+        <div class="info-box">
+            <strong>Εκπαιδευτικός Στόχος:</strong> Το όριο lim(x→a) f(x) = L σημαίνει: για κάθε ε>0, υπάρχει δ>0 τέτοιο ώστε αν |x-a|<δ τότε |f(x)-L|<ε. Δηλαδή, f(x) προσεγγίζει L καθώς x προσεγγίζει a.
+        </div>
+
+        <div class="formula">
+            <strong>ε-δ Ορισμός:</strong> ∀ε>0 ∃δ>0: |x-a|<δ ⟹ |f(x)-L|<ε
+        </div>
+
+        <div class="control-group">
+            <button class="btn orange" id="func1">f(x) = sin(x)/x, x→0</button>
+            <button class="btn orange" id="func2">f(x) = (x²-1)/(x-1), x→1</button>
+            <button class="btn orange" id="func3">f(x) = 2x, x→2</button>
+        </div>
+
+        <div class="control-group">
+            <label>ε (σφάλμα): <span id="eps-val">0.5</span></label>
+            <div class="slider-container">
+                <input type="range" id="eps" min="0.1" max="2" step="0.1" value="0.5">
+            </div>
+            <label>δ (δ-γειτονιά): <span id="delta-val">0.5</span></label>
+            <div class="slider-container">
+                <input type="range" id="delta" min="0.05" max="1" step="0.05" value="0.5">
+            </div>
+        </div>
+
+        <canvas id="canvas" width="700" height="500"></canvas>
+
+        <div class="info-box" id="statusBox">
+            <strong id="status"></strong>
+        </div>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let funcType = 1;
+        let eps = 0.5, delta = 0.5;
+
+        const functions = {
+            1: {
+                formula: x => x === 0 ? 1 : Math.sin(x) / x,
+                limit: 1,
+                point: 0,
+                xlim: [-2, 2],
+                name: 'f(x) = sin(x)/x, x→0, L=1'
+            },
+            2: {
+                formula: x => x === 1 ? 0 : (x*x - 1) / (x - 1),
+                limit: 2,
+                point: 1,
+                xlim: [-1, 3],
+                name: 'f(x) = (x²-1)/(x-1), x→1, L=2'
+            },
+            3: {
+                formula: x => 2*x,
+                limit: 4,
+                point: 2,
+                xlim: [0, 4],
+                name: 'f(x) = 2x, x→2, L=4'
+            }
+        };
+
+        document.getElementById('eps').addEventListener('input', (e) => {
+            eps = parseFloat(e.target.value);
+            document.getElementById('eps-val').textContent = eps.toFixed(1);
+            updateDisplay();
+        });
+
+        document.getElementById('delta').addEventListener('input', (e) => {
+            delta = parseFloat(e.target.value);
+            document.getElementById('delta-val').textContent = delta.toFixed(2);
+            updateDisplay();
+        });
+
+        document.getElementById('func1').addEventListener('click', () => {funcType = 1; updateDisplay();});
+        document.getElementById('func2').addEventListener('click', () => {funcType = 2; updateDisplay();});
+        document.getElementById('func3').addEventListener('click', () => {funcType = 3; updateDisplay();});
+
+        function updateDisplay() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const func = functions[funcType];
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const scaleX = (canvas.width * 0.8) / (func.xlim[1] - func.xlim[0]);
+            const scaleY = (canvas.height * 0.8) / 6;
+
+            // Axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, canvas.height * 0.1);
+            ctx.lineTo(centerX, canvas.height * 0.9);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(canvas.width * 0.1, centerY);
+            ctx.lineTo(canvas.width * 0.9, centerY);
+            ctx.stroke();
+
+            // Grid
+            ctx.strokeStyle = '#e8e8e8';
+            ctx.lineWidth = 1;
+            for (let i = Math.ceil(func.xlim[0]); i <= Math.floor(func.xlim[1]); i++) {
+                const px = centerX + (i - func.xlim[0]) * scaleX / (func.xlim[1] - func.xlim[0]);
+                ctx.beginPath();
+                ctx.moveTo(px, canvas.height * 0.1);
+                ctx.lineTo(px, canvas.height * 0.9);
+                ctx.stroke();
+            }
+
+            // ε-band (vertical band around limit value)
+            ctx.fillStyle = 'rgba(200, 80, 0, 0.1)';
+            const yL = centerY - func.limit * scaleY;
+            ctx.fillRect(canvas.width * 0.1, yL - eps * scaleY, canvas.width * 0.8, 2 * eps * scaleY);
+
+            // δ-band (horizontal band around point)
+            ctx.fillStyle = 'rgba(0, 140, 70, 0.1)';
+            const xP = centerX + (func.point - func.xlim[0]) * scaleX / (func.xlim[1] - func.xlim[0]);
+            ctx.fillRect(xP - delta * scaleX / (func.xlim[1] - func.xlim[0]), canvas.height * 0.1, 2 * delta * scaleX / (func.xlim[1] - func.xlim[0]), canvas.height * 0.8);
+
+            // Function curve
+            ctx.strokeStyle = '#c85000';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            let first = true;
+            const step = (func.xlim[1] - func.xlim[0]) / 200;
+            for (let x = func.xlim[0]; x <= func.xlim[1]; x += step) {
+                const y = func.formula(x);
+                const px = centerX + (x - func.xlim[0]) * scaleX / (func.xlim[1] - func.xlim[0]);
+                const py = centerY - y * scaleY;
+                if (isFinite(y)) {
+                    if (first) {
+                        ctx.moveTo(px, py);
+                        first = false;
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                } else {
+                    first = true;
+                }
+            }
+            ctx.stroke();
+
+            // Point at limit
+            ctx.fillStyle = '#7b2daa';
+            ctx.beginPath();
+            ctx.arc(xP, yL, 6, 0, 2*Math.PI);
+            ctx.fill();
+
+            // Labels
+            ctx.fillStyle = '#004080';
+            ctx.font = 'bold 12px Georgia';
+            ctx.fillText(func.name, canvas.width * 0.15, canvas.height * 0.05);
+            ctx.fillText(`L = ${func.limit}`, canvas.width * 0.05, yL - 10);
+            ctx.fillText(`x = ${func.point}`, xP, canvas.height * 0.95);
+
+            // Status
+            const withinDelta = Math.abs(func.point - func.point) < delta;
+            document.getElementById('status').innerHTML = `<strong>ε = ${eps.toFixed(1)}</strong>, δ = ${delta.toFixed(2)}<br>Αν |x - ${func.point}| < ${delta.toFixed(2)}, τότε |f(x) - ${func.limit}| < ${eps.toFixed(1)}`;
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>

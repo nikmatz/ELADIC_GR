@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Πεδίο Κλίσεων Διαφορικής Εξίσωσης</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 650px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 0 0 15px 0;
+            font-size: 24px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-style: italic;
+        }
+        .controls {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+        select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .buttons-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 8px 12px;
+            font-size: 13px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-clear {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-clear:hover {
+            background-color: #da190b;
+        }
+        .btn-preset {
+            background-color: #2196F3;
+            color: white;
+        }
+        .btn-preset:hover {
+            background-color: #0b7dda;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: white;
+            display: block;
+            margin: 20px 0;
+            cursor: crosshair;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #333;
+        }
+        .author-stamp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            gap: 4px;
+        }
+        .stamp-book {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Πεδίο Κλίσεων Διαφορικής Εξίσωσης</h1>
+        <div class="subtitle">dy/dx = f(x, y)</div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="equationSelect">Διαφορική εξίσωση:</label>
+                <select id="equationSelect">
+                    <option value="y">dy/dx = y</option>
+                    <option value="circle">dy/dx = −x/y</option>
+                    <option value="xy">dy/dx = x − y</option>
+                    <option value="sinx">dy/dx = sin(x)</option>
+                </select>
+            </div>
+
+            <div class="buttons-group">
+                <button class="btn-clear" id="clearBtn">Σβήσε Καμπύλες</button>
+                <button class="btn-preset" id="presetBtn">Προεπιλεγμένα αρχικά σημεία</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <strong>Οδηγίες:</strong> Κάντε κλικ στο γράφημα για να ξεκινήσετε μια καμπύλη λύσης από αυτό το σημείο. 
+            Το πεδίο κλίσεων δείχνει την κατεύθυνση της λύσης σε κάθε σημείο.
+        </div>
+
+        <canvas id="canvas" width="480" height="480"></canvas>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const equationSelect = document.getElementById('equationSelect');
+        const clearBtn = document.getElementById('clearBtn');
+        const presetBtn = document.getElementById('presetBtn');
+
+        const width = canvas.width;
+        const height = canvas.height;
+        const padding = 40;
+        const graphWidth = width - 2 * padding;
+        const graphHeight = height - 2 * padding;
+
+        const equations = {
+            y: { slope: (x, y) => y, name: 'dy/dx = y' },
+            circle: { slope: (x, y) => y === 0 ? 0 : -x / y, name: 'dy/dx = −x/y' },
+            xy: { slope: (x, y) => x - y, name: 'dy/dx = x − y' },
+            sinx: { slope: (x, y) => Math.sin(x), name: 'dy/dx = sin(x)' }
+        };
+
+        let solutions = [];
+        const gridSize = 20;
+
+        function pixelToCoord(px, py) {
+            const x = (px - padding) / graphWidth * 4 - 2;
+            const y = 2 - (py - padding) / graphHeight * 4;
+            return { x, y };
+        }
+
+        function coordToPixel(x, y) {
+            const px = padding + (x + 2) / 4 * graphWidth;
+            const py = padding + (2 - y) / 4 * graphHeight;
+            return { px, py };
+        }
+
+        function drawAxis() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Grid
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const x = padding + (i / 4) * graphWidth;
+                const y = padding + (i / 4) * graphHeight;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            // Axis labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i <= 4; i++) {
+                const x = padding + (i / 4) * graphWidth;
+                ctx.fillText((i - 2).toString(), x, height - padding + 15);
+            }
+
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (i / 4) * graphHeight;
+                ctx.fillText((2 - i).toString(), padding - 10, y + 4);
+            }
+
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            ctx.fillText('x', width - padding + 10, height - padding + 20);
+            ctx.textAlign = 'right';
+            ctx.fillText('y', padding - 15, padding - 5);
+        }
+
+        function drawSlopeField(equationName) {
+            const eq = equations[equationName];
+            const segmentLength = 0.08;
+
+            ctx.strokeStyle = '#2196F3';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i <= gridSize; i++) {
+                for (let j = 0; j <= gridSize; j++) {
+                    const x = -2 + (i / gridSize) * 4;
+                    const y = 2 - (j / gridSize) * 4;
+                    const slope = eq.slope(x, y);
+
+                    const angle = Math.atan(slope);
+                    const dx = segmentLength * Math.cos(angle);
+                    const dy = segmentLength * Math.sin(angle);
+
+                    const { px, py } = coordToPixel(x, y);
+                    ctx.beginPath();
+                    ctx.moveTo(px - dx * graphWidth / 4, py - dy * graphHeight / 4);
+                    ctx.lineTo(px + dx * graphWidth / 4, py + dy * graphHeight / 4);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        function drawSolution(equationName, startX, startY) {
+            const eq = equations[equationName];
+            const dt = 0.01;
+            const maxSteps = 1000;
+
+            ctx.strokeStyle = '#f44336';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            let x = startX, y = startY;
+            const { px, py } = coordToPixel(x, y);
+            ctx.moveTo(px, py);
+
+            for (let step = 0; step < maxSteps; step++) {
+                const slope = eq.slope(x, y);
+                const dy = slope * dt;
+                const dx = dt;
+
+                y += dy;
+                x += dx;
+
+                if (x < -2.5 || x > 2.5 || y < -2.5 || y > 2.5) break;
+
+                const { px, py } = coordToPixel(x, y);
+                ctx.lineTo(px, py);
+            }
+
+            ctx.stroke();
+
+            // Draw in negative direction
+            x = startX;
+            y = startY;
+            ctx.beginPath();
+            const { px: px0, py: py0 } = coordToPixel(x, y);
+            ctx.moveTo(px0, py0);
+
+            for (let step = 0; step < maxSteps; step++) {
+                const slope = eq.slope(x, y);
+                const dy = slope * (-dt);
+                const dx = -dt;
+
+                y += dy;
+                x += dx;
+
+                if (x < -2.5 || x > 2.5 || y < -2.5 || y > 2.5) break;
+
+                const { px, py } = coordToPixel(x, y);
+                ctx.lineTo(px, py);
+            }
+
+            ctx.stroke();
+        }
+
+        function draw() {
+            const equationName = equationSelect.value;
+            drawAxis();
+            drawSlopeField(equationName);
+
+            solutions.forEach(({ x, y }) => {
+                drawSolution(equationName, x, y);
+            });
+        }
+
+        function addPresetSolutions() {
+            solutions = [];
+            const equationName = equationSelect.value;
+
+            const presets = {
+                y: [[-1.5, 1.5], [-0.5, 1], [0.5, -1], [1.5, -1.5]],
+                circle: [[-1.5, 1.5], [1.5, 1.5], [1.5, -1.5], [-1.5, -1.5]],
+                xy: [[-1.5, 0.5], [0, -1], [1.5, 1.5], [0.5, -0.5]],
+                sinx: [[-1.5, 1.5], [-0.5, -1], [1, 0.5], [1.5, -1]]
+            };
+
+            solutions = presets[equationName] || [];
+            draw();
+        }
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const px = e.clientX - rect.left;
+            const py = e.clientY - rect.top;
+
+            const { x, y } = pixelToCoord(px, py);
+            solutions.push({ x, y });
+            draw();
+        });
+
+        clearBtn.addEventListener('click', () => {
+            solutions = [];
+            draw();
+        });
+
+        presetBtn.addEventListener('click', addPresetSolutions);
+
+        equationSelect.addEventListener('change', () => {
+            solutions = [];
+            draw();
+        });
+
+        draw();
+    </script>
+</body>
+</html>

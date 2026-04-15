@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Σύνθεση Συναρτήσεων</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+        header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+        header h1{font-size:1.3rem}
+        header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+        .container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}
+        canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff;display:block;margin:1.5rem auto}
+        .formula{background:#fffbf0;border-left:4px solid #c85000;padding:.7rem 1rem;border-radius:0 8px 8px 0;font-size:.9rem;margin-bottom:.8rem}
+        .btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;font-size:.88rem;margin:.2rem}
+        .btn.orange{background:#c85000}.btn:hover{background:#003060}.btn.orange:hover{background:#a54000}
+        .control-group{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem;border:1px solid #dde3ea}
+        .info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem;margin-bottom:1rem;border-radius:0 8px 8px 0}
+        .info-box strong{color:#004080}
+        .button-group{display:flex;flex-wrap:wrap;gap:0.5rem}
+        .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-family:Georgia,serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+        .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Σύνθεση Συναρτήσεων</h1>
+        <p>Κεφάλαιο 7: Συναρτήσεις - Σύνθετες απεικονίσεις</p>
+    </header>
+
+    <div class="container">
+        <div class="info-box">
+            <strong>Εκπαιδευτικός Στόχος:</strong> Η σύνθεση δύο συναρτήσεων f και g ορίζεται ως (f∘g)(x) = f(g(x)). Πρώτα εφαρμόζουμε τη g, μετά τη f. Η σύνθεση δεν είναι αντιμεταθετική: (f∘g) ≠ (g∘f) γενικά.
+        </div>
+
+        <div class="formula">
+            <strong>Σύνθεση:</strong> (f∘g)(x) = f(g(x)) &nbsp;&nbsp;&nbsp;&nbsp; <strong>Δεν είναι αντιμεταθετική!</strong> (f∘g) ≠ (g∘f)
+        </div>
+
+        <div class="control-group">
+            <label>Επιλέξτε g(x):</label>
+            <div class="button-group">
+                <button class="btn" id="g-2x">g(x) = 2x</button>
+                <button class="btn" id="g-x2">g(x) = x²</button>
+                <button class="btn" id="g-sin">g(x) = sin(x)</button>
+                <button class="btn" id="g-sqr">g(x) = √x</button>
+            </div>
+            <label style="margin-top:1rem">Επιλέξτε f(x):</label>
+            <div class="button-group">
+                <button class="btn" id="f-x2">f(x) = x²</button>
+                <button class="btn" id="f-sin">f(x) = sin(x)</button>
+                <button class="btn" id="f-exp">f(x) = eˣ</button>
+                <button class="btn" id="f-1x">f(x) = 1/x</button>
+            </div>
+        </div>
+
+        <canvas id="canvas" width="800" height="350"></canvas>
+
+        <div class="info-box" id="compositionInfo">
+            <strong id="compName">(f∘g)(x) = f(g(x))</strong>
+        </div>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let gFunc = x => 2*x;
+        let gName = 'g(x) = 2x';
+        let fFunc = x => x*x;
+        let fName = 'f(x) = x²';
+
+        const gFunctions = {
+            '2x': {formula: x => 2*x, name: 'g(x) = 2x'},
+            'x2': {formula: x => x*x, name: 'g(x) = x²'},
+            'sin': {formula: x => Math.sin(x), name: 'g(x) = sin(x)'},
+            'sqr': {formula: x => x >= 0 ? Math.sqrt(x) : null, name: 'g(x) = √x'}
+        };
+
+        const fFunctions = {
+            'x2': {formula: x => x*x, name: 'f(x) = x²'},
+            'sin': {formula: x => Math.sin(x), name: 'f(x) = sin(x)'},
+            'exp': {formula: x => Math.exp(x), name: 'f(x) = eˣ'},
+            '1x': {formula: x => x === 0 ? null : 1/x, name: 'f(x) = 1/x'}
+        };
+
+        function setG(key) {
+            const func = gFunctions[key];
+            gFunc = func.formula;
+            gName = func.name;
+            updateDisplay();
+        }
+
+        function setF(key) {
+            const func = fFunctions[key];
+            fFunc = func.formula;
+            fName = func.name;
+            updateDisplay();
+        }
+
+        document.getElementById('g-2x').addEventListener('click', () => setG('2x'));
+        document.getElementById('g-x2').addEventListener('click', () => setG('x2'));
+        document.getElementById('g-sin').addEventListener('click', () => setG('sin'));
+        document.getElementById('g-sqr').addEventListener('click', () => setG('sqr'));
+
+        document.getElementById('f-x2').addEventListener('click', () => setF('x2'));
+        document.getElementById('f-sin').addEventListener('click', () => setF('sin'));
+        document.getElementById('f-exp').addEventListener('click', () => setF('exp'));
+        document.getElementById('f-1x').addEventListener('click', () => setF('1x'));
+
+        function updateDisplay() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const width = canvas.width / 3;
+            const height = canvas.height;
+
+            // Draw three panels
+            drawPanel(ctx, 0, 0, width, height, gName, gFunc, [-2, 2]);
+            drawPanel(ctx, width, 0, width, height, fName, fFunc, [-2, 2]);
+
+            // Draw composition
+            const compFunc = x => {
+                const g_val = gFunc(x);
+                if (g_val === null || !isFinite(g_val)) return null;
+                const f_val = fFunc(g_val);
+                return f_val;
+            };
+            drawPanel(ctx, 2*width, 0, width, height, `(f∘g)(x)`, compFunc, [-2, 2]);
+
+            document.getElementById('compName').textContent = `(f∘g)(x) = f(${gName.split('=')[1].trim()}) = ${fName.split('=')[1].trim()}`;
+        }
+
+        function drawPanel(ctx, startX, startY, width, height, label, func, xlim) {
+            const centerX = startX + width / 2;
+            const centerY = startY + height / 2;
+            const scaleX = width / (xlim[1] - xlim[0]) * 0.7;
+            const scaleY = height / 8;
+
+            // Background
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(startX, startY, width, height);
+            ctx.strokeStyle = '#dde3ea';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(startX, startY, width, height);
+
+            // Grid
+            ctx.strokeStyle = '#f0f0f0';
+            ctx.lineWidth = 0.5;
+            for (let x = Math.ceil(xlim[0]); x <= Math.floor(xlim[1]); x++) {
+                const px = centerX + (x - (xlim[0]+xlim[1])/2) * scaleX;
+                ctx.beginPath();
+                ctx.moveTo(px, startY);
+                ctx.lineTo(px, startY + height);
+                ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(centerX, startY);
+            ctx.lineTo(centerX, startY + height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(startX, centerY);
+            ctx.lineTo(startX + width, centerY);
+            ctx.stroke();
+
+            // Function curve
+            ctx.strokeStyle = '#c85000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let firstPoint = true;
+            const step = (xlim[1] - xlim[0]) / 100;
+            for (let x = xlim[0]; x <= xlim[1]; x += step) {
+                const y = func(x);
+                if (y !== null && isFinite(y)) {
+                    const px = centerX + (x - (xlim[0]+xlim[1])/2) * scaleX;
+                    const py = centerY - y * scaleY;
+                    if (py >= startY && py <= startY + height) {
+                        if (firstPoint) {
+                            ctx.moveTo(px, py);
+                            firstPoint = false;
+                        } else {
+                            ctx.lineTo(px, py);
+                        }
+                    }
+                } else {
+                    firstPoint = true;
+                }
+            }
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = '#004080';
+            ctx.font = 'bold 12px Georgia';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, centerX, startY + 20);
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>

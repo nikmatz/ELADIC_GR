@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Γράφημα Συνάρτησης</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+        header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+        header h1{font-size:1.3rem}
+        header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+        .container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}
+        canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff;display:block;margin:1.5rem auto}
+        .btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;font-size:.88rem;margin:.2rem}
+        .btn.orange{background:#c85000}.btn:hover{background:#003060}.btn.orange:hover{background:#a54000}
+        input[type=range]{width:100%;accent-color:#c85000}
+        .control-group{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem;border:1px solid #dde3ea}
+        .control-group label{display:block;margin-top:.5rem;font-weight:bold;font-size:.9rem}
+        .slider-container{display:flex;align-items:center;gap:1rem;margin-top:.3rem}
+        .slider-value{min-width:50px;font-family:monospace;background:#f0f0f0;padding:.2rem .4rem;border-radius:4px;text-align:right}
+        .info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem;margin-bottom:1rem;border-radius:0 8px 8px 0}
+        .info-box strong{color:#004080}
+        .button-group{display:flex;flex-wrap:wrap;gap:0.5rem}
+        .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-family:Georgia,serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+        .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Γράφημα Συνάρτησης</h1>
+        <p>Κεφάλαιο 7: Συναρτήσεις - Οπτική αναπαράσταση</p>
+    </header>
+
+    <div class="container">
+        <div class="info-box">
+            <strong>Εκπαιδευτικός Στόχος:</strong> Κάθε συνάρτηση f(x) μπορεί να απεικονιστεί ως γράφημα στο xy-επίπεδο. Το πεδίο ορισμού (domain) είναι οι δυνατές τιμές x, και το πεδίο τιμών (range) είναι οι δυνατές τιμές y. Ασύμπτωτες είναι γραμμές που το γράφημα πλησιάζει αλλά δεν αγγίζει.
+        </div>
+
+        <div class="control-group">
+            <div class="button-group">
+                <button class="btn orange" id="func-x2">f(x) = x²</button>
+                <button class="btn orange" id="func-x3">f(x) = x³</button>
+                <button class="btn orange" id="func-sin">f(x) = sin(x)</button>
+                <button class="btn orange" id="func-cos">f(x) = cos(x)</button>
+                <button class="btn orange" id="func-exp">f(x) = eˣ</button>
+                <button class="btn orange" id="func-ln">f(x) = ln(x)</button>
+                <button class="btn orange" id="func-abs">f(x) = |x|</button>
+                <button class="btn orange" id="func-inv">f(x) = 1/x</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Ζουμ x-άξονα (αριστερό, δεξιό): <span id="xmin-val">-3</span> έως <span id="xmax-val">3</span></label>
+            <div class="slider-container">
+                <input type="range" id="xmin" min="-10" max="0" step="0.5" value="-3">
+                <input type="range" id="xmax" min="0" max="10" step="0.5" value="3">
+            </div>
+        </div>
+
+        <canvas id="canvas" width="700" height="500"></canvas>
+
+        <div class="info-box" id="funcInfo">
+            <strong id="funcName">f(x) = x²</strong><br>
+            <span id="domain">Πεδίο ορισμού: ℝ</span><br>
+            <span id="range">Πεδίο τιμών: [0, +∞)</span>
+        </div>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let currentFunc = 'x2';
+        let xmin = -3, xmax = 3;
+
+        const functions = {
+            'x2': {
+                formula: x => x * x,
+                name: 'f(x) = x²',
+                domain: 'ℝ',
+                range: '[0, +∞)',
+                asymptotes: []
+            },
+            'x3': {
+                formula: x => x * x * x,
+                name: 'f(x) = x³',
+                domain: 'ℝ',
+                range: 'ℝ',
+                asymptotes: []
+            },
+            'sin': {
+                formula: x => Math.sin(x),
+                name: 'f(x) = sin(x)',
+                domain: 'ℝ',
+                range: '[-1, 1]',
+                asymptotes: []
+            },
+            'cos': {
+                formula: x => Math.cos(x),
+                name: 'f(x) = cos(x)',
+                domain: 'ℝ',
+                range: '[-1, 1]',
+                asymptotes: []
+            },
+            'exp': {
+                formula: x => Math.exp(x),
+                name: 'f(x) = eˣ',
+                domain: 'ℝ',
+                range: '(0, +∞)',
+                asymptotes: [{type: 'h', value: 0, label: 'y = 0'}]
+            },
+            'ln': {
+                formula: x => Math.log(x),
+                name: 'f(x) = ln(x)',
+                domain: '(0, +∞)',
+                range: 'ℝ',
+                asymptotes: [{type: 'v', value: 0, label: 'x = 0'}]
+            },
+            'abs': {
+                formula: x => Math.abs(x),
+                name: 'f(x) = |x|',
+                domain: 'ℝ',
+                range: '[0, +∞)',
+                asymptotes: []
+            },
+            'inv': {
+                formula: x => x === 0 ? null : 1/x,
+                name: 'f(x) = 1/x',
+                domain: 'ℝ \\ {0}',
+                range: 'ℝ \\ {0}',
+                asymptotes: [{type: 'h', value: 0, label: 'y = 0'}, {type: 'v', value: 0, label: 'x = 0'}]
+            }
+        };
+
+        function setFunc(key) {
+            currentFunc = key;
+            if (key === 'ln') xmin = 0.1, xmax = 10;
+            else xmin = -3, xmax = 3;
+            document.getElementById('xmin').value = xmin;
+            document.getElementById('xmax').value = xmax;
+            updateDisplay();
+        }
+
+        document.getElementById('func-x2').addEventListener('click', () => setFunc('x2'));
+        document.getElementById('func-x3').addEventListener('click', () => setFunc('x3'));
+        document.getElementById('func-sin').addEventListener('click', () => setFunc('sin'));
+        document.getElementById('func-cos').addEventListener('click', () => setFunc('cos'));
+        document.getElementById('func-exp').addEventListener('click', () => setFunc('exp'));
+        document.getElementById('func-ln').addEventListener('click', () => setFunc('ln'));
+        document.getElementById('func-abs').addEventListener('click', () => setFunc('abs'));
+        document.getElementById('func-inv').addEventListener('click', () => setFunc('inv'));
+
+        document.getElementById('xmin').addEventListener('input', (e) => {
+            xmin = parseFloat(e.target.value);
+            document.getElementById('xmin-val').textContent = xmin.toFixed(1);
+            updateDisplay();
+        });
+
+        document.getElementById('xmax').addEventListener('input', (e) => {
+            xmax = parseFloat(e.target.value);
+            document.getElementById('xmax-val').textContent = xmax.toFixed(1);
+            updateDisplay();
+        });
+
+        function updateDisplay() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const scaleX = canvas.width / (xmax - xmin);
+            const scaleY = canvas.height / 8;
+
+            // Grid
+            ctx.strokeStyle = '#e8e8e8';
+            ctx.lineWidth = 1;
+            for (let x = Math.ceil(xmin); x <= Math.floor(xmax); x++) {
+                ctx.beginPath();
+                ctx.moveTo(centerX + (x - xmin) * scaleX, 0);
+                ctx.lineTo(centerX + (x - xmin) * scaleX, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = -4; y <= 4; y++) {
+                ctx.beginPath();
+                ctx.moveTo(0, centerY - y * scaleY);
+                ctx.lineTo(canvas.width, centerY - y * scaleY);
+                ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX + (0 - xmin) * scaleX, 0);
+            ctx.lineTo(centerX + (0 - xmin) * scaleX, canvas.height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.stroke();
+
+            // Draw asymptotes
+            const func = functions[currentFunc];
+            for (let asymp of func.asymptotes) {
+                ctx.strokeStyle = '#d32f2f';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([5, 5]);
+                if (asymp.type === 'h') {
+                    ctx.beginPath();
+                    ctx.moveTo(0, centerY - asymp.value * scaleY);
+                    ctx.lineTo(canvas.width, centerY - asymp.value * scaleY);
+                    ctx.stroke();
+                } else {
+                    ctx.beginPath();
+                    ctx.moveTo(centerX + (asymp.value - xmin) * scaleX, 0);
+                    ctx.lineTo(centerX + (asymp.value - xmin) * scaleX, canvas.height);
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+            }
+
+            // Draw function
+            ctx.strokeStyle = '#c85000';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            let firstPoint = true;
+            const step = (xmax - xmin) / 500;
+            for (let x = xmin; x <= xmax; x += step) {
+                const y = func.formula(x);
+                if (y !== null && isFinite(y)) {
+                    const px = centerX + (x - xmin) * scaleX;
+                    const py = centerY - y * scaleY;
+                    if (Math.abs(py) < canvas.height * 2) {
+                        if (firstPoint) {
+                            ctx.moveTo(px, py);
+                            firstPoint = false;
+                        } else {
+                            ctx.lineTo(px, py);
+                        }
+                    }
+                } else {
+                    firstPoint = true;
+                }
+            }
+            ctx.stroke();
+
+            // Update info
+            document.getElementById('funcName').textContent = func.name;
+            document.getElementById('domain').textContent = `Πεδίο ορισμού: ${func.domain}`;
+            document.getElementById('range').textContent = `Πεδίο τιμών: ${func.range}`;
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>

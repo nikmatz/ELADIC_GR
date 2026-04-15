@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Τύποι Λύσεων 2×2 Συστήματος</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+        header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+        header h1{font-size:1.3rem}
+        header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+        .container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}
+        canvas{border:2px solid #dde3ea;border-radius:10px;background:#fff;display:block;margin:1.5rem auto}
+        .btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;font-size:.88rem;margin:.2rem}
+        .btn.orange{background:#c85000}.btn:hover{background:#003060}.btn.orange:hover{background:#a54000}
+        input[type=range]{width:100%;accent-color:#c85000}
+        .control-group{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem;border:1px solid #dde3ea}
+        .control-group label{display:block;margin-top:.5rem;font-weight:bold;font-size:.9rem}
+        .slider-container{display:flex;align-items:center;gap:1rem;margin-top:.3rem}
+        .slider-value{min-width:50px;font-family:monospace;background:#f0f0f0;padding:.2rem .4rem;border-radius:4px;text-align:right}
+        .info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem;margin-bottom:1rem;border-radius:0 8px 8px 0}
+        .info-box strong{color:#004080}
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .result-box{background:#fff;padding:1rem;border-radius:8px;border:2px solid #c85000;margin-top:1rem;font-size:1rem}
+        @media(max-width:600px){.grid-2{grid-template-columns:1fr}}
+        .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-family:Georgia,serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+        .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Τύποι Λύσεων 2×2 Γραμμικού Συστήματος</h1>
+        <p>Κεφάλαιο 3: Γραμμικά Συστήματα - Γεωμετρική ερμηνεία</p>
+    </header>
+
+    <div class="container">
+        <div class="info-box">
+            <strong>Εκπαιδευτικός Στόχος:</strong> Ένα σύστημα 2×2 αντιστοιχεί σε δύο ευθείες. Η λύση είναι: τομή σημείο (μοναδική), όλα τα σημεία της ευθείας (άπειρες), ή καμία (παράλληλες διαφορετικές ευθείες).
+        </div>
+
+        <canvas id="canvas" width="600" height="500"></canvas>
+
+        <div class="grid-2">
+            <div class="control-group">
+                <label>Ευθεία 1: a₁x + b₁y = c₁</label>
+                <label>a₁: <span id="a1-val">1</span></label>
+                <div class="slider-container">
+                    <input type="range" id="a1" min="-3" max="3" step="0.2" value="1">
+                </div>
+                <label>b₁: <span id="b1-val">1</span></label>
+                <div class="slider-container">
+                    <input type="range" id="b1" min="-3" max="3" step="0.2" value="1">
+                </div>
+                <label>c₁: <span id="c1-val">3</span></label>
+                <div class="slider-container">
+                    <input type="range" id="c1" min="-5" max="5" step="0.2" value="3">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Ευθεία 2: a₂x + b₂y = c₂</label>
+                <label>a₂: <span id="a2-val">2</span></label>
+                <div class="slider-container">
+                    <input type="range" id="a2" min="-3" max="3" step="0.2" value="2">
+                </div>
+                <label>b₂: <span id="b2-val">-1</span></label>
+                <div class="slider-container">
+                    <input type="range" id="b2" min="-3" max="3" step="0.2" value="-1">
+                </div>
+                <label>c₂: <span id="c2-val">2</span></label>
+                <div class="slider-container">
+                    <input type="range" id="c2" min="-5" max="5" step="0.2" value="2">
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <button class="btn orange" id="unique">Μοναδική Λύση</button>
+            <button class="btn orange" id="infinite">Άπειρες Λύσεις</button>
+            <button class="btn orange" id="none">Καμία Λύση</button>
+            <button class="btn" id="reset">Επαναφορά</button>
+        </div>
+
+        <div class="result-box" id="resultBox">
+            <strong id="resultType">Κατάσταση:</strong> <span id="resultText">-</span>
+        </div>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const scale = 60;
+
+        let a1 = 1, b1 = 1, c1 = 3;
+        let a2 = 2, b2 = -1, c2 = 2;
+
+        const sliders = [
+            {id: 'a1', display: 'a1-val', setter: (v) => a1 = v},
+            {id: 'b1', display: 'b1-val', setter: (v) => b1 = v},
+            {id: 'c1', display: 'c1-val', setter: (v) => c1 = v},
+            {id: 'a2', display: 'a2-val', setter: (v) => a2 = v},
+            {id: 'b2', display: 'b2-val', setter: (v) => b2 = v},
+            {id: 'c2', display: 'c2-val', setter: (v) => c2 = v}
+        ];
+
+        sliders.forEach(slider => {
+            const el = document.getElementById(slider.id);
+            el.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                document.getElementById(slider.display).textContent = val.toFixed(1);
+                slider.setter(val);
+                updateDisplay();
+            });
+        });
+
+        document.getElementById('unique').addEventListener('click', () => {
+            a1 = 1; b1 = 0; c1 = 1;
+            a2 = 0; b2 = 1; c2 = 2;
+            updateSliders();
+            updateDisplay();
+        });
+
+        document.getElementById('infinite').addEventListener('click', () => {
+            a1 = 1; b1 = 1; c1 = 2;
+            a2 = 2; b2 = 2; c2 = 4;
+            updateSliders();
+            updateDisplay();
+        });
+
+        document.getElementById('none').addEventListener('click', () => {
+            a1 = 1; b1 = 1; c1 = 2;
+            a2 = 1; b2 = 1; c2 = 3;
+            updateSliders();
+            updateDisplay();
+        });
+
+        document.getElementById('reset').addEventListener('click', () => {
+            a1 = 1; b1 = 1; c1 = 3;
+            a2 = 2; b2 = -1; c2 = 2;
+            updateSliders();
+            updateDisplay();
+        });
+
+        function updateSliders() {
+            document.getElementById('a1').value = a1;
+            document.getElementById('b1').value = b1;
+            document.getElementById('c1').value = c1;
+            document.getElementById('a2').value = a2;
+            document.getElementById('b2').value = b2;
+            document.getElementById('c2').value = c2;
+            document.getElementById('a1-val').textContent = a1.toFixed(1);
+            document.getElementById('b1-val').textContent = b1.toFixed(1);
+            document.getElementById('c1-val').textContent = c1.toFixed(1);
+            document.getElementById('a2-val').textContent = a2.toFixed(1);
+            document.getElementById('b2-val').textContent = b2.toFixed(1);
+            document.getElementById('c2-val').textContent = c2.toFixed(1);
+        }
+
+        function findIntersection() {
+            const det = a1 * b2 - a2 * b1;
+            if (Math.abs(det) > 0.001) {
+                const x = (c1 * b2 - c2 * b1) / det;
+                const y = (a1 * c2 - a2 * c1) / det;
+                return {exists: true, x: x, y: y, type: 'unique'};
+            } else {
+                const ratio = (Math.abs(a1) > 0.001) ? a2/a1 : b2/b1;
+                const cRatio = (Math.abs(c1) > 0.001) ? c2/c1 : 1;
+                if (Math.abs(ratio - cRatio) < 0.001) {
+                    return {exists: false, type: 'infinite'};
+                } else {
+                    return {exists: false, type: 'none'};
+                }
+            }
+        }
+
+        function updateDisplay() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Grid
+            ctx.strokeStyle = '#e8e8e8';
+            ctx.lineWidth = 1;
+            for (let i = -3; i <= 3; i++) {
+                ctx.beginPath();
+                ctx.moveTo(centerX + i * scale, 0);
+                ctx.lineTo(centerX + i * scale, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, centerY - i * scale);
+                ctx.lineTo(canvas.width, centerY - i * scale);
+                ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, canvas.height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.stroke();
+
+            // Draw line 1: a1*x + b1*y = c1
+            drawLine(a1, b1, c1, '#c85000', 'Ευθεία 1');
+            // Draw line 2: a2*x + b2*y = c2
+            drawLine(a2, b2, c2, '#008c46', 'Ευθεία 2');
+
+            const intersection = findIntersection();
+
+            if (intersection.type === 'unique') {
+                ctx.fillStyle = '#7b2daa';
+                ctx.beginPath();
+                ctx.arc(centerX + intersection.x * scale, centerY - intersection.y * scale, 8, 0, 2*Math.PI);
+                ctx.fill();
+                ctx.fillStyle = '#7b2daa';
+                ctx.font = 'bold 12px Georgia';
+                ctx.fillText(`(${intersection.x.toFixed(1)},${intersection.y.toFixed(1)})`,
+                    centerX + intersection.x * scale + 10, centerY - intersection.y * scale - 10);
+            }
+
+            updateResult(intersection);
+        }
+
+        function drawLine(a, b, c, color, label) {
+            if (Math.abs(b) > 0.001) {
+                const y1 = (c - a * (-3)) / b;
+                const y2 = (c - a * 3) / b;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(centerX - 3 * scale, centerY - y1 * scale);
+                ctx.lineTo(centerX + 3 * scale, centerY - y2 * scale);
+                ctx.stroke();
+            } else if (Math.abs(a) > 0.001) {
+                const x = c / a;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(centerX + x * scale, 0);
+                ctx.lineTo(centerX + x * scale, canvas.height);
+                ctx.stroke();
+            }
+        }
+
+        function updateResult(intersection) {
+            const resultBox = document.getElementById('resultBox');
+            if (intersection.type === 'unique') {
+                resultBox.innerHTML = `<strong style="color:#008c46">✓ Μοναδική Λύση:</strong> Λύση στο σημείο τομής (${intersection.x.toFixed(2)}, ${intersection.y.toFixed(2)})`;
+            } else if (intersection.type === 'infinite') {
+                resultBox.innerHTML = `<strong style="color:#004080">∞ Άπειρες Λύσεις:</strong> Οι δύο ευθείες συμπίπτουν — κάθε σημείο είναι λύση`;
+            } else {
+                resultBox.innerHTML = `<strong style="color:#d32f2f">✗ Καμία Λύση:</strong> Οι ευθείες είναι παράλληλες και διαφορετικές`;
+            }
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>

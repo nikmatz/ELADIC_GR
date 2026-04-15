@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Μερικά Αθροίσματα Σειράς</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 650px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 0 0 20px 0;
+            font-size: 24px;
+        }
+        .controls {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+        select, input[type="range"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="range"] {
+            flex: 1;
+        }
+        .slider-value {
+            font-weight: bold;
+            color: #2196F3;
+            min-width: 50px;
+            text-align: right;
+        }
+        .canvas-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #fafafa;
+            display: block;
+        }
+        .canvas-label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+            text-align: center;
+        }
+        .info-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .info-box.diverging {
+            background-color: #ffebee;
+            border-left-color: #f44336;
+        }
+        .info-box-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2e7d32;
+        }
+        .info-box.diverging .info-box-title {
+            color: #c62828;
+        }
+        .info-box-content {
+            font-size: 14px;
+            color: #333;
+        }
+        .author-stamp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            gap: 4px;
+        }
+        .stamp-book {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Μερικά Αθροίσματα Σειράς</h1>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="seriesSelect">Σειρά Σₙ:</label>
+                <select id="seriesSelect">
+                    <option value="geom05">Γεωμετρική r = 0.5: Σₙ = Σ(0.5)ⁿ</option>
+                    <option value="geom11">Γεωμετρική r = 1.1: Σₙ = Σ(1.1)ⁿ</option>
+                    <option value="inv2">Σₙ = Σ 1/n²</option>
+                    <option value="harm">Σₙ = Σ 1/n (Αρμονική)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="nSlider">Πλήθος όρων N:</label>
+                <div class="slider-container">
+                    <input type="range" id="nSlider" min="1" max="50" step="1" value="20">
+                    <span class="slider-value" id="nValue">20</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box" id="infoBox">
+            <div class="info-box-title">Σειρά Σ(0.5)ⁿ</div>
+            <div class="info-box-content">
+                Σύγκλιση: Sₙ → <strong id="limitValue">2.000</strong><br>
+                Τρέχον S₂₀: <strong id="currentSum">1.999</strong>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <div>
+                <canvas id="canvasTerms" width="280" height="280"></canvas>
+                <div class="canvas-label">aₙ (Όροι σειράς)</div>
+            </div>
+            <div>
+                <canvas id="canvasSums" width="280" height="280"></canvas>
+                <div class="canvas-label">Sₙ (Μερικά αθροίσματα)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-stamp">
+        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Μαθηματικά Ι»</em></span>
+        <span>Νίκος Ματζάκος, Αναπλ. Καθηγητής &nbsp;·&nbsp; Παιδαγωγικό Τμήμα, ΑΣΠΑΙΤΕ</span>
+    </div>
+
+    <script>
+        const ctxTerms = document.getElementById('canvasTerms').getContext('2d');
+        const ctxSums = document.getElementById('canvasSums').getContext('2d');
+        const canvasTerms = document.getElementById('canvasTerms');
+        const canvasSums = document.getElementById('canvasSums');
+        const seriesSelect = document.getElementById('seriesSelect');
+        const nSlider = document.getElementById('nSlider');
+        const nValue = document.getElementById('nValue');
+        const infoBox = document.getElementById('infoBox');
+        const limitValue = document.getElementById('limitValue');
+        const currentSum = document.getElementById('currentSum');
+
+        const width = canvasTerms.width;
+        const height = canvasTerms.height;
+        const padding = 35;
+        const graphWidth = width - 2 * padding;
+        const graphHeight = height - 2 * padding;
+
+        const series = {
+            geom05: {
+                name: 'Σ(0.5)ⁿ',
+                term: n => Math.pow(0.5, n),
+                limit: 1,
+                converges: true
+            },
+            geom11: {
+                name: 'Σ(1.1)ⁿ',
+                term: n => Math.pow(1.1, n),
+                limit: null,
+                converges: false
+            },
+            inv2: {
+                name: 'Σ 1/n²',
+                term: n => 1 / (n * n),
+                limit: Math.PI * Math.PI / 6,
+                converges: true
+            },
+            harm: {
+                name: 'Σ 1/n (Αρμονική)',
+                term: n => 1 / n,
+                limit: null,
+                converges: false
+            }
+        };
+
+        function drawAxis(ctx, canvas, yMin, yMax) {
+            ctx.fillStyle = '#fafafa';
+            ctx.fillRect(padding, padding, graphWidth, graphHeight);
+
+            // Grid
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (i / 10) * graphWidth;
+                const y = padding + (i / 10) * graphHeight;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i <= 10; i += 2) {
+                const x = padding + (i / 10) * graphWidth;
+                ctx.fillText((i * 5).toString(), x, height - padding + 15);
+            }
+
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 10; i += 2) {
+                const y = padding + (i / 10) * graphHeight;
+                const val = (yMax - (i / 10) * (yMax - yMin)).toFixed(1);
+                ctx.fillText(val, padding - 10, y + 4);
+            }
+
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            ctx.fillText('n', width - padding + 10, height - padding + 20);
+            ctx.textAlign = 'right';
+            ctx.fillText('Value', padding - 15, padding - 5);
+        }
+
+        function drawTerms(seriesName, maxN) {
+            const ser = series[seriesName];
+            const terms = [];
+            let maxTerm = 0;
+
+            for (let n = 1; n <= maxN; n++) {
+                const term = ser.term(n);
+                terms.push(term);
+                maxTerm = Math.max(maxTerm, term);
+            }
+
+            drawAxis(ctxTerms, canvasTerms, 0, maxTerm * 1.2);
+
+            // Draw bars
+            ctxTerms.fillStyle = seriesName.startsWith('geom05') || seriesName === 'inv2' ? '#4CAF50' : '#f44336';
+            terms.forEach((term, i) => {
+                const n = i + 1;
+                const px = padding + (n / (maxN + 2)) * graphWidth;
+                const py = height - padding - (term / (maxTerm * 1.2)) * graphHeight;
+                const barWidth = Math.max(2, graphWidth / (maxN + 2) * 0.8);
+                const barHeight = height - padding - py;
+
+                ctxTerms.fillRect(px - barWidth / 2, py, barWidth, barHeight);
+            });
+        }
+
+        function drawSums(seriesName, maxN) {
+            const ser = series[seriesName];
+            const sums = [];
+            let maxSum = 0;
+            let totalSum = 0;
+
+            for (let n = 1; n <= maxN; n++) {
+                totalSum += ser.term(n);
+                sums.push(totalSum);
+                maxSum = Math.max(maxSum, totalSum);
+            }
+
+            // Consider limit for y-axis
+            let yMax = maxSum;
+            if (ser.limit !== null) {
+                yMax = Math.max(maxSum, ser.limit * 1.1);
+            }
+
+            drawAxis(ctxSums, canvasSums, 0, yMax);
+
+            // Draw partial sums
+            ctxSums.strokeStyle = '#2196F3';
+            ctxSums.lineWidth = 2;
+            ctxSums.beginPath();
+
+            sums.forEach((sum, i) => {
+                const n = i + 1;
+                const px = padding + (n / (maxN + 2)) * graphWidth;
+                const py = height - padding - (sum / yMax) * graphHeight;
+
+                if (i === 0) ctxSums.moveTo(px, py);
+                else ctxSums.lineTo(px, py);
+            });
+            ctxSums.stroke();
+
+            // Draw points
+            ctxSums.fillStyle = '#2196F3';
+            sums.forEach((sum, i) => {
+                const n = i + 1;
+                const px = padding + (n / (maxN + 2)) * graphWidth;
+                const py = height - padding - (sum / yMax) * graphHeight;
+                ctxSums.beginPath();
+                ctxSums.arc(px, py, 3, 0, 2 * Math.PI);
+                ctxSums.fill();
+            });
+
+            // Draw limit line if it exists
+            if (ser.limit !== null) {
+                ctxSums.strokeStyle = '#f44336';
+                ctxSums.lineWidth = 2;
+                ctxSums.setLineDash([5, 5]);
+                const limitPy = height - padding - (ser.limit / yMax) * graphHeight;
+                ctxSums.beginPath();
+                ctxSums.moveTo(padding, limitPy);
+                ctxSums.lineTo(width - padding, limitPy);
+                ctxSums.stroke();
+                ctxSums.setLineDash([]);
+            }
+
+            return { sums, totalSum, maxSum };
+        }
+
+        function draw() {
+            const seriesName = seriesSelect.value;
+            const maxN = parseInt(nSlider.value);
+            nValue.textContent = maxN.toString();
+
+            const ser = series[seriesName];
+
+            drawTerms(seriesName, maxN);
+            const { sums, totalSum } = drawSums(seriesName, maxN);
+
+            // Update info box
+            const titleText = `Σειρά ${ser.name}`;
+            infoBox.className = 'info-box' + (ser.converges ? '' : ' diverging');
+
+            let infoHTML = `<div class="info-box-title">${titleText}</div><div class="info-box-content">`;
+
+            if (ser.converges) {
+                infoHTML += `Σύγκλιση: Sₙ → <strong>${ser.limit.toFixed(4)}</strong><br>`;
+            } else {
+                infoHTML += `Αποκλίνουσα σειρά<br>`;
+            }
+            infoHTML += `Τρέχον S₍${maxN}₎: <strong>${totalSum.toFixed(4)}</strong></div>`;
+
+            infoBox.innerHTML = infoHTML;
+        }
+
+        seriesSelect.addEventListener('change', draw);
+        nSlider.addEventListener('input', draw);
+
+        draw();
+    </script>
+</body>
+</html>
