@@ -6,91 +6,94 @@
   <title>Απαλοιφή Gauss — Βήμα-βήμα</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+    body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a;font-size:15px}
     header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
     header h1{font-size:1.3rem}
     header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
-    .container{max-width:920px;margin:0 auto;padding:1.5rem 1rem}
+    .container{max-width:860px;margin:0 auto;padding:1.5rem 1rem}
 
-    .ex-btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem}
-    .ex-btn{background:#004080;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:6px;cursor:pointer;font-size:.85rem;font-family:Georgia,serif}
-    .ex-btn.active{background:#c85000}
-    .ex-btn:hover{opacity:.85}
-
-    /* Step counter */
-    .step-counter{font-size:.85rem;color:#666;margin-bottom:.6rem}
-    .prog{height:5px;background:#dde3ea;border-radius:3px;margin-bottom:1rem;overflow:hidden}
-    .prog-fill{height:100%;background:linear-gradient(90deg,#004080,#c85000);border-radius:3px;transition:width .4s}
-
-    /* Main display: prev | arrow | curr */
-    .step-display{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
-    .mat-card{background:#fff;border:2px solid #dde3ea;border-radius:10px;padding:1rem 1.2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;min-width:220px;transition:opacity .4s}
-    .mat-card.prev{border-color:#b0bec5;opacity:.75}
-    .mat-card.curr{border-color:#004080;box-shadow:0 2px 12px rgba(0,64,128,.12)}
-    .mat-card.curr.final{border-color:#2e7d32;box-shadow:0 2px 12px rgba(46,125,50,.15)}
-    .mat-card-label{font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.05em}
-    .mat-card-label.curr-lbl{color:#004080;font-weight:bold}
-    .mat-card-label.final-lbl{color:#2e7d32;font-weight:bold}
-
-    /* Arrow column */
-    .arrow-col{display:flex;flex-direction:column;align-items:center;gap:.3rem;min-width:110px}
-    .arrow-op{background:#c85000;color:#fff;padding:.3rem .8rem;border-radius:16px;font-family:'Courier New',monospace;font-size:.82rem;font-weight:bold;text-align:center;word-break:break-all}
-    .arrow-explain{font-size:.75rem;color:#888;font-style:italic;text-align:center;max-width:120px}
-    .arrow-sym{font-size:1.8rem;color:#c85000}
-
-    /* Matrix rendering */
-    .aug-mat{display:flex;align-items:stretch}
-    .mat-bracket{font-size:3.4rem;color:#004080;line-height:1;padding:0 2px;font-weight:100;align-self:center}
-    .mat-bracket.green{color:#2e7d32}
-    .mat-bracket.grey{color:#90a4ae}
-    .mat-inner{display:flex;align-items:center}
-    .mat-sep{width:2px;background:#004080;margin:2px 6px;border-radius:1px;align-self:stretch}
-    .mat-sep.green{background:#2e7d32}
-    .mat-sep.grey{background:#90a4ae}
-    .mat-col{display:flex;flex-direction:column;gap:3px}
-    .cell{width:50px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-family:'Courier New',monospace;font-size:.88rem;font-weight:600;border:1.5px solid #e0e6ef;background:#f7f8fa;transition:background .45s,color .45s,border-color .45s}
-    .cell.prev-style{background:#f0f0f0;border-color:#ddd;color:#888}
-    .cell.pivot-row{background:#ddeeff;border-color:#004080;color:#004080}
-    .cell.changed-row{background:#ffeedd;border-color:#c85000;color:#c85000}
-    .cell.pivot-cell{background:#004080;color:#fff;border-color:#004080}
-    .cell.new-zero{background:#e8f5e9;border-color:#4caf50;color:#2e7d32}
-    .cell.flash{animation:fl .55s ease}
-    @keyframes fl{0%{transform:scale(1.2);background:#c85000;color:#fff}70%{transform:scale(1.04)}100%{}}
-
-    /* Row labels */
-    .row-lbls{display:flex;flex-direction:column;gap:3px;margin-right:5px}
-    .row-lbl{height:38px;display:flex;align-items:center;font-size:.75rem;color:#aaa;font-style:italic}
-
-    /* Operation description box */
-    .op-box{background:#fffbf0;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:.75rem 1rem;margin-bottom:.8rem;min-height:52px;animation:fadeIn .4s ease}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-    .op-box .op-step{font-size:.75rem;color:#aaa;text-transform:uppercase;margin-bottom:.2rem}
-    .op-box .op-label{font-family:'Courier New',monospace;font-size:.98rem;color:#c85000;font-weight:bold}
-    .op-box .op-desc{font-size:.83rem;color:#666;margin-top:.25rem}
-
-    /* Result */
-    .result-box{padding:.75rem 1rem;border-radius:8px;font-size:.9rem;font-weight:bold;margin-bottom:.8rem;animation:fadeIn .4s ease}
-    .result-box.unique{background:#e8f5e9;color:#2e7d32;border-left:4px solid #2e7d32}
-    .result-box.infinite{background:#e3f2fd;color:#1565c0;border-left:4px solid #1565c0}
-    .result-box.none{background:#ffebee;color:#c62828;border-left:4px solid #c62828}
+    /* Tabs */
+    .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+    .tab{background:#004080;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:6px;cursor:pointer;font-size:.85rem;font-family:Georgia,serif}
+    .tab.on{background:#c85000}
+    .tab:hover{opacity:.85}
 
     /* Controls */
-    .controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
-    .btn{padding:.5rem 1.2rem;border:none;border-radius:6px;cursor:pointer;font-size:.88rem;font-family:Georgia,serif;transition:background .2s}
-    .btn-primary{background:#004080;color:#fff}.btn-primary:hover{background:#003060}
-    .btn-secondary{background:#e0e7ef;color:#004080}.btn-secondary:hover{background:#c8d5e8}
-    .btn-orange{background:#c85000;color:#fff}.btn-orange:hover{background:#a54000}
+    .ctrls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:1.3rem}
+    .btn{padding:.48rem 1.1rem;border:none;border-radius:6px;cursor:pointer;font-size:.87rem;font-family:Georgia,serif}
+    .btn-blue{background:#004080;color:#fff}.btn-blue:hover{background:#003060}
+    .btn-org{background:#c85000;color:#fff}.btn-org:hover{background:#a54000}
+    .btn-gray{background:#e0e7ef;color:#004080}.btn-gray:hover{background:#c8d5e8}
     .btn:disabled{opacity:.35;cursor:not-allowed}
-    select{padding:.4rem .7rem;border:1.5px solid #dde3ea;border-radius:6px;font-family:Georgia,serif;font-size:.85rem}
-    .spd-lbl{font-size:.82rem;color:#666}
+    select{padding:.38rem .7rem;border:1.5px solid #dde3ea;border-radius:6px;font-family:Georgia,serif;font-size:.85rem}
+    .spd{font-size:.82rem;color:#666}
 
-    .expl-section{margin-top:1.2rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
+    /* Steps list */
+    #steps{display:flex;flex-direction:column;align-items:center;gap:0}
+
+    /* Each step animates in */
+    .step-in{animation:drop .5s cubic-bezier(.22,.68,0,1.2) forwards}
+    @keyframes drop{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* Matrix block */
+    .mat-wrap{display:flex;align-items:center;justify-content:center;padding:.9rem 1.4rem;background:#fff;border:2px solid #c8d5e8;border-radius:10px}
+    .mat-wrap.initial{border-color:#004080}
+    .mat-wrap.final{border-color:#2e7d32;background:#f4fbf5}
+
+    /* The matrix itself: bracket + table + augment line + rhs */
+    .matrix{display:inline-flex;align-items:stretch;gap:0}
+    .m-brak{display:flex;flex-direction:column;justify-content:space-between;width:10px;flex-shrink:0}
+    .m-brak-l .m-top,.m-brak-l .m-bot{border-left:3px solid #004080;height:12px}
+    .m-brak-l .m-mid{border-left:3px solid #004080;flex:1}
+    .m-brak-l .m-top{border-top:3px solid #004080;border-radius:3px 0 0 0}
+    .m-brak-l .m-bot{border-bottom:3px solid #004080;border-radius:0 0 0 3px}
+    .m-brak-r .m-top,.m-brak-r .m-bot{border-right:3px solid #004080;height:12px}
+    .m-brak-r .m-mid{border-right:3px solid #004080;flex:1}
+    .m-brak-r .m-top{border-top:3px solid #004080;border-radius:0 3px 0 0}
+    .m-brak-r .m-bot{border-bottom:3px solid #004080;border-radius:0 0 3px 0}
+    .mat-wrap.final .m-brak-l .m-top,.mat-wrap.final .m-brak-l .m-bot,.mat-wrap.final .m-brak-l .m-mid,
+    .mat-wrap.final .m-brak-r .m-top,.mat-wrap.final .m-brak-r .m-bot,.mat-wrap.final .m-brak-r .m-mid{border-color:#2e7d32}
+    .m-body{display:flex;align-items:center;gap:0;padding:0 4px}
+    .m-col{display:flex;flex-direction:column;gap:2px;padding:0 3px}
+    .m-aug-line{width:2px;background:#004080;margin:2px 6px;border-radius:1px}
+    .mat-wrap.final .m-aug-line{background:#2e7d32}
+    .mcell{min-width:44px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:.9rem;font-weight:600;border-radius:5px;border:1.5px solid transparent;transition:background .4s,color .4s,border-color .4s}
+    .mcell.norm{color:#333}
+    .mcell.piv-row{background:#ddeeff;border-color:#4d90d0;color:#003a80}
+    .mcell.piv-cell{background:#004080;color:#fff;border-color:#004080}
+    .mcell.chg-row{background:#ffeedd;border-color:#d07040;color:#8b3000}
+    .mcell.new-zero{background:#e6f5ea;border-color:#5cb870;color:#1a6b2a;animation:glow .7s ease}
+    @keyframes glow{0%{background:#b2dfdb;transform:scale(1.15)}100%{background:#e6f5ea;transform:scale(1)}}
+
+    /* Row labels left of matrix */
+    .rlbls{display:flex;flex-direction:column;gap:2px;margin-right:7px}
+    .rlbl{height:36px;display:flex;align-items:center;font-size:.78rem;color:#aaa;font-style:italic}
+
+    /* Step label above matrix */
+    .mat-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:.45rem;text-align:center}
+    .mat-lbl.init{color:#004080;font-weight:bold}
+    .mat-lbl.fin{color:#2e7d32;font-weight:bold}
+
+    /* Arrow between matrices */
+    .op-arrow{display:flex;flex-direction:column;align-items:center;gap:.3rem;padding:.55rem 0}
+    .op-pill{background:#c85000;color:#fff;padding:.28rem .9rem;border-radius:20px;font-size:.88rem;font-family:'Courier New',monospace;font-weight:bold}
+    .op-note{font-size:.75rem;color:#999;font-style:italic;text-align:center;max-width:200px}
+    .op-sym{font-size:1.5rem;color:#c85000;line-height:1}
+
+    /* Result banner */
+    .result{margin:.6rem 0;padding:.7rem 1.1rem;border-radius:8px;font-size:.9rem;font-weight:bold;animation:drop .4s ease}
+    .result.uniq{background:#e8f5e9;color:#2e7d32;border-left:4px solid #2e7d32}
+    .result.inf{background:#e3f2fd;color:#1565c0;border-left:4px solid #1565c0}
+    .result.none{background:#ffebee;color:#c62828;border-left:4px solid #c62828}
+
+    /* Explanation */
+    .expl-section{margin-top:1.4rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
     .expl-toggle{width:100%;background:#004080;color:#fff;border:none;padding:.7rem 1rem;text-align:left;cursor:pointer;font-size:.9rem;font-family:Georgia,serif}
     .expl-toggle:hover{background:#003060}
-    .expl-body{display:none;padding:1rem;background:#fffbf0;font-size:.9rem;line-height:1.7}
+    .expl-body{display:none;padding:1rem 1.2rem;background:#fffbf0;font-size:.9rem;line-height:1.75}
     .expl-body.open{display:block}
     .expl-body h3{color:#004080;margin-bottom:.5rem}
-    .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
+    .formula{background:#fff;border-left:4px solid #c85000;padding:.45rem .9rem;margin:.5rem 0;border-radius:0 6px 6px 0;font-style:italic}
 
     .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
     .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
@@ -99,49 +102,35 @@
 <body>
 <header>
   <h1>Απαλοιφή Gauss — Βήμα-βήμα</h1>
-  <p>Κεφάλαιο 3 · Γραμμικά Συστήματα · Κάθε βήμα δείχνει τον προηγούμενο και τον νέο επαυξημένο πίνακα</p>
+  <p>Κεφάλαιο 3 · Γραμμικά Συστήματα · Όλα τα βήματα ορατά — κάθε πίνακας με σωστό συμβολισμό</p>
 </header>
 <div class="container">
 
-  <div class="ex-btns">
-    <button class="ex-btn active" onclick="loadEx(0)">Παράδειγμα 1 — Μοναδική Λύση</button>
-    <button class="ex-btn" onclick="loadEx(1)">Παράδειγμα 2 — Άπειρες Λύσεις</button>
-    <button class="ex-btn" onclick="loadEx(2)">Παράδειγμα 3 — Καμία Λύση</button>
+  <div class="tabs">
+    <button class="tab on" onclick="loadEx(0)">Παράδειγμα 1 — Μοναδική Λύση</button>
+    <button class="tab"    onclick="loadEx(1)">Παράδειγμα 2 — Άπειρες Λύσεις</button>
+    <button class="tab"    onclick="loadEx(2)">Παράδειγμα 3 — Καμία Λύση</button>
   </div>
 
-  <div class="prog"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-  <div class="step-counter" id="stepCounter">Βήμα 0 από —</div>
-
-  <div id="opBox" class="op-box">
-    <div class="op-step">Έτοιμο</div>
-    <div class="op-label">Επιλέξτε παράδειγμα ή πατήστε «Επόμενο Βήμα»</div>
+  <div class="ctrls">
+    <button class="btn btn-blue" id="bNext" onclick="revealNext()">Επόμενο Βήμα ▶</button>
+    <button class="btn btn-org"  id="bAll"  onclick="revealAll()">Εμφάνιση Όλων ⏩</button>
+    <button class="btn btn-gray" onclick="loadEx(curEx)">↺ Επαναφορά</button>
+    <span class="spd">Ταχύτητα αυτόματης:</span>
+    <select id="spd"><option value="2000">Αργά</option><option value="1100" selected>Κανονικά</option><option value="550">Γρήγορα</option></select>
+    <button class="btn btn-org" id="bAuto" onclick="toggleAuto()">▶ Αυτόματα</button>
   </div>
 
-  <div class="step-display" id="stepDisplay"></div>
-
-  <div id="resultBox"></div>
-
-  <div class="controls">
-    <button class="btn btn-secondary" id="btnPrev" onclick="prevStep()" disabled>◀ Πίσω</button>
-    <button class="btn btn-primary"   id="btnNext" onclick="nextStep()">Επόμενο Βήμα ▶</button>
-    <button class="btn btn-orange"    id="btnAuto" onclick="toggleAuto()">▶ Αυτόματα</button>
-    <button class="btn btn-secondary" onclick="loadEx(curEx)">↺ Επαναφορά</button>
-    <span class="spd-lbl">Ταχύτητα:</span>
-    <select id="speedSel">
-      <option value="2200">Αργά</option>
-      <option value="1300" selected>Κανονικά</option>
-      <option value="650">Γρήγορα</option>
-    </select>
-  </div>
+  <div id="steps"></div>
 
   <div class="expl-section">
-    <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼</button>
-    <div class="expl-body" id="explBody">
-      <h3>Απαλοιφή Gauss — Μέθοδος κλιμακωτής αναγωγής</h3>
-      <p>Η απαλοιφή Gauss μετατρέπει τον [A|b] σε <strong>κλιμακωτή μορφή (REF)</strong> με στοιχειώδεις πράξεις γραμμών που δεν αλλάζουν το σύνολο λύσεων:</p>
-      <div class="formula">Rᵢ ↔ Rⱼ &nbsp;|&nbsp; Rᵢ ← λ·Rᵢ (λ≠0) &nbsp;|&nbsp; Rᵢ ← Rᵢ + λ·Rⱼ</div>
-      <p>Σε κάθε βήμα: <span style="color:#004080;font-weight:bold">μπλε = γραμμή pivot</span> · <span style="color:#c85000;font-weight:bold">πορτοκαλί = γραμμή που αλλάζει</span> · <span style="color:#2e7d32;font-weight:bold">πράσινο = νέο μηδέν</span>. Αριστερά ο <em>προηγούμενος</em> πίνακας, δεξιά ο <em>νέος</em>.</p>
-      <div class="formula">Θεώρημα Kronecker-Capelli: συμβατό ⟺ rank(A) = rank([A|b])</div>
+    <button class="expl-toggle" id="eTog">📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼</button>
+    <div class="expl-body" id="eBody">
+      <h3>Απαλοιφή Gauss — Κλιμακωτή αναγωγή (REF)</h3>
+      <p>Ο επαυξημένος πίνακας [A|b] μετατρέπεται σε <strong>κλιμακωτή μορφή</strong> με τρεις επιτρεπόμενες πράξεις γραμμών:</p>
+      <div class="formula">R<sub>i</sub> ↔ R<sub>j</sub> &nbsp;·&nbsp; R<sub>i</sub> ← λ·R<sub>i</sub> (λ≠0) &nbsp;·&nbsp; R<sub>i</sub> ← R<sub>i</sub> + λ·R<sub>j</sub></div>
+      <p>Χρωματισμός: <span style="color:#003a80;font-weight:bold">■ γαλάζιο = γραμμή pivot</span> · <span style="color:#8b3000;font-weight:bold">■ πορτοκαλί = γραμμή που αλλάζει</span> · <span style="color:#1a6b2a;font-weight:bold">■ πράσινο = νέο μηδέν</span>.</p>
+      <div class="formula">Θεώρημα Kronecker-Capelli: το σύστημα Ax=b είναι συμβατό ⟺ rank(A) = rank([A|b])</div>
     </div>
   </div>
 </div>
@@ -153,8 +142,8 @@
 
 <script>
 const EX=[
-  {name:'Μοναδική Λύση',type:'unique',
-   result:'✓ Κλιμακωτή μορφή — Μοναδική λύση: x₁=3, x₂=2, x₃=−⅔',
+  {name:'Μοναδική Λύση',type:'uniq',
+   res:'✓ Κλιμακωτή μορφή — Μοναδική λύση: x<sub>1</sub>=3, x<sub>2</sub>=2, x<sub>3</sub>=−⅔',
    mats:[
      [[2,1,-1,8],[1,-1,1,0],[3,2,1,13]],
      [[2,1,-1,8],[0,-1.5,1.5,-4],[3,2,1,13]],
@@ -162,175 +151,179 @@ const EX=[
      [[2,1,-1,8],[0,-1.5,1.5,-4],[0,0,3,-2]]
    ],
    ops:[
-     {lbl:'R₂ ← R₂ − ½·R₁', desc:'Εξάλειψη στήλης 1, γραμμή 2 (pivot: γραμμή 1)', piv:0, chg:1},
-     {lbl:'R₃ ← R₃ − ³⁄₂·R₁',desc:'Εξάλειψη στήλης 1, γραμμή 3 (pivot: γραμμή 1)', piv:0, chg:2},
-     {lbl:'R₃ ← R₃ + ¹⁄₃·R₂', desc:'Εξάλειψη στήλης 2, γραμμή 3 (pivot: γραμμή 2)', piv:1, chg:2}
+     {html:'R<sub>2</sub> ← R<sub>2</sub> − ½·R<sub>1</sub>', note:'Εξάλειψη a₂₁: pivot γραμμή 1, αλλάζει γραμμή 2', piv:0,chg:1},
+     {html:'R<sub>3</sub> ← R<sub>3</sub> − <sup>3</sup>/<sub>2</sub>·R<sub>1</sub>', note:'Εξάλειψη a₃₁: pivot γραμμή 1, αλλάζει γραμμή 3', piv:0,chg:2},
+     {html:'R<sub>3</sub> ← R<sub>3</sub> + <sup>1</sup>/<sub>3</sub>·R<sub>2</sub>', note:'Εξάλειψη a₃₂: pivot γραμμή 2, αλλάζει γραμμή 3', piv:1,chg:2}
    ]},
-  {name:'Άπειρες Λύσεις',type:'infinite',
-   result:'∞ Άπειρες λύσεις: rank(A)=rank([A|b])=1 < 3 · x₁=6−2x₂−3x₃, x₂,x₃ ελεύθερες',
+  {name:'Άπειρες Λύσεις',type:'inf',
+   res:'∞ Άπειρες λύσεις: rank(A)=rank([A|b])=1&lt;3 &nbsp;→&nbsp; x<sub>1</sub>=6−2x<sub>2</sub>−3x<sub>3</sub>, x<sub>2</sub> x<sub>3</sub> ελεύθερες',
    mats:[
      [[1,2,3,6],[2,4,6,12],[1,2,3,6]],
      [[1,2,3,6],[0,0,0,0],[1,2,3,6]],
      [[1,2,3,6],[0,0,0,0],[0,0,0,0]]
    ],
    ops:[
-     {lbl:'R₂ ← R₂ − 2·R₁',desc:'Γραμμή 2 γίνεται μηδενική (pivot: γραμμή 1)',piv:0,chg:1},
-     {lbl:'R₃ ← R₃ − R₁',  desc:'Γραμμή 3 γίνεται μηδενική (pivot: γραμμή 1)',piv:0,chg:2}
+     {html:'R<sub>2</sub> ← R<sub>2</sub> − 2·R<sub>1</sub>', note:'Γραμμή 2 γίνεται [0 0 0 | 0]', piv:0,chg:1},
+     {html:'R<sub>3</sub> ← R<sub>3</sub> − R<sub>1</sub>',  note:'Γραμμή 3 γίνεται [0 0 0 | 0]', piv:0,chg:2}
    ]},
   {name:'Καμία Λύση',type:'none',
-   result:'✗ Καμία λύση: rank(A)=1 < rank([A|b])=2 · αντίφαση [0 0 0|−1]',
+   res:'✗ Καμία λύση: rank(A)=1 &lt; rank([A|b])=2 &nbsp;→&nbsp; αντίφαση [0 0 0 | −1]',
    mats:[
      [[1,2,3,6],[2,4,6,12],[1,2,3,5]],
      [[1,2,3,6],[0,0,0,0],[1,2,3,5]],
      [[1,2,3,6],[0,0,0,0],[0,0,0,-1]]
    ],
    ops:[
-     {lbl:'R₂ ← R₂ − 2·R₁',desc:'Γραμμή 2 γίνεται μηδενική',piv:0,chg:1},
-     {lbl:'R₃ ← R₃ − R₁',  desc:'Αντίφαση: [0 0 0|−1] ≠ 0',piv:0,chg:2}
+     {html:'R<sub>2</sub> ← R<sub>2</sub> − 2·R<sub>1</sub>', note:'Γραμμή 2 → [0 0 0 | 0]', piv:0,chg:1},
+     {html:'R<sub>3</sub> ← R<sub>3</sub> − R<sub>1</sub>',  note:'Γραμμή 3 → [0 0 0 | −1] ← αντίφαση!', piv:0,chg:2}
    ]}
 ];
 
-let curEx=0,step=0,autoTimer=null;
+let curEx=0,revealed=0,autoT=null;
 
-function fmt(v){
+function fr(v){
   if(Math.abs(v)<1e-9)return'0';
   if(Math.abs(v-Math.round(v))<1e-9)return String(Math.round(v));
-  const fr=[[1,2],[1,3],[2,3],[3,2],[1,4],[3,4],[1,5],[2,5],[3,5],[4,5],[5,2],[7,2]];
-  for(const[n,d]of fr){if(Math.abs(v-n/d)<1e-9)return n+'/'+d;if(Math.abs(v+n/d)<1e-9)return'−'+n+'/'+d;}
+  const fs=[[1,2],[1,3],[2,3],[3,2],[1,4],[3,4],[5,2],[7,2],[1,5],[2,5],[3,5],[4,5],[5,7],[20,7]];
+  for(const[n,d]of fs){
+    if(Math.abs(v-n/d)<1e-9)return`<sup>${n}</sup>/<sub>${d}</sub>`;
+    if(Math.abs(v+n/d)<1e-9)return`−<sup>${n}</sup>/<sub>${d}</sub>`;
+  }
   return v.toFixed(2);
 }
 
-function buildMat(mat,piv,chg,prevMat,isPrev,isFinal){
+function bracket(top){
+  return`<div class="m-brak ${top?'m-brak-l':'m-brak-r'}"><div class="m-top"></div><div class="m-mid"></div><div class="m-bot"></div></div>`;
+}
+
+function buildMat(mat,piv,chg,prevMat,isFinal){
   const nr=mat.length,nc=mat[0].length,nc0=nc-1;
-  const gc=isFinal?'green':(isPrev?'grey':'');
-  let h='<div class="row-lbls">';
-  for(let r=0;r<nr;r++)h+=`<div class="row-lbl">R${r+1}</div>`;
-  h+='</div><div class="aug-mat">';
-  h+=`<div class="mat-bracket ${gc}">[</div><div class="mat-inner">`;
+  let h='<div class="rlbls">';
+  for(let r=0;r<nr;r++)h+=`<div class="rlbl">R<sub>${r+1}</sub></div>`;
+  h+='</div>';
+
+  h+='<div class="matrix">';
+  h+=bracket(true);
+  h+='<div class="m-body">';
+
+  // coefficient columns
   for(let c=0;c<nc0;c++){
-    h+='<div class="mat-col">';
+    h+='<div class="m-col">';
     for(let r=0;r<nr;r++){
-      let cls='cell';
-      if(isPrev)cls+=' prev-style';
-      else{
-        if(r===piv)cls+=r===piv&&c===0?' pivot-cell':' pivot-row';
-        if(r===chg){
-          if(prevMat&&Math.abs(mat[r][c])<1e-9&&Math.abs(prevMat[r][c])>1e-9)cls=' cell new-zero flash';
-          else cls+=' changed-row';
-        }
+      let cls='mcell norm';
+      if(r===piv){cls=(c===0)?'mcell piv-cell':'mcell piv-row';}
+      else if(r===chg){
+        if(prevMat&&Math.abs(mat[r][c])<1e-9&&Math.abs(prevMat[r][c])>1e-9) cls='mcell new-zero';
+        else cls='mcell chg-row';
       }
-      h+=`<div class="${cls}">${fmt(mat[r][c])}</div>`;
+      h+=`<div class="${cls}">${fr(mat[r][c])}</div>`;
     }
     h+='</div>';
   }
-  h+=`<div class="mat-sep ${gc}"></div><div class="mat-col">`;
+
+  // vertical augment line
+  h+='<div class="m-aug-line"></div>';
+
+  // rhs column
+  h+='<div class="m-col">';
   for(let r=0;r<nr;r++){
-    let cls='cell';
-    if(isPrev)cls+=' prev-style';
-    else{if(r===piv)cls+=' pivot-row';if(r===chg)cls+=' changed-row';}
-    h+=`<div class="${cls}">${fmt(mat[r][nc-1])}</div>`;
+    let cls='mcell norm';
+    if(r===piv) cls='mcell piv-row';
+    else if(r===chg) cls='mcell chg-row';
+    h+=`<div class="${cls}">${fr(mat[r][nc-1])}</div>`;
   }
-  h+='</div></div>';
-  h+=`<div class="mat-bracket ${gc}">]</div></div>`;
+  h+='</div>';
+
+  h+='</div>'; // m-body
+  h+=bracket(false);
+  h+='</div>'; // matrix
   return h;
 }
 
-function render(flash){
+function buildBlock(mat,piv,chg,prevMat,label,labelCls,isFinal){
+  return`<div class="mat-wrap ${isFinal?'final':''} step-in" style="flex-direction:column">
+    <div class="mat-lbl ${labelCls}">${label}</div>
+    <div style="display:flex;align-items:center">${buildMat(mat,piv,chg,prevMat,isFinal)}</div>
+  </div>`;
+}
+
+function buildArrow(op){
+  return`<div class="op-arrow step-in">
+    <div class="op-sym">↓</div>
+    <div class="op-pill">${op.html}</div>
+    <div class="op-note">${op.note}</div>
+  </div>`;
+}
+
+function renderSteps(){
   const ex=EX[curEx];
-  const total=ex.ops.length;
+  const sc=document.getElementById('steps');
+  sc.innerHTML='';
 
-  // progress & counter
-  document.getElementById('progFill').style.width=(step/total*100)+'%';
-  document.getElementById('stepCounter').textContent=`Βήμα ${step} από ${total}`;
+  // step 0: initial
+  const d0=document.createElement('div');
+  d0.innerHTML=buildBlock(ex.mats[0],-1,-1,null,'Αρχικός επαυξημένος πίνακας [A|b]','init',false);
+  sc.appendChild(d0);
 
-  // op box
-  const ob=document.getElementById('opBox');
-  if(step===0){
-    ob.innerHTML='<div class="op-step">Αρχή</div><div class="op-label">Αρχικός επαυξημένος πίνακας [A|b]</div>';
-  } else {
-    const op=ex.ops[step-1];
-    ob.innerHTML=`<div class="op-step">Βήμα ${step} από ${total}</div><div class="op-label">${op.lbl}</div><div class="op-desc">${op.desc}</div>`;
+  // steps 1..revealed
+  for(let s=1;s<=revealed;s++){
+    const op=ex.ops[s-1];
+    const isFinal=(s===ex.ops.length);
+    const lbl=isFinal?'Κλιμακωτή Μορφή (REF)':'Βήμα '+s;
+    const lblCls=isFinal?'fin':'';
+
+    const da=document.createElement('div');
+    da.innerHTML=buildArrow(op);
+    sc.appendChild(da);
+
+    const dm=document.createElement('div');
+    dm.innerHTML=buildBlock(ex.mats[s],op.piv,op.chg,ex.mats[s-1],lbl,lblCls,isFinal);
+    sc.appendChild(dm);
+
+    if(isFinal){
+      const dr=document.createElement('div');
+      dr.className='step-in';
+      dr.innerHTML=`<div class="result ${ex.type}">${ex.res}</div>`;
+      sc.appendChild(dr);
+    }
   }
 
-  // matrices
-  const sd=document.getElementById('stepDisplay');
-  const currMat=ex.mats[step];
-  const prevMat=step>0?ex.mats[step-1]:null;
-  const isFinal=(step===total);
-  const op=step>0?ex.ops[step-1]:null;
-
-  if(step===0){
-    // just show initial matrix centered
-    sd.innerHTML=`
-      <div class="mat-card curr">
-        <div class="mat-card-label curr-lbl">Αρχικός [A|b]</div>
-        ${buildMat(currMat,-1,-1,null,false,false)}
-      </div>`;
-  } else {
-    const currLabel=isFinal?'Κλιμακωτή Μορφή (REF)':'Βήμα '+step;
-    const currLblCls=isFinal?'final-lbl':'curr-lbl';
-    sd.innerHTML=`
-      <div class="mat-card prev">
-        <div class="mat-card-label">Βήμα ${step-1===0?'0 — Αρχικός':step-1}</div>
-        ${buildMat(prevMat,-1,-1,null,true,false)}
-      </div>
-      <div class="arrow-col">
-        <div class="arrow-op">${op.lbl}</div>
-        <div class="arrow-explain">${op.desc}</div>
-        <div class="arrow-sym">→</div>
-      </div>
-      <div class="mat-card curr ${isFinal?'final':''}">
-        <div class="mat-card-label ${currLblCls}">${currLabel}</div>
-        ${buildMat(currMat,op.piv,op.chg,prevMat,false,isFinal)}
-      </div>`;
-  }
-
-  // result
-  const rb=document.getElementById('resultBox');
-  if(isFinal){
-    rb.innerHTML=`<div class="result-box ${ex.type}">${ex.result}</div>`;
-  } else {
-    rb.innerHTML='';
-  }
-
-  document.getElementById('btnPrev').disabled=(step===0);
-  document.getElementById('btnNext').disabled=(step===total);
+  document.getElementById('bNext').disabled=(revealed>=ex.ops.length);
 }
 
 function loadEx(i){
-  stopAuto();curEx=i;step=0;
-  document.querySelectorAll('.ex-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
-  render(false);
+  stopAuto();curEx=i;revealed=0;
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));
+  renderSteps();
 }
 
-function nextStep(){
-  if(step>=EX[curEx].ops.length)return;
-  step++;render(true);
+function revealNext(){
+  if(revealed>=EX[curEx].ops.length)return;
+  revealed++;renderSteps();
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),80);
 }
-function prevStep(){
-  if(step===0)return;
-  step--;render(false);
+function revealAll(){
+  stopAuto();revealed=EX[curEx].ops.length;renderSteps();
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),120);
 }
 function stopAuto(){
-  if(autoTimer){clearInterval(autoTimer);autoTimer=null;}
-  document.getElementById('btnAuto').textContent='▶ Αυτόματα';
+  if(autoT){clearInterval(autoT);autoT=null;}
+  document.getElementById('bAuto').textContent='▶ Αυτόματα';
 }
 function toggleAuto(){
-  if(autoTimer){stopAuto();return;}
-  const spd=parseInt(document.getElementById('speedSel').value);
-  document.getElementById('btnAuto').textContent='⏸ Παύση';
-  nextStep();
-  autoTimer=setInterval(()=>{
-    if(step>=EX[curEx].ops.length){stopAuto();return;}
-    nextStep();
+  if(autoT){stopAuto();return;}
+  const spd=parseInt(document.getElementById('spd').value);
+  document.getElementById('bAuto').textContent='⏸ Παύση';
+  revealNext();
+  autoT=setInterval(()=>{
+    if(revealed>=EX[curEx].ops.length){stopAuto();return;}
+    revealNext();
   },spd);
 }
-
-document.getElementById('explBtn').addEventListener('click',function(){
-  const b=document.getElementById('explBody'),open=b.classList.toggle('open');
-  this.textContent=open?'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▲':'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼';
+document.getElementById('eTog').addEventListener('click',function(){
+  const b=document.getElementById('eBody'),o=b.classList.toggle('open');
+  this.textContent=o?'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▲':'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼';
 });
-
 loadEx(0);
 </script>
 </body>
