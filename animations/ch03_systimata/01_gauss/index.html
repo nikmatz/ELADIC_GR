@@ -1,31 +1,69 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Απαλοιφή Gauss</title>
-    <style>
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
-        header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
-        header h1{font-size:1.3rem}
-        header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
-        .container{max-width:950px;margin:0 auto;padding:1.5rem 1rem}
-        .btn{background:#004080;color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;font-size:.88rem;margin:.2rem}
-        .btn.orange{background:#c85000}.btn:hover{background:#003060}.btn.orange:hover{background:#a54000}
-        .control-group{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem;border:1px solid #dde3ea}
-        .info-box{background:#e8f4f8;border-left:4px solid #004080;padding:.7rem 1rem;margin-bottom:1rem;border-radius:0 8px 8px 0}
-        .info-box strong{color:#004080}
-        .matrix-display{background:#fff;padding:1.5rem;border-radius:8px;border:1px solid #dde3ea;margin:1rem 0;font-family:monospace;text-align:center}
-        .matrix-row{display:flex;justify-content:center;gap:0.5rem;margin:0.3rem 0}
-        .matrix-cell{display:inline-block;width:60px;text-align:center;padding:0.5rem;background:#f0f0f0;border:1px solid #ddd;border-radius:4px}
-        .matrix-cell.highlight{background:#c85000;color:#fff;font-weight:bold}
-        .operation-step{background:#fffbf0;border-left:4px solid #c85000;padding:.7rem 1rem;border-radius:0 8px 8px 0;margin:0.8rem 0;font-family:monospace;font-size:0.9rem}
-        .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
-        @media(max-width:600px){.grid-3{grid-template-columns:1fr}}
-        .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-family:Georgia,serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
-        .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Απαλοιφή Gauss — Βήμα-βήμα</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,serif;background:#f5f7fa;color:#1a1a1a}
+    header{background:linear-gradient(135deg,#004080,#0060a0);color:#fff;padding:1.2rem 1.5rem;border-bottom:3px solid #c85000}
+    header h1{font-size:1.3rem}
+    header p{font-size:.85rem;opacity:.85;margin-top:.3rem}
+    .container{max-width:900px;margin:0 auto;padding:1.5rem 1rem}
+
+    /* Example buttons */
+    .ex-btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+    .ex-btn{background:#004080;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:6px;cursor:pointer;font-size:.85rem;font-family:Georgia,serif;transition:background .2s}
+    .ex-btn:hover{background:#003060}
+    .ex-btn.active{background:#c85000}
+
+    /* Matrix area */
+    .matrix-wrapper{background:#fff;border:2px solid #dde3ea;border-radius:10px;padding:1.4rem 1.8rem;margin:1rem 0;display:flex;align-items:center;justify-content:center;min-height:120px}
+    .aug-matrix{display:inline-flex;align-items:stretch;gap:0}
+    .mat-bracket{font-size:3.5rem;color:#004080;line-height:1;padding:0 4px;font-weight:100}
+    .mat-cols{display:flex;gap:0;align-items:center}
+    .mat-coeff{display:flex;gap:0}
+    .mat-sep{width:2px;background:#004080;margin:4px 8px;border-radius:1px;align-self:stretch}
+    .mat-rhs{display:flex;gap:0}
+    .mat-col{display:flex;flex-direction:column;gap:4px}
+    .mat-cell{width:56px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:5px;font-family:'Courier New',monospace;font-size:.95rem;font-weight:600;transition:background .5s, color .5s, transform .4s;background:#f7f8fa;border:1px solid #dde3ea}
+    .mat-cell.pivot-row{background:#cce4ff;border-color:#004080;color:#004080}
+    .mat-cell.changed-row{background:#ffe4cc;border-color:#c85000;color:#c85000}
+    .mat-cell.pivot-cell{background:#004080;color:#fff;border-color:#004080}
+    .mat-cell.flash{animation:flash .6s ease}
+    @keyframes flash{0%{transform:scale(1.18);background:#c85000;color:#fff}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+
+    /* Row labels */
+    .row-labels{display:flex;flex-direction:column;gap:4px;margin-right:10px}
+    .row-label{height:40px;display:flex;align-items:center;font-size:.8rem;color:#888;font-style:italic}
+
+    /* Step info */
+    .step-box{background:#fffbf0;border-left:4px solid #c85000;border-radius:0 8px 8px 0;padding:.9rem 1.2rem;margin:.8rem 0;min-height:56px;transition:opacity .4s}
+    .step-box .step-num{font-size:.78rem;color:#888;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.04em}
+    .step-box .step-op{font-family:'Courier New',monospace;font-size:1rem;color:#c85000;font-weight:bold}
+    .step-box .step-explain{font-size:.85rem;color:#555;margin-top:.3rem}
+
+    /* Progress */
+    .progress-bar{height:6px;background:#dde3ea;border-radius:3px;margin:.8rem 0;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#004080,#c85000);border-radius:3px;transition:width .5s ease}
+
+    /* Status */
+    .status-box{background:#e8f4f8;border-left:4px solid #004080;border-radius:0 8px 8px 0;padding:.7rem 1rem;margin:.6rem 0;font-size:.9rem}
+    .status-box.done{background:#e8f5e9;border-color:#2e7d32}
+    .status-box.done strong{color:#2e7d32}
+
+    /* Controls */
+    .controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.8rem 0}
+    .btn{padding:.5rem 1.2rem;border:none;border-radius:6px;cursor:pointer;font-size:.88rem;font-family:Georgia,serif;transition:background .2s}
+    .btn-primary{background:#004080;color:#fff}.btn-primary:hover{background:#003060}
+    .btn-secondary{background:#e0e7ef;color:#004080}.btn-secondary:hover{background:#c8d5e8}
+    .btn-orange{background:#c85000;color:#fff}.btn-orange:hover{background:#a54000}
+    .btn:disabled{opacity:.4;cursor:not-allowed}
+    .speed-label{font-size:.82rem;color:#555;margin-left:.5rem}
+    select{padding:.4rem .7rem;border:1.5px solid #dde3ea;border-radius:6px;font-family:Georgia,serif;font-size:.85rem;background:#fff}
+
+    /* Explanation */
     .expl-section{margin-top:1.5rem;border:2px solid #dde3ea;border-radius:8px;overflow:hidden}
     .expl-toggle{width:100%;background:#004080;color:#fff;border:none;padding:.7rem 1rem;text-align:left;cursor:pointer;font-size:.9rem;font-family:Georgia,serif}
     .expl-toggle:hover{background:#003060}
@@ -33,192 +71,247 @@
     .expl-body.open{display:block}
     .expl-body h3{color:#004080;margin-bottom:.5rem;font-size:.95rem}
     .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
+
+    .author-stamp{background:linear-gradient(135deg,#004080,#003060);color:#fff;padding:.8rem 1.4rem;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem;border-top:3px solid #c85000;margin-top:2rem}
+    .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
   </style>
 </head>
 <body>
-    <header>
-        <h1>Απαλοιφή Gauss</h1>
-        <p>Κεφάλαιο 3: Γραμμικά Συστήματα - Βήμα προς βήμα επίλυση</p>
-    </header>
+<header>
+  <h1>Απαλοιφή Gauss — Βήμα-βήμα</h1>
+  <p>Κεφάλαιο 3 · Γραμμικά Συστήματα · Μετασχηματισμός επαυξημένου πίνακα σε κλιμακωτή μορφή</p>
+</header>
+<div class="container">
 
-    <div class="container">
-        <div class="info-box">
-            <strong>Εκπαιδευτικός Στόχος:</strong> Η απαλοιφή Gauss μετασχηματίζει το σύστημα σε άνω τριγωνική μορφή για εύκολη λύση με αντικατάσταση προς τα πάνω (back substitution). Χρησιμοποιούμε στοιχειώδες λειτουργίες γραμμών που δεν αλλάζουν τη λύση.
-        </div>
+  <div class="ex-btns">
+    <button class="ex-btn active" onclick="loadExample(0)">Παράδειγμα 1 — Μοναδική Λύση</button>
+    <button class="ex-btn" onclick="loadExample(1)">Παράδειγμα 2 — Άπειρες Λύσεις</button>
+    <button class="ex-btn" onclick="loadExample(2)">Παράδειγμα 3 — Καμία Λύση</button>
+  </div>
 
-        <div class="grid-3">
-            <button class="btn orange" id="example1">Παράδειγμα 1: Μοναδική Λύση</button>
-            <button class="btn orange" id="example2">Παράδειγμα 2: Άπειρες Λύσεις</button>
-            <button class="btn orange" id="example3">Παράδειγμα 3: Καμία Λύση</button>
-        </div>
+  <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
 
-        <div class="control-group">
-            <button class="btn" id="nextStep">Επόμενο Βήμα</button>
-            <button class="btn" id="prevStep">Προηγούμενο Βήμα</button>
-            <button class="btn" id="autoPlay">Αυτόματη Αναπαραγωγή</button>
-            <button class="btn" id="reset">Επαναφορά</button>
-        </div>
+  <div class="matrix-wrapper" id="matrixWrap"></div>
 
-        <div class="matrix-display">
-            <strong>Επαυξημένος Πίνακας [A|b]</strong>
-            <div id="matrixDisplay"></div>
-        </div>
+  <div class="step-box" id="stepBox">
+    <div class="step-num">Έτοιμο</div>
+    <div class="step-op">Πατήστε «Επόμενο Βήμα» ή «Αυτόματα»</div>
+  </div>
 
-        <div id="operationInfo"></div>
+  <div class="status-box" id="statusBox">
+    <strong>Αρχικός πίνακας</strong> — Βήμα 0 από <span id="totalSteps">—</span>
+  </div>
 
-        <div class="info-box" id="solutionInfo">
-            <strong id="solStatus">Κατάσταση:</strong> <span id="solMessage">Πατήστε "Επόμενο Βήμα"</span>
-        </div>
+  <div class="controls">
+    <button class="btn btn-secondary" id="btnPrev" onclick="prevStep()" disabled>◀ Πίσω</button>
+    <button class="btn btn-primary" id="btnNext" onclick="nextStep()">Επόμενο Βήμα ▶</button>
+    <button class="btn btn-orange" id="btnAuto" onclick="toggleAuto()">▶▶ Αυτόματα</button>
+    <button class="btn btn-secondary" onclick="resetEx()">↺ Επαναφορά</button>
+    <span class="speed-label">Ταχύτητα:</span>
+    <select id="speedSel">
+      <option value="2200">Αργά</option>
+      <option value="1300" selected>Κανονικά</option>
+      <option value="700">Γρήγορα</option>
+    </select>
+  </div>
+
+  <div class="expl-section">
+    <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼</button>
+    <div class="expl-body" id="explBody">
+      <h3>Απαλοιφή Gauss — Μέθοδος κλιμακωτής αναγωγής</h3>
+      <p>Η απαλοιφή Gauss μετατρέπει τον επαυξημένο πίνακα [A|b] σε <strong>κλιμακωτή μορφή (REF)</strong> χρησιμοποιώντας στοιχειώδεις πράξεις γραμμών — οι οποίες δεν αλλάζουν το σύνολο λύσεων:</p>
+      <div class="formula">Rᵢ ↔ Rⱼ &nbsp;|&nbsp; Rᵢ ← λ·Rᵢ (λ≠0) &nbsp;|&nbsp; Rᵢ ← Rᵢ + λ·Rⱼ</div>
+      <p>Σε κάθε βήμα επιλέγουμε <strong>pivot</strong> (το πρώτο μη-μηδενικό στοιχείο της γραμμής) και εξαλείφουμε τα κάτω στοιχεία της ίδιας στήλης. Μετά ακολουθεί η <strong>αντικατάσταση προς τα πάνω (back substitution)</strong> για εύρεση λύσεων.</p>
+      <div class="formula">Θεώρημα Kronecker-Capelli: συμβατό ⟺ rank(A) = rank([A|b])</div>
     </div>
-
-    
-<div class="expl-section" style="max-width:980px;margin:0 auto 1rem auto;padding:0 1rem">
-  <button class="expl-toggle" id="explBtn">📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼</button>
-  <div class="expl-body" id="explBody">
-    <h3>Απαλοιφή Gauss</h3>
-    <p>Η απαλοιφή Gauss μετατρέπει το [A|b] σε κλιμακωτή μορφή (REF) με πράξεις γραμμών.</p>
-    <div class="formula">Βήματα: επιλογή pivot → κανονικοποίηση → εξάλειψη κάτω στοιχείων → επανάληψη</div>
-    <p>Επιτρεπτές πράξεις: εναλλαγή γραμμών, πολλαπλασιασμός γραμμής επί λ≠0, πρόσθεση πολλαπλάσιου γραμμής σε άλλη. Αυτές δεν αλλάζουν το σύνολο λύσεων.</p>
   </div>
 </div>
+
+<div class="author-stamp">
+  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
+  <span>Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
+</div>
+
 <script>
+const EXAMPLES = [
+  {
+    name: 'Μοναδική Λύση',
+    init: [[2,1,-1,8],[1,-1,1,0],[3,2,1,13]],
+    steps: [
+      {op:'R₂ ← R₂ − (½)·R₁', explain:'Εξάλειψη του 1 στη στήλη 1, γραμμή 2 (pivot: γραμμή 1)', pivotRow:0, changedRow:1,
+       matrix:[[2,1,-1,8],[0,-1.5,1.5,-4],[3,2,1,13]]},
+      {op:'R₃ ← R₃ − (3/2)·R₁', explain:'Εξάλειψη του 3 στη στήλη 1, γραμμή 3 (pivot: γραμμή 1)', pivotRow:0, changedRow:2,
+       matrix:[[2,1,-1,8],[0,-1.5,1.5,-4],[0,0.5,2.5,1]]},
+      {op:'R₃ ← R₃ + (1/3)·R₂', explain:'Εξάλειψη του 0.5 στη στήλη 2, γραμμή 3 (pivot: γραμμή 2)', pivotRow:1, changedRow:2,
+       matrix:[[2,1,-1,8],[0,-1.5,1.5,-4],[0,0,3,-2/3*3]]}
+    ],
+    result:'✓ Κλιμακωτή μορφή — Μοναδική λύση: x₁=3, x₂=2, x₃=−⅔'
+  },
+  {
+    name: 'Άπειρες Λύσεις',
+    init: [[1,2,3,6],[2,4,6,12],[1,2,3,6]],
+    steps: [
+      {op:'R₂ ← R₂ − 2·R₁', explain:'Εξάλειψη γραμμής 2 — η γραμμή γίνεται μηδενική', pivotRow:0, changedRow:1,
+       matrix:[[1,2,3,6],[0,0,0,0],[1,2,3,6]]},
+      {op:'R₃ ← R₃ − R₁', explain:'Εξάλειψη γραμμής 3 — η γραμμή γίνεται μηδενική', pivotRow:0, changedRow:2,
+       matrix:[[1,2,3,6],[0,0,0,0],[0,0,0,0]]}
+    ],
+    result:'∞ Άπειρες λύσεις: rank(A)=rank([A|b])=1 < 3 — x₁=6−2x₂−3x₃, x₂,x₃ ελεύθερα'
+  },
+  {
+    name: 'Καμία Λύση',
+    init: [[1,2,3,6],[2,4,6,12],[1,2,3,5]],
+    steps: [
+      {op:'R₂ ← R₂ − 2·R₁', explain:'Εξάλειψη γραμμής 2', pivotRow:0, changedRow:1,
+       matrix:[[1,2,3,6],[0,0,0,0],[1,2,3,5]]},
+      {op:'R₃ ← R₃ − R₁', explain:'Εξάλειψη γραμμής 3 — αντίφαση: [0 0 0 | −1]', pivotRow:0, changedRow:2,
+       matrix:[[1,2,3,6],[0,0,0,0],[0,0,0,-1]]}
+    ],
+    result:'✗ Καμία λύση: rank(A)=1 < rank([A|b])=2 — αντίφαση στη γραμμή [0 0 0|−1]'
+  }
+];
+
+let exIdx=0, step=0, autoTimer=null, animLock=false;
+
+function fmt(v){
+  if(Math.abs(v)<1e-9)return'0';
+  if(Math.abs(v-Math.round(v))<1e-9)return String(Math.round(v));
+  // try simple fractions
+  const fracs=[[1,3],[2,3],[1,2],[1,4],[3,4],[1,6],[5,6],[1,5],[2,5],[3,5],[4,5]];
+  for(const[n,d]of fracs){
+    if(Math.abs(v-n/d)<1e-9)return n+'/'+d;
+    if(Math.abs(v+n/d)<1e-9)return'−'+n+'/'+d;
+  }
+  return v.toFixed(2);
+}
+
+function renderMatrix(mat, pivotRow, changedRow, flashCols){
+  const ncols=mat[0].length, ncoeff=ncols-1;
+  let html='<div class="row-labels">';
+  for(let r=0;r<mat.length;r++) html+=`<div class="row-label">R${r+1}</div>`;
+  html+='</div>';
+
+  html+='<div class="aug-matrix">';
+  html+='<div class="mat-bracket">[</div>';
+  html+='<div class="mat-cols">';
+  // coefficient columns
+  html+='<div class="mat-coeff">';
+  for(let c=0;c<ncoeff;c++){
+    html+='<div class="mat-col">';
+    for(let r=0;r<mat.length;r++){
+      let cls='mat-cell';
+      if(r===pivotRow) cls+=' pivot-row';
+      if(r===changedRow) cls+=' changed-row';
+      if(r===pivotRow && c===0) cls+=' pivot-cell';
+      const flash=(flashCols&&flashCols.includes(c)&&r===changedRow)?' flash':'';
+      html+=`<div class="${cls}${flash}">${fmt(mat[r][c])}</div>`;
+    }
+    html+='</div>';
+  }
+  html+='</div>';
+  // separator
+  html+='<div class="mat-sep"></div>';
+  // rhs column
+  html+='<div class="mat-rhs"><div class="mat-col">';
+  for(let r=0;r<mat.length;r++){
+    let cls='mat-cell';
+    if(r===pivotRow) cls+=' pivot-row';
+    if(r===changedRow) cls+=' changed-row';
+    const flash=(flashCols&&r===changedRow)?' flash':'';
+    html+=`<div class="${cls}${flash}">${fmt(mat[r][ncols-1])}</div>`;
+  }
+  html+='</div></div>';
+  html+='</div>';
+  html+='<div class="mat-bracket">]</div>';
+  html+='</div>';
+  document.getElementById('matrixWrap').innerHTML=html;
+}
+
+function updateUI(flash){
+  const ex=EXAMPLES[exIdx];
+  const total=ex.steps.length;
+  const mat=step===0?ex.init:ex.steps[step-1].matrix;
+  const pr=step===0?-1:ex.steps[step-1].pivotRow;
+  const cr=step===0?-1:ex.steps[step-1].changedRow;
+  const fc=flash?[0,1,2,3]:null;
+  renderMatrix(mat,pr,cr,fc);
+
+  // progress
+  document.getElementById('progFill').style.width=(total?(step/total*100):0)+'%';
+
+  // step box
+  const sb=document.getElementById('stepBox');
+  if(step===0){
+    sb.innerHTML='<div class="step-num">Αρχή</div><div class="step-op">Αρχικός επαυξημένος πίνακας [A|b]</div>';
+  } else {
+    const s=ex.steps[step-1];
+    sb.innerHTML=`<div class="step-num">Βήμα ${step} από ${total}</div><div class="step-op">${s.op}</div><div class="step-explain">${s.explain}</div>`;
+  }
+
+  // status
+  const stb=document.getElementById('statusBox');
+  document.getElementById('totalSteps').textContent=total;
+  if(step===total){
+    stb.className='status-box done';
+    stb.innerHTML=`<strong>${ex.result}</strong>`;
+  } else {
+    stb.className='status-box';
+    stb.innerHTML=`<strong>Κατάσταση:</strong> Βήμα ${step} από ${total}`;
+  }
+
+  document.getElementById('btnPrev').disabled=(step===0);
+  document.getElementById('btnNext').disabled=(step===total);
+}
+
+function loadExample(i){
+  stopAuto();
+  exIdx=i; step=0;
+  document.querySelectorAll('.ex-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  updateUI(false);
+}
+
+function nextStep(){
+  if(animLock)return;
+  const ex=EXAMPLES[exIdx];
+  if(step>=ex.steps.length)return;
+  step++;
+  animLock=true;
+  updateUI(true);
+  setTimeout(()=>{animLock=false;},700);
+}
+
+function prevStep(){
+  if(animLock||step===0)return;
+  step--;
+  updateUI(false);
+}
+
+function resetEx(){stopAuto();step=0;updateUI(false);}
+
+function stopAuto(){
+  if(autoTimer){clearInterval(autoTimer);autoTimer=null;}
+  document.getElementById('btnAuto').textContent='▶▶ Αυτόματα';
+}
+
+function toggleAuto(){
+  if(autoTimer){stopAuto();return;}
+  const speed=parseInt(document.getElementById('speedSel').value);
+  document.getElementById('btnAuto').textContent='⏸ Παύση';
+  nextStep();
+  autoTimer=setInterval(()=>{
+    const ex=EXAMPLES[exIdx];
+    if(step>=ex.steps.length){stopAuto();return;}
+    nextStep();
+  },speed);
+}
+
 document.getElementById('explBtn').addEventListener('click',function(){
-  var b=document.getElementById('explBody');
-  var open=b.classList.toggle('open');
+  const b=document.getElementById('explBody');
+  const open=b.classList.toggle('open');
   this.textContent=open?'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▲':'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼';
 });
+
+loadExample(0);
 </script>
-<div class="author-stamp">
-        <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
-        <span>Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
-    </div>
-
-    <script>
-        const examples = {
-            1: {
-                name: 'Μοναδική Λύση',
-                matrix: [[2, 1, -1, 8], [1, -1, 1, 0], [3, 2, 1, 13]],
-                steps: [
-                    {op: 'R₂ ← R₂ - (1/2)R₁', matrix: [[2, 1, -1, 8], [0, -1.5, 1.5, -4], [3, 2, 1, 13]]},
-                    {op: 'R₃ ← R₃ - (3/2)R₁', matrix: [[2, 1, -1, 8], [0, -1.5, 1.5, -4], [0, 0.5, 2.5, 1]]},
-                    {op: 'R₃ ← R₃ + (1/3)R₂', matrix: [[2, 1, -1, 8], [0, -1.5, 1.5, -4], [0, 0, 3, -2]]}
-                ],
-                result: 'Μοναδική Λύση: x₁=3, x₂=2, x₃=-2/3'
-            },
-            2: {
-                name: 'Άπειρες Λύσεις',
-                matrix: [[1, 2, 3, 6], [2, 4, 6, 12], [1, 2, 3, 6]],
-                steps: [
-                    {op: 'R₂ ← R₂ - 2R₁', matrix: [[1, 2, 3, 6], [0, 0, 0, 0], [1, 2, 3, 6]]},
-                    {op: 'R₃ ← R₃ - R₁', matrix: [[1, 2, 3, 6], [0, 0, 0, 0], [0, 0, 0, 0]]}
-                ],
-                result: 'Άπειρες Λύσεις: x₁ = 6-2x₂-3x₃ (x₂, x₃ ελεύθερα)'
-            },
-            3: {
-                name: 'Καμία Λύση',
-                matrix: [[1, 2, 3, 6], [2, 4, 6, 12], [1, 2, 3, 5]],
-                steps: [
-                    {op: 'R₂ ← R₂ - 2R₁', matrix: [[1, 2, 3, 6], [0, 0, 0, 0], [1, 2, 3, 5]]},
-                    {op: 'R₃ ← R₃ - R₁', matrix: [[1, 2, 3, 6], [0, 0, 0, 0], [0, 0, 0, -1]]}
-                ],
-                result: 'Καμία Λύση: Αντίφαση στη γραμμή [0 0 0|-1]'
-            }
-        };
-
-        let currentExample = 1;
-        let currentStep = 0;
-        let autoPlaying = false;
-
-        function setExample(num) {
-            currentExample = num;
-            currentStep = 0;
-            autoPlaying = false;
-            document.getElementById('nextStep').textContent = 'Επόμενο Βήμα';
-            render();
-        }
-
-        function nextStep() {
-            if (currentStep < examples[currentExample].steps.length) {
-                currentStep++;
-                render();
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 0) {
-                currentStep--;
-                render();
-            }
-        }
-
-        function toggleAutoPlay() {
-            autoPlaying = !autoPlaying;
-            if (autoPlaying) {
-                const interval = setInterval(() => {
-                    if (currentStep < examples[currentExample].steps.length) {
-                        currentStep++;
-                        render();
-                    } else {
-                        clearInterval(interval);
-                        autoPlaying = false;
-                        document.getElementById('autoPlay').textContent = 'Αυτόματη Αναπαραγωγή';
-                    }
-                }, 1500);
-            } else {
-                document.getElementById('autoPlay').textContent = 'Αυτόματη Αναπαραγωγή';
-            }
-        }
-
-        function render() {
-            const example = examples[currentExample];
-            let matrix = JSON.parse(JSON.stringify(example.matrix));
-
-            if (currentStep > 0) {
-                matrix = example.steps[currentStep - 1].matrix;
-            }
-
-            const matrixDisplay = document.getElementById('matrixDisplay');
-            let html = '';
-            for (let i = 0; i < matrix.length; i++) {
-                html += '<div class="matrix-row">';
-                for (let j = 0; j < matrix[i].length; j++) {
-                    let isAugmentLine = (j === matrix[i].length - 1);
-                    let highlight = (currentStep > 0 && j === 0);
-                    let cls = highlight ? 'matrix-cell highlight' : 'matrix-cell';
-                    html += `<span class="${cls}">${matrix[i][j].toFixed(2)}</span>`;
-                    if (isAugmentLine && j > 0) {
-                        html += '<span style="margin:0 0.3rem;color:#999">|</span>';
-                    }
-                }
-                html += '</div>';
-            }
-            matrixDisplay.innerHTML = html;
-
-            const opInfo = document.getElementById('operationInfo');
-            if (currentStep === 0) {
-                opInfo.innerHTML = '<div class="operation-step"><strong>Αρχικός επαυξημένος πίνακας [A|b]</strong><br>Πατήστε "Επόμενο Βήμα" για την πρώτη λειτουργία γραμμής</div>';
-            } else {
-                const step = example.steps[currentStep - 1];
-                opInfo.innerHTML = `<div class="operation-step"><strong>Βήμα ${currentStep}:</strong> ${step.op}</div>`;
-            }
-
-            const solInfo = document.getElementById('solutionInfo');
-            if (currentStep === example.steps.length) {
-                solInfo.innerHTML = `<strong>✓ Ολοκληρώθηκε:</strong> ${example.result}`;
-            } else {
-                solInfo.innerHTML = `<strong>Κατάσταση:</strong> Βήμα ${currentStep} από ${example.steps.length}`;
-            }
-        }
-
-        document.getElementById('example1').addEventListener('click', () => setExample(1));
-        document.getElementById('example2').addEventListener('click', () => setExample(2));
-        document.getElementById('example3').addEventListener('click', () => setExample(3));
-        document.getElementById('nextStep').addEventListener('click', nextStep);
-        document.getElementById('prevStep').addEventListener('click', prevStep);
-        document.getElementById('autoPlay').addEventListener('click', toggleAutoPlay);
-        document.getElementById('reset').addEventListener('click', () => setExample(1));
-
-        render();
-    </script>
 </body>
 </html>
