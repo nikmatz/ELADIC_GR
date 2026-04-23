@@ -1,0 +1,65 @@
+% ============================================================
+% CAS/Python ενότητες — Κεφάλαιο 12: Εφαρμογές Ολοκληρωτικού
+%
+% QR code: qr_3c203fbbafb7.png  (→ latex/qrcodes/)
+% URL: https://nikmatz.github.io/ELADIC_GR/code/ch12/
+% ============================================================
+
+\casactivbox%
+  {Maxima: Εμβαδόν, Όγκος Περιστροφής, Μήκος Τόξου}%
+  {%
+    \label{cas:ch12_integral_apps}
+    \begin{enumerate}[label=(\alph*),itemsep=2pt]
+      \item \textbf{Εμβαδόν}: υπολογίστε με \texttt{integrate} και
+        \texttt{romberg} το $\int_{-1}^{1}|x^3-x|\,dx$ και το
+        εμβαδόν μεταξύ $y=-x^2+4$ και $y=x^2-2x$.
+        Βρείτε τομές με \texttt{solve}.
+      \item \textbf{Όγκος περιστροφής} — μέθοδος δίσκων
+        ($V=\pi\int_a^b[f(x)]^2\,dx$): υπολογίστε για
+        $y=\sqrt{x}$ σε $[0,4]$ και $y=\sin x$ σε $[0,\pi]$.
+        Δακτύλιοι: $y=\sqrt{x}$ vs $y=x$ γύρω από τον $x$-άξονα.
+        Κελύφη: $y=x^3$ γύρω από τον $y$-άξονα, $[0,2]$.
+      \item \textbf{Μήκος τόξου} ($L=\int_a^b\!\sqrt{1+[f'(x)]^2}\,dx$):
+        για $y=x^{3/2}$ σε $[0,4]$ και $y=\ln(\cos x)$ σε $[0,\pi/3]$.
+        Χρησιμοποιήστε \texttt{diff} και \texttt{trigsimp}.
+      \item \textbf{Εμβαδόν επιφάνειας} ($S=2\pi\!\int f\sqrt{1+f'^2}\,dx$):
+        για τον κώνο $y=x$, $[0,2]$. Επαληθεύστε με τον τύπο
+        $S=\pi r l$ ($r=2$, $l=2\sqrt{2}$).
+      \item \textbf{Φυσικές εφαρμογές}: έργο ελατηρίου $F=200x$,
+        $x\in[0,0.1]$· κέντρο βάρους $y=x^2$, $[0,3]$.
+    \end{enumerate}
+    \smallskip
+    \textbf{Εντολές Maxima:}
+    \texttt{integrate(f,x,a,b)}, \texttt{romberg(f,x,a,b)},
+    \texttt{diff(f,x)}, \texttt{sqrt()}, \texttt{solve(f=g,x)}
+  }%
+  {https://nikmatz.github.io/ELADIC_GR/code/ch12/}%
+  {qr_3c203fbbafb7.png}
+
+\subsection*{Δραστηριότητα Python}
+
+\begin{pybox}{Python: Εφαρμογές Ολοκληρωτικού — SymPy, SciPy, 3D}%
+             {https://nikmatz.github.io/ELADIC_GR/code/ch12/}%
+             {qr_3c203fbbafb7.png}
+\label{py:ch12_integral_apps}
+\begin{enumerate}[label=(\alph*),itemsep=2pt]
+  \item Υπολογίστε εμβαδόν μεταξύ καμπυλών με
+    \texttt{sympy.integrate} και σχεδιάστε τη σκιασμένη
+    περιοχή με \texttt{matplotlib.fill\_between}.
+  \item Όγκος περιστροφής: εφαρμόστε και τις τρεις
+    μεθόδους (δίσκων, δακτυλίων, κελυφών) και επαληθεύστε
+    ότι δίνουν το ίδιο αποτέλεσμα. Οπτικοποιήστε το στερεό
+    3D με \texttt{mpl\_toolkits.mplot3d}.
+  \item Μήκος τόξου: υπολογίστε με \texttt{sympy} και
+    \texttt{scipy.integrate.quad}. Σχεδιάστε σωρευτικό
+    μήκος τόξου $L(t)$ παράλληλα με την καμπύλη.
+  \item Φυσικές εφαρμογές: υπολογίστε έργο ελατηρίου,
+    κέντρο βάρους και υδροστατική δύναμη σε ορθογωνική
+    δεξαμενή ($4\text{ m}\times 3\text{ m}$, $\rho g=9810$ N/m³).
+\end{enumerate}
+\medskip
+\textbf{Βιβλιοθήκες / Εντολές:}
+\texttt{sympy.integrate()}, \texttt{sympy.diff()},
+\texttt{scipy.integrate.quad()},
+\texttt{mpl\_toolkits.mplot3d}, \texttt{fill\_between()}
+\end{pybox}

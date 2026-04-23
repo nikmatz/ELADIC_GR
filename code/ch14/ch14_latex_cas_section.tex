@@ -1,0 +1,57 @@
+% ============================================================
+% CAS/Python ενότητες — Κεφάλαιο 14: Δυναμοσειρές
+%
+% QR code: qr_7d8143d735df.png  (→ latex/qrcodes/)
+% URL: https://nikmatz.github.io/ELADIC_GR/code/ch14/
+% ============================================================
+
+\casactivbox%
+  {Maxima: Δυναμοσειρές — Ακτίνα Σύγκλισης, Taylor, Πράξεις}%
+  {%
+    \label{cas:ch14_power_series}
+    \begin{enumerate}[label=(\alph*),itemsep=2pt]
+      \item \textbf{Ακτίνα σύγκλισης} $R = \lim\left|\dfrac{c_n}{c_{n+1}}\right|$:
+        υπολογίστε για $\sum\frac{x^n}{n}$, $\sum\frac{x^n}{n!}$,
+        $\sum n\,x^n$, $\sum\frac{x^n}{2^n}$, $\sum n!\,x^n$.
+      \item \textbf{Αναπτύγματα Maclaurin} με \texttt{taylor(f,x,0,8)}:
+        $e^x$, $\sin x$, $\cos x$, $\ln(1+x)$, $\dfrac{1}{1-x}$,
+        $\arctan x$, $\sqrt{1+x}$. Taylor γύρω από $x_0=1$ για $e^x$.
+      \item \textbf{Πράξεις}: παράγωγος $\frac{d}{dx}\!\left[\sum x^n\right]$
+        $=\sum nx^{n-1}=\frac{1}{(1-x)^2}$· ολοκλήρωμα
+        $\int\!\frac{1}{1+x}\,dx = \sum\frac{(-1)^n x^{n+1}}{n+1}=\ln(1+x)$.
+      \item \textbf{Υπολογισμός $\pi$}: σειρά Gregory-Leibniz
+        $\frac{\pi}{4}=\sum\frac{(-1)^n}{2n+1}$ για $N=10,100,1000$·
+        τύπος Machin $\frac{\pi}{4}=4\arctan\frac{1}{5}-\arctan\frac{1}{239}$.
+      \item Προσέγγιση $\int_0^1\!\sin(x^2)\,dx$ με δυναμοσειρά.
+    \end{enumerate}
+    \smallskip
+    \textbf{Εντολές Maxima:}
+    \texttt{taylor(f,x,x0,n)}, \texttt{diff(T,x)},
+    \texttt{integrate(T,x)}, \texttt{limit()}, \texttt{sum()}
+  }%
+  {https://nikmatz.github.io/ELADIC_GR/code/ch14/}%
+  {qr_7d8143d735df.png}
+
+\subsection*{Δραστηριότητα Python}
+
+\begin{pybox}{Python: Δυναμοσειρές — SymPy, Σύγκλιση, Γραφικά}%
+             {https://nikmatz.github.io/ELADIC_GR/code/ch14/}%
+             {qr_7d8143d735df.png}
+\label{py:ch14_power_series}
+\begin{enumerate}[label=(\alph*),itemsep=2pt]
+  \item Πίνακας ακτίνων σύγκλισης $R$ για 6 δυναμοσειρές.
+    Αναπτύγματα Maclaurin με \texttt{sympy.series(f,x,0,8)}.
+  \item Γραφικά Maclaurin: σχεδιάστε $e^x$, $\sin x$, $\ln(1+x)$,
+    $\arctan x$ μαζί με προσεγγίσεις τάξης $n=1,3,5,9$ —
+    παρατηρήστε πού «ξεφεύγει» κάθε πολυώνυμο από την καμπύλη.
+  \item Υπολογισμός $\pi$: σύγκλιση Gregory-Leibniz (αργή)
+    vs τύπος Machin (ταχεία). Σφάλμα ως συνάρτηση $N$ σε log-scale.
+  \item Δυναμοσειρά για ολοκλήρωμα: $\int_0^1\!\sin(x^2)\,dx$
+    — σύγκριση σειράς vs \texttt{scipy.quad}. Σφάλμα ανά τάξη.
+\end{enumerate}
+\medskip
+\textbf{Βιβλιοθήκες / Εντολές:}
+\texttt{sympy.series()}, \texttt{sympy.diff()},
+\texttt{sympy.integrate()}, \texttt{math.factorial()},
+\texttt{scipy.integrate.quad()}, \texttt{matplotlib.pyplot}
+\end{pybox}

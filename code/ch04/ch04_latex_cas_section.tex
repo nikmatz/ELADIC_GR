@@ -1,0 +1,60 @@
+% ============================================================
+% CAS/Python ενότητες — Κεφάλαιο 4: Γραμμικές Μετασχηματισμοί
+%
+% QR code: qr_6b31e6452fdb.png  (→ latex/qrcodes/)
+% URL: https://nikmatz.github.io/ELADIC_GR/code/ch04/
+% ============================================================
+
+\casactivbox%
+  {Maxima: Γραμμικοί Μετασχηματισμοί — Ker, Im, Γεωμετρία}%
+  {%
+    \label{cas:ch4_linear_transforms}
+    Ο γραμμικός μετασχηματισμός $T:\mathbb{R}^3\to\mathbb{R}^3$ ορίζεται από
+    \[
+      T(x,y,z) = (x+2y,\; 3x-y+z,\; 2y-z),
+      \quad
+      A = \begin{pmatrix} 1 & 2 & 0 \\ 3 & -1 & 1 \\ 0 & 2 & -1 \end{pmatrix}.
+    \]
+    \begin{enumerate}[label=(\alph*),itemsep=2pt]
+      \item Υπολογίστε $T(\mathbf{e}_1)$, $T(\mathbf{e}_2)$, $T(\mathbf{e}_3)$
+        και $T(2,-1,3)^{\top}$. Επαληθεύστε τη γραμμικότητα:
+        $T(2\mathbf{u}-\mathbf{w}) = 2T(\mathbf{u})-T(\mathbf{w})$.
+      \item Βρείτε $\ker(T)$ (\texttt{nullspace}) και $\operatorname{Im}(T)$
+        (\texttt{columnspace}). Επαληθεύστε το θεώρημα rank-nullity.
+      \item Για τη στροφή $R_\theta$ στο $\mathbb{R}^2$ κατά $\theta=45°$:
+        υπολογίστε $R_{45°}\cdot(1,0)^\top$ και επαληθεύστε $\det(R_{45°})=1$.
+      \item Υπολογίστε $R_{90°}\cdot \text{Ref}_x$ και $\text{Ref}_x\cdot R_{90°}$.
+        Σχολιάστε τη μη αντιμεταθετικότητα.
+    \end{enumerate}
+    \smallskip
+    \textbf{Εντολές Maxima:}
+    \texttt{A . v}, \texttt{nullspace(A)}, \texttt{columnspace(A)},
+    \texttt{rank(A)}, \texttt{determinant(A)}, \texttt{invert(A)}
+  }%
+  {https://nikmatz.github.io/ELADIC_GR/code/ch04/}%
+  {qr_6b31e6452fdb.png}
+
+\subsection*{Δραστηριότητα Python}
+
+\begin{pybox}{Python: Μετασχηματισμοί — Γεωμετρία, Σύνθεση, Οπτικοποίηση}%
+             {https://nikmatz.github.io/ELADIC_GR/code/ch04/}%
+             {qr_6b31e6452fdb.png}
+\label{py:ch4_linear_transforms}
+\begin{enumerate}[label=(\alph*),itemsep=2pt]
+  \item Εφαρμόστε τον μετασχηματισμό $A$ της δραστηριότητας Maxima
+    σε διανύσματα με \texttt{A @ v}. Επαληθεύστε τη γραμμικότητα.
+  \item Βρείτε $\ker(T)$ και $\operatorname{Im}(T)$ με
+    \texttt{sympy.Matrix.nullspace()} και \texttt{columnspace()}.
+  \item Ορίστε συναρτήσεις \texttt{rot($\theta$)}, \texttt{ref\_x()},
+    \texttt{scale($s_x,s_y$)}, \texttt{shear($k$)} και υπολογίστε
+    $\det$ για κάθε έναν. Τι σημαίνει $|\det|$ γεωμετρικά;
+  \item Εφαρμόστε τους μετασχηματισμούς σε ένα τετράγωνο και
+    οπτικοποιήστε πριν/μετά (Matplotlib) — στροφή $45°$, ανάκλαση,
+    κλιμάκωση, διάτμηση.
+\end{enumerate}
+\medskip
+\textbf{Βιβλιοθήκες / Εντολές:}
+\texttt{A @ v}, \texttt{np.linalg.det()},
+\texttt{sympy.Matrix.nullspace()},
+\texttt{np.radians()}, \texttt{matplotlib.pyplot}
+\end{pybox}

@@ -1,0 +1,61 @@
+% ============================================================
+% ΔΙΟΡΘΩΜΕΝΗ έκδοση — Κεφάλαιο 0
+% Μιγαδικοί Αριθμοί
+%
+% Αφαιρέθηκαν τα \begin{ekfonisicas} / \begin{ekfonisipy}
+% ώστε να μην εμφανίζεται κάθετη γραμμή μέσα στα box.
+%
+% QR code: qr_cf0b663610cc.png  (→ latex/qrcodes/)
+% URL: https://nikmatz.github.io/ELADIC_GR/code/ch00/
+% ============================================================
+
+\casactivbox%
+  {Maxima: Μιγαδικοί — Εκθετική Μορφή, Φάσορες, De Moivre}%
+  {%
+    \label{cas:ch0_complex_exponential}
+    Στην ανάλυση AC κυκλωμάτων χρησιμοποιούμε \textbf{φάσορες} (phasors)
+    σε εκθετική μορφή $z = r\,e^{i\theta}$.
+    Δίνονται $z_A = 5\,e^{i\pi/3}$ και $z_B = 2\,e^{i\pi/6}$.
+    \begin{enumerate}[label=(\alph*),itemsep=2pt]
+      \item Μετατρέψτε $z_A$, $z_B$ σε ορθογώνια μορφή $a+bi$
+        (\texttt{rectform}).
+      \item Υπολογίστε $z_A \cdot z_B$ και $z_A / z_B$. Επαληθεύστε
+        πρόσθεση/αφαίρεση γωνιών και πολλαπλασιασμό/διαίρεση μέτρων.
+      \item Επαληθεύστε De Moivre για $n=3$:
+        $\bigl(5\,e^{i\pi/3}\bigr)^3 = -125$.
+      \item Βρείτε τις τρεις ρίζες $x^3 = 8$ (\texttt{solve}).
+        Σχολιάστε τη γεωμετρική τους διάταξη στο επίπεδο.
+    \end{enumerate}
+    \smallskip
+    \textbf{Εντολές Maxima:}
+    \texttt{rectform(z)}, \texttt{abs(z)}, \texttt{carg(z)},
+    \texttt{simplify(\ldots)}, \texttt{solve(x\^{}3=8, x)}
+  }%
+  {https://nikmatz.github.io/ELADIC_GR/code/ch00/}%
+  {qr_cf0b663610cc.png}
+
+\subsection*{Δραστηριότητα Python}
+
+\begin{pybox}{Python: Μιγαδικοί — cmath, SymPy, Διάγραμμα Argand}%
+             {https://nikmatz.github.io/ELADIC_GR/code/ch00/}%
+             {qr_cf0b663610cc.png}
+\label{py:ch0_complex}
+Δίνονται $z_1 = 3+4i$, $z_2 = 1-2i$ και φάσορες
+$z_A = 5\,e^{i\pi/3}$, $z_B = 2\,e^{i\pi/6}$.
+\begin{enumerate}[label=(\alph*),itemsep=2pt]
+  \item Υπολογίστε βασικές πράξεις με \texttt{cmath}:
+    $z_1+z_2$, $z_1 \cdot z_2$, $|z_1|$, $\arg(z_1)$.
+  \item Για τους φάσορες: υπολογίστε γινόμενο και πηλίκο,
+    επαληθεύστε νόμους μέτρου και γωνίας.
+  \item Βρείτε τις δύο τετραγωνικές ρίζες του $1+i$
+    και επαληθεύστε $x^2 = 1+i$.
+  \item Επαληθεύστε De Moivre $n=3$ με SymPy (συμβολικά).
+  \item \textit{Προαιρετικό:} Σχεδιάστε διάγραμμα Argand
+    με τις πράξεις και τις ρίζες $x^3=8$ (Matplotlib).
+\end{enumerate}
+\medskip
+\textbf{Βιβλιοθήκες / Εντολές:}
+\texttt{cmath.polar(z)}, \texttt{cmath.rect(r,$\theta$)},
+\texttt{cmath.phase(z)}, \texttt{sympy.solve()},
+\texttt{matplotlib.pyplot}
+\end{pybox}

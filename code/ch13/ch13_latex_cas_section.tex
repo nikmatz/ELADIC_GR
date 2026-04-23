@@ -1,0 +1,64 @@
+% ============================================================
+% CAS/Python ενότητες — Κεφάλαιο 13: Ακολουθίες και Σειρές
+%
+% QR code: qr_50f013549203.png  (→ latex/qrcodes/)
+% URL: https://nikmatz.github.io/ELADIC_GR/code/ch13/
+% ============================================================
+
+\casactivbox%
+  {Maxima: Ακολουθίες, Σειρές, Κριτήρια Σύγκλισης, Taylor}%
+  {%
+    \label{cas:ch13_sequences_series}
+    \begin{enumerate}[label=(\alph*),itemsep=2pt]
+      \item \textbf{Ακολουθίες}: υπολογίστε με \texttt{limit(a\_n,n,inf)}
+        τα όρια των $\dfrac{n}{n+1}$, $\left(1+\dfrac{1}{n}\right)^n$,
+        $\dfrac{n^2}{e^n}$, $\dfrac{(-1)^n}{n}$.
+        Εκτυπώστε τους πρώτους 10 όρους με \texttt{makelist}.
+      \item \textbf{Γεωμετρικές σειρές}: υπολογίστε
+        $\sum_{n=0}^{\infty}\!\left(\tfrac{1}{2}\right)^n$,
+        $\sum_{n=0}^{\infty}\!\left(\tfrac{2}{3}\right)^n$
+        με \texttt{sum} και επαληθεύστε τον τύπο $S=a/(1-r)$.
+        Τηλεσκοπική: $\sum_{n=1}^{\infty}\frac{1}{n(n+1)}=1$.
+      \item \textbf{Κριτήρια}: εφαρμόστε κριτήριο λόγου
+        για $\sum \frac{n!}{n^n}$ και $\sum \frac{n^n}{n!}$.
+        Σειρά Basel: $\sum\frac{1}{n^2}=\frac{\pi^2}{6}$ —
+        υπολογίστε $S_N$ για $N=10,100,1000$.
+      \item \textbf{Σειρές Maclaurin}: αναπτύξτε με \texttt{taylor}
+        τις $e^x$, $\sin x$, $\cos x$, $\ln(1+x)$, $\dfrac{1}{1-x}$
+        έως $n=6$. Αριθμητική σύγκλιση $e^x$ στο $x=1$.
+    \end{enumerate}
+    \smallskip
+    \textbf{Εντολές Maxima:}
+    \texttt{limit(a,n,inf)}, \texttt{sum(a,n,1,inf)},
+    \texttt{makelist()}, \texttt{taylor(f,x,0,n)},
+    \texttt{float()}
+  }%
+  {https://nikmatz.github.io/ELADIC_GR/code/ch13/}%
+  {qr_50f013549203.png}
+
+\subsection*{Δραστηριότητα Python}
+
+\begin{pybox}{Python: Ακολουθίες, Σειρές, Σύγκλιση, Maclaurin}%
+             {https://nikmatz.github.io/ELADIC_GR/code/ch13/}%
+             {qr_50f013549203.png}
+\label{py:ch13_sequences_series}
+\begin{enumerate}[label=(\alph*),itemsep=2pt]
+  \item Υπολογίστε με \texttt{sympy.limit} τα όρια ακολουθιών.
+    Σχεδιάστε $(1+1/n)^n$ ως συνάρτηση του $n$ και δείξτε
+    τη σύγκλισή του προς $e$ (οριζόντια ασύμπτωτος).
+  \item Γεωμετρικές σειρές: υπολογίστε μερικά αθροίσματα
+    $S_N$ με \texttt{np.cumsum} και σχεδιάστε τη σύγκλιση.
+    \texttt{sympy.summation} για ακριβείς τιμές.
+  \item Κριτήρια σύγκλισης: εφαρμόστε αριθμητικό κριτήριο
+    λόγου για $N=50$ όρους. Σύγκλιση $\sum 1/n^2 \to \pi^2/6$:
+    σχεδιάστε σφάλμα σε log-log γράφημα (κλίση $-1$).
+  \item Maclaurin: σχεδιάστε $e^x$ και προσεγγίσεις τάξης
+    $n=1,3,5,9$ σε $[-3,3]$· ομοίως $\sin x$ σε $[-2\pi,2\pi]$.
+    Εκτυπώστε πίνακα σύγκλισης για $e^1$.
+\end{enumerate}
+\medskip
+\textbf{Βιβλιοθήκες / Εντολές:}
+\texttt{sympy.limit()}, \texttt{sympy.summation()},
+\texttt{sympy.series()}, \texttt{np.cumsum()},
+\texttt{math.factorial()}, \texttt{matplotlib.pyplot}
+\end{pybox}

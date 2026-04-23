@@ -1,0 +1,77 @@
+% ============================================================
+% CAS/Python ενότητες — Κεφάλαιο 3: Γραμμικά Συστήματα
+%
+% QR code: qr_d7aaf59e2500.png  (→ latex/qrcodes/)
+% URL: https://nikmatz.github.io/ELADIC_GR/code/ch03/
+% ============================================================
+
+\casactivbox%
+  {Maxima: Γραμμικά Συστήματα — Gauss, Cramer, Ομογενή}%
+  {%
+    \label{cas:ch3_linear_systems}
+    Εξετάστε τα παρακάτω τρία συστήματα $3\times 3$:
+    \[
+      (A)\;
+      \begin{cases}
+        2x + y - z = 8\\
+       -3x - y + 2z = -11\\
+        x - 2y + 2z = -3
+      \end{cases}
+      \qquad
+      (B)\;
+      \begin{cases}
+        x + y = 3\\
+        2x + 2y = 5
+      \end{cases}
+      \qquad
+      (C)\;
+      \begin{cases}
+        x + 2y - z = 3\\
+        2x + 4y - 2z = 6
+      \end{cases}
+    \]
+    \begin{enumerate}[label=(\alph*),itemsep=2pt]
+      \item Λύστε το σύστημα $(A)$ με \texttt{linsolve} και επαληθεύστε.
+        Κατασκευάστε τον επαυξημένο πίνακα $[A|\mathbf{b}]$ και υπολογίστε
+        \texttt{rref}.
+      \item Για τα $(B)$ και $(C)$: υπολογίστε $\operatorname{rank}(A)$ και
+        $\operatorname{rank}([A|\mathbf{b}])$. Εφαρμόστε το θεώρημα
+        Rouché–Capelli και χαρακτηρίστε κάθε σύστημα.
+      \item Λύστε το $2\times 2$ σύστημα $2x+y=4$, $5x+3y=7$ με τον
+        κανόνα Cramer (αντικατάσταση στήλης, \texttt{determinant}).
+      \item Βρείτε τον μηδενόχωρο (\texttt{nullspace}) του ομογενούς
+        συστήματος $A\mathbf{x}=\mathbf{0}$ για
+        $A=\bigl[\begin{smallmatrix}1&-2&1\\2&-3&1\\0&1&-1\end{smallmatrix}\bigr]$.
+    \end{enumerate}
+    \smallskip
+    \textbf{Εντολές Maxima:}
+    \texttt{linsolve([eq,...],[x,y,z])}, \texttt{rref(A)},
+    \texttt{rank(A)}, \texttt{determinant(A)}, \texttt{nullspace(A)}
+  }%
+  {https://nikmatz.github.io/ELADIC_GR/code/ch03/}%
+  {qr_d7aaf59e2500.png}
+
+\subsection*{Δραστηριότητα Python}
+
+\begin{pybox}{Python: Γραμμικά Συστήματα — NumPy, SymPy, Γεωμετρία}%
+             {https://nikmatz.github.io/ELADIC_GR/code/ch03/}%
+             {qr_d7aaf59e2500.png}
+\label{py:ch3_linear_systems}
+Χρησιμοποιήστε τα συστήματα $(A)$, $(B)$, $(C)$ της δραστηριότητας Maxima.
+\begin{enumerate}[label=(\alph*),itemsep=2pt]
+  \item Λύστε το $(A)$ με \texttt{np.linalg.solve}. Επαληθεύστε και
+    εκτυπώστε την RREF με \texttt{sympy.Matrix.rref()}.
+  \item Γράψτε συνάρτηση \texttt{classify\_system(A, b)} που ελέγχει
+    τις τάξεις και επιστρέφει «μοναδική / άπειρες / ασύμβατο».
+    Δοκιμάστε τη στα $(A)$, $(B)$, $(C)$.
+  \item Για το $(C)$: εκτυπώστε την παραμετρική λύση με
+    \texttt{sympy.linsolve}.
+  \item Οπτικοποιήστε γεωμετρικά τους τρεις τύπους (τομή / παράλληλες /
+    ταυτόσημες ευθείες) σε $2\times 2$ συστήματα με Matplotlib.
+\end{enumerate}
+\medskip
+\textbf{Βιβλιοθήκες / Εντολές:}
+\texttt{np.linalg.solve()}, \texttt{np.linalg.matrix\_rank()},
+\texttt{sympy.Matrix.rref()}, \texttt{sympy.linsolve()},
+\texttt{matplotlib.pyplot}
+\end{pybox}
