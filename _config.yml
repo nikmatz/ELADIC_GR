@@ -1,6 +1,6 @@
-# GitHub Pages config for ELADIC_GR
-title: "ELADIC_GR — Μαθηματικά Ι ΑΣΠΕΤΕ"
-description: "Ψηφιακό εκπαιδευτικό υλικό: διαδραστικά κουίζ και animations"
+# GitHub Pages config
+title: "Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού"
+description: "Ψηφιακό συνοδευτικό υλικό: διαδραστικά κουίζ, δραστηριότητες CAS και animations"
 url: "https://nikmatz.github.io"
 baseurl: "/ELADIC_GR"
 theme: null

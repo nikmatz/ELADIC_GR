@@ -3,66 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELADIC_GR — Ψηφιακό Συνοδευτικό Υλικό «Μαθηματικά Ι»</title>
+  <title>Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού — Ψηφιακό Συνοδευτικό Υλικό</title>
   <style>
     :root {
-      --aspblue:#004080; --bookorange:#c85000; --bookgreen:#008c46;
+      --blue:#004080; --bookorange:#c85000; --bookgreen:#008c46;
       --bg:#f5f7fa; --card:#fff; --shadow:0 2px 12px rgba(0,0,0,.10);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:#1a1a1a;line-height:1.7}
-    header{background:linear-gradient(135deg,var(--aspblue) 55%,#0060a0);color:#fff;padding:2.5rem 2rem 2rem;border-bottom:3px solid #b48c00}
-    header h1{font-size:2rem;letter-spacing:-.02em}
+    header{background:linear-gradient(135deg,var(--blue) 55%,#0060a0);color:#fff;padding:2.5rem 2rem 2rem;border-bottom:3px solid #b48c00}
+    header h1{font-size:1.75rem;letter-spacing:-.02em}
     header p{opacity:.8;font-size:.95rem;margin-top:.4rem}
     .badge{display:inline-block;background:#b48c00;color:#fff;padding:.2em .8em;border-radius:4px;font-size:.72rem;font-family:sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.8rem}
     main{max-width:1100px;margin:0 auto;padding:2rem 1.2rem 4rem}
-    .section-title{font-size:1.3rem;color:var(--aspblue);margin:2rem 0 1rem;border-bottom:2px solid #dde3ea;padding-bottom:.4rem}
+    .section-title{font-size:1.3rem;color:var(--blue);margin:2rem 0 1rem;border-bottom:2px solid #dde3ea;padding-bottom:.4rem}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
-    .card{background:var(--card);border-radius:10px;box-shadow:var(--shadow);padding:1.2rem 1.4rem;border-top:4px solid var(--aspblue);transition:transform .15s}
+    .card{background:var(--card);border-radius:10px;box-shadow:var(--shadow);padding:1.2rem 1.4rem;border-top:4px solid var(--blue);transition:transform .15s}
     .card:hover{transform:translateY(-2px)}
     .card-num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:var(--bookorange);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
-    .card h3{font-size:1.05rem;color:var(--aspblue);margin-bottom:.35rem}
+    .card h3{font-size:1.05rem;color:var(--blue);margin-bottom:.35rem}
     .card p{font-size:.88rem;color:#555;margin-bottom:.9rem}
     .card-links{display:flex;gap:.5rem;flex-wrap:wrap}
     .btn-quiz{background:var(--bookorange);color:#fff;padding:.3em .9em;border-radius:5px;text-decoration:none;font-size:.82rem;font-family:sans-serif;font-weight:600}
     .btn-quiz:hover{background:#a54000}
     .btn-anim{background:var(--bookgreen);color:#fff;padding:.3em .9em;border-radius:5px;text-decoration:none;font-size:.82rem;font-family:sans-serif;font-weight:600}
     .btn-anim:hover{background:#006030}
+    .btn-code{background:#555;color:#fff;padding:.3em .9em;border-radius:5px;text-decoration:none;font-size:.82rem;font-family:sans-serif;font-weight:600}
+    .btn-code:hover{background:#333}
     footer{text-align:center;padding:2rem;font-size:.83rem;color:#888;font-family:sans-serif}
-  
-  .author-stamp {
-    background: linear-gradient(135deg, #004080 0%, #003060 100%);
-    color: #fff;
-    padding: 0.8rem 1.4rem;
-    font-family: 'Georgia', serif;
-    font-size: 0.82rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.4rem;
-    border-top: 3px solid #c85000;
-    margin-top: 2rem;
-  }
-  .author-stamp .stamp-book {
-    font-style: italic;
-    color: #ffd080;
-    font-weight: bold;
-  }
-  .author-stamp .stamp-author {
-    opacity: 0.9;
-  }
-
+    .author-stamp{
+      background:linear-gradient(135deg,#004080 0%,#003060 100%);
+      color:#fff;padding:.8rem 1.4rem;font-family:'Georgia',serif;font-size:.82rem;
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+      gap:.4rem;border-top:3px solid #c85000;margin-top:2rem;
+    }
+    .author-stamp .stamp-book{font-style:italic;color:#ffd080;font-weight:bold}
+    .author-stamp .stamp-author{opacity:.9}
   </style>
 </head>
 <body>
 <header>
-  <div class="badge">Βιβλίο «Μαθηματικά Ι»</div>
-  <h1>ELADIC_GR — Ψηφιακό Συνοδευτικό Υλικό</h1>
-  <p>Διαδραστικά Κουίζ Αυτοαξιολόγησης · 21 Κεφάλαια · 10+ Ερωτήσεις ανά Κεφάλαιο</p>
+  <div class="badge">Ψηφιακό Συνοδευτικό Υλικό</div>
+  <h1>📖 Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού</h1>
+  <p>Ν. Ματζάκος &nbsp;·&nbsp; Διαδραστικά Κουίζ &amp; Δραστηριότητες CAS · 20 Κεφάλαια</p>
 </header>
 <main>
-  <div class="section-title">Κουίζ Αυτοαξιολόγησης — Επιλέξτε Κεφάλαιο</div>
+  <div class="section-title">📝 Κουίζ Αυτοαξιολόγησης &amp; Δραστηριότητες CAS — Επιλέξτε Κεφάλαιο</div>
   <div class="grid">
     <div class="card">
       <div class="card-num">Κεφ. 0</div>
@@ -70,6 +56,7 @@
       <p>Αριθμητικά σύνολα, ανισότητες, τριγωνομετρία, μιγαδικοί</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch00/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch00/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch00_ypovathro/01_unit_circle/">⬡ Μοναδ. Κύκλος</a>
         <a class="btn-anim" href="animations/ch00_ypovathro/02_complex_numbers/">⬡ Μιγαδικοί</a>
         <a class="btn-anim" href="animations/ch00_ypovathro/03_trig_identities/">⬡ Τριγ.</a>
@@ -81,6 +68,7 @@
       <p>Διανυσματικοί χώροι, βάση, διάσταση, υποχώροι</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch01/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch01/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch01_grammikoi/01_vector_add/">⬡ Πρόσθεση</a>
         <a class="btn-anim" href="animations/ch01_grammikoi/02_linear_independence/">⬡ Ανεξαρτησία</a>
         <a class="btn-anim" href="animations/ch01_grammikoi/03_basis_span/">⬡ Βάση</a>
@@ -92,6 +80,7 @@
       <p>Πράξεις, ορίζουσα, αντίστροφος, τάξη</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch02/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch02/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch02_pinakas/01_matrix_vector/">⬡ Μητρώο×Διαν.</a>
         <a class="btn-anim" href="animations/ch02_pinakas/02_matrix_mult/">⬡ Πολλαπλ.</a>
         <a class="btn-anim" href="animations/ch02_pinakas/03_determinant/">⬡ Ορίζουσα</a>
@@ -103,6 +92,7 @@
       <p>Gauss, Rouché-Capelli, LU παραγοντοποίηση</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch03/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch03/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch03_systimata/01_gauss/">⬡ Gauss</a>
         <a class="btn-anim" href="animations/ch03_systimata/02_solutions/">⬡ Λύσεις</a>
       </div>
@@ -113,6 +103,7 @@
       <p>Πυρήνας, εικόνα, μήτρα αναπαράστασης</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch04/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch04/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch04_metaschim/01_linear_transform/">⬡ Μετ/σμός</a>
         <a class="btn-anim" href="animations/ch04_metaschim/02_rotation/">⬡ Στροφή</a>
       </div>
@@ -123,6 +114,7 @@
       <p>Χαρακτηριστικό πολυώνυμο, ιδιοδιανύσματα</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch05/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch05/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch05_idiotimes/01_eigenvalues/">⬡ Ιδιοτιμές</a>
         <a class="btn-anim" href="animations/ch05_idiotimes/02_eigenvectors/">⬡ Ιδιοδιαν.</a>
       </div>
@@ -133,6 +125,7 @@
       <p>Διαγωνοποίηση, SVD, συμμετρικοί πίνακες</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch06/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch06/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch06_diagonop/01_diagonalization/">⬡ Διαγων.</a>
       </div>
     </div>
@@ -151,16 +144,18 @@
       <p>Πεδίο ορισμού, αντίστροφη, σύνθεση</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch07/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch07/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch07_synart/01_function_graph/">⬡ Γράφημα</a>
         <a class="btn-anim" href="animations/ch07_synart/02_composition/">⬡ Σύνθεση</a>
       </div>
     </div>
     <div class="card">
       <div class="card-num">Κεφ. 8</div>
-      <h3>Όρια & Συνέχεια</h3>
+      <h3>Όρια &amp; Συνέχεια</h3>
       <p>Υπολογισμός ορίων, θεωρήματα συνέχειας</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch08/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch08/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch08_oria/01_limit/">⬡ Όριο</a>
         <a class="btn-anim" href="animations/ch08_oria/02_continuity/">⬡ Συνέχεια</a>
       </div>
@@ -171,16 +166,18 @@
       <p>Κανόνες παραγώγισης, αλυσίδα, εφαπτομένη</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch09/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch09/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch09_paragogos/01_tangent/">⬡ Εφαπτ.</a>
         <a class="btn-anim" href="animations/ch09_paragogos/02_derivative_rules/">⬡ Κανόνες</a>
       </div>
     </div>
     <div class="card">
       <div class="card-num">Κεφ. 10</div>
-      <h3>Μονοτονία & Ακρότατα</h3>
+      <h3>Μονοτονία &amp; Ακρότατα</h3>
       <p>Taylor, κυρτότητα, θεώρημα μέσης τιμής</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch10/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch10/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch10_akrotata/01_monotonicity/">⬡ Μονοτ.</a>
         <a class="btn-anim" href="animations/ch10_akrotata/02_critical_points/">⬡ Ακρότατα</a>
       </div>
@@ -191,6 +188,7 @@
       <p>L'Hôpital, Newton, ασύμπτωτες</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch11/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch11/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch11_efarm_par/01_taylor/">⬡ Taylor</a>
         <a class="btn-anim" href="animations/ch11_efarm_par/02_lhopital/">⬡ L'Hôpital</a>
       </div>
@@ -201,6 +199,7 @@
       <p>Αντιπαραγώγιση, αντικατάσταση</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch12/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch12/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch12_aoristo/01_antiderivative/">⬡ Αντιπαρ.</a>
       </div>
     </div>
@@ -210,6 +209,7 @@
       <p>Riemann, εμβαδόν, ιδιότητες</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch13/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch13/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch13_orismeno/01_riemann/">⬡ Riemann</a>
         <a class="btn-anim" href="animations/ch13_orismeno/02_area/">⬡ Εμβαδόν</a>
       </div>
@@ -220,15 +220,17 @@
       <p>Σύνδεση παραγώγου-ολοκληρώματος</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch14/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch14/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch14_ttl/01_ftc/">⬡ ΘΘΛ</a>
       </div>
     </div>
     <div class="card">
       <div class="card-num">Κεφ. 15</div>
       <h3>Τεχνικές Ολοκλήρωσης</h3>
-      <p>Κ.μ.μ., μερικά κλάσματα, τριγ. αντικ.</p>
+      <p>κ.μ.μ., μερικά κλάσματα, τριγ. αντικ.</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch15/">✓ Κουίζ</a>
+        <a class="btn-code" href="code/ch15/">⚙ Κώδικας</a>
         <a class="btn-anim" href="animations/ch15_texniques/01_by_parts/">⬡ κατά Μέρη</a>
       </div>
     </div>
@@ -252,7 +254,7 @@
     </div>
     <div class="card">
       <div class="card-num">Κεφ. 18</div>
-      <h3>Ακολουθίες & Σειρές</h3>
+      <h3>Ακολουθίες &amp; Σειρές</h3>
       <p>Σύγκλιση, κριτήρια, γεωμετρικές σειρές</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch18/">✓ Κουίζ</a>
@@ -263,7 +265,7 @@
     <div class="card">
       <div class="card-num">Κεφ. 19</div>
       <h3>Διαφορικές Εξισώσεις</h3>
-      <p>Χωριζόμενες, γραμμικές 1ης & 2ης τάξης</p>
+      <p>Χωριζόμενες, γραμμικές 1ης &amp; 2ης τάξης</p>
       <div class="card-links">
         <a class="btn-quiz" href="quizzes/ch19/">✓ Κουίζ</a>
         <a class="btn-anim" href="animations/ch19_diaf_ex/01_slope_field/">⬡ Πεδίο</a>
@@ -272,10 +274,10 @@
     </div>
   </div>
 </main>
-<footer>Βιβλίο «Μαθηματικά Ι» · Ν. Ματζάκος · <a href="https://github.com/nikmatz/ELADIC_GR">GitHub</a></footer>
+<footer>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» · Ν. Ματζάκος · <a href="https://github.com/nikmatz/ELADIC_GR">GitHub</a></footer>
 <div class="author-stamp">
-  <span class="stamp-book">📖 Συμπληρωματικό υλικό από το βιβλίο <em>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού»</em></span>
-  <span class="stamp-author">Νίκος Ματζάκος, Αναπληρωτής Καθηγητής &nbsp;·&nbsp; nikmatz@gmail.com</span>
+  <span class="stamp-book">📖 Ψηφιακό συνοδευτικό υλικό για το βιβλίο <em>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού»</em></span>
+  <span class="stamp-author">Νίκος Ματζάκος &nbsp;·&nbsp; nikmatz@gmail.com</span>
 </div>
 </body>
 </html>
