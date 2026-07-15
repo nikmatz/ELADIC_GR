@@ -1,0 +1,48 @@
+;; maxima_dynamoseires.mac — Δυναμοσειρές και Σειρές Taylor (Κεφ. 20)
+;; Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+
+/* 1. Ακτίνα σύγκλισης  R = lim |c_n / c_{n+1}| */
+Rconv(cn) := 1 / limit(abs(subst(n+1,n,cn)/cn), n, inf)$
+print("Σ x^n/n   : R =", Rconv(1/n));        /* 1  */
+print("Σ x^n/n!  : R =", Rconv(1/n!));        /* inf */
+print("Σ n x^n   : R =", Rconv(n));           /* 1  */
+print("Σ x^n/2^n : R =", Rconv(1/2^n));       /* 2  */
+print("Σ n! x^n  : R =", Rconv(n!));          /* 0  */
+
+/* 2. Αναπτύγματα Maclaurin (τάξη 8) */
+taylor(exp(x),    x, 0, 8);
+taylor(sin(x),    x, 0, 8);
+taylor(cos(x),    x, 0, 8);
+taylor(log(1+x),  x, 0, 8);
+taylor(1/(1-x),   x, 0, 8);
+taylor(atan(x),   x, 0, 8);
+taylor(sqrt(1+x), x, 0, 8);
+/* Taylor γύρω από x0 = 1 για το e^x */
+taylor(exp(x), x, 1, 6);
+
+/* 3. Πράξεις με δυναμοσειρές: παράγωγος & ολοκλήρωμα ορίζουν νέες σειρές */
+S : sum(x^n, n, 0, inf);                      /* 1/(1-x) */
+print("d/dx Σ x^n =", diff(1/(1-x), x));      /* 1/(1-x)^2 */
+print("∫ 1/(1+x) dx =", integrate(1/(1+x), x)); /* log(1+x) */
+
+/* 4. Υπολογισμός του π */
+/* Gregory–Leibniz: π/4 = Σ (-1)^n /(2n+1) */
+GL(N) := 4 * sum((-1)^k/(2*k+1), k, 0, N)$
+print("Gregory-Leibniz N=10   :", float(GL(10)));
+print("Gregory-Leibniz N=100  :", float(GL(100)));
+print("Gregory-Leibniz N=1000 :", float(GL(1000)));
+/* Τύπος Machin: π/4 = 4 atan(1/5) - atan(1/239) — ταχεία σύγκλιση */
+print("Machin                 :", float(4*(4*atan(1/5) - atan(1/239))));
+
+/* 5. Προσέγγιση ολοκληρώματος με δυναμοσειρά: ∫_0^1 sin(x^2) dx */
+Tser : taylor(sin(x^2), x, 0, 14)$
+print("∫_0^1 sin(x^2)dx (σειρά)   =", float(integrate(Tser, x, 0, 1)));
+print("∫_0^1 sin(x^2)dx (αριθμ.)  =", float(quad_qags(sin(x^2), x, 0, 1)[1]));
+
+/* 6. Γράφημα: Maclaurin του e^x σε αυξανόμενες τάξεις */
+p1 : taylor(exp(x), x, 0, 1)$
+p3 : taylor(exp(x), x, 0, 3)$
+p5 : taylor(exp(x), x, 0, 5)$
+plot2d([exp(x), p1, p3, p5], [x, -3, 3], [y, -1, 12],
+       [legend, "e^x", "Τάξη 1", "Τάξη 3", "Τάξη 5"],
+       [title, "Maclaurin του e^x"])$
