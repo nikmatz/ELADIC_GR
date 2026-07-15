@@ -1,0 +1,43 @@
+/* ============================================================
+   maxima_oria.mac
+   Κεφάλαιο 9 — Όρια και Συνέχεια
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+   ΕΝΤΟΛΕΣ:
+     limit(f,x,a)            -> lim_{x->a} f(x)
+     limit(f,x,a,plus)       -> δεξιό όριο
+     limit(f,x,a,minus)      -> αριστερό όριο
+     limit(f,x,inf/minf)     -> όριο στο ±άπειρο
+   ============================================================ */
+
+/* 1. Βασικά όρια */
+print("lim x->2  (x^2-4)/(x-2)   =", limit((x^2-4)/(x-2), x, 2));
+print("lim x->0  sin(x)/x        =", limit(sin(x)/x, x, 0));
+print("lim x->inf (2x^2+1)/(x^2-3)=",limit((2*x^2+1)/(x^2-3), x, inf));
+print("lim x->0  (e^x-1)/x      =", limit((exp(x)-1)/x, x, 0));
+print("lim x->0  (1-cos(x))/x^2 =", limit((1-cos(x))/x^2, x, 0));
+print("lim x->inf (1+1/x)^x     =", limit((1+1/x)^x, x, inf));
+print("lim x->0  sin(3x)/(2x)   =", limit(sin(3*x)/(2*x), x, 0));
+
+/* 2. Μονόπλευρα */
+print("lim x->0+ 1/x  =", limit(1/x, x, 0, plus));
+print("lim x->0- 1/x  =", limit(1/x, x, 0, minus));
+print("lim x->1+ ln(x-1) =", limit(log(x-1), x, 1, plus));
+print("lim x->0+ x*log(x) =", limit(x*log(x), x, 0, plus));
+
+/* 3. Συνέχεια piecewise */
+f(x) := if x = 0 then 1 else sin(x)/x;
+print("f(0) =", f(0));
+print("lim x->0 sin(x)/x =", limit(sin(x)/x, x, 0));
+print("Συνεχής στο 0:", f(0) = limit(sin(x)/x, x, 0));
+
+/* 4. Ασύμπτωτες */
+print("Κατακόρυφη ασύμπτωτος 1/(x-2):");
+print("  lim x->2+ =", limit(1/(x-2), x, 2, plus));
+print("  lim x->2- =", limit(1/(x-2), x, 2, minus));
+print("Οριζόντια ασύμπτωτος (2x+1)/(x-3):");
+print("  lim x->inf =", limit((2*x+1)/(x-3), x, inf));
+
+/* 5. Γράφημα */
+plot2d(sin(x)/x, [x, -4*%pi, 4*%pi],
+       [title, "sin(x)/x"], [xlabel,"x"]);

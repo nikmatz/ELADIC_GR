@@ -1,0 +1,19 @@
+/* Κεφάλαιο 12 — Εφαρμογές Παραγώγου */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications. */
+/* 1. Σειρά Taylor */
+print("e^x    ≈", taylor(exp(x),x,0,6));
+print("sin(x) ≈", taylor(sin(x),x,0,7));
+print("cos(x) ≈", taylor(cos(x),x,0,6));
+print("ln(1+x)≈", taylor(log(1+x),x,0,6));
+/* 2. L'Hopital */
+print("lim sin(x)/x    =", limit(sin(x)/x,x,0));
+print("lim (e^x-1)/x   =", limit((exp(x)-1)/x,x,0));
+print("lim (1-cos(x))/x^2=",limit((1-cos(x))/x^2,x,0));
+print("lim x*e^(-x) x->inf=",limit(x*exp(-x),x,inf));
+/* 3. Βελτιστοποίηση */
+A : l*(10-l); dA:diff(A,l); l_opt:solve(dA=0,l);
+print("Βέλτιστο:",l_opt,"A_max=",ev(A,l_opt[1]));
+/* 4. Newton x^3-2=0 */
+f(t):=t^3-2; df(t):=diff(f(t),t);
+xi:1.5;
+for i:1 thru 8 do (xi:xi-f(xi)/df(xi), print("x_",i,"=",xi));

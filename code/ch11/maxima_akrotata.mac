@@ -1,0 +1,15 @@
+/* Κεφάλαιο 11 — Μονοτονία, Κυρτότητα και Ακρότατα */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications. */
+f : x^3 - 3*x^2 - 9*x + 2;
+f1 : diff(f,x);
+f2 : diff(f,x,2);
+print("f' =",f1,"  f'' =",f2);
+crits : solve(f1=0,x);
+print("Κρίσιμα:",crits);
+for xi in crits do (
+    x0:rhs(xi), y0:ev(f,x=x0), f2v:ev(f2,x=x0),
+    if f2v>0 then k:"min" elseif f2v<0 then k:"max" else k:"?",
+    print("x=",x0,"f=",y0,"f''=",f2v,"->",k));
+infl : solve(f2=0,x);
+print("Σημεία καμπής:",infl);
+plot2d([f,f1,f2],[x,-4,7],[legend,"f","f'","f''"],[title,"Μελέτη"]);

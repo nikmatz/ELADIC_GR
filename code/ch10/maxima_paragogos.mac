@@ -1,0 +1,45 @@
+/* ============================================================
+   maxima_paragogos.mac
+   Κεφάλαιο 10 — Παράγωγος Συνάρτησης
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+   ΕΝΤΟΛΕΣ:
+     diff(f,x)                -> f'(x)
+     diff(f,x,n)              -> n-οστή παράγωγος
+     implicit_derivative(F,y,x) -> άρρητη παραγώγιση
+   ============================================================ */
+
+/* 1. Βασικοί κανόνες */
+print("(x^5 - 3x^2 + 7)'  =", diff(x^5-3*x^2+7, x));
+print("(sin(x)*cos(x))'   =", trigsimp(diff(sin(x)*cos(x),x)));
+print("(x^2*e^x)'         =", diff(x^2*exp(x),x));
+print("(ln(x)/x)'         =", simplify(diff(log(x)/x, x)));
+print("((x^2+1)^10)'      =", factor(diff((x^2+1)^10, x)));
+
+/* 2. Ανώτερης τάξης */
+for n:1 thru 4 do
+    print("sin^(", n, ")(x) =", diff(sin(x), x, n));
+
+/* 3. Κανόνας αλυσίδας */
+print("(sin(3x^2+1))' =", diff(sin(3*x^2+1), x));
+print("(e^(x^2-x))'   =", diff(exp(x^2-x), x));
+print("(ln(cos(x)))'  =", simplify(diff(log(cos(x)),x)));
+print("(sqrt(x^2+4))' =", simplify(diff(sqrt(x^2+4),x)));
+
+/* 4. Άρρητη παραγώγιση x^2+y^2=25 */
+depends(y,x);
+eq : x^2 + y^2 - 25;
+dy_dx : -diff(eq,x)/diff(eq,y);
+print("dy/dx (x^2+y^2=25) =", dy_dx, "  (= -x/y ?)");
+remove(y, dependency);
+
+/* 5. Εφαπτόμενη f(x)=x^3 στο x0=1 */
+f1 : x^3;
+x0 : 1;
+y0 : ev(f1, x=x0);
+m  : ev(diff(f1,x), x=x0);
+tang : y0 + m*(x-x0);
+print("Εφαπτόμενη (x0=1):", tang, " (κλίση =",m,")");
+plot2d([f1, tang],[x,-2,2.5],
+       [legend,"x^3","εφαπτόμενη"],
+       [title,"Παράγωγος και εφαπτόμενη"]);
