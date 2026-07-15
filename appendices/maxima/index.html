@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Οδηγός Maxima CAS · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+ :root{--blue:#1a5276;--teal:#0e6655;--orange:#ca6f1e;--bg:#f5f5f0;}
+ *{box-sizing:border-box;margin:0;padding:0;}
+ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222;line-height:1.55;}
+ header{background:var(--blue);color:#fff;padding:18px 24px;}
+ header h1{font-size:1.3rem;} header p{font-size:.9rem;margin-top:4px;opacity:.85;}
+ .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd;}
+ .breadcrumb a{color:var(--blue);text-decoration:none;}
+ .container{max-width:980px;margin:0 auto;padding:24px 16px;}
+ .goals{background:#fff;border-left:5px solid var(--orange);padding:14px 18px;margin-bottom:22px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+ .goals h2{font-size:1rem;color:var(--orange);margin-bottom:6px;}
+ .toc{background:#fff;border:1px solid #ddd;border-radius:6px;padding:14px 20px;margin-bottom:26px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+ .toc strong{color:var(--blue);} .toc ol{margin:8px 0 0 20px;font-size:.9rem;columns:2;}
+ .toc a{color:var(--blue);text-decoration:none;} .toc a:hover{text-decoration:underline;}
+ section{margin-bottom:34px;}
+ h2{color:var(--blue);font-size:1.25rem;border-bottom:2px solid var(--blue);padding-bottom:5px;margin-bottom:14px;}
+ h3{color:var(--teal);font-size:1.05rem;margin:18px 0 8px;}
+ h4{color:var(--blue);font-size:.98rem;margin-bottom:8px;}
+ p{margin:8px 0;font-size:.92rem;}
+ ul,ol{margin:8px 0 8px 26px;font-size:.92rem;} li{margin:3px 0;}
+ .en{font-style:italic;color:#555;}
+ code{background:#eef3f7;color:#10324a;padding:1px 5px;border-radius:3px;font-size:.86em;}
+ table.cheat{width:100%;border-collapse:collapse;margin:12px 0;background:#fff;font-size:.86rem;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+ table.cheat th{background:var(--blue);color:#fff;text-align:left;padding:7px 10px;}
+ table.cheat td{padding:6px 10px;border-bottom:1px solid #eee;vertical-align:top;}
+ table.cheat tr:nth-child(even) td{background:#fafafa;}
+ table.cheat code{background:#f0f4f8;}
+ .example{background:#fff;border:1px solid #e3e3e3;border-left:4px solid var(--teal);border-radius:6px;padding:14px 18px;margin:18px 0;box-shadow:0 1px 5px rgba(0,0,0,.07);}
+ .example h4{color:var(--teal);}
+ .ekf{background:#f3f9f6;border-radius:4px;padding:8px 12px;font-size:.9rem;}
+ .tip{background:#fffde7;border:1px solid #f4c430;border-radius:6px;padding:12px 18px;margin:18px 0;}
+ .tip h4{color:var(--orange);}
+ .code-card{margin:12px 0;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+ .code-top{display:flex;justify-content:space-between;align-items:center;background:#2d2d2d;color:#ccc;padding:6px 12px;font-size:.8rem;}
+ .copy{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:3px 10px;font-size:.78rem;cursor:pointer;}
+ .copy:hover{background:rgba(255,255,255,.25);}
+ pre[class*="language-"]{margin:0!important;border-radius:0!important;font-size:.83rem;max-height:560px;overflow:auto;}
+ pre code.language-none{display:block;background:#2d2d2d;color:#e6e6e6;padding:14px 16px;white-space:pre;}
+ footer{text-align:center;padding:22px;font-size:.8rem;color:#888;margin-top:30px;border-top:1px solid #ddd;}
+ a.top{color:var(--blue);font-size:.8rem;text-decoration:none;}
+</style>
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]},options:{ignoreHtmlClass:'tex2jax_ignore'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+</head>
+<body>
+<header><h1>Οδηγός Maxima CAS</h1><p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού &amp; Ολοκληρωτικού Λογισμού» · Ν. Ματζάκος</p></header>
+<div class="breadcrumb"><a href="../../index.html">🏠 Αρχική</a> › <a href="../">Παραρτήματα</a> › Maxima</div>
+<div class="container">
+<div class="goals"><h2>🎯 Στόχοι</h2><ul>
+<li>Να εγκαταστήσετε και να εκκινήσετε το <strong>wxMaxima</strong>.</li>
+<li>Να χρησιμοποιείτε το Maxima για συμβολικούς υπολογισμούς Γραμμικής Άλγεβρας.</li>
+<li>Να υπολογίζετε παραγώγους, ολοκληρώματα, όρια και σειρές συμβολικά.</li>
+<li>Να λύνετε διαφορικές εξισώσεις και να οπτικοποιείτε αποτελέσματα.</li>
+</ul></div>
+<nav class="toc"><strong>Περιεχόμενα</strong><ol>
+<li><a href="#s0">Εισαγωγή: Τι είναι το Maxima;</a></li>
+<li><a href="#s1">Εισαγωγή στο Maxima</a></li>
+<li><a href="#s2">Βασικές Αλγεβρικές Πράξεις</a></li>
+<li><a href="#s3">Γραμμική Άλγεβρα</a></li>
+<li><a href="#s4">Απειροστικός Λογισμός — Παράγωγος</a></li>
+<li><a href="#s5">Ολοκληρωτικός Λογισμός</a></li>
+<li><a href="#s6">Διαφορικές Εξισώσεις</a></li>
+<li><a href="#s7">Ακολουθίες και Σειρές</a></li>
+<li><a href="#s8">Διαγωνιοποίηση και Ομοιότητα Πινάκων</a></li>
+<li><a href="#s9">Μιγαδικοί Αριθμοί</a></li>
+<li><a href="#s10">Γραφήματα</a></li>
+<li><a href="#s11">Αριθμητικές Μέθοδοι</a></li>
+<li><a href="#s12">Συχνά Λάθη και Αντιμετώπιση</a></li>
+</ol></nav>
+<section id="s0"><h2>Εισαγωγή: Τι είναι το Maxima;</h2><p>Το <strong>Maxima</strong> είναι ένα <em>Σύστημα Αλγεβρικής Επεξεργασίας</em>
+(<span class="en">Computer Algebra System, CAS</span>): ένα λογισμικό που εκτελεί μαθηματικές
+πράξεις <em>συμβολικά</em>, δηλαδή ακριβώς όπως ο άνθρωπος με χαρτί και μολύβι,
+χωρίς αποκοπή δεκαδικών.</p>
+<p>Ενώ ένας επιστημονικός υπολογιστής (π.χ. Python/NumPy ή MATLAB) εργάζεται
+<em>αριθμητικά</em> — υπολογίζει $\sqrt{2}\approx 1.41421\ldots$ — το Maxima
+επιστρέφει <em>ακριβώς</em> <code>sqrt(2)</code>, παραγοντοποιεί πολυώνυμα,
+ολοκληρώνει συναρτήσεις αναλυτικά και λύνει εξισώσεις σε κλειστή μορφή.
+Αυτή η ιδιότητα το καθιστά ιδιαίτερα χρήσιμο για:</p>
+<ul>
+<li><strong>Επαλήθευση χειρωνακτικών υπολογισμών</strong> — ανακαλύπτεις λάθη
+ πριν την εξέταση.</li>
+<li><strong>Εξερεύνηση μαθηματικών εννοιών</strong> — π.χ. τι αλλάζει στη λύση
+ μιας ΔΕ αν αλλάξει η αρχική συνθήκη;</li>
+<li><strong>Υπολογισμό ορίων, παραγώγων, ολοκληρωμάτων</strong> που είναι
+ χρονοβόροι στο χέρι.</li>
+<li><strong>Γεωμετρική οπτικοποίηση</strong> με ενσωματωμένα γραφήματα 2D/3D.</li>
+</ul>
+<p><strong>Ιστορικό:</strong> Το Maxima κατάγεται από το <strong>Macsyma</strong>,
+το πρώτο CAS που αναπτύχθηκε στο MIT τη δεκαετία του 1960. Σήμερα
+διανέμεται ως ελεύθερο λογισμικό (GNU GPL) και αποτελεί μια από τις
+πιο ολοκληρωμένες ελεύθερες εναλλακτικές λύσεις έναντι εμπορικών
+συστημάτων όπως το Mathematica ή το Maple.</p>
+<p>Για βαθύτερη μελέτη και εκτενή παρουσίαση των εντολών του Maxima
+βλ. .</p>
+<div class="tip"><h4>💡 Maxima vs Python/NumPy — Πότε να χρησιμοποιώ τι;</h4><ul>
+<li>Χρήση <strong>Maxima</strong> όταν: θέλεις ακριβή αναλυτική απάντηση,
+ πρέπει να επαληθεύσεις θεωρητικό αποτέλεσμα, δουλεύεις με ορίσματα
+ (π.χ. ολοκλήρωσε $\int x^n\,dx$ για γενικό $n$).</li>
+<li>Χρήση <strong>Python/NumPy</strong> όταν: χρειάζεσαι αριθμητικό αποτέλεσμα
+ για μεγάλο πίνακα, θέλεις να δημιουργήσεις γραφήματα υψηλής ποιότητας,
+ η συνάρτηση δεν έχει κλειστή μορφή.</li>
+<li>Ιδανικά: χρησιμοποιείς και τα δύο συμπληρωματικά!</li>
+</ul></div></section>
+<section id="s1"><h2>Εισαγωγή στο Maxima</h2><p>Το <strong>Maxima</strong> είναι ελεύθερο σύστημα αλγεβρικής επεξεργασίας (CAS — <em>Computer Algebra System</em>),
+διαθέσιμο για Windows, macOS και Linux. Αναπτύχθηκε από το MIT ως «Macsyma» τη δεκαετία του 1960 και
+σήμερα διατίθεται ως ανοιχτό λογισμικό. Το γραφικό του περιβάλλον, <strong>wxMaxima</strong>, προσφέρει
+φιλικό interface με αποτελέσματα σε μαθηματική σημειογραφία.</p>
+<h3>Εγκατάσταση</h3>
+<ol>
+<li>Μεταβείτε στο <a href="https://wxmaxima-developers.github.io/wxmaxima/" target="_blank">https://wxmaxima-developers.github.io/wxmaxima/</a></li>
+<li>Κατεβάστε τον installer για το λειτουργικό σας σύστημα.</li>
+<li>Εγκαταστήστε — το Maxima συμπεριλαμβάνεται αυτόματα.</li>
+</ol>
+<h3>Βασικοί Κανόνες Σύνταξης</h3>
+<ul>
+<li>Κάθε εντολή τελειώνει με <strong>ερωτηματικό</strong> <code>;</code> ή <strong>δολάριο</strong> <code>$</code> (χωρίς εκτύπωση).</li>
+<li>Σχόλια: <code>/* κείμενο */</code></li>
+<li>Ανάθεση τιμής: <code>a : 5</code> (με άνω-κάτω τελεία)</li>
+<li>Ορισμός συνάρτησης: <code>f(x) := x^2 + 1</code></li>
+<li>Το σύμβολο <code>%</code> αναφέρεται στο <em>τελευταίο αποτέλεσμα</em>.</li>
+<li>Το <code>float(&hellip;)</code> μετατρέπει σε δεκαδικό αριθμό.</li>
+<li>Εκτέλεση: <strong>Shift+Enter</strong> στο wxMaxima.</li>
+</ul>
+<div class="example">
+<h4>Πρώτες Εντολές στο Maxima</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Ανοίξτε το Maxima ή το wxMaxima και εκτελέστε τις ακόλουθες βασικές εντολές: (α) αριθμητικές πράξεις και αριθμητικές σταθερές ($\pi$, $e$), (β) υπολογισμό παραγόντων, ριζών και δυνάμεων, (γ) ορισμό μεταβλητής και συνάρτησης. Παρατηρήστε τη διαφορά μεταξύ συμβολικής και αριθμητικής αξιολόγησης.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Αριθμητικές πραξεις */
+2 + 3; /* 5 */
+sqrt(2); /* sqrt(2) -- συμβολικο */
+float(sqrt(2)); /* 1.41421356... */
+
+/* Ορισμος συναρτησης */
+f(x) := x^2 - 3*x + 2;
+f(3); /* 2 */
+f(a+1); /* (a+1)^2 - 3*(a+1) + 2 */
+
+/* Σχολιο: το Maxima διατηρει ακριβη αποτελεσματα */
+1/3 + 1/6; /* 1/2 */</code></pre></div>
+</div></section>
+<section id="s2"><h2>Βασικές Αλγεβρικές Πράξεις</h2><p>Ο παρακάτω πίνακας περιέχει τις βασικές εντολές αλγεβρικής επεξεργασίας:</p>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th><th><strong>Παράδειγμα</strong></th></tr></thead><tbody>
+<tr><td><code>expand(expr)</code></td><td>Ανάπτυξη έκφρασης</td><td><code>expand((x+1)^3)</code></td></tr>
+<tr><td><code>factor(expr)</code></td><td>Παραγοντοποίηση</td><td><code>factor(x^2-1)</code></td></tr>
+<tr><td><code>simplify(expr)</code></td><td>Γενική απλοποίηση</td><td><code>simplify(sin(x)^2+cos(x)^2)</code></td></tr>
+<tr><td><code>ratsimp(expr)</code></td><td>Απλοποίηση ρητής</td><td><code>ratsimp((x^2-1)/(x-1))</code></td></tr>
+<tr><td><code>trigsimp(expr)</code></td><td>Τριγων. απλοποίηση</td><td><code>trigsimp(2*sin(x)*cos(x))</code></td></tr>
+<tr><td><code>float(expr)</code></td><td>Δεκαδικό αποτέλεσμα</td><td><code>float(%pi)</code></td></tr>
+<tr><td><code>ev(expr, x=a)</code></td><td>Αντικατάσταση</td><td><code>ev(x^2+1, x=3)</code></td></tr>
+<tr><td><code>subst(a, x, f)</code></td><td>Αντικατάσταση</td><td><code>subst(2, x, x^3)</code></td></tr>
+<tr><td><code>solve(eq, x)</code></td><td>Λύση εξίσωσης</td><td><code>solve(x^2=4, x)</code></td></tr>
+</tbody></table>
+<p><strong>Βασικές Μαθηματικές Σταθερές:</strong>
+<code>%pi</code> $=\pi$, <code>%e</code> $=e$, <code>%i</code> $=i$ (φανταστική μονάδα), 
+<code>inf</code> $=+\infty$, <code>minf</code> $=-\infty$.</p>
+<div class="example">
+<h4>Αλγεβρικές Πράξεις — Παραδείγματα</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για αλγεβρικές πράξεις: (α) απλοποιήστε αλγεβρικές εκφράσεις με <code>expand</code> και <code>factor</code>, (β) λύστε εξισώσεις και ανισώσεις με <code>solve</code>, (γ) εκτελέστε παραγοντοποίηση πολυωνύμων. Συγκρίνετε τα αποτελέσματα με χειρωνακτικούς υπολογισμούς.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Παραγοντοποιηση */
+factor(x^3 - 3*x^2 + 3*x - 1); /* (x-1)^3 */
+
+/* Απλοποιηση τριγωνομετρικης */
+trigsimp(sin(x)^2 + cos(x)^2); /* 1 */
+
+/* Λυση εξισωσης */
+solve(x^2 - 5*x + 6 = 0, x); /* [x=2, x=3] */
+
+/* Αντικατασταση */
+f(x) := x^3 - 2*x;
+ev(f(x), x = sqrt(2)); /* 0 */</code></pre></div>
+</div></section>
+<section id="s3"><h2>Γραμμική Άλγεβρα</h2><p>Το Maxima διαθέτει πλήρες σύνολο εντολών για Γραμμική Άλγεβρα.
+Για σύνθετες λειτουργίες (echelon, rref, nullspace) φορτώστε το πακέτο:</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">load(&quot;linearalgebra&quot;);</code></pre></div>
+<h3>Ορισμός και Βασικές Πράξεις Πινάκων</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>matrix([a,b],[c,d])</code></td><td>Ορισμός πίνακα $2\times2$</td></tr>
+<tr><td><code>A . B</code></td><td>Πολλαπλασιασμός πινάκων $A\cdot B$</td></tr>
+<tr><td><code>A ^^ n</code></td><td>Δύναμη πίνακα $A^n$</td></tr>
+<tr><td><code>transpose(A)</code></td><td>Ανάστροφος $A^T$</td></tr>
+<tr><td><code>invert(A)</code></td><td>Αντίστροφος $A^{-1}$</td></tr>
+<tr><td><code>determinant(A)</code></td><td>Ορίζουσα $\det(A)$</td></tr>
+<tr><td><code>rank(A)</code></td><td>Τάξη (rank)</td></tr>
+<tr><td><code>ident(n)</code></td><td>Μοναδιαίος $n\times n$</td></tr>
+<tr><td><code>zeromatrix(m,n)</code></td><td>Μηδενικός $m\times n$</td></tr>
+<tr><td><code>submatrix(i,A,j)</code></td><td>Υποπίνακας (διαγραφή γραμμής $i$, στήλης $j$)</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Βασικές Πράξεις Πινάκων</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για πράξεις πινάκων: (α) ορισμός πίνακα με <code>matrix</code>, (β) πολλαπλασιασμός πινάκων με <code>.</code> (τελεστής), (γ) υπολογισμός ορίζουσας με <code>determinant</code> και αντιστρόφου με <code>invert</code>. Επαληθεύστε ότι $A \cdot A^{-1} = I$.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Ορισμος πινακων */
+A: matrix([2, 1], [5, 3]);
+B: matrix([3, -1], [-5, 2]);
+
+/* Πολλαπλασιασμος */
+A . B; /* matrix([1,0],[0,1]) -- αντιστροφος! */
+
+/* Οριζουσα */
+determinant(A); /* 1 */
+
+/* Αντιστροφος */
+invert(A); /* matrix([3,-1],[-5,2]) */
+
+/* Επαληθευση: A * A^(-1) = I */
+A . invert(A); /* ident(2) */
+
+/* Αναστροφος */
+C: matrix([1,2,3],[4,5,6]);
+transpose(C); /* matrix([1,4],[2,5],[3,6]) */</code></pre></div>
+</div>
+<h3>Gauss, Rref, Πυρήνας</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>echelon(A)</code></td><td>Κλιμακωτή μορφή (Gauss)</td></tr>
+<tr><td><code>rref(A)</code></td><td>Ανηγμένη κλιμακωτή μορφή (Gauss-Jordan)</td></tr>
+<tr><td><code>nullspace(A)</code></td><td>Πυρήνας $\ker(A)$</td></tr>
+<tr><td><code>columnspace(A)</code></td><td>Χώρος στηλών (εικόνα)</td></tr>
+<tr><td><code>rowspace(A)</code></td><td>Χώρος γραμμών</td></tr>
+<tr><td><code>linsolve([eq1,...],[x,y,...])</code></td><td>Λύση γραμμικού συστήματος</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Γραμμικό Σύστημα $3\times3$ με Maxima</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για να επιλύσετε το γραμμικό σύστημα $3\times3$: ορίστε τον πίνακα συντελεστών $A$ και το διάνυσμα δεξιών μελών $\mathbf{b}$, και βρείτε τη λύση $\mathbf{x} = A^{-1}\mathbf{b}$ χρησιμοποιώντας <code>linsolve</code>. Επαληθεύστε την ορθότητα υπολογίζοντας $A \cdot \mathbf{x}$.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">load(&quot;linearalgebra&quot;);
+
+/* Συστημα: x+2y-z=4, 2x-y+3z=1, 3x+y+2z=5 */
+A: matrix([1, 2, -1], [2, -1, 3], [3, 1, 2]);
+b: matrix([4], [1], [5]);
+
+/* Μεθοδος 1: linsolve */
+linsolve([x+2*y-z=4, 2*x-y+3*z=1, 3*x+y+2*z=5], [x,y,z]);
+/* [x=2, y=1, z=0] */
+
+/* Μεθοδος 2: αντιστροφος πινακας */
+invert(A) . b;
+
+/* Αναλυση: κλιμακωτη μορφη */
+rref(addcol(A, b)); /* Επαυξημενος πινακας [A|b] */
+
+/* Πυρηνας (ομογενες συστημα) */
+nullspace(A);</code></pre></div>
+</div>
+<h3>Ιδιοτιμές και Ιδιοδιανύσματα</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>eigenvalues(A)</code></td><td>Ιδιοτιμές — επιστρέφει <code>[[$\lambda_1$,$\lambda_2$,...],[$m_1$,$m_2$,...]]</code></td></tr>
+<tr><td><code>eigenvectors(A)</code></td><td>Ιδιοτιμές + ιδιοδιανύσματα</td></tr>
+<tr><td><code>charpoly(A, x)</code></td><td>Χαρακτηριστικό πολυώνυμο ως προς $x$</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Ιδιοτιμές και Ιδιοδιανύσματα</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Δίνεται ο πίνακας $A = \begin{pmatrix}4&1\\2&3\end{pmatrix}$. Χρησιμοποιήστε το Maxima για να: (α) υπολογίσετε το χαρακτηριστικό πολυώνυμο με <code>charpoly</code>, (β) βρείτε τις ιδιοτιμές με <code>eigenvalues</code>, (γ) υπολογίσετε τα ιδιοδιανύσματα με <code>eigenvectors</code>. Ερμηνεύστε τα αποτελέσματα.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">A: matrix([4, 1], [2, 3]);
+
+/* Χαρακτηριστικο πολυωνυμο */
+charpoly(A, lambda); /* lambda^2 - 7*lambda + 10 */
+
+/* Ιδιοτιμες */
+eigenvalues(A); /* [[2, 5], [1, 1]] =&gt; λ1=2 (πολλ.1), λ2=5 (πολλ.1) */
+
+/* Ιδιοδιανυσματα */
+eigenvectors(A);
+/* Για λ=2: v=[-1,2], για λ=5: v=[1,1] */
+
+/* Επαληθευση: A*v = λ*v */
+v1: matrix([-1], [2]);
+A . v1; /* 2 * v1 */</code></pre></div>
+</div></section>
+<section id="s4"><h2>Απειροστικός Λογισμός — Παράγωγος</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>diff(f(x), x)</code></td><td>Παράγωγος $f'(x)$</td></tr>
+<tr><td><code>diff(f(x), x, n)</code></td><td>$n$-οστή παράγωγος $f^{(n)}(x)$</td></tr>
+<tr><td><code>diff(f(x,y), x)</code></td><td>Μερική παράγωγος $\partial f/\partial x$</td></tr>
+<tr><td><code>limit(f(x), x, a)</code></td><td>Όριο $\lim_{x\to a}f(x)$</td></tr>
+<tr><td><code>limit(f(x), x, a, plus)</code></td><td>Δεξιά $\lim_{x\to a^+}$</td></tr>
+<tr><td><code>limit(f(x), x, a, minus)</code></td><td>Αριστερά $\lim_{x\to a^-}$</td></tr>
+<tr><td><code>limit(f(x), x, inf)</code></td><td>Όριο στο $+\infty$</td></tr>
+<tr><td><code>taylor(f(x), x, a, n)</code></td><td>Πολυώνυμο Taylor τάξης $n$ γύρω από $a$</td></tr>
+<tr><td><code>find_root(f(x), x, a, b)</code></td><td>Αριθμητική εύρεση ρίζας στο $[a,b]$</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Παράγωγος, Όριο και Taylor</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για συμβολικό διαφορικό λογισμό: (α) υπολογίστε παραγώγους διαφόρων τάξεων της $f(x) = x^3 e^{-x}$ με <code>diff</code>, (β) βρείτε όρια με <code>limit</code>, συμπεριλαμβανομένων ορίων στο άπειρο, (γ) αναπτύξτε σε σειρά Taylor γύρω από $x_0 = 0$ με <code>taylor</code>.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Παραγωγος */
+f(x) := x^2 * sin(x);
+diff(f(x), x); /* 2*x*sin(x) + x^2*cos(x) */
+
+/* Κανονας αλυσιδας */
+g(x) := exp(x^2 + 1);
+diff(g(x), x); /* 2*x*exp(x^2+1) */
+
+/* 2η παραγωγος */
+diff(f(x), x, 2);
+
+/* Ορια */
+limit(sin(x)/x, x, 0); /* 1 */
+limit((1+1/n)^n, n, inf); /* %e */
+limit(exp(-x), x, inf); /* 0 */
+
+/* Κανονας L&#x27;Hopital */
+limit((exp(x)-1)/x, x, 0); /* 1 */
+
+/* Taylor γυρω απο x=0, ταξης 4 */
+taylor(sin(x), x, 0, 5);
+/* x - x^3/6 + x^5/120 + ... */
+
+/* Αριθμητικη ριζα */
+find_root(x^3 - 2, x, 1, 2); /* 1.259921... */</code></pre></div>
+</div></section>
+<section id="s5"><h2>Ολοκληρωτικός Λογισμός</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>integrate(f(x), x)</code></td><td>Αόριστο ολοκλήρωμα $\int f(x)\,dx$</td></tr>
+<tr><td><code>integrate(f(x), x, a, b)</code></td><td>Ορισμένο ολοκλήρωμα $\int_a^b f(x)\,dx$</td></tr>
+<tr><td><code>romberg(f(x), x, a, b)</code></td><td>Αριθμητική ολοκλήρωση (Romberg)</td></tr>
+<tr><td><code>quad_qags(f(x), x, a, b)</code></td><td>Αριθμητική ολοκλήρωση (QUADPACK)</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Αόριστο και Ορισμένο Ολοκλήρωμα</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για υπολογισμό ολοκληρωμάτων: (α) αόριστα ολοκληρώματα σύνθετων συναρτήσεων με <code>integrate</code>, (β) ορισμένα ολοκληρώματα σε ένα διάστημα, (γ) ολοκληρώματα που εμπλέκουν τριγωνομετρικές και εκθετικές συναρτήσεις. Επαληθεύστε τα αποτελέσματα παραγωγίζοντας.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Αοριστο ολοκληρωμα */
+integrate(x^2, x); /* x^3/3 */
+integrate(sin(x)*exp(x), x); /* exp(x)*(sin(x)-cos(x))/2 */
+integrate(1/(x^2-1), x); /* log(x-1)/2 - log(x+1)/2 */
+
+/* Ορισμενο ολοκληρωμα */
+integrate(x^2, x, 0, 1); /* 1/3 */
+integrate(sin(x), x, 0, %pi); /* 2 */
+
+/* Γενικευμενο ολοκληρωμα */
+integrate(exp(-x^2), x, 0, inf); /* sqrt(%pi)/2 */
+
+/* Αριθμητικη ολοκληρωση (οταν δεν εχει κλειστη μορφη) */
+romberg(exp(-x^2), x, 0, 1); /* 0.7468241... */</code></pre></div>
+</div></section>
+<section id="s6"><h2>Διαφορικές Εξισώσεις</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>depends(y, x)</code></td><td>Δηλώνει $y=y(x)$</td></tr>
+<tr><td><code>ode2(ode, y, x)</code></td><td>Λύση ΔΕ 1ης ή 2ης τάξης</td></tr>
+<tr><td><code>ic1(sol, x=x0, y=y0)</code></td><td>Αρχική συνθήκη 1ης τάξης</td></tr>
+<tr><td><code>ic2(sol, x=x0, y=y0, diff(y,x)=y1)</code></td><td>Αρχικές συνθήκες 2ης τάξης</td></tr>
+<tr><td><code>desolve(de, y)</code></td><td>Συμβολική λύση ΔΕ (εναλλακτική)</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Διαφορικές Εξισώσεις — Χωριζόμενες και 2ης Τάξης</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για να επιλύσετε διαφορικές εξισώσεις: (α) χωριζόμενη ΔΕ 1ης τάξης με <code>ode2</code>, (β) γραμμική ΔΕ 2ης τάξης με σταθερούς συντελεστές, (γ) αρχικό πρόβλημα με <code>ic1</code> και <code>ic2</code>. Σχεδιάστε τη λύση με <code>plot2d</code>.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* ΔΕ 1ης ταξης: dy/dx = -y */
+depends(y, x);
+ode1: diff(y,x) + y = 0;
+sol1: ode2(ode1, y, x); /* y = %c * exp(-x) */
+
+/* Με αρχικη συνθηκη y(0)=2 */
+ic1(sol1, x=0, y=2); /* y = 2*exp(-x) */
+
+/* ΔΕ 2ης ταξης: y&#x27;&#x27; - 3y&#x27; + 2y = 0 */
+ode2_eq: diff(y,x,2) - 3*diff(y,x) + 2*y = 0;
+sol2: ode2(ode2_eq, y, x);
+/* y = %k1*exp(x) + %k2*exp(2*x) */
+
+/* Με αρχικες συνθηκες y(0)=1, y&#x27;(0)=0 */
+ic2(sol2, x=0, y=1, diff(y,x)=0);
+/* y = 2*exp(x) - exp(2*x) */
+
+/* ΔΕ Bernoulli: y&#x27; + y/x = y^2 */
+ode_bern: diff(y,x) + y/x = y^2;
+ode2(ode_bern, y, x);</code></pre></div>
+</div></section>
+<section id="s7"><h2>Ακολουθίες και Σειρές</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>sum(expr, k, a, b)</code></td><td>Άθροισμα $\sum_{k=a}^{b}$ expr</td></tr>
+<tr><td><code>sum(expr, k, 1, inf)</code></td><td>Άπειρη σειρά (αν συγκλίνει)</td></tr>
+<tr><td><code>taylor(f, x, a, n)</code></td><td>Σειρά Taylor τάξης $n$ γύρω από $a$</td></tr>
+<tr><td><code>powerseries(f, x, 0)</code></td><td>Σειρά δυνάμεων γύρω από $0$</td></tr>
+<tr><td><code>simplify(%)</code></td><td>Απλοποίηση αποτελέσματος σειράς</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Σειρές και Ακολουθίες</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για εργασία με ακολουθίες και σειρές: (α) ορισμός ακολουθίας και υπολογισμός πρώτων όρων, (β) σύγκλιση γεωμετρικής σειράς με <code>sum</code>, (γ) αθροίσματα σειρών <code>inf</code> (άπειρα) — π.χ. $\sum_{n=1}^{\infty} \frac{1}{n^2}$. Ερμηνεύστε τα αποτελέσματα.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Αριθμητικη σειρα */
+sum(1/k^2, k, 1, inf); /* %pi^2/6 */
+sum(1/k, k, 1, 10); /* 7381/2520 */
+
+/* Σειρα Taylor sin(x) γυρω απο 0 */
+taylor(sin(x), x, 0, 7);
+/* x - x^3/6 + x^5/120 - x^7/5040 */
+
+/* Σειρα exp(x) */
+taylor(exp(x), x, 0, 5);
+/* 1 + x + x^2/2 + x^3/6 + x^4/24 + x^5/120 */
+
+/* Ακτινα συγκλισης με κριτηριο λογου */
+f(n) := 1/n!;
+float(limit(f(n+1)/f(n), n, inf)); /* 0 =&gt; ακτινα = +inf */
+
+/* Σειρα δυναμεων */
+powerseries(atan(x), x, 0);</code></pre></div>
+</div></section>
+<section id="s8"><h2>Διαγωνιοποίηση και Ομοιότητα Πινάκων</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>eigenvectors(A)</code></td><td>Ιδιοτιμές &amp; ιδιοδιανύσματα</td></tr>
+<tr><td><code>jordan(A)</code></td><td>Κανονική μορφή Jordan</td></tr>
+<tr><td><code>similaritytransform(A)</code></td><td>Πίνακας $P$: $A = PDP^{-1}$</td></tr>
+<tr><td><code>matrixexp(A)</code></td><td>Εκθετικός πίνακας $e^A$</td></tr>
+<tr><td><code>columnspace(A)</code></td><td>Χώρος στηλών</td></tr>
+<tr><td><code>nullspace(A)</code></td><td>Πυρήνας (μηδενόχωρος)</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Διαγωνιοποίηση Πίνακα</h4>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Ορισμός πίνακα */
+A : matrix([4, 1], [2, 3]);
+
+/* Ιδιοτιμές και ιδιοδιανύσματα */
+[vals, vecs] : eigenvectors(A);
+print(&quot;Ιδιοτιμές:&quot;, vals);
+print(&quot;Ιδιοδιανύσματα:&quot;, vecs);
+
+/* Πίνακας ιδιοδιανυσμάτων P */
+P : transpose(matrix(vecs[1][1][1], vecs[1][2][1]));
+
+/* Έλεγχος: A = P * D * P^(-1) */
+D : matrix([vals[1][1], 0], [0, vals[1][2]]);
+print(&quot;Έλεγχος A = P*D*P^-1:&quot;, ratsimp(P . D . invert(P) - A));</code></pre></div>
+</div>
+<div class="example">
+<h4>Εκθετικός Πίνακας και Κανονική Μορφή Jordan</h4>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Εκθετικός πίνακας e^(At) */
+load(&quot;diag&quot;);
+A : matrix([0, 1], [-1, 0]);   /* αρμονικός ταλαντωτής */
+eAt : matrixexp(A * t);
+print(&quot;e^(At) =&quot;, eAt);
+
+/* Κανονική μορφή Jordan (για μη διαγωνιοποιήσιμο πίνακα) */
+B : matrix([3, 1], [0, 3]);    /* διπλή ιδιοτιμή */
+JB : jordan(B);
+print(&quot;Jordan(B) =&quot;, JB);</code></pre></div>
+</div></section>
+<section id="s9"><h2>Μιγαδικοί Αριθμοί</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>rectform(z)</code></td><td>Ορθοκανονική μορφή $a+bi$</td></tr>
+<tr><td><code>polarform(z)</code></td><td>Πολική μορφή $r\cdot e^{i\theta}$</td></tr>
+<tr><td><code>abs(z)</code></td><td>Μέτρο $|z|$</td></tr>
+<tr><td><code>carg(z)</code></td><td>Όρισμα (argument) $\arg(z)$</td></tr>
+<tr><td><code>conjugate(z)</code></td><td>Συζυγής $\bar{z}$</td></tr>
+<tr><td><code>realpart(z)</code></td><td>Πραγματικό μέρος $\Re(z)$</td></tr>
+<tr><td><code>imagpart(z)</code></td><td>Φανταστικό μέρος $\Im(z)$</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Μιγαδικοί Αριθμοί</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε το Maxima για εργασία με μιγαδικούς αριθμούς: (α) ορισμός μιγαδικών και αριθμητικές πράξεις, (β) εύρεση μέτρου, συζυγούς και ορίσματος, (γ) εκφράστε μιγαδικό σε πολική μορφή $r e^{i\theta}$ και εφαρμόστε τον τύπο De Moivre. Επαληθεύστε ότι $e^{i\pi} + 1 = 0$.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Ορισμος: %i ειναι η μοναδα i */
+z1: 3 + 4*%i;
+z2: 1 - 2*%i;
+
+/* Βασικες πραξεις */
+rectform(z1 * z2); /* 11 - 2*%i */
+rectform(z1 / z2); /* -1/5 + 2*%i */
+rectform(z1^2); /* -7 + 24*%i */
+
+/* Μετρο και ορισμα */
+abs(z1); /* 5 */
+float(carg(z1)); /* 0.9272952... = arctan(4/3) */
+
+/* Πολικη μορφη */
+polarform(z1); /* 5 * exp(%i*arctan(4/3)) */
+
+/* Θεωρημα De Moivre */
+z: cos(%pi/6) + %i*sin(%pi/6);
+rectform(z^6); /* -1 = exp(%i*%pi) */</code></pre></div>
+</div></section>
+<section id="s10"><h2>Γραφήματα</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>plot2d(f(x), [x,a,b])</code></td><td>Γράφημα μίας συνάρτησης</td></tr>
+<tr><td><code>plot2d([f,g], [x,a,b])</code></td><td>Πολλαπλά γραφήματα</td></tr>
+<tr><td><code>plot3d(f(x,y), [x,a,b], [y,c,d])</code></td><td>Τρισδιάστατο γράφημα</td></tr>
+<tr><td><code>wxdraw2d(...)</code></td><td>Inline σχέδιο στο wxMaxima</td></tr>
+</tbody></table>
+<p><strong>Επιλογές γραφημάτων:</strong> 
+<code>[legend, "f(x)"]</code> — υπόμνημα, 
+<code>[xlabel, "x"]</code> — ετικέτα $x$, 
+<code>[color, red, blue]</code> — χρώματα, 
+<code>[style, lines, linespoints]</code> — στυλ γραμμής.</p>
+<div class="example">
+<h4>Γραφήματα με Maxima</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε τις εντολές γραφικής παράστασης του Maxima: (α) γράφημα μιας συνάρτησης με <code>plot2d</code> — π.χ. $f(x) = x \sin x$ στο $[0, 4\pi]$, (β) πολλαπλές καμπύλες στο ίδιο σχήμα με διαφορετικά χρώματα, (γ) τρισδιάστατο γράφημα επιφάνειας $f(x,y)$ με <code>plot3d</code>.</p>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Απλο γραφημα */
+plot2d(sin(x), [x, -%pi, %pi]);
+
+/* Δυο συναρτησεις μαζι */
+plot2d([sin(x), cos(x)], [x, 0, 2*%pi],
+ [legend, &quot;sin(x)&quot;, &quot;cos(x)&quot;],
+ [xlabel, &quot;x&quot;], [ylabel, &quot;y&quot;]);
+
+/* Γραφημα και παραγωγος */
+f(x) := x^3 - 3*x;
+plot2d([f(x), diff(f(x),x)], [x,-2,2],
+ [legend, &quot;f(x)&quot;, &quot;f&#x27;(x)&quot;],
+ [color, blue, red]);
+
+/* Τρισδιαστατο γραφημα */
+plot3d(sin(x)*cos(y), [x, 0, 2*%pi], [y, 0, 2*%pi]);
+
+/* Αριθμητικη λυση και γραφημα ΔΕ */
+depends(y, x);
+sol: ode2(diff(y,x) + y = sin(x), y, x);
+sol_part: ic1(sol, x=0, y=0);
+plot2d(rhs(sol_part), [x, 0, 4*%pi]);</code></pre></div>
+</div></section>
+<section id="s11"><h2>Αριθμητικές Μέθοδοι</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>find_root(f, x, a, b)</code></td><td>Εύρεση ρίζας στο $[a,b]$</td></tr>
+<tr><td><code>newton(f, x, x0, tol)</code></td><td>Μέθοδος Newton-Raphson</td></tr>
+<tr><td><code>romberg(f, x, a, b)</code></td><td>Αριθμητική ολοκλήρωση Romberg</td></tr>
+<tr><td><code>rk(ode, y, y0, [t,t0,tf,h])</code></td><td>Runge-Kutta 4ης τάξης</td></tr>
+<tr><td><code>mnewton(flist,xlist,x0)</code></td><td>Newton για σύστημα εξισώσεων</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Εύρεση Ριζών και Αριθμητική Ολοκλήρωση</h4>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Εύρεση ρίζας f(x)=cos(x)-x στο [0,1] */
+f(x) := cos(x) - x;
+r : find_root(f, x, 0, 1);
+print(&quot;Ρίζα:&quot;, float(r));    /* ≈ 0.7391 */
+
+/* Μέθοδος Newton: f(x)=x^3-2, x0=1 */
+load(&quot;newton1&quot;);
+g(x) := x^3 - 2;
+x_newton : newton(g(x), x, 1, 1e-10);
+print(&quot;Newton:&quot;, float(x_newton));  /* ≈ 1.2599 */
+
+/* Αριθμητική ολοκλήρωση: int_0^1 exp(-x^2) dx */
+h(x) := exp(-x^2);
+I : romberg(h(x), x, 0, 1);
+print(&quot;Ολοκλήρωμα:&quot;, float(I));    /* ≈ 0.7468 */</code></pre></div>
+</div>
+<div class="example">
+<h4>Αριθμητική Επίλυση ΣΔΕ — Runge-Kutta</h4>
+<div class="code-card"><div class="code-top"><span>Maxima</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-none">/* Λύση y&#x27;=-2*y, y(0)=1 με RK4, βήμα h=0.1 */
+sol_rk : rk([-2*y], [y], [1], [t, 0, 2, 0.1]);
+
+/* sol_rk: λίστα από [t, y(t)] */
+/* Εκτύπωση πρώτων 5 σημείων */
+for i:1 thru 5 do
+  print(&quot;t=&quot;, sol_rk[i][1], &quot; y=&quot;, sol_rk[i][2]);
+
+/* Ακριβής λύση για σύγκριση */
+y_exact(t) := exp(-2*t);
+print(&quot;Σφάλμα στο t=0.5:&quot;,
+  abs(sol_rk[6][2] - y_exact(0.5)));</code></pre></div>
+</div></section>
+<section id="s12"><h2>Συχνά Λάθη και Αντιμετώπιση</h2><table class="cheat">
+<thead><tr><th><strong>Λάθος</strong></th><th><strong>Αιτία</strong></th><th><strong>Διόρθωση</strong></th></tr></thead><tbody>
+<tr><td><code>integrate(...)</code> αποτυγχάνει</td><td>Δεν υπάρχει κλειστή μορφή</td><td>Χρήση <code>romberg()</code></td></tr>
+<tr><td><code>ode2()</code> αποτυγχάνει</td><td>Μη τυπικός τύπος ΔΕ</td><td>Αριθμητική λύση</td></tr>
+<tr><td><code>eigenvalues()</code> αργεί</td><td>Μεγάλος πίνακας</td><td><code>float(eigenvalues(A))</code></td></tr>
+<tr><td>Αποτέλεσμα με <code>sqrt(%)</code></td><td>Maxima κρατά συμβολικό</td><td>Χρήση <code>float(%)</code></td></tr>
+<tr><td><code>nullspace()</code> κενό</td><td>Πλήρης τάξη</td><td>Ελέγξτε <code>rank(A)</code></td></tr>
+</tbody></table>
+<div class="tip"><h4>💡 Χρήσιμη Συμβουλή</h4><p>Στο wxMaxima, η εντολή <code>describe(εντολή)</code> εμφανίζει την τεκμηρίωση της εντολής.
+Π.χ. <code>describe(integrate);</code> εξηγεί όλες τις παραλλαγές.
+Η επίσημη τεκμηρίωση περιέχει πλήρες
+εγχειρίδιο στα αγγλικά.</p></div></section>
+</div>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν.&nbsp;Μ. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small><br><a href="https://nikmatz.github.io/ELADIC_GR/" style="color:#aaa">ELADIC_GR</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+<script>
+function cp(btn){const code=btn.closest('.code-card').querySelector('code').innerText;
+ navigator.clipboard.writeText(code).then(()=>{btn.textContent='✓ Αντιγράφηκε';setTimeout(()=>btn.textContent='📋 Αντιγραφή',1500);});}
+</script>
+</body></html>

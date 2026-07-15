@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Οδηγός Python για Μαθηματικούς Υπολογισμούς · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+ :root{--blue:#1a5276;--teal:#0e6655;--orange:#ca6f1e;--bg:#f5f5f0;}
+ *{box-sizing:border-box;margin:0;padding:0;}
+ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222;line-height:1.55;}
+ header{background:var(--blue);color:#fff;padding:18px 24px;}
+ header h1{font-size:1.3rem;} header p{font-size:.9rem;margin-top:4px;opacity:.85;}
+ .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd;}
+ .breadcrumb a{color:var(--blue);text-decoration:none;}
+ .container{max-width:980px;margin:0 auto;padding:24px 16px;}
+ .goals{background:#fff;border-left:5px solid var(--orange);padding:14px 18px;margin-bottom:22px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+ .goals h2{font-size:1rem;color:var(--orange);margin-bottom:6px;}
+ .toc{background:#fff;border:1px solid #ddd;border-radius:6px;padding:14px 20px;margin-bottom:26px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+ .toc strong{color:var(--blue);} .toc ol{margin:8px 0 0 20px;font-size:.9rem;columns:2;}
+ .toc a{color:var(--blue);text-decoration:none;} .toc a:hover{text-decoration:underline;}
+ section{margin-bottom:34px;}
+ h2{color:var(--blue);font-size:1.25rem;border-bottom:2px solid var(--blue);padding-bottom:5px;margin-bottom:14px;}
+ h3{color:var(--teal);font-size:1.05rem;margin:18px 0 8px;}
+ h4{color:var(--blue);font-size:.98rem;margin-bottom:8px;}
+ p{margin:8px 0;font-size:.92rem;}
+ ul,ol{margin:8px 0 8px 26px;font-size:.92rem;} li{margin:3px 0;}
+ .en{font-style:italic;color:#555;}
+ code{background:#eef3f7;color:#10324a;padding:1px 5px;border-radius:3px;font-size:.86em;}
+ table.cheat{width:100%;border-collapse:collapse;margin:12px 0;background:#fff;font-size:.86rem;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+ table.cheat th{background:var(--blue);color:#fff;text-align:left;padding:7px 10px;}
+ table.cheat td{padding:6px 10px;border-bottom:1px solid #eee;vertical-align:top;}
+ table.cheat tr:nth-child(even) td{background:#fafafa;}
+ table.cheat code{background:#f0f4f8;}
+ .example{background:#fff;border:1px solid #e3e3e3;border-left:4px solid var(--teal);border-radius:6px;padding:14px 18px;margin:18px 0;box-shadow:0 1px 5px rgba(0,0,0,.07);}
+ .example h4{color:var(--teal);}
+ .ekf{background:#f3f9f6;border-radius:4px;padding:8px 12px;font-size:.9rem;}
+ .tip{background:#fffde7;border:1px solid #f4c430;border-radius:6px;padding:12px 18px;margin:18px 0;}
+ .tip h4{color:var(--orange);}
+ .code-card{margin:12px 0;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+ .code-top{display:flex;justify-content:space-between;align-items:center;background:#2d2d2d;color:#ccc;padding:6px 12px;font-size:.8rem;}
+ .copy{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:3px 10px;font-size:.78rem;cursor:pointer;}
+ .copy:hover{background:rgba(255,255,255,.25);}
+ pre[class*="language-"]{margin:0!important;border-radius:0!important;font-size:.83rem;max-height:560px;overflow:auto;}
+ pre code.language-none{display:block;background:#2d2d2d;color:#e6e6e6;padding:14px 16px;white-space:pre;}
+ footer{text-align:center;padding:22px;font-size:.8rem;color:#888;margin-top:30px;border-top:1px solid #ddd;}
+ a.top{color:var(--blue);font-size:.8rem;text-decoration:none;}
+</style>
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]},options:{ignoreHtmlClass:'tex2jax_ignore'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+</head>
+<body>
+<header><h1>Οδηγός Python για Μαθηματικούς Υπολογισμούς</h1><p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού &amp; Ολοκληρωτικού Λογισμού» · Ν. Ματζάκος</p></header>
+<div class="breadcrumb"><a href="../../index.html">🏠 Αρχική</a> › <a href="../">Παραρτήματα</a> › Python</div>
+<div class="container">
+<div class="goals"><h2>🎯 Στόχοι</h2><ul>
+<li>Να εγκαταστήσετε το Anaconda και να χρησιμοποιείτε Jupyter Notebooks.</li>
+<li>Να εκτελείτε πράξεις Γραμμικής Άλγεβρας με <strong>NumPy</strong>.</li>
+<li>Να υπολογίζετε παραγώγους, ολοκληρώματα και σειρές με <strong>SymPy</strong>.</li>
+<li>Να λύνετε αριθμητικά ολοκληρώματα και ΔΕ με <strong>SciPy</strong>.</li>
+<li>Να δημιουργείτε γραφήματα με <strong>Matplotlib</strong>.</li>
+</ul></div>
+<nav class="toc"><strong>Περιεχόμενα</strong><ol>
+<li><a href="#s0">Εισαγωγή: Γιατί Python για Μαθηματικούς Υπολογισμούς;</a></li>
+<li><a href="#s1">Εισαγωγή — Εγκατάσταση</a></li>
+<li><a href="#s2">NumPy — Αριθμητική Γραμμική Άλγεβρα</a></li>
+<li><a href="#s3">SciPy — Επιστημονικοί Υπολογισμοί</a></li>
+<li><a href="#s4">SymPy — Συμβολικός Λογισμός</a></li>
+<li><a href="#s5">Matplotlib — Γραφήματα</a></li>
+<li><a href="#s6">Ολοκληρωμένα Παραδείγματα</a></li>
+<li><a href="#s7">Βελτιστοποίηση και Εύρεση Ριζών — <code>scipy.optimize</code></a></li>
+<li><a href="#s8">Χρήσιμα Shortcuts και Συχνά Λάθη</a></li>
+</ol></nav>
+<section id="s0"><h2>Εισαγωγή: Γιατί Python για Μαθηματικούς Υπολογισμούς;</h2><p>Η <strong>Python</strong> είναι σήμερα η πλέον διαδεδομένη γλώσσα προγραμματισμού
+στην επιστημονική κοινότητα.
+Σε αντίθεση με εξειδικευμένα εργαλεία όπως το MATLAB ή το Mathematica,
+η Python είναι <em>ελεύθερη</em>, <em>ανοιχτού κώδικα</em> και διαθέτει ένα
+από τα πλουσιότερα οικοσυστήματα βιβλιοθηκών για επιστημονικούς υπολογισμούς.</p>
+<p>Για το παρόν μάθημα χρησιμοποιούμε τέσσερις εξειδικευμένες βιβλιοθήκες:</p>
+<ul>
+<li><strong>NumPy</strong> (<span class="en">Numerical Python</span>) — η βάση κάθε επιστημονικού
+ υπολογισμού: γρήγοροι $n$-διάστατοι πίνακες, πράξεις γραμμικής
+ άλγεβρας, μαθηματικές συναρτήσεις.</li>
+<li><strong>SciPy</strong> (<span class="en">Scientific Python</span>) — αλγόριθμοι ανώτερου
+ επιπέδου: αριθμητική ολοκλήρωση, λύση ΔΕ αρχικού προβλήματος,
+ ειδικές συναρτήσεις, βελτιστοποίηση.</li>
+<li><strong>SymPy</strong> (<span class="en">Symbolic Python</span>) — συμβολικός λογισμός
+ αντίστοιχος του Maxima: ακριβείς παράγωγοι, ολοκληρώματα, όρια,
+ σειρές Taylor, λύσεις εξισώσεων.</li>
+<li><strong>Matplotlib</strong> — επαγγελματική βιβλιοθήκη γραφημάτων:
+ γραφήματα 2D/3D, πεδία κλίσεων, ισοϋψείς καμπύλες,
+ γραφήματα εφαρμογών.</li>
+</ul>
+<p><strong>Τι μπορώ να κάνω με Python που δεν μπορώ με Maxima;</strong></p>
+<ul>
+<li>Να επεξεργαστώ <em>μεγάλους πίνακες</em> (χιλιάδες γραμμές)
+ με υψηλή ταχύτητα.</li>
+<li>Να αυτοματοποιήσω επαναλαμβανόμενους υπολογισμούς με βρόγχους.</li>
+<li>Να δημιουργώ <em>γραφήματα εξαιρετικής ποιότητας</em> έτοιμα για
+ δημοσίευση.</li>
+<li>Να συνδυάζω συμβολικούς (SymPy) και αριθμητικούς (NumPy/SciPy)
+ υπολογισμούς στο ίδιο πρόγραμμα.</li>
+<li>Να επιλύω πραγματικά μηχανικά προβλήματα: ανάλυση δομών,
+ δυναμική ρευστών, επεξεργασία σήματος.</li>
+</ul>
+<p>Για βαθύτερη μελέτη της Python στα μαθηματικά και τους επιστημονικούς υπολογισμούς
+βλ. .</p>
+<div class="tip"><h4>💡 Anaconda — Το «Πακέτο» του Επιστήμονα</h4><p>Η διανομή <strong>Anaconda</strong> (<a href="https://www.anaconda.com" target="_blank">https://www.anaconda.com</a>) εγκαθιστά
+ταυτόχρονα Python, NumPy, SciPy, SymPy, Matplotlib, Jupyter Notebooks
+και εκατοντάδες επιπλέον βιβλιοθήκες με ένα μόνο εγκαταστάτη.
+Είναι η <em>συνιστώμενη επιλογή</em> για φοιτητές Πολιτικής Μηχανικής
+που επιθυμούν να χρησιμοποιήσουν Python για μαθηματικούς υπολογισμούς.</p></div></section>
+<section id="s1"><h2>Εισαγωγή — Εγκατάσταση</h2><p>Η Python είναι μία από τις πλέον διαδεδομένες γλώσσες προγραμματισμού για επιστημονικούς
+υπολογισμούς. Για το μάθημα χρειαζόμαστε τέσσερις βιβλιοθήκες:</p>
+<ul>
+<li><strong>NumPy</strong> — αριθμητική γραμμική άλγεβρα και πίνακες</li>
+<li><strong>SciPy</strong> — επιστημονικοί αλγόριθμοι (ολοκλήρωση, ΔΕ, ειδικές συναρτήσεις)</li>
+<li><strong>SymPy</strong> — συμβολικός λογισμός (παράγωγοι, ολοκληρώματα, όρια αναλυτικά)</li>
+<li><strong>Matplotlib</strong> — γραφήματα και οπτικοποίηση</li>
+</ul>
+<h3>Εγκατάσταση --- Anaconda (Συνιστάται)</h3>
+<ol>
+<li>Μεταβείτε στο <a href="https://www.anaconda.com/download" target="_blank">https://www.anaconda.com/download</a></li>
+<li>Κατεβάστε τον <strong>Anaconda Individual Edition</strong> για το λειτουργικό σας.</li>
+<li>Εγκαταστήστε — όλες οι βιβλιοθήκες (NumPy, SciPy, SymPy, Matplotlib) συμπεριλαμβάνονται.</li>
+<li>Εκκινήστε το <strong>Jupyter Notebook</strong> από το μενού Anaconda Navigator.</li>
+</ol>
+<h3>Βασική Σύνταξη Python</h3>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python"># Σχολια με #
+x = 5 # αναθεση
+print(x) # εκτυπωση
+y = x**2 + 3*x - 1 # δυναμη με **
+
+# Εισαγωγη βιβλιοθηκων (ιδιοτυπο για μαθηματικα)
+import numpy as np
+import matplotlib.pyplot as plt
+from sympy import symbols, diff, integrate, limit, solve, series
+from scipy.integrate import quad
+from scipy.linalg import null_space</code></pre></div></section>
+<section id="s2"><h2>NumPy — Αριθμητική Γραμμική Άλγεβρα</h2><h3>Δημιουργία Πινάκων και Διανυσμάτων</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>np.array([a,b,c])</code></td><td>Διάνυσμα (1D array)</td></tr>
+<tr><td><code>np.array([[a,b],[c,d]])</code></td><td>Πίνακας (2D array)</td></tr>
+<tr><td><code>np.zeros((m,n))</code></td><td>Μηδενικός $m\times n$ πίνακας</td></tr>
+<tr><td><code>np.ones((m,n))</code></td><td>Πίνακας από $1$</td></tr>
+<tr><td><code>np.eye(n)</code></td><td>Ταυτοτικός $n\times n$</td></tr>
+<tr><td><code>np.diag([a,b,c])</code></td><td>Διαγώνιος πίνακας</td></tr>
+<tr><td><code>np.linspace(a, b, n)</code></td><td>$n$ ισαπέχοντα σημεία από $a$ ως $b$</td></tr>
+<tr><td><code>np.arange(a, b, step)</code></td><td>Ακολουθία από $a$ ως $b$ με βήμα</td></tr>
+<tr><td><code>np.meshgrid(x, y)</code></td><td>Πλέγμα 2D για γραφήματα</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Ορισμός Πινάκων</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε τη βιβλιοθήκη NumPy για να ορίσετε: (α) ένα διάνυσμα τριών στοιχείων, (β) έναν πίνακα $2\times3$, (γ) έναν πίνακα ταυτότητας $3\times3$ και (δ) έναν τυχαίο πίνακα $2\times2$. Εκτυπώστε τις διαστάσεις και τον τύπο δεδομένων κάθε αντικειμένου.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+
+# Διανυσμα
+v = np.array([1, 2, 3])
+
+# Πινακας 2x3
+A = np.array([[1, 2, 3],
+ [4, 5, 6]])
+
+# Ταυτοτικος 3x3
+I = np.eye(3)
+
+# Γραμμικο πλεγμα (100 σημεια απο 0 ως 2pi)
+x = np.linspace(0, 2*np.pi, 100)
+
+# Πλεγμα για 3D
+X, Y = np.meshgrid(np.linspace(-2,2,50), np.linspace(-2,2,50))
+Z = np.sin(X) * np.cos(Y)</code></pre></div>
+</div>
+<h3>Πράξεις Γραμμικής Άλγεβρας</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>A @ B</code> ή <code>np.dot(A, B)</code></td><td>Πολλαπλασιασμός πινάκων $A\cdot B$</td></tr>
+<tr><td><code>A.T</code></td><td>Ανάστροφος $A^T$</td></tr>
+<tr><td><code>k * A</code></td><td>Βαθμωτός πολλαπλασιασμός</td></tr>
+<tr><td><code>A + B</code>, <code>A - B</code></td><td>Πρόσθεση/Αφαίρεση</td></tr>
+<tr><td><code>np.linalg.det(A)</code></td><td>Ορίζουσα $\det(A)$</td></tr>
+<tr><td><code>np.linalg.inv(A)</code></td><td>Αντίστροφος $A^{-1}$</td></tr>
+<tr><td><code>np.linalg.solve(A, b)</code></td><td>Λύση $Ax=b$</td></tr>
+<tr><td><code>np.linalg.eig(A)</code></td><td>Ιδιοτιμές + ιδιοδιανύσματα</td></tr>
+<tr><td><code>np.linalg.eigvals(A)</code></td><td>Μόνο ιδιοτιμές</td></tr>
+<tr><td><code>np.linalg.norm(v)</code></td><td>Νόρμα $\|v\|$ (ευκλείδεια)</td></tr>
+<tr><td><code>np.linalg.matrix_rank(A)</code></td><td>Τάξη (rank)</td></tr>
+<tr><td><code>np.linalg.qr(A)</code></td><td>Αποσύνθεση QR</td></tr>
+<tr><td><code>np.linalg.svd(A)</code></td><td>Αποσύνθεση SVD</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Γραμμική Άλγεβρα με NumPy</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Δίνεται ο πίνακας $A = \begin{pmatrix}2&1&-1\\3&2&1\\1&-1&2\end{pmatrix}$. Χρησιμοποιήστε τη βιβλιοθήκη NumPy για να: (α) λύσετε το γραμμικό σύστημα $A\mathbf{x} = \mathbf{b}$ για $\mathbf{b} = (8,11,-3)^T$ και να επαληθεύσετε, (β) βρείτε την ορίζουσα και τον αντίστροφο πίνακα, (γ) υπολογίσετε ιδιοτιμές και ιδιοδιανύσματα ενός $2\times2$ πίνακα $B$.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+
+A = np.array([[2., 1., -1.],
+ [3., 2., 1.],
+ [1., -1., 2.]])
+b = np.array([8., 11., -3.])
+
+# Λυση Ax = b
+x = np.linalg.solve(A, b)
+print(&quot;Λυση:&quot;, x) # [2. 3. -1.]
+
+# Επαληθευση
+print(&quot;Επαληθευση:&quot;, A @ x) # [8. 11. -3.]
+
+# Οριζουσα
+print(&quot;det(A):&quot;, np.linalg.det(A)) # 10.0
+
+# Αντιστροφος
+Ainv = np.linalg.inv(A)
+print(&quot;A*A^-1 =\n&quot;, A @ Ainv) # I
+
+# Ιδιοτιμες - ιδιοδιανυσματα
+B = np.array([[4., 1.], [2., 3.]])
+vals, vecs = np.linalg.eig(B)
+print(&quot;Ιδιοτιμες:&quot;, vals) # [5. 2.]
+print(&quot;Ιδιοδιανυσματα:\n&quot;, vecs)
+
+# Επαληθευση: B*v = λ*v
+for i in range(len(vals)):
+ lam, v = vals[i], vecs[:,i]
+ print(f&quot;B*v{i} - {lam}*v{i} =&quot;, B@v - lam*v) # ~[0,0]</code></pre></div>
+</div>
+<h3>Μαθηματικές Συναρτήσεις NumPy</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th><th><strong>Εντολή</strong></th></tr></thead><tbody>
+<tr><td><code>np.sin(x)</code>, <code>np.cos(x)</code></td><td>τριγωνομετρικές</td><td><code>np.arcsin(x)</code>, <code>np.arctan(x)</code></td></tr>
+<tr><td><code>np.exp(x)</code></td><td>εκθετική $e^x$</td><td><code>np.log(x)</code>, <code>np.log10(x)</code></td></tr>
+<tr><td><code>np.sqrt(x)</code></td><td>τετραγωνική ρίζα</td><td><code>np.abs(x)</code></td></tr>
+<tr><td><code>np.pi</code>, <code>np.e</code></td><td>σταθερές</td><td><code>np.inf</code></td></tr>
+<tr><td><code>np.sum(A)</code></td><td>άθροισμα</td><td><code>np.max(A)</code>, <code>np.min(A)</code></td></tr>
+<tr><td><code>np.cumsum(v)</code></td><td>αθροιστικό άθροισμα</td><td><code>np.round(x, n)</code></td></tr>
+</tbody></table>
+<h3>Μιγαδικοί Αριθμοί</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>z = 3 + 4j</code></td><td>Ορισμός (το <code>j</code> = φανταστική μονάδα)</td></tr>
+<tr><td><code>np.abs(z)</code></td><td>Μέτρο $|z|$</td></tr>
+<tr><td><code>np.angle(z)</code></td><td>Όρισμα $\arg(z)$ (σε ακτίνια)</td></tr>
+<tr><td><code>np.conj(z)</code></td><td>Συζυγής $\bar{z}$</td></tr>
+<tr><td><code>z.real</code>, <code>z.imag</code></td><td>Πραγματικό / φανταστικό μέρος</td></tr>
+<tr><td><code>np.exp(1j*theta)</code></td><td>$e^{i\theta} = \cos\theta + i\sin\theta$</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Μιγαδικοί Αριθμοί</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε Python για να εκτελέσετε πράξεις με μιγαδικούς αριθμούς: (α) ορίστε $z_1 = 3+4i$ και $z_2 = 1-2i$, (β) υπολογίστε το άθροισμα, το γινόμενο και το πηλίκο $z_1/z_2$, (γ) βρείτε το μέτρο, το συζυγές και το όρισμα $\arg(z_1)$, (δ) εκτυπώστε τα αποτελέσματα.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+
+z1 = 3 + 4j
+z2 = 1 - 2j
+
+print(&quot;|z1| =&quot;, np.abs(z1)) # 5.0
+print(&quot;arg(z1) =&quot;, np.degrees(np.angle(z1))) # 53.13...
+print(&quot;conj(z1) =&quot;, np.conj(z1)) # 3-4j
+print(&quot;z1*z2 =&quot;, z1*z2) # 11-2j
+print(&quot;z1/z2 =&quot;, z1/z2) # -1+2j
+
+# Τυπος Euler
+theta = np.pi/4
+print(&quot;e^(i*pi/4) =&quot;, np.exp(1j*theta)) # (0.707+0.707j)
+
+# Ιδιοτιμες μιγαδικες
+A = np.array([[0., -1.], [1., 0.]])
+vals = np.linalg.eigvals(A)
+print(&quot;Ιδιοτιμες:&quot;, vals) # [0.+1j, 0.-1j]</code></pre></div>
+</div>
+<h3>Πολυώνυμα</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>np.roots([a,b,c])</code></td><td>Ρίζες $ax^2+bx+c=0$</td></tr>
+<tr><td><code>np.poly(roots)</code></td><td>Πολυώνυμο από ρίζες</td></tr>
+<tr><td><code>np.polyval(p, x)</code></td><td>Τιμή πολυωνύμου $p$ στο $x$</td></tr>
+<tr><td><code>np.polyfit(x, y, n)</code></td><td>Παρεμβολή πολυωνύμου βαθμού $n$</td></tr>
+</tbody></table></section>
+<section id="s3"><h2>SciPy — Επιστημονικοί Υπολογισμοί</h2><h3>Γραμμική Άλγεβρα SciPy</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>from scipy.linalg import null_space</code></td><td></td></tr>
+<tr><td><code>null_space(A)</code></td><td>Ορθοκανονική βάση $\ker(A)$</td></tr>
+<tr><td><code>from scipy.linalg import expm</code></td><td></td></tr>
+<tr><td><code>expm(A)</code></td><td>Εκθετική πίνακα $e^A$</td></tr>
+<tr><td><code>from scipy.linalg import solve</code></td><td></td></tr>
+<tr><td><code>solve(A, b)</code></td><td>Λύση $Ax=b$ (βελτιστοποιημένο)</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Πυρήνας και Εκθετική Πίνακα</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε τη βιβλιοθήκη SciPy για να: (α) υπολογίσετε την εκθετική $e^A$ ενός πίνακα $A$, (β) βρείτε τον πυρήνα (null space) ενός πίνακα χρησιμοποιώντας SVD, (γ) εκτυπώστε τα αποτελέσματα και επαληθεύστε $e^A \cdot e^{-A} = I$.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+from scipy.linalg import null_space, expm
+
+# Πυρηνας (null space)
+A = np.array([[1., 2., 3.],
+ [4., 5., 6.],
+ [7., 8., 9.]])
+ker = null_space(A)
+print(&quot;Πυρηνας (ορθοκανονικη βαση):\n&quot;, ker)
+print(&quot;Επαληθευση A*ker ≈ 0:\n&quot;, A @ ker)
+
+# Εκθετικη πινακα: e^A (για ΔΕ x&#x27; = Ax)
+B = np.array([[-1., 0.], [0., -2.]])
+t = 0.5
+eAt = expm(B * t)
+print(&quot;e^(B*0.5) =\n&quot;, eAt) # diag([e^-0.5, e^-1])</code></pre></div>
+</div>
+<h3>Αριθμητική Ολοκλήρωση</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>from scipy.integrate import quad</code></td><td></td></tr>
+<tr><td><code>quad(f, a, b)</code></td><td>$\int_a^b f(x)\,dx$ — επιστρέφει <code>(τιμή, σφάλμα)</code></td></tr>
+<tr><td><code>quad(f, a, np.inf)</code></td><td>Γενικευμένο $\int_a^{+\infty}$</td></tr>
+<tr><td><code>from scipy.integrate import dblquad</code></td><td></td></tr>
+<tr><td><code>dblquad(f, a, b, g, h)</code></td><td>$\int_a^b\!\int_{g(x)}^{h(x)} f(x,y)\,dy\,dx$</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Αριθμητική Ολοκλήρωση</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε τη συνάρτηση <code>quad</code> της βιβλιοθήκης SciPy για να υπολογίσετε αριθμητικά τα ολοκληρώματα: (α) $\int_0^1 x^2\,dx$, (β) $\int_0^{\pi} \sin x\,dx$, (γ) $\int_1^{\infty} e^{-x}\,dx$. Συγκρίνετε τα αριθμητικά αποτελέσματα με τις αναλυτικές τιμές.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+from scipy.integrate import quad, dblquad
+
+# Απλο ολοκληρωμα: int_0^pi sin(x)dx = 2
+val, err = quad(np.sin, 0, np.pi)
+print(f&quot;integral = {val:.6f}, error = {err:.2e}&quot;) # 2.000000
+
+# Γκαουσιανη: int_0^inf exp(-x^2)dx = sqrt(pi)/2
+val, err = quad(lambda x: np.exp(-x**2), 0, np.inf)
+print(f&quot;Gaussian = {val:.6f}&quot;) # 0.886227 = sqrt(pi)/2
+
+# Ολοκλήρωμα που δεν εχει κλειστη μορφη
+val, err = quad(lambda x: np.sin(x)/x, 0.001, 10)
+print(f&quot;Si(10) ≈ {val:.4f}&quot;)
+
+# Διπλο ολοκληρωμα: int_0^1 int_0^1 x*y dydx = 1/4
+val, err = dblquad(lambda y, x: x*y, 0, 1, 0, 1)
+print(f&quot;Double integral = {val:.4f}&quot;) # 0.25</code></pre></div>
+</div>
+<h3>Διαφορικές Εξισώσεις</h3>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>from scipy.integrate import solve_ivp</code></td><td></td></tr>
+<tr><td><code>solve_ivp(f, [t0,tf], y0)</code></td><td>Λύση $\mathbf{y}'=f(t,\mathbf{y})$, $\mathbf{y}(t_0)=\mathbf{y}_0$</td></tr>
+<tr><td><code>solve_ivp(f, ..., method='RK45')</code></td><td>Runge-Kutta 4ης/5ης τάξης (προεπιλογή)</td></tr>
+<tr><td><code>solve_ivp(f, ..., dense_output=True)</code></td><td>Συνεχής παρεμβολή λύσης</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Αρχικό Πρόβλημα ΔΕ</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Επιλύστε αριθμητικά το αρχικό πρόβλημα $y' = -y + \sin t$, $y(0)=1$ στο διάστημα $[0,10]$ χρησιμοποιώντας τη συνάρτηση <code>solve_ivp</code> της SciPy. Σχεδιάστε τη λύση και συγκρίνετε με την αναλυτική $y(t) = e^{-t} + \frac{1}{2}(\sin t - \cos t) + \frac{1}{2}e^{-t}$.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Παραδειγμα 1: y&#x27; = -y, y(0)=1 =&gt; y=e^-t
+def f(t, y):
+ return [-y[0]]
+
+sol = solve_ivp(f, [0, 5], [1.0], dense_output=True)
+t = np.linspace(0, 5, 200)
+y_numerical = sol.sol(t)[0]
+y_exact = np.exp(-t)
+
+plt.plot(t, y_numerical, &#x27;b-&#x27;, label=&#x27;Αριθμητική λύση&#x27;)
+plt.plot(t, y_exact, &#x27;r--&#x27;, label=&#x27;Ακριβής: $e^{-t}$&#x27;)
+plt.xlabel(&#x27;t&#x27;); plt.ylabel(&#x27;y(t)&#x27;)
+plt.legend(); plt.grid(True); plt.show()
+
+# Παραδειγμα 2: Συστημα 2x2 (Αρμονικος ταλαντωτης)
+# y&#x27;&#x27; + omega^2*y = 0 =&gt; [y&#x27;, v&#x27;] = [v, -omega^2*y]
+omega = 2.0
+def harmonic(t, Y):
+ y, v = Y
+ return [v, -omega**2 * y]
+
+sol2 = solve_ivp(harmonic, [0, 10], [1.0, 0.0],
+ dense_output=True, max_step=0.1)
+t2 = np.linspace(0, 10, 500)
+Y2 = sol2.sol(t2)
+plt.plot(t2, Y2[0], label=&#x27;y(t) θεση&#x27;)
+plt.plot(t2, Y2[1], label=&quot;y&#x27;(t) ταχυτητα&quot;)
+plt.legend(); plt.grid(True); plt.show()</code></pre></div>
+</div></section>
+<section id="s4"><h2>SymPy — Συμβολικός Λογισμός</h2><p>Το SymPy επιτρέπει <em>ακριβείς</em> (συμβολικές) πράξεις — αντίστοιχα με το Maxima, αλλά μέσα στην Python.</p>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>symbols('x y z')</code></td><td>Ορισμός συμβολικών μεταβλητών</td></tr>
+<tr><td><code>diff(f, x)</code></td><td>Παράγωγος $f'(x)$</td></tr>
+<tr><td><code>diff(f, x, n)</code></td><td>$n$-οστή παράγωγος $f^{(n)}(x)$</td></tr>
+<tr><td><code>integrate(f, x)</code></td><td>Αόριστο ολοκλήρωμα</td></tr>
+<tr><td><code>integrate(f, (x, a, b))</code></td><td>Ορισμένο ολοκλήρωμα</td></tr>
+<tr><td><code>limit(f, x, a)</code></td><td>Όριο $\lim_{x\to a}f(x)$</td></tr>
+<tr><td><code>solve(eq, x)</code></td><td>Λύση εξίσωσης</td></tr>
+<tr><td><code>series(f, x, 0, n)</code></td><td>Σειρά Maclaurin τάξης $n$</td></tr>
+<tr><td><code>simplify(expr)</code></td><td>Απλοποίηση</td></tr>
+<tr><td><code>factor(expr)</code></td><td>Παραγοντοποίηση</td></tr>
+<tr><td><code>expand(expr)</code></td><td>Ανάπτυξη</td></tr>
+<tr><td><code>latex(expr)</code></td><td>Μετατροπή σε LaTeX</td></tr>
+<tr><td><code>lambdify(x, f)</code></td><td>Συμβολική → αριθμητική συνάρτηση</td></tr>
+<tr><td><code>dsolve(ode, y)</code></td><td>Συμβολική λύση ΔΕ</td></tr>
+</tbody></table>
+<div class="example">
+<h4>SymPy — Παράγωγος, Ολοκλήρωμα, Όριο</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε τη βιβλιοθήκη SymPy για να εκτελέσετε συμβολικούς υπολογισμούς: (α) τον υπολογισμό παραγώγων της $f(x) = x^3 e^{-x} \sin x$, (β) την εύρεση του ολοκληρώματος $\int \frac{1}{1+x^2}\,dx$, (γ) τον υπολογισμό του ορίου $\lim_{x\to 0} \frac{\sin x}{x}$, (δ) την ανάπτυξη Taylor γύρω από $x=0$ μέχρι 8ης τάξης.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">from sympy import symbols, diff, integrate, limit, solve
+from sympy import sin, cos, exp, ln, pi, oo, simplify, series
+
+x, t, n = symbols(&#x27;x t n&#x27;)
+
+# Παραγωγος
+f = x**2 * sin(x)
+fp = diff(f, x)
+print(&quot;f&#x27;(x) =&quot;, fp) # 2*x*sin(x) + x^2*cos(x)
+
+# 2η παραγωγος
+fpp = diff(f, x, 2)
+print(&quot;f&#x27;&#x27;(x) =&quot;, fpp)
+
+# Ολοκληρωμα
+g = x * exp(x)
+print(integrate(g, x)) # (x-1)*exp(x)
+print(integrate(g, (x, 0, 1))) # 1
+
+# Οριο
+print(limit(sin(x)/x, x, 0)) # 1
+print(limit((1+1/n)**n, n, oo)) # E = 2.718...
+
+# Λυση εξισωσης
+sols = solve(x**2 - 5*x + 6, x)
+print(&quot;Ριζες:&quot;, sols) # [2, 3]
+
+# Σειρα Taylor (Maclaurin)
+print(series(sin(x), x, 0, 7))
+# x - x^3/6 + x^5/120 - x^7/5040 + O(x^8)</code></pre></div>
+</div>
+<p>Η SymPy υποστηρίζει επίσης πλήρεις υπολογισμούς γραμμικής άλγεβρας και συμβολική επίλυση διαφορικών εξισώσεων, όπως φαίνεται στο επόμενο παράδειγμα.</p>
+<div class="example">
+<h4>SymPy — Γραμμική Άλγεβρα και ΔΕ</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε τη βιβλιοθήκη SymPy για: (α) τον ορισμό συμβολικού πίνακα $A$ και τον υπολογισμό της ορίζουσας, αντιστρόφου και ιδιοτιμών, (β) τον υπολογισμό του χαρακτηριστικού πολυωνύμου, (γ) τη συμβολική επίλυση της γραμμικής ΔΕ $y'' - 3y' + 2y = 0$.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">from sympy import Matrix, symbols, dsolve, Function, Eq, diff
+
+x_s = symbols(&#x27;x&#x27;)
+
+# Συμβολικος πινακας
+A = Matrix([[3, 1], [0, 2]])
+print(&quot;det =&quot;, A.det()) # 6
+print(&quot;inv =\n&quot;, A.inv())
+print(&quot;eigenvals =&quot;, A.eigenvals()) # {2: 1, 3: 1}
+print(&quot;eigenvects =\n&quot;, A.eigenvects())
+
+# Χαρακτηριστικο πολυωνυμο
+lam = symbols(&#x27;lambda&#x27;)
+print(&quot;charpoly =&quot;, A.charpoly(lam)) # lambda^2 - 5*lambda + 6
+
+# Συμβολικη λυση ΔΕ
+y = Function(&#x27;y&#x27;)
+ode = Eq(y(x_s).diff(x_s, 2) - 3*y(x_s).diff(x_s) + 2*y(x_s), 0)
+sol = dsolve(ode, y(x_s))
+print(&quot;Λυση:&quot;, sol)
+# y(x) = C1*exp(x) + C2*exp(2*x)</code></pre></div>
+</div></section>
+<section id="s5"><h2>Matplotlib — Γραφήματα</h2><table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Περιγραφή</strong></th></tr></thead><tbody>
+<tr><td><code>plt.figure(figsize=(w,h))</code></td><td>Νέο γράφημα (πλάτος $w$, ύψος $h$ σε ίντσες)</td></tr>
+<tr><td><code>plt.plot(x, y)</code></td><td>Γράφημα γραμμής</td></tr>
+<tr><td><code>plt.plot(x, y, 'r--', label='...')</code></td><td>Με χρώμα, στυλ, ετικέτα</td></tr>
+<tr><td><code>plt.scatter(x, y)</code></td><td>Σκεδίαση σημείων</td></tr>
+<tr><td><code>plt.fill_between(x, y1, y2)</code></td><td>Χρωματισμός περιοχής (εμβαδό)</td></tr>
+<tr><td><code>plt.quiver(X, Y, U, V)</code></td><td>Πεδίο διανυσμάτων</td></tr>
+<tr><td><code>plt.contour(X, Y, Z)</code></td><td>Ισοϋψείς καμπύλες</td></tr>
+<tr><td><code>plt.xlabel('...')</code>, <code>plt.ylabel('...')</code></td><td>Ετικέτες αξόνων</td></tr>
+<tr><td><code>plt.title('...')</code></td><td>Τίτλος γραφήματος</td></tr>
+<tr><td><code>plt.legend()</code></td><td>Υπόμνημα</td></tr>
+<tr><td><code>plt.grid(True)</code></td><td>Πλέγμα</td></tr>
+<tr><td><code>plt.axhline(y=0, color='k')</code></td><td>Οριζόντια γραμμή</td></tr>
+<tr><td><code>plt.axvline(x=0, color='k')</code></td><td>Κατακόρυφη γραμμή</td></tr>
+<tr><td><code>plt.xlim(a, b)</code>, <code>plt.ylim(a, b)</code></td><td>Όρια αξόνων</td></tr>
+<tr><td><code>plt.subplots(m, n)</code></td><td>Υπογράφημα $m\times n$</td></tr>
+<tr><td><code>plt.tight_layout()</code></td><td>Βελτίωση διάταξης</td></tr>
+<tr><td><code>plt.savefig('file.pdf', dpi=150)</code></td><td>Αποθήκευση</td></tr>
+<tr><td><code>plt.show()</code></td><td>Εμφάνιση</td></tr>
+</tbody></table>
+<p><strong>Χρώματα:</strong> <code>'b'</code> μπλε, <code>'r'</code> κόκκινο, <code>'g'</code> πράσινο, <code>'k'</code> μαύρο, <code>'m'</code> ματζέντα. 
+<strong>Στυλ γραμμής:</strong> <code>'-'</code> συνεχής, <code>'--'</code> διακεκομμένη, <code>':'</code> τελειακή, <code>'-.'</code> μικτή.</p>
+<div class="example">
+<h4>Βασικά Γραφήματα</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Χρησιμοποιήστε τη βιβλιοθήκη Matplotlib για να δημιουργήσετε γραφήματα: (α) γράφημα της $f(x) = \sin x$ και $g(x) = \cos x$ στο $[0,2\pi]$, (β) υπολογίστε και σχεδιάστε το εμβαδόν μεταξύ των δύο καμπυλών στο διάστημα $[0,\pi/2]$. Προσθέστε τίτλο, ετικέτες αξόνων και υπόμνημα.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2*np.pi, 300)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# Αριστερο: Δυο συναρτησεις
+axes[0].plot(x, np.sin(x), &#x27;b-&#x27;, label=r&#x27;$\sin x$&#x27;)
+axes[0].plot(x, np.cos(x), &#x27;r--&#x27;, label=r&#x27;$\cos x$&#x27;)
+axes[0].axhline(y=0, color=&#x27;k&#x27;, linewidth=0.8)
+axes[0].set_xlabel(&#x27;x&#x27;); axes[0].set_ylabel(&#x27;y&#x27;)
+axes[0].set_title(&#x27;Τριγωνομετρικές Συναρτήσεις&#x27;)
+axes[0].legend(); axes[0].grid(True)
+
+# Δεξι: Εμβαδο μεταξυ καμπυλων
+x2 = np.linspace(0, 1, 200)
+f1 = x2**2
+f2 = x2
+axes[1].plot(x2, f1, &#x27;b-&#x27;, label=r&#x27;$y=x^2$&#x27;)
+axes[1].plot(x2, f2, &#x27;r-&#x27;, label=r&#x27;$y=x$&#x27;)
+axes[1].fill_between(x2, f1, f2, alpha=0.3, color=&#x27;green&#x27;,
+ label=&#x27;Εμβαδό&#x27;)
+axes[1].set_title(&#x27;Εμβαδόν μεταξύ καμπυλών&#x27;)
+axes[1].legend(); axes[1].grid(True)
+
+plt.tight_layout()
+plt.show()</code></pre></div>
+</div>
+<p>Εκτός από βασικά γραφήματα, η Matplotlib επιτρέπει τη σχεδίαση πεδίων κλίσεων για διαφορικές εξισώσεις, χρήσιμη εργαλεία για την εποπτική ανάλυση λύσεων.</p>
+<div class="example">
+<h4>Γράφημα Πεδίου Κλίσεων — Διαφορικές Εξισώσεις</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Σχεδιάστε το πεδίο κλίσεων (direction field) της διαφορικής εξίσωσης $y' = x - y$ στο ορθογώνιο $[-2,3]\times[-2,3]$ χρησιμοποιώντας τη συνάρτηση <code>quiver</code> της Matplotlib. Προσθέστε επίσης μία χαρακτηριστική λύση του προβλήματος.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Πεδιο κλισεων για y&#x27; = x - y
+x = np.linspace(-2, 3, 20)
+y = np.linspace(-2, 3, 20)
+X, Y = np.meshgrid(x, y)
+
+# Κλιση: dy/dx = X - Y
+dX = np.ones_like(X)
+dY = X - Y
+# Κανονικοποιηση
+N = np.sqrt(dX**2 + dY**2)
+plt.quiver(X, Y, dX/N, dY/N, color=&#x27;gray&#x27;, alpha=0.7)
+
+# Αριθμητικη λυση με solve_ivp
+from scipy.integrate import solve_ivp
+sol = solve_ivp(lambda t, y: [t - y[0]],
+ [-2, 3], [0.0], dense_output=True)
+t_plot = np.linspace(-2, 3, 200)
+plt.plot(t_plot, sol.sol(t_plot)[0], &#x27;r-&#x27;, linewidth=2,
+ label=&quot;y&#x27;=x-y, y(-2)=0&quot;)
+
+plt.xlabel(&#x27;x&#x27;); plt.ylabel(&#x27;y&#x27;)
+plt.title(&quot;Πεδίο Κλίσεων: $y&#x27;=x-y$&quot;)
+plt.legend(); plt.grid(True); plt.show()</code></pre></div>
+</div></section>
+<section id="s6"><h2>Ολοκληρωμένα Παραδείγματα</h2><div class="example">
+<h4>Πλήρης Ανάλυση Γραμμικής Άλγεβρας</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Δίνεται ο πίνακας στρέψης (stochastic) $P$ μίας αλυσίδας Markov. Χρησιμοποιήστε NumPy για να: (α) υπολογίσετε τις ιδιοτιμές και να επαληθεύσετε ότι η μέγιστη είναι $\lambda=1$, (β) βρείτε τη σταθερή κατανομή $\boldsymbol{\pi}$ ως ιδιοδιάνυσμα, (γ) εκτελέσετε πολλές επαναλήψεις $P^{100}$ και επιβεβαιώσετε τη σύγκλιση.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.linalg import null_space
+
+# Ο πινακας Markov
+P = np.array([[0.7, 0.1, 0.2],
+ [0.2, 0.8, 0.1],
+ [0.1, 0.1, 0.7]])
+
+# Σταθερη κατανομη (στηλο-στοχαστικος): P*pi = pi =&gt; (P - I)*pi = 0
+A = P - np.eye(3)
+ker = null_space(A)
+pi = ker[:,0] / ker[:,0].sum() # Κανονικοποιηση
+print(&quot;Σταθερη κατανομη:&quot;, np.round(pi, 4))
+
+# Εξελιξη κατανομης
+x0 = np.array([1., 0., 0.])
+states = [x0]
+for _ in range(50):
+ x0 = P @ x0
+ states.append(x0)
+states = np.array(states)
+
+plt.plot(states[:,0], label=&#x27;Κατ. 1&#x27;); 
+plt.plot(states[:,1], label=&#x27;Κατ. 2&#x27;)
+plt.plot(states[:,2], label=&#x27;Κατ. 3&#x27;)
+plt.axhline(pi[0], linestyle=&#x27;--&#x27;, color=&#x27;blue&#x27;)
+plt.xlabel(&#x27;Βήματα k&#x27;); plt.ylabel(&#x27;Πιθανότητα&#x27;)
+plt.title(&#x27;Σύγκλιση Αλυσίδας Markov&#x27;)
+plt.legend(); plt.grid(True); plt.show()</code></pre></div>
+</div>
+<p>Ο συνδυασμός SymPy και NumPy επιτρέπει τη χρήση συμβολικών αποτελεσμάτων σε αριθμητικές εφαρμογές, γεφυρώνοντας τη θεωρία με την πράξη.</p>
+<div class="example">
+<h4>Συμβολικός + Αριθμητικός Λογισμός</h4>
+<p class="ekf"><strong>Εκφώνηση:</strong> Δείξτε τη συνεργασία SymPy και NumPy: (α) ορίστε συμβολικά μια συνάρτηση $f(x)$, βρείτε αναλυτικά παράγωγο και ολοκλήρωμα, (β) μετατρέψτε τα συμβολικά αποτελέσματα σε αριθμητικές συναρτήσεις με <code>lambdify</code>, (γ) σχεδιάστε γράφημα εκτυπώνοντας παράλληλα τον μαθηματικό τύπο σε LaTeX.</p>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from sympy import symbols, sin, diff, integrate, lambdify, latex
+
+x = symbols(&#x27;x&#x27;)
+
+# Συμβολικη f και παραγωγοι
+f_sym = sin(x**2)
+fp_sym = diff(f_sym, x) # 2*x*cos(x^2)
+fpp_sym = diff(f_sym, x, 2)
+
+print(&quot;f&#x27;(x) =&quot;, fp_sym)
+print(&quot;f&#x27;&#x27;(x) =&quot;, fpp_sym)
+print(&quot;LaTeX:&quot;, latex(fp_sym)) # 2 x \cos{\left(x^{2} \right)}
+
+# Αοριστο ολοκληρωμα (δεν εχει κλειστη μορφη → Fresnel)
+# Χρηση αριθμητικης ολοκληρωσης
+from scipy.integrate import quad
+F = lambda t: np.sin(t**2)
+x_vals = np.linspace(0, 4, 200)
+F_vals = [quad(F, 0, xi)[0] for xi in x_vals]
+
+# Μετατροπη σε αριθμητικη για γραφημα
+f_num = lambdify(x, f_sym, &#x27;numpy&#x27;)
+fp_num = lambdify(x, fp_sym, &#x27;numpy&#x27;)
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1,2,1)
+plt.plot(x_vals, f_num(x_vals), &#x27;b-&#x27;, label=r&#x27;$\sin(x^2)$&#x27;)
+plt.plot(x_vals, fp_num(x_vals), &#x27;r-&#x27;, label=r&quot;$f&#x27;(x)$&quot;)
+plt.legend(); plt.grid(True); plt.title(&#x27;Συνάρτηση και Παράγωγος&#x27;)
+
+plt.subplot(1,2,2)
+plt.plot(x_vals, F_vals, &#x27;g-&#x27;, label=r&#x27;$\int_0^x\sin(t^2)dt$&#x27;)
+plt.legend(); plt.grid(True); plt.title(&#x27;Fresnel Integral&#x27;)
+plt.tight_layout(); plt.show()</code></pre></div>
+</div></section>
+<section id="s7"><h2>Βελτιστοποίηση και Εύρεση Ριζών — <code>scipy.optimize</code></h2><p>Η βιβλιοθήκη <code>scipy.optimize</code> παρέχει εργαλεία για εύρεση ριζών,
+ελαχιστοποίηση συναρτήσεων και επίλυση συστημάτων εξισώσεων.</p>
+<table class="cheat">
+<thead><tr><th><strong>Εντολή</strong></th><th><strong>Χρήση</strong></th></tr></thead><tbody>
+<tr><td><code>fsolve(f, x0)</code></td><td>Επίλυση $f(x)=0$ (ή συστήματος)</td></tr>
+<tr><td><code>brentq(f, a, b)</code></td><td>Εύρεση ρίζας στο $[a,b]$ (Brent)</td></tr>
+<tr><td><code>minimize(f, x0)</code></td><td>Ελαχιστοποίηση $f(x)$</td></tr>
+<tr><td><code>minimize_scalar(f)</code></td><td>Ελαχιστοποίηση μιας μεταβλητής</td></tr>
+<tr><td><code>linprog(c, A_ub, b_ub)</code></td><td>Γραμμικός προγραμματισμός</td></tr>
+</tbody></table>
+<div class="example">
+<h4>Εύρεση Ριζών και Ελαχιστοποίηση</h4>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">from scipy.optimize import fsolve, brentq, minimize
+import numpy as np
+
+# -- Εύρεση ρίζας: f(x) = cos(x) - x
+f = lambda x: np.cos(x) - x
+root = brentq(f, 0, 1)
+print(f&quot;Ρίζα (Brent): x = {root:.6f}&quot;)   # ≈ 0.739085
+
+# -- Σύστημα εξισώσεων: x^2 + y^2 = 1, x - y = 0
+def system(vars):
+    x, y = vars
+    return [x**2 + y**2 - 1, x - y]
+
+sol = fsolve(system, [0.5, 0.5])
+print(f&quot;Σύστημα: x={sol[0]:.4f}, y={sol[1]:.4f}&quot;)  # ≈ 0.7071
+
+# -- Ελαχιστοποίηση: f(x,y) = (x-1)^2 + (y-2)^2
+def objective(v):
+    return (v[0]-1)**2 + (v[1]-2)**2
+
+result = minimize(objective, [0, 0], method=&#x27;BFGS&#x27;)
+print(f&quot;Ελάχιστο: x={result.x[0]:.4f}, y={result.x[1]:.4f}&quot;)  # → (1, 2)
+print(f&quot;f_min = {result.fun:.6f}&quot;)</code></pre></div>
+</div>
+<div class="example">
+<h4>Βελτιστοποίηση με Περιορισμούς — Μηχανική</h4>
+<div class="code-card"><div class="code-top"><span>Python</span><button class="copy" onclick="cp(this)">📋 Αντιγραφή</button></div><pre><code class="language-python">from scipy.optimize import minimize
+import numpy as np
+
+# Ελαχιστοποίηση κόστους: f = 2*x + 3*y
+# Περιορισμοί: x + y &gt;= 4,  x &gt;= 1, y &gt;= 1
+def cost(v):
+    return 2*v[0] + 3*v[1]
+
+constraints = [
+    {&#x27;type&#x27;: &#x27;ineq&#x27;, &#x27;fun&#x27;: lambda v: v[0] + v[1] - 4},  # x+y &gt;= 4
+]
+bounds = [(1, None), (1, None)]   # x&gt;=1, y&gt;=1
+
+res = minimize(cost, [2, 2], method=&#x27;SLSQP&#x27;,
+               constraints=constraints, bounds=bounds)
+print(f&quot;Βέλτιστο: x={res.x[0]:.3f}, y={res.x[1]:.3f}&quot;)
+print(f&quot;Ελάχιστο κόστος: {res.fun:.3f}&quot;)</code></pre></div>
+</div></section>
+<section id="s8"><h2>Χρήσιμα Shortcuts και Συχνά Λάθη</h2><table class="cheat">
+<thead><tr><th><strong>Λάθος</strong></th><th><strong>Αιτία</strong></th><th><strong>Διόρθωση</strong></th></tr></thead><tbody>
+<tr><td><code>2**3 = 8</code> αλλά <code>np.array error</code></td><td>Λανθασμένος τύπος</td><td>Χρήση <code>float</code> ή <code>np.float64</code></td></tr>
+<tr><td><code>A * B</code> αντί <code>A @ B</code></td><td>Element-wise αντί matrix product</td><td>Πάντα <code>@</code> για πινακοπολλαπλασιασμό</td></tr>
+<tr><td><code>integrate</code> δίνει <code>0</code></td><td>Συμβολικό $x$ αντί αριθμητικό</td><td>Χρήση <code>quad</code> από scipy</td></tr>
+<tr><td><code>solve_ivp</code> αργεί</td><td>Βήμα πολύ μεγάλο</td><td>Μειώστε <code>max_step</code></td></tr>
+<tr><td><code>eig</code> δίνει μιγαδικές</td><td>Πίνακας δεν είναι συμμετρικός</td><td>Αν συμμετρικός: <code>np.linalg.eigh</code></td></tr>
+</tbody></table>
+<div class="tip"><h4>💡 Jupyter Notebook Tips</h4><ul>
+<li><strong>Shift+Enter</strong>: Εκτέλεση κελιού και μετάβαση στο επόμενο.</li>
+<li><strong>Tab</strong>: Αυτόματη συμπλήρωση (π.χ. <code>np.lin</code> + Tab).</li>
+<li><strong>Shift+Tab</strong>: Εμφάνιση τεκμηρίωσης συνάρτησης.</li>
+<li>Γράψτε <code>?np.linalg.eig</code> για πλήρη τεκμηρίωση.</li>
+<li>Χρήση <code>%matplotlib inline</code> για εμφάνιση γραφημάτων μέσα στο notebook.</li>
+</ul></div></section>
+</div>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν.&nbsp;Μ. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small><br><a href="https://nikmatz.github.io/ELADIC_GR/" style="color:#aaa">ELADIC_GR</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function cp(btn){const code=btn.closest('.code-card').querySelector('code').innerText;
+ navigator.clipboard.writeText(code).then(()=>{btn.textContent='✓ Αντιγράφηκε';setTimeout(()=>btn.textContent='📋 Αντιγραφή',1500);});}
+</script>
+</body></html>
