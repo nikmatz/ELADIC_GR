@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κώδικας Κεφ. 6 — Διαγωνοποίηση · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',Arial,sans-serif; background:var(--bg); color:#222; }
+  header { background:var(--blue); color:white; padding:18px 24px; }
+  header h1 { font-size:1.25rem; font-weight:700; }
+  header p  { font-size:0.9rem; margin-top:4px; opacity:.85; }
+  .breadcrumb { font-size:0.82rem; padding:10px 24px; background:#eee; border-bottom:1px solid #ddd; }
+  .breadcrumb a { color:var(--blue); text-decoration:none; }
+  .container { max-width:960px; margin:0 auto; padding:24px 16px; }
+  .info-box { background:white; border-left:5px solid var(--blue); padding:14px 18px;
+    margin-bottom:24px; border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  .info-box h2 { font-size:1rem; color:var(--blue); margin-bottom:8px; }
+  .info-box p  { font-size:0.88rem; line-height:1.6; }
+  .tabs { display:flex; gap:6px; }
+  .tab-btn { padding:10px 20px; border:none; border-radius:6px 6px 0 0;
+    font-size:0.9rem; font-weight:600; cursor:pointer; transition:background .2s; }
+  .tab-btn.maxima { background:#d5f5e3; color:var(--teal); }
+  .tab-btn.python { background:#d6eaf8; color:var(--blue); }
+  .tab-btn.active.maxima { background:var(--teal); color:white; }
+  .tab-btn.active.python { background:var(--blue); color:white; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+  .code-card { background:white; border-radius:0 6px 6px 6px; box-shadow:0 2px 8px rgba(0,0,0,.1); overflow:hidden; }
+  .code-header { display:flex; justify-content:space-between; align-items:center;
+    padding:10px 16px; font-size:0.85rem; font-weight:600; }
+  .code-header.maxima { background:var(--teal); color:white; }
+  .code-header.python { background:var(--blue); color:white; }
+  .download-btn { display:inline-block; padding:5px 12px; background:rgba(255,255,255,.2);
+    color:white; border:1px solid rgba(255,255,255,.5); border-radius:4px;
+    text-decoration:none; font-size:0.8rem; font-weight:600; }
+  .download-btn:hover { background:rgba(255,255,255,.35); }
+  pre[class*="language-"] { margin:0!important; border-radius:0!important; max-height:520px; overflow-y:auto; font-size:0.83rem; }
+  .commands-box { background:#fffde7; border:1px solid #f9a825; border-radius:4px;
+    padding:12px 16px; margin:16px 0; font-size:0.85rem; }
+  .commands-box strong { color:var(--orange); }
+  .commands-box code { background:#fff3cd; padding:1px 5px; border-radius:3px; font-size:0.82rem; }
+  footer { text-align:center; padding:20px; font-size:0.8rem; color:#888;
+    margin-top:32px; border-top:1px solid #ddd; }
+
+  /* ── In-browser Python runner ── */
+  .py-toolbar{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#1d2b36;}
+  .run-btn{background:#16a34a;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .run-btn:disabled{opacity:.55;cursor:default;}
+  .reset-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;}
+  .py-status{color:#9fb3c8;font-size:.8rem;margin-left:auto;text-align:right;}
+  textarea.py-editor{display:block;width:100%;min-height:360px;border:none;background:#272822;color:#f8f8f2;font-family:Consolas,Monaco,monospace;font-size:.83rem;line-height:1.5;padding:14px 16px;resize:vertical;outline:none;tab-size:4;}
+  .py-output{background:#0e1416;color:#e6edf3;font-family:Consolas,Monaco,monospace;font-size:.82rem;white-space:pre-wrap;padding:14px 16px;margin:0;max-height:380px;overflow:auto;border-top:1px solid #2a3942;}
+  .py-output:empty{display:none;}
+  .py-plots{padding:8px 16px 14px;background:#fff;text-align:center;}
+  .py-plots img{max-width:100%;border:1px solid #ddd;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📐 Κεφάλαιο 6 — Διαγωνοποίηση Πινάκων</h1>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+</header>
+
+<div class="breadcrumb">
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 6
+</div>
+
+<div class="container">
+
+  <div class="info-box">
+    <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
+    <p>
+      <strong>Αντικείμενο:</strong> Διαγωνοποίηση $A=PDP^{-1}$ — συνθήκες,
+      ορθογώνια διαγωνοποίηση συμμετρικών (φασματικό θεώρημα $A=Q\Lambda Q^\top$),
+      SVD ($A=U\Sigma V^\top$), εκθετική πίνακα $e^A$,
+      τετραγωνικές μορφές και ταξινόμηση (θετικά ορισμένος κτλ.).<br><br>
+      Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.
+    </p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn maxima active" onclick="showTab('maxima')">⚙️ Maxima (.mac)</button>
+    <button class="tab-btn python"        onclick="showTab('python')">🐍 Python (.py)</button>
+  </div>
+
+  <div id="tab-maxima" class="tab-content active">
+    <div class="code-card">
+      <div class="code-header maxima">
+        <span>maxima_diag.mac</span>
+        <a class="download-btn" href="maxima_diag.mac" download>⬇ Λήψη .mac</a>
+        <a class="download-btn" href="maxima_diag.wxmx" download style="margin-left:6px;background:rgba(255,255,255,.15);">⬇ Λήψη .wxmx</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0;">
+        <strong>Βασικές εντολές:</strong>
+        <code>eigenvectors(A)</code> &nbsp;
+        <code>P . D . invert(P)</code> &nbsp;
+        <code>transpose(Q) . Q</code> &nbsp;
+        <code>charpoly(A,λ)</code> &nbsp;
+        <code>nullspace(A-λI)</code>
+      </div>
+      <pre><code class="language-maxima" id="maxima-code">/* ============================================================
+   maxima_diag.mac
+   Κεφάλαιο 6 — Διαγωνοποίηση Πινάκων
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     load("eigen")          → πακέτο ιδιοτιμών
+     eigenvectors(A)        → ιδιοτιμές + ιδιοδιανύσματα
+     invert(P)              → αντίστροφος πίνακας ιδιοδιανυσμάτων
+     transpose(P)           → για ορθοκανονικό P: P⁻¹ = Pᵀ
+     A . B                  → γινόμενο πινάκων
+     ratsimp / trigsimp     → απλοποίηση
+     matrixexp(A, t)        → εκθετική πίνακα (αν διαθέσιμη)
+
+   Εκτελέστε με: wxMaxima (Load/File) ή
+                 maxima -b maxima_diag.mac
+   ============================================================ */
+
+load("eigen")$
+
+/* ── Μέρος Α: Συνθήκες Διαγωνοποίησης ──────────────────── */
+print("════ Α. Συνθήκες Διαγωνοποίησης ════");
+
+/* Πίνακας Α — διαγωνοποιήσιμος (διακριτές ιδιοτιμές) */
+A : matrix([5, 4],
+           [1, 2]);
+
+load("eigen")$
+evA : eigenvectors(A);
+print("eigenvectors(A):"); print(evA);
+
+/* Εξαγωγή ιδιοτιμών */
+lam1 : 6;  lam2 : 1;
+
+/* Ιδιοδιανύσματα */
+v1 : matrix([4], [1]);
+v2 : matrix([-1],[1]);
+
+P   : addcol(v1, v2);
+P_inv : invert(P);
+D   : matrix([lam1, 0], [0, lam2]);
+
+print("P ="); print(P);
+print("D ="); print(D);
+print("Επαλήθευση P·D·P⁻¹ ="); print(ratsimp(P . D . P_inv));
+print("[Πρέπει να ισούται με A =", A, "]");
+
+/* ── Μέρος Β: Μη Διαγωνοποιήσιμος Πίνακας ───────────────── */
+print("════ Β. Μη Διαγωνοποιήσιμος (Jordan) ════");
+
+/* Ο B έχει διπλή ιδιοτιμή αλλά μόνο 1 ιδιοδιάνυσμα */
+B : matrix([3, 1],
+           [0, 3]);
+print("B ="); print(B);
+print("eigenvalues(B):"); print(eigenvalues(B));
+print("nullspace(B - 3I):"); print(nullspace(B - 3*ident(2)));
+print("→ Μόνο 1 ανεξάρτητο ιδιοδιάνυσμα → ΜΗ διαγωνοποιήσιμος");
+
+/* ── Μέρος Γ: Ορθογώνια Διαγωνοποίηση (Συμμετρικός) ────── */
+print("════ Γ. Ορθογώνια Διαγωνοποίηση ════");
+/* Φασματικό Θεώρημα: κάθε συμμετρικός A = QΛQᵀ */
+
+S : matrix([4, 2],
+           [2, 1]);
+print("S (συμμετρικός) ="); print(S);
+print("S = Sᵀ:", is(S = transpose(S)));
+
+evS : eigenvectors(S);
+print("eigenvectors(S):"); print(evS);
+
+/* Ορθοκανονικοποίηση Gram-Schmidt για ιδιοδιανύσματα */
+u1 : matrix([2],[-1]); /* ιδιοδιάνυσμα λ₁=5 */
+u2 : matrix([1], [2]); /* ιδιοδιάνυσμα λ₂=0 */
+
+/* Νόρμες */
+n1 : sqrt(u1 . u1);
+n2 : sqrt(u2 . u2);
+q1 : u1 / n1;
+q2 : u2 / n2;
+q1 : ratsimp(q1);
+q2 : ratsimp(q2);
+
+Q  : addcol(q1, q2);
+LS : matrix([5, 0], [0, 0]);   /* Λ = diag(ιδιοτιμές) */
+
+print("Q (ορθοκανονικός) ="); print(float(Q));
+print("QᵀQ ="); print(ratsimp(transpose(Q) . Q));
+print("[= I₂ ✓]");
+print("QΛQᵀ ="); print(ratsimp(Q . LS . transpose(Q)));
+print("[= S ✓]");
+
+/* ── Μέρος Δ: Δύναμη Πίνακα μέσω Διαγωνοποίησης ─────────── */
+print("════ Δ. Αᵑ μέσω Διαγωνοποίησης ════");
+
+/* Aⁿ = P·Dⁿ·P⁻¹ */
+n_pow : 10;
+Dn : matrix([lam1^n_pow, 0], [0, lam2^n_pow]);
+A_pow : ratsimp(P . Dn . P_inv);
+print("A¹⁰ ="); print(A_pow);
+
+/* Επαλήθευση: A^1 = A */
+Dn1 : matrix([lam1, 0], [0, lam2]);
+print("Επαλήθευση A¹ =", ratsimp(P . Dn1 . P_inv));
+
+/* ── Μέρος Ε: Τετραγωνική Μορφή Q(x) = xᵀAx ─────────────── */
+print("════ Ε. Τετραγωνική Μορφή ════");
+
+/* Q(x,y) = 4x² + 4xy + y²  ↔  S παραπάνω */
+x_var : matrix([x], [y]);
+quad_form : transpose(x_var) . S . x_var;
+quad_form : expand(quad_form[1][1]);
+print("Q(x,y) = xᵀSx =", quad_form);
+print("[= 4x² + 4xy + y²]");
+
+/* Ταξινόμηση: ιδιοτιμές S ≥ 0 → θετικά ημιορισμένη */
+print("Ιδιοτιμές S: 5, 0  →  θετικά ΗΜΙ-ορισμένη (semi-definite)");
+
+print("════ Τέλος ════");
+</code></pre>
+    </div>
+  </div>
+
+  <div id="tab-python" class="tab-content">
+    <div class="code-card">
+      <div class="code-header python">
+        <span>python_diag.py</span>
+        <a class="download-btn" href="python_diag.py" download>⬇ Λήψη .py</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0;">
+        <strong>Βιβλιοθήκες / εντολές:</strong>
+        <code>np.linalg.eigh(S)</code> &nbsp;
+        <code>np.linalg.svd(A)</code> &nbsp;
+        <code>scipy.linalg.expm(A)</code> &nbsp;
+        <code>np.linalg.matrix_power(A,n)</code>
+      </div>
+            <div class="py-toolbar">
+        <button class="run-btn" id="py-run">▶ Τρέξε</button>
+        <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
+        <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
+      </div>
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># ============================================================
+# python_diag.py
+# Κεφάλαιο 6 — Διαγωνοποίηση Πινάκων
+# Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+# ============================================================
+#
+# ΒΙΒΛΙΟΘΗΚΕΣ:
+#   numpy         → eig, eigh, svd, matrix_power
+#   scipy.linalg  → expm (εκθετική πίνακα)
+#   sympy         → ακριβής διαγωνοποίηση, τετραγωνικές μορφές
+#   matplotlib    → ελλείψεις τετραγωνικής μορφής, SVD γεωμετρία
+#
+# ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:
+#   np.linalg.eig(A)         → διαγωνοποίηση (γενική)
+#   np.linalg.eigh(S)        → για συμμετρικούς (ορθ. ιδιοδ.)
+#   np.linalg.svd(A)         → SVD: A = UΣVᵀ
+#   scipy.linalg.expm(A)     → εκθετική e^A
+#   np.linalg.matrix_power   → Aⁿ άμεσα (για σύγκριση)
+# ============================================================
+
+import numpy as np
+import scipy.linalg as sla
+import matplotlib.pyplot as plt
+from sympy import Matrix, symbols, pprint, sqrt, Rational, factor
+
+print("=" * 55)
+print(" Κεφάλαιο 6: Διαγωνοποίηση — Python")
+print("=" * 55)
+
+# ── Α. Διαγωνοποίηση A = PDP⁻¹ ───────────────────────────
+print("\n── Α. Διαγωνοποίηση A = PDP⁻¹ ──")
+
+A = np.array([[5, 4],
+              [1, 2]], dtype=float)
+
+vals, P = np.linalg.eig(A)
+D = np.diag(vals)
+P_inv = np.linalg.inv(P)
+
+print(f"Ιδιοτιμές: {np.round(vals, 6)}")
+print(f"P =\n{np.round(P, 6)}")
+print(f"\nΕπαλήθευση PDP⁻¹ = A:")
+print(np.round(P @ D @ P_inv, 8))
+print(f"✓ {np.allclose(P @ D @ P_inv, A)}")
+
+# Δύναμη μέσω διαγωνοποίησης
+n_pow = 10
+A_pow_diag   = P @ np.diag(vals**n_pow) @ P_inv
+A_pow_direct = np.linalg.matrix_power(A, n_pow)
+print(f"\nA¹⁰ (PD¹⁰P⁻¹):\n{np.round(A_pow_diag, 2)}")
+print(f"Ισότητα με matrix_power: {np.allclose(A_pow_diag, A_pow_direct)}  ✓")
+
+# ── Β. Μη Διαγωνοποιήσιμος — Έλεγχος ─────────────────────
+print("\n── Β. Έλεγχος Διαγωνοποιησιμότητας ──")
+
+def is_diagonalizable(A):
+    """Ελέγχει αν ο A είναι διαγωνοποιήσιμος."""
+    A_sym = Matrix(A.tolist())
+    n = A.shape[0]
+    total_geo = 0
+    for lam, alg_mult in A_sym.eigenvals().items():
+        geo_mult = len(A_sym.eigenvects()[
+            [ev[0] for ev in A_sym.eigenvects()].index(lam)][2])
+        total_geo += geo_mult
+        print(f"  λ={lam}: αλγ.πολλ.={alg_mult}, γεωμ.πολλ.={geo_mult}")
+    return total_geo == n
+
+B = np.array([[3, 1], [0, 3]], dtype=float)   # Jordan block
+C = np.array([[5, 4], [1, 2]], dtype=float)   # διαγωνοποιήσιμος
+
+print("B (Jordan block):")
+is_diagonalizable(B)
+print(f"  → Διαγωνοποιήσιμος: {np.linalg.matrix_rank(B - 3*np.eye(2)) &lt; 2}")
+
+# ── Γ. Ορθογώνια Διαγωνοποίηση (Φασματικό Θεώρημα) ───────
+print("\n── Γ. Ορθογώνια Διαγωνοποίηση — Συμμετρικός ──")
+
+S = np.array([[4, 2],
+              [2, 1]], dtype=float)
+print(f"S = Sᵀ: {np.allclose(S, S.T)}  ✓")
+
+# eigh → ορθοκανονικά ιδιοδιανύσματα εγγυημένα
+eigvals, Q = np.linalg.eigh(S)
+Lambda = np.diag(eigvals)
+
+print(f"Ιδιοτιμές Λ: {np.round(eigvals, 6)}")
+print(f"Q (ορθοκανονικός):\n{np.round(Q, 6)}")
+print(f"QᵀQ = I: {np.allclose(Q.T @ Q, np.eye(2))}  ✓")
+print(f"QΛQᵀ = S: {np.allclose(Q @ Lambda @ Q.T, S)}  ✓")
+
+# ── Δ. SVD — Αποσύνθεση Μοναδιαίων Τιμών ──────────────────
+print("\n── Δ. SVD: A = UΣVᵀ ──")
+
+M = np.array([[1, 2, 0],
+              [0, 1, 3],
+              [1, 0, 1]], dtype=float)
+
+U, sigma, Vt = np.linalg.svd(M)
+Sigma = np.zeros_like(M)
+np.fill_diagonal(Sigma, sigma)
+
+print(f"Μοναδιαίες τιμές σ: {np.round(sigma, 4)}")
+print(f"Επαλήθευση UΣVᵀ = M: {np.allclose(U @ Sigma @ Vt, M)}  ✓")
+print(f"rank(M) = {np.linalg.matrix_rank(M)}  "
+      f"(= αριθμός μη-μηδενικών σ: {np.sum(sigma &gt; 1e-10)})")
+
+# Προσέγγιση χαμηλής τάξης (rank-1)
+M_rank1 = sigma[0] * np.outer(U[:,0], Vt[0,:])
+print(f"\nΠροσέγγιση rank-1:")
+print(np.round(M_rank1, 4))
+print(f"Σφάλμα Frobenius: {np.linalg.norm(M - M_rank1):.4f}")
+
+# ── Ε. Εκθετική Πίνακα e^A ────────────────────────────────
+print("\n── Ε. Εκθετική Πίνακα e^(tA) ──")
+
+# A = PDP⁻¹  →  e^A = P·diag(e^λᵢ)·P⁻¹
+A2 = np.array([[0, -1], [1,  0]], dtype=float)   # στροφή: e^(tA) = R(t)
+t = np.pi / 2   # π/2
+
+eA_scipy = sla.expm(t * A2)
+eA_diag  = np.array([[np.cos(t), -np.sin(t)],
+                     [np.sin(t),  np.cos(t)]])   # αναλυτικά: R(π/2)
+
+print(f"A = antisymmetric (γεννήτρας στροφής)")
+print(f"e^(π/2·A) (scipy):\n{np.round(eA_scipy, 6)}")
+print(f"R(π/2) (αναλυτικά):\n{np.round(eA_diag, 6)}")
+print(f"Ισότητα: {np.allclose(eA_scipy, eA_diag)}  ✓")
+
+# ── Στ. Τετραγωνική Μορφή &amp; Ελλείψεις ────────────────────
+print("\n── Στ. Τετραγωνικές Μορφές ──")
+
+# Q(x,y) = xᵀSx: ελλείψεις = ισοϋψείς καμπύλες Q=const
+theta = np.linspace(0, 2*np.pi, 400)
+unit_circle = np.array([np.cos(theta), np.sin(theta)])
+
+fig, axes = plt.subplots(1, 3, figsize=(14, 4.5))
+fig.suptitle("Διαγωνοποίηση — SVD &amp; Τετραγωνικές Μορφές", fontsize=12, fontweight='bold')
+
+# --- Ιδιοδιανύσματα συμμετρικού S ---
+ax1 = axes[0]
+ax1.set_title("Ιδιοδιανύσματα $S$ (ορθογώνια)")
+colors = ['royalblue', 'tomato']
+for i in range(2):
+    v = Q[:, i] * eigvals[i] if eigvals[i] != 0 else Q[:, i] * 0.5
+    ax1.annotate('', xy=Q[:,i], xytext=(0,0),
+                 arrowprops=dict(arrowstyle='-&gt;', color=colors[i], lw=2.5))
+    ax1.text(Q[0,i]*1.1, Q[1,i]*1.1,
+             f'$q_{i+1}$, $\\lambda={eigvals[i]:.0f}$', fontsize=9, color=colors[i])
+ax1.axhline(0,color='k',lw=0.5); ax1.axvline(0,color='k',lw=0.5)
+ax1.set_xlim(-1.5,1.5); ax1.set_ylim(-1.5,1.5)
+ax1.set_aspect('equal'); ax1.grid(True,alpha=0.3)
+
+# --- SVD: εφαρμογή σε μοναδιαίο κύκλο ---
+ax2 = axes[1]
+ax2.set_title("SVD: Εικόνα μοναδιαίου κύκλου")
+transformed = M[:2,:2] @ unit_circle   # 2D για απλότητα (πρώτη 2×2 υπο-αρ/ση)
+ax2.plot(unit_circle[0], unit_circle[1], 'royalblue', lw=1.5, label='Αρχικός κύκλος')
+ax2.plot(transformed[0], transformed[1], 'tomato', lw=2, label='$M\\cdot$κύκλος')
+ax2.axhline(0,color='k',lw=0.5); ax2.axvline(0,color='k',lw=0.5)
+ax2.set_aspect('equal'); ax2.grid(True,alpha=0.3)
+ax2.legend(fontsize=8); ax2.set_title("SVD: Εικόνα κύκλου υπό $M_{2\\times2}$")
+
+# --- Ισοϋψείς τετραγωνικής μορφής Q=xᵀSx ---
+ax3 = axes[2]
+ax3.set_title("Ισοϋψείς $Q(x,y)=x^\\top S x$")
+xx, yy = np.meshgrid(np.linspace(-3,3,300), np.linspace(-3,3,300))
+pts = np.stack([xx.ravel(), yy.ravel()])
+Qvals = np.sum(pts * (S @ pts), axis=0).reshape(xx.shape)
+cs = ax3.contour(xx, yy, Qvals, levels=[1,2,4,8,16], colors='royalblue')
+ax3.clabel(cs, fontsize=8)
+# Άξονες ιδιοδιανυσμάτων
+for i, col in enumerate(['tomato','forestgreen']):
+    ax3.annotate('', xy=Q[:,i]*2, xytext=(0,0),
+                 arrowprops=dict(arrowstyle='-&gt;', color=col, lw=2))
+ax3.axhline(0,color='k',lw=0.5); ax3.axvline(0,color='k',lw=0.5)
+ax3.set_xlim(-3,3); ax3.set_ylim(-3,3)
+ax3.set_aspect('equal'); ax3.grid(True,alpha=0.3)
+
+plt.tight_layout()
+plt.savefig("diagonalization.png", dpi=120, bbox_inches='tight')
+print("Το διάγραμμα αποθηκεύτηκε: diagonalization.png")
+plt.show()
+</textarea>
+      <pre class="py-output" id="py-output"></pre>
+      <div class="py-plots" id="py-plots"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector('.tab-btn.' + name).classList.add('active');
+}
+function loadCode(file, elementId, lang) {
+  fetch(file + '?v=' + Date.now())
+    .then(r => r.ok ? r.text() : Promise.reject(r.status))
+    .then(text => {
+      const el = document.getElementById(elementId);
+      el.textContent = text; el.className = 'language-' + lang;
+      Prism.highlightElement(el);
+    })
+    .catch(err => {
+      document.getElementById(elementId).textContent =
+        '⚠ Αδυναμία φόρτωσης (' + err + '). Χρησιμοποιήστε "Λήψη".';
+    });
+}
+
+/* ── In-browser Python runner (Pyodide) ── */
+const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+let pyodideReady = null, originalPy = '';
+const $ = id => document.getElementById(id);
+originalPy = $('py-editor').value;
+$('py-reset').onclick = () => { $('py-editor').value = originalPy; $('py-output').textContent=''; $('py-plots').innerHTML=''; };
+
+async function ensurePyodide(setStatus){
+  if (pyodideReady) return pyodideReady;
+  pyodideReady = (async () => {
+    setStatus('Λήψη περιβάλλοντος Python… (πρώτη φορά ~15–25 MB)');
+    if (!window.loadPyodide){
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = PYODIDE_URL; sc.onload = res; sc.onerror = () => rej('script load error');
+        document.head.appendChild(sc);
+      });
+    }
+    return await loadPyodide();
+  })();
+  return pyodideReady;
+}
+
+$('py-run').onclick = async function(){
+  const btn = this, out = $('py-output'), plots = $('py-plots');
+  const setStatus = t => $('py-status').textContent = t;
+  btn.disabled = true; out.textContent = ''; plots.innerHTML = '';
+  try {
+    const py = await ensurePyodide(setStatus);
+    py.setStdout({ batched: s => { out.textContent += s; } });
+    py.setStderr({ batched: s => { out.textContent += s; } });
+    const code = $('py-editor').value;
+    setStatus('Φόρτωση βιβλιοθηκών…');
+    await py.loadPackagesFromImports(code);
+    setStatus('Εκτέλεση…');
+    await py.runPythonAsync("try:\n    import matplotlib; matplotlib.use('AGG')\nexcept Exception:\n    pass");
+    py.globals.set('__user_src__', code);
+    await py.runPythonAsync(`
+import traceback
+try:
+    exec(__user_src__, {'__name__': '__main__'})
+except Exception:
+    traceback.print_exc()
+`);
+    const figs = await py.runPythonAsync(`
+import base64, io
+_imgs = []
+try:
+    import matplotlib.pyplot as plt
+    for _n in plt.get_fignums():
+        _f = plt.figure(_n); _b = io.BytesIO()
+        _f.savefig(_b, format='png', dpi=110, bbox_inches='tight'); _b.seek(0)
+        _imgs.append(base64.b64encode(_b.read()).decode())
+    plt.close('all')
+except Exception:
+    pass
+_imgs
+`);
+    const arr = figs.toJs(); if (figs.destroy) figs.destroy();
+    arr.forEach(b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; plots.appendChild(img); });
+    setStatus(arr.length ? ('Ολοκληρώθηκε ✓ — ' + arr.length + ' γράφημα/τα') : 'Ολοκληρώθηκε ✓');
+  } catch (e) {
+    out.textContent += '\n⚠ Σφάλμα: ' + e;
+    setStatus('Σφάλμα');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>
