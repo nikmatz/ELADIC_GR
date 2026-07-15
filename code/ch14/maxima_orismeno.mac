@@ -1,0 +1,15 @@
+/* Κεφάλαιο 14 — Ορισμένο Ολοκλήρωμα */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications. */
+print("int_0^1 x^2     =", integrate(x^2,x,0,1));
+print("int_0^pi sin(x) =", integrate(sin(x),x,0,%pi));
+print("int_1^e ln(x)   =", integrate(log(x),x,1,%e));
+print("int_0^1 e^x     =", integrate(exp(x),x,0,1));
+print("int_0^1 1/(1+x^2)=",integrate(1/(1+x^2),x,0,1));  /* pi/4 */
+/* Αθροίσματα Riemann n=100 */
+n:100; dx:1/n; S:0;
+for i:0 thru n-1 do S:S+(i*dx)^2*dx;
+print("Riemann (n=100):", float(S));
+/* Εμβαδόν μεταξύ x^2 και x */
+area : integrate(x-x^2,x,0,1);
+print("Εμβαδόν y=x vs y=x^2:",area);
+plot2d([sin(x),0],[x,0,%pi],[title,"int_0^pi sin(x)dx=2"]);

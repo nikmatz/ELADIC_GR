@@ -1,0 +1,16 @@
+/* Κεφάλαιο 13 — Αόριστο Ολοκλήρωμα */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications. */
+print("int(x^5)         =", integrate(x^5,x));
+print("int(1/x)         =", integrate(1/x,x));
+print("int(e^x)         =", integrate(exp(x),x));
+print("int(sin(x))      =", integrate(sin(x),x));
+print("int(cos(x))      =", integrate(cos(x),x));
+print("int(sin(2x+1))   =", integrate(sin(2*x+1),x));
+print("int(x*e^(x^2))   =", integrate(x*exp(x^2),x));
+print("int(x/sqrt(x^2+4))=",integrate(x/sqrt(x^2+4),x));
+print("int(x*e^x)       =", integrate(x*exp(x),x));
+print("int(x*sin(x))    =", integrate(x*sin(x),x));
+print("int(x^2*log(x))  =", integrate(x^2*log(x),x));
+print("int(log(x))      =", integrate(log(x),x));
+result : integrate(x^3*exp(x),x);
+print("Επαλήθευση:", ratsimp(diff(result,x)-x^3*exp(x))=0);

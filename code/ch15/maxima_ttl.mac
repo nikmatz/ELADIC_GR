@@ -1,0 +1,20 @@
+/* Κεφάλαιο 15 — Θεμελιώδες Θεώρημα Λογισμού */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications. */
+/* ΘΘΛ Μέρος Α */
+F_expr : integrate(t^2, t, 0, x);
+print("F(x)=int_0^x t^2:", F_expr);
+print("F'(x)=", diff(F_expr,x), " (= x^2 ?)");
+F2 : integrate(sin(t),t,0,x);
+print("F(x)=int_0^x sin(t):", F2);
+print("F'(x)=", diff(F2,x));
+/* ΘΘΛ Μέρος Β */
+print("int_1^3 x^2     =", integrate(x^2,x,1,3));
+print("int_0^pi cos(x) =", integrate(cos(x),x,0,%pi));
+print("int_1^e 1/x     =", integrate(1/x,x,1,%e));
+print("int_0^1 e^x     =", integrate(exp(x),x,0,1));
+print("int_-1^1 x^3    =", integrate(x^3,x,-1,1));
+/* Εμβαδόν μεταξύ x^2 και 2x */
+intersect : solve(x^2=2*x,x);
+print("Τομές x^2=2x:", intersect);
+print("Εμβαδόν =", integrate(2*x-x^2,x,0,2));
+plot2d([x^2,2*x],[x,-0.5,2.5],[legend,"x^2","2x"],[title,"ΘΘΛ"]);

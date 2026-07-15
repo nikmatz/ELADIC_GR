@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κώδικας Κεφ. 19 — Ακολουθίες και Σειρές · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222}
+  header{background:var(--blue);color:white;padding:18px 24px}
+  header h1{font-size:1.25rem;font-weight:700}
+  header p{font-size:.9rem;margin-top:4px;opacity:.85}
+  .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd}
+  .breadcrumb a{color:var(--blue);text-decoration:none}
+  .container{max-width:960px;margin:0 auto;padding:24px 16px}
+  .info-box{background:white;border-left:5px solid var(--blue);padding:14px 18px;margin-bottom:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .info-box h2{font-size:1rem;color:var(--blue);margin-bottom:8px}
+  .info-box p{font-size:.88rem;line-height:1.6}
+  .tabs{display:flex;gap:6px;margin-bottom:0}
+  .tab-btn{padding:10px 20px;border:none;border-radius:6px 6px 0 0;font-size:.9rem;font-weight:600;cursor:pointer}
+  .tab-btn.maxima{background:#d5f5e3;color:var(--teal)}
+  .tab-btn.python{background:#d6eaf8;color:var(--blue)}
+  .tab-btn.active.maxima{background:var(--teal);color:white}
+  .tab-btn.active.python{background:var(--blue);color:white}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  .code-card{background:white;border-radius:0 6px 6px 6px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+  .code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-size:.85rem;font-weight:600}
+  .code-header.maxima{background:var(--teal);color:white}
+  .code-header.python{background:var(--blue);color:white}
+  .download-btn{display:inline-block;padding:5px 12px;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.5);border-radius:4px;text-decoration:none;font-size:.8rem;font-weight:600}
+  .download-btn:hover{background:rgba(255,255,255,.35)}
+  pre[class*="language-"]{margin:0!important;border-radius:0!important;max-height:520px;overflow-y:auto;font-size:.83rem}
+  .commands-box{background:#fffde7;border:1px solid #f9a825;border-radius:4px;padding:12px 16px;margin:16px 0;font-size:.85rem}
+  .commands-box strong{color:var(--orange)}
+  .commands-box code{background:#fff3cd;padding:1px 5px;border-radius:3px;font-size:.82rem}
+  footer{text-align:center;padding:20px;font-size:.8rem;color:#888;margin-top:32px;border-top:1px solid #ddd}
+
+  /* ── In-browser Python runner ── */
+  .py-toolbar{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#1d2b36;}
+  .run-btn{background:#16a34a;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .run-btn:disabled{opacity:.55;cursor:default;}
+  .reset-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;}
+  .py-status{color:#9fb3c8;font-size:.8rem;margin-left:auto;text-align:right;}
+  textarea.py-editor{display:block;width:100%;min-height:360px;border:none;background:#272822;color:#f8f8f2;font-family:Consolas,Monaco,monospace;font-size:.83rem;line-height:1.5;padding:14px 16px;resize:vertical;outline:none;tab-size:4;}
+  .py-output{background:#0e1416;color:#e6edf3;font-family:Consolas,Monaco,monospace;font-size:.82rem;white-space:pre-wrap;padding:14px 16px;margin:0;max-height:380px;overflow:auto;border-top:1px solid #2a3942;}
+  .py-output:empty{display:none;}
+  .py-plots{padding:8px 16px 14px;background:#fff;text-align:center;}
+  .py-plots img{max-width:100%;border:1px solid #ddd;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 Κεφάλαιο 19 — Ακολουθίες και Σειρές</h1>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+</header>
+<div class="breadcrumb">
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 19
+</div>
+<div class="container">
+  <div class="info-box">
+    <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
+    <p><strong>Αντικείμενο:</strong> όρια ακολουθιών, γεωμετρική σειρά, Taylor/Maclaurin, κριτήριο λόγου, ακτίνα σύγκλισης<br><br>
+    Επιλέξτε γλώσσα από τις καρτέλες. Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.</p>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn maxima active" onclick="showTab('maxima')">⚙️ Maxima (.mac)</button>
+    <button class="tab-btn python"        onclick="showTab('python')">🐍 Python (.py)</button>
+  </div>
+  <div id="tab-maxima" class="tab-content active">
+    <div class="code-card">
+      <div class="code-header maxima">
+        <span>maxima_seires.mac</span>
+        <a class="download-btn" href="maxima_seires.mac" download>⬇ Λήψη .mac</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βασικές εντολές:</strong> limit() &nbsp; sum() &nbsp; taylor() &nbsp; plot2d()
+      </div>
+      <pre><code class="language-maxima" id="maxima-code">;; maxima_seires.mac — Ακολουθίες και Σειρές (Κεφ. 19)
+;; Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+
+/* 1. Όρια ακολουθιών */
+print("limit n/(n+1)   =", limit(n/(n+1), n, inf));
+print("limit (1+1/n)^n =", limit((1+1/n)^n, n, inf));
+print("limit n^2/exp(n)=", limit(n^2/exp(n), n, inf));
+print("limit sin(n)/n  =", limit(sin(n)/n, n, inf));
+
+/* 2. Γεωμετρική σειρά */
+for q in [1/2, 1/3, 2/3] do (
+  S: sum(q^k, k, 0, inf),
+  print("q =", q, "-&gt;", S)
+)$
+
+/* 3. Taylor / Maclaurin */
+taylor(exp(x),   x, 0, 7);
+taylor(sin(x),   x, 0, 7);
+taylor(cos(x),   x, 0, 7);
+taylor(1/(1-x),  x, 0, 6);
+taylor(log(1+x), x, 0, 6);
+
+/* 4. Κριτήριο λόγου: n!/n^n */
+a[n] := n! / n^n$
+ratio: limit(a[n+1]/a[n], n, inf);
+print("Κριτήριο λόγου L =", ratio, " -&gt; σύγκλιση");
+
+/* 5. Σειρά ισχύος — ακτίνα σύγκλισης */
+c[n] := 1/n^2$
+R: 1 / limit(c[n+1]/c[n], n, inf);
+print("Ακτίνα R =", R);
+
+/* 6. Γράφημα μερικών αθροισμάτων Taylor sin(x) */
+approx1: x - x^3/6;
+approx3: x - x^3/6 + x^5/120 - x^7/5040;
+plot2d([sin(x), approx1, approx3], [x, -3.14, 3.14],
+       [legend, "sin(x)", "Τάξη 3", "Τάξη 7"],
+       [title, "Taylor sin(x)"])$
+</code></pre>
+    </div>
+  </div>
+  <div id="tab-python" class="tab-content">
+    <div class="code-card">
+      <div class="code-header python">
+        <span>python_seires.py</span>
+        <a class="download-btn" href="python_seires.py" download>⬇ Λήψη .py</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βιβλιοθήκες / εντολές:</strong> sympy.limit() &nbsp; sympy.summation() &nbsp; sympy.series() &nbsp; numpy
+      </div>
+            <div class="py-toolbar">
+        <button class="run-btn" id="py-run">▶ Τρέξε</button>
+        <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
+        <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
+      </div>
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># python_seires.py — Ακολουθίες και Σειρές (Κεφ. 19)
+# Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+# Απαιτεί: pip install sympy matplotlib numpy
+
+from sympy import *
+import numpy as np
+import matplotlib.pyplot as plt
+
+n, x = symbols('n x', real=True)
+k = symbols('k', integer=True, positive=True)
+
+print("=" * 60)
+print("ΑΚΟΛΟΥΘΙΕΣ ΚΑΙ ΣΕΙΡΕΣ")
+print("=" * 60)
+
+# ── 1. Όριο ακολουθίας ───────────────────────────────────────────────────────
+print()
+print("1. ΟΡΙΑ ΑΚΟΛΟΥΘΙΩΝ")
+seqs = [
+    (n / (n + 1), "n/(n+1)"),
+    ((1 + 1/n)**n, "(1+1/n)^n → e"),
+    (n**2 / exp(n), "n²/eⁿ"),
+    (sin(n)/n, "sin(n)/n"),
+]
+for expr, label in seqs:
+    lim = limit(expr, n, oo)
+    print(f"   lim {label} = {lim}")
+
+# ── 2. Γεωμετρική Σειρά ──────────────────────────────────────────────────────
+print()
+print("2. ΓΕΩΜΕΤΡΙΚΗ ΣΕΙΡΑ  Σ qⁿ")
+q = symbols('q')
+for qval in [Rational(1,2), Rational(1,3), Rational(2,3), -Rational(1,2)]:
+    S = summation(qval**k, (k, 0, oo))
+    print(f"   q = {qval}: Σ qⁿ = {S}")
+
+# ── 3. Σειρά Taylor / Maclaurin ─────────────────────────────────────────────
+print()
+print("3. ΑΝΑΠΤΥΓΜΑ TAYLOR / MACLAURIN")
+funcs = [
+    (exp(x), "e^x", 0, 6),
+    (sin(x), "sin(x)", 0, 7),
+    (cos(x), "cos(x)", 0, 7),
+    (1/(1-x), "1/(1-x)", 0, 5),
+    (ln(1+x), "ln(1+x)", 0, 6),
+]
+for f, label, a0, order in funcs:
+    T = series(f, x, a0, order)
+    print(f"   {label} = {T}")
+
+# ── 4. Κριτήρια Σύγκλισης ───────────────────────────────────────────────────
+print()
+print("4. ΚΡΙΤΗΡΙΟ ΛΟΓΟΥ (ratio test) — an = n!/nⁿ")
+a_n = factorial(n) / n**n
+ratio = simplify(a_n.subs(n, n+1) / a_n)
+L = limit(ratio, n, oo)
+print(f"   |a_{{n+1}}/a_n| → {L}  (&lt; 1 → σύγκλιση)")
+
+# ── 5. Ακτίνα σύγκλισης ─────────────────────────────────────────────────────
+print()
+print("5. ΑΚΤΙΝΑ ΣΥΓΚΛΙΣΗΣ — Σ xⁿ/n²")
+c_n = x**n / n**2
+c_ratio = simplify(abs(c_n.subs(n, n+1) / c_n))
+R = 1 / limit(c_ratio / abs(x), n, oo)
+print(f"   Ακτίνα R = {R}")
+
+# ── 6. Γράφημα μερικών αθροισμάτων ─────────────────────────────────────────
+print()
+xv = np.linspace(-1, 1, 400)
+fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+
+# Maclaurin του sin(x)
+true_sin = np.sin(xv)
+axes[0].plot(xv, true_sin, 'k-', linewidth=2, label='sin(x)')
+for order in [1, 3, 5, 7]:
+    taylor_val = sum(
+        ((-1)**m * xv**(2*m+1)) / float(factorial(2*m+1))
+        for m in range((order+1)//2)
+    )
+    axes[0].plot(xv, taylor_val, '--', label=f'Τάξη {order}')
+axes[0].set_ylim(-1.5, 1.5)
+axes[0].legend(fontsize=8); axes[0].set_title('Taylor του sin(x)')
+axes[0].grid(True, alpha=0.3)
+
+# Γεωμετρική σειρά q=1/2
+partial_sums = [sum(0.5**i for i in range(n_terms)) for n_terms in range(1, 15)]
+ns = list(range(1, 15))
+axes[1].plot(ns, partial_sums, 'bo-', label='Μερικά αθρ. Σ(1/2)ⁿ')
+axes[1].axhline(2, color='r', linestyle='--', label='Όριο = 2')
+axes[1].legend(); axes[1].set_title('Γεωμετρική σειρά, q=1/2')
+axes[1].grid(True, alpha=0.3)
+
+plt.tight_layout(); plt.savefig('seires.png', dpi=100); plt.show()
+print("Αρχείο 'seires.png' αποθηκεύτηκε.")
+</textarea>
+      <pre class="py-output" id="py-output"></pre>
+      <div class="py-plots" id="py-plots"></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+}
+function loadCode(file, elementId, lang) {
+  fetch(file+'?v='+Date.now())
+    .then(r=>r.ok?r.text():Promise.reject(r.status))
+    .then(text=>{
+      const el=document.getElementById(elementId);
+      el.textContent=text; el.className='language-'+lang;
+      Prism.highlightElement(el);
+    })
+    .catch(err=>{document.getElementById(elementId).textContent='⚠ Αδυναμία φόρτωσης ('+err+'). Χρήση κουμπιού Λήψη.';});
+}
+
+/* ── In-browser Python runner (Pyodide) ── */
+const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+let pyodideReady = null, originalPy = '';
+const $ = id => document.getElementById(id);
+originalPy = $('py-editor').value;
+$('py-reset').onclick = () => { $('py-editor').value = originalPy; $('py-output').textContent=''; $('py-plots').innerHTML=''; };
+
+async function ensurePyodide(setStatus){
+  if (pyodideReady) return pyodideReady;
+  pyodideReady = (async () => {
+    setStatus('Λήψη περιβάλλοντος Python… (πρώτη φορά ~15–25 MB)');
+    if (!window.loadPyodide){
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = PYODIDE_URL; sc.onload = res; sc.onerror = () => rej('script load error');
+        document.head.appendChild(sc);
+      });
+    }
+    return await loadPyodide();
+  })();
+  return pyodideReady;
+}
+
+$('py-run').onclick = async function(){
+  const btn = this, out = $('py-output'), plots = $('py-plots');
+  const setStatus = t => $('py-status').textContent = t;
+  btn.disabled = true; out.textContent = ''; plots.innerHTML = '';
+  try {
+    const py = await ensurePyodide(setStatus);
+    py.setStdout({ batched: s => { out.textContent += s; } });
+    py.setStderr({ batched: s => { out.textContent += s; } });
+    const code = $('py-editor').value;
+    setStatus('Φόρτωση βιβλιοθηκών…');
+    await py.loadPackagesFromImports(code);
+    setStatus('Εκτέλεση…');
+    await py.runPythonAsync("try:\n    import matplotlib; matplotlib.use('AGG')\nexcept Exception:\n    pass");
+    py.globals.set('__user_src__', code);
+    await py.runPythonAsync(`
+import traceback
+try:
+    exec(__user_src__, {'__name__': '__main__'})
+except Exception:
+    traceback.print_exc()
+`);
+    const figs = await py.runPythonAsync(`
+import base64, io
+_imgs = []
+try:
+    import matplotlib.pyplot as plt
+    for _n in plt.get_fignums():
+        _f = plt.figure(_n); _b = io.BytesIO()
+        _f.savefig(_b, format='png', dpi=110, bbox_inches='tight'); _b.seek(0)
+        _imgs.append(base64.b64encode(_b.read()).decode())
+    plt.close('all')
+except Exception:
+    pass
+_imgs
+`);
+    const arr = figs.toJs(); if (figs.destroy) figs.destroy();
+    arr.forEach(b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; plots.appendChild(img); });
+    setStatus(arr.length ? ('Ολοκληρώθηκε ✓ — ' + arr.length + ' γράφημα/τα') : 'Ολοκληρώθηκε ✓');
+  } catch (e) {
+    out.textContent += '\n⚠ Σφάλμα: ' + e;
+    setStatus('Σφάλμα');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>

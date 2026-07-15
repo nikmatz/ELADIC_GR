@@ -1,0 +1,24 @@
+/* Κεφάλαιο 16 — Τεχνικές Ολοκλήρωσης */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications. */
+/* 1. Κατά μέρη */
+print("int(x*e^x)         =", integrate(x*exp(x),x));
+print("int(x^2*log(x))    =", integrate(x^2*log(x),x));
+print("int(e^x*sin(x))    =", radcan(integrate(exp(x)*sin(x),x)));
+print("int(atan(x))       =", integrate(atan(x),x));
+/* 2. Μερικά κλάσματα */
+f1:(2*x+1)/((x-1)*(x+2));
+print("Μερικά:", partfrac(f1,x));
+print("int =", integrate(f1,x));
+f2:x/(x^2-5*x+6);
+print("int(x/(x^2-5x+6)) =", integrate(f2,x));
+/* 3. Τριγ. αντικατάσταση */
+print("int(1/sqrt(1-x^2)) =", integrate(1/sqrt(1-x^2),x));
+print("int(sqrt(1-x^2))   =", integrate(sqrt(1-x^2),x));
+print("int(1/sqrt(x^2+4)) =", integrate(1/sqrt(x^2+4),x));
+/* 4. Τριγωνομετρικά */
+print("int(sin^2(x))      =", trigsimp(integrate(sin(x)^2,x)));
+print("int(cos^3(x))      =", trigsimp(integrate(cos(x)^3,x)));
+print("int(tan(x))        =", integrate(tan(x),x));
+/* Επαλήθευση */
+r:integrate(x^3*exp(x),x);
+print("Επαλήθευση:", ratsimp(diff(r,x)-x^3*exp(x))=0);

@@ -1,0 +1,38 @@
+;; maxima_seires.mac — Ακολουθίες και Σειρές (Κεφ. 19)
+;; Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+
+/* 1. Όρια ακολουθιών */
+print("limit n/(n+1)   =", limit(n/(n+1), n, inf));
+print("limit (1+1/n)^n =", limit((1+1/n)^n, n, inf));
+print("limit n^2/exp(n)=", limit(n^2/exp(n), n, inf));
+print("limit sin(n)/n  =", limit(sin(n)/n, n, inf));
+
+/* 2. Γεωμετρική σειρά */
+for q in [1/2, 1/3, 2/3] do (
+  S: sum(q^k, k, 0, inf),
+  print("q =", q, "->", S)
+)$
+
+/* 3. Taylor / Maclaurin */
+taylor(exp(x),   x, 0, 7);
+taylor(sin(x),   x, 0, 7);
+taylor(cos(x),   x, 0, 7);
+taylor(1/(1-x),  x, 0, 6);
+taylor(log(1+x), x, 0, 6);
+
+/* 4. Κριτήριο λόγου: n!/n^n */
+a[n] := n! / n^n$
+ratio: limit(a[n+1]/a[n], n, inf);
+print("Κριτήριο λόγου L =", ratio, " -> σύγκλιση");
+
+/* 5. Σειρά ισχύος — ακτίνα σύγκλισης */
+c[n] := 1/n^2$
+R: 1 / limit(c[n+1]/c[n], n, inf);
+print("Ακτίνα R =", R);
+
+/* 6. Γράφημα μερικών αθροισμάτων Taylor sin(x) */
+approx1: x - x^3/6;
+approx3: x - x^3/6 + x^5/120 - x^7/5040;
+plot2d([sin(x), approx1, approx3], [x, -3.14, 3.14],
+       [legend, "sin(x)", "Τάξη 3", "Τάξη 7"],
+       [title, "Taylor sin(x)"])$
