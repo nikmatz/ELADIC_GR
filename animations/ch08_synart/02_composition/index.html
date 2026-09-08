@@ -33,8 +33,8 @@
 </head>
 <body>
     <header>
-        <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Σύνθεση Συναρτήσεων</h1>
-        <p>Κεφάλαιο 7: Συναρτήσεις - Σύνθετες απεικονίσεις</p>
+        <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Σύνθεση Συναρτήσεων</h1>
+        <p>Κεφάλαιο 8: Συναρτήσεις - Σύνθετες απεικονίσεις</p>
     </header>
 
     <div class="container">
@@ -60,6 +60,13 @@
                 <button class="btn" id="f-sin">f(x) = sin(x)</button>
                 <button class="btn" id="f-exp">f(x) = eˣ</button>
                 <button class="btn" id="f-1x">f(x) = 1/x</button>
+            </div>
+            <div style="margin-top:1rem">
+                <button class="btn orange" id="swapFG">⇄ Εναλλαγή f και g &nbsp;(δείτε το g∘f)</button>
+                <div id="swapNote" style="font-size:.85rem;color:#555;margin-top:.4rem">
+                    Πατήστε το για να ανταλλάξετε τους ρόλους: η καμπύλη αλλάζει, γιατί
+                    <b>f∘g ≠ g∘f</b> εν γένει.
+                </div>
             </div>
         </div>
 
@@ -124,6 +131,19 @@ document.getElementById('explBtn').addEventListener('click',function(){
             fName = func.name;
             updateDisplay();
         }
+
+        /* --- Εναλλαγή ρόλων f και g: η σύνθεση ΔΕΝ είναι αντιμεταθετική --- */
+        document.getElementById('swapFG').addEventListener('click', () => {
+            const tf = fFunc, tn = fName;
+            fFunc = gFunc; fName = gName.replace(/^g/, 'f');
+            gFunc = tf;    gName = tn.replace(/^f/, 'g');
+            const note = document.getElementById('swapNote');
+            if (note) note.innerHTML =
+                'Τώρα υπολογίζεται η <b>' + fName.split('=')[0].trim() + '∘' +
+                gName.split('=')[0].trim() + '</b> με ' + gName + ' και ' + fName +
+                '. Συγκρίνετε την καμπύλη με την προηγούμενη: <b>f∘g ≠ g∘f</b>.';
+            updateDisplay();
+        });
 
         document.getElementById('g-2x').addEventListener('click', () => setG('2x'));
         document.getElementById('g-x2').addEventListener('click', () => setG('x2'));

@@ -37,7 +37,7 @@
 </head>
 <body>
     <header>
-        <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Γραμμικοί Μετασχηματισμοί στο ℝ²</h1>
+        <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Γραμμικοί Μετασχηματισμοί στο ℝ²</h1>
         <p>Κεφάλαιο 4: Γραμμικές Απεικονίσεις - Μεταμόρφωση του χώρου</p>
     </header>
 
@@ -139,7 +139,7 @@ document.getElementById('explBtn').addEventListener('click',function(){
         }
 
         document.getElementById('identity').addEventListener('click', () => setTransform(1, 0, 0, 1));
-        document.getElementById('rotation').addEventListener('click', () => setTransform(0, -1, 1, 0)); // 90° counterclockwise
+        document.getElementById('rotation').addEventListener('click', () => setTransform(0, 1, -1, 0)); // A=[[0,-1],[1,0]] : στροφή 90° αριστερόστροφα
         document.getElementById('reflection').addEventListener('click', () => setTransform(1, 0, 0, -1)); // reflection over x-axis
         document.getElementById('shear').addEventListener('click', () => setTransform(1, 0.5, 0, 1)); // horizontal shear
         document.getElementById('scale').addEventListener('click', () => setTransform(2, 0, 0, 2)); // scaling by 2
@@ -195,6 +195,38 @@ document.getElementById('explBtn').addEventListener('click',function(){
             ctx.globalAlpha = 1.0;
             ctx.fillStyle = '#008c46';
             ctx.fillText('Μετά τον Μετασχηματισμό', rightX - 20, centerY - 120);
+
+            // --- Διανύσματα βάσης e1, e2 και οι εικόνες τους (= οι στήλες του A) ---
+            function vec(ox, oy, vx, vy, col, lbl){
+                const x2 = ox + vx*gridScale, y2 = oy - vy*gridScale;
+                ctx.save();
+                ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(x2, y2); ctx.stroke();
+                const ang = Math.atan2(y2-oy, x2-ox);
+                ctx.translate(x2, y2); ctx.rotate(ang);
+                ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-10,-4.5); ctx.lineTo(-10,4.5); ctx.closePath(); ctx.fill();
+                ctx.restore();
+                if (lbl){
+                    ctx.save(); ctx.fillStyle = col; ctx.font = 'bold 13px Georgia';
+                    const len = Math.hypot(x2-ox, y2-oy) || 1;
+                    ctx.fillText(lbl, x2 + 9*(y2-oy)/len + 2, y2 - 9*(x2-ox)/len - 2);
+                    ctx.restore();
+                }
+            }
+            const E1 = '#7a3fb5', E2 = '#b53f8f';
+            vec(leftX,  centerY, 1, 0, E1, 'e\u2081');
+            vec(leftX,  centerY, 0, 1, E2, 'e\u2082');
+            vec(rightX, centerY, a, b, E1, 'Ae\u2081');
+            vec(rightX, centerY, c, d, E2, 'Ae\u2082');
+
+            // --- Λεζάντα: οι στήλες του A και η ορίζουσα ---
+            ctx.save();
+            ctx.font = '12px Georgia'; ctx.fillStyle = '#334';
+            ctx.fillText('Ae\u2081 = 1η στήλη = (' + a.toFixed(1) + ', ' + b.toFixed(1) + ')   ·   ' +
+                         'Ae\u2082 = 2η στήλη = (' + c.toFixed(1) + ', ' + d.toFixed(1) + ')   ·   ' +
+                         'det A = ' + (a*d - b*c).toFixed(2), 60, centerY + 175);
+            ctx.fillText('Το O μένει σταθερό και οι ευθείες παραμένουν ευθείες: αυτό ακριβώς σημαίνει «γραμμικός».', 60, centerY + 195);
+            ctx.restore();
         }
 
         updateDisplay();

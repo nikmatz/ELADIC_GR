@@ -25,22 +25,28 @@ input[type=range]{width:100%;accent-color:#c85000}
     .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
   </style></head>
 <body>
-<header><div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Γενικευμένα Ολοκληρώματα</h1><p>Κεφάλαιο 17 · Σύγκλιση και Απόκλιση — ∫₁^∞ 1/xᵖ dx</p></header>
+<header><div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Γενικευμένα Ολοκληρώματα</h1><p>Κεφάλαιο 18 · Σύγκλιση και Απόκλιση — ∫₁^∞ 1/xᵖ dx</p></header>
 <div class="container"><div class="layout">
 <canvas id="cv" width="460" height="360"></canvas>
 <div class="panel"><h2>Παράμετροι</h2>
+<div class="slider-group"><label>Είδος γενικευμένου ολοκληρώματος</label>
+<select id="selMode" style="width:100%;padding:.4rem;border-radius:6px;border:1px solid #bcd;font-size:.9rem">
+  <option value="A">Α΄ είδους — άπειρο διάστημα: ∫₁ᵇ x⁻ᵖ dx, b → ∞</option>
+  <option value="B">Β΄ είδους — ιδιόμορφο σημείο: ∫_ε¹ x⁻ᵖ dx, ε → 0⁺</option>
+</select></div>
 <div class="slider-group"><label>Εκθέτης p = <strong id="pVal">2.0</strong></label>
 <input type="range" id="slP" min="0.3" max="3.0" step="0.1" value="2.0"></div>
-<div class="slider-group"><label>Άνω όριο b = <strong id="bVal">10</strong></label>
+<div class="slider-group" id="grpB"><label>Άνω όριο b = <strong id="bVal">10</strong></label>
 <input type="range" id="slB" min="2" max="50" step="1" value="10"></div>
+<div class="slider-group" id="grpE" style="display:none"><label>Κάτω όριο ε = <strong id="eVal">0.100</strong></label>
+<input type="range" id="slE" min="0.001" max="0.5" step="0.001" value="0.1"></div>
 <div id="statusBox" class="status converges">✓ Συγκλίνει (p > 1)</div>
-<div class="result-box"><div class="lbl">∫₁ᵇ 1/xᵖ dx</div><div class="val" id="intVal">—</div></div>
-<div class="result-box"><div class="lbl">Όριο b→∞</div><div class="val" id="limVal">—</div></div>
+<div class="result-box"><div class="lbl" id="intLbl">∫₁ᵇ 1/xᵖ dx</div><div class="val" id="intVal">—</div></div>
+<div class="result-box"><div class="lbl" id="limLbl">Όριο b→∞</div><div class="val" id="limVal">—</div></div>
 <div class="formula" id="formulaBox">∫₁^∞ x⁻ᵖ dx = 1/(p−1) &nbsp; (p>1)</div>
 <div style="background:#e8f0f8;border-radius:6px;padding:.7rem;font-size:.83rem;margin-top:.5rem;line-height:1.6">
-  <strong>Κριτήριο p:</strong><br>
-  p &gt; 1 → Συγκλίνει σε 1/(p−1)<br>
-  p ≤ 1 → Αποκλίνει (→ +∞)
+  <strong id="critTitle">Κριτήριο p (άπειρο διάστημα):</strong><br>
+  <span id="critBody">p &gt; 1 → Συγκλίνει σε 1/(p−1)<br>p ≤ 1 → Αποκλίνει (→ +∞)</span>
 </div></div></div></div>
 <script>
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
@@ -90,7 +96,10 @@ function draw(){
   // Update panel
   document.getElementById('pVal').textContent=p.toFixed(1);
   document.getElementById('bVal').textContent=b;
-  let intVal=converges?(1-Math.pow(b,1-p))/(p-1):Math.pow(b,1-p)/(1-p)-1/(1-p);
+  // Οριακή περίπτωση p=1: η αντιπαράγωγος είναι ο λογάριθμος, όχι δύναμη.
+  // (Χωρίς αυτόν τον κλάδο ο τύπος δίνει 0/0 -> NaN.)
+  let intVal = (Math.abs(p-1)<1e-9) ? Math.log(b)
+             : (1-Math.pow(b,1-p))/(p-1);
   document.getElementById('intVal').textContent=intVal.toFixed(4);
   let sb=document.getElementById('statusBox');
   if(converges){sb.className='status converges';sb.textContent='✓ Συγκλίνει (p='+p.toFixed(1)+' > 1)';
@@ -100,8 +109,90 @@ function draw(){
     document.getElementById('limVal').textContent='+∞';
     document.getElementById('formulaBox').textContent='∫₁^∞ x⁻ᵖ dx → +∞  (p ≤ 1)';}
 }
-['slP','slB'].forEach(id=>document.getElementById(id).addEventListener('input',draw));
-draw();
+
+/* ============================================================
+   Β΄ είδους: ιδιόμορφο σημείο στο 0. ∫_ε^1 x^(-p) dx, ε -> 0+
+   Συγκλίνει ακριβώς όταν p < 1 — ΑΚΡΙΒΩΣ ΑΝΤΙΣΤΡΟΦΑ από το Α΄ είδους.
+   ============================================================ */
+function drawB(){
+  const p=parseFloat(document.getElementById('slP').value);
+  const e=parseFloat(document.getElementById('slE').value);
+  const converges = p<1;
+  const x0=0, x1=1.05;
+  const f=x=>Math.pow(x,-p);
+  const ymax=Math.min(f(Math.max(e,0.02)),12), ymin=0;
+  ctx.clearRect(0,0,W,H);
+
+  ctx.fillStyle=converges?'rgba(0,64,128,0.2)':'rgba(200,80,0,0.2)';
+  ctx.beginPath();ctx.moveTo(sx(e,x0,x1),sy(0,ymin,ymax));
+  for(let i=0;i<=400;i++){const x=e+(1-e)*i/400;ctx.lineTo(sx(x,x0,x1),sy(Math.min(f(x),ymax),ymin,ymax));}
+  ctx.lineTo(sx(1,x0,x1),sy(0,ymin,ymax));ctx.closePath();ctx.fill();
+
+  ctx.strokeStyle='#004080';ctx.lineWidth=2.5;ctx.beginPath();
+  let started=false;
+  for(let i=0;i<=600;i++){
+    const x=0.004+(1.02-0.004)*i/600, y=f(x);
+    if(y>ymax*1.02){started=false;continue;}
+    started?ctx.lineTo(sx(x,x0,x1),sy(y,ymin,ymax)):ctx.moveTo(sx(x,x0,x1),sy(y,ymin,ymax));
+    started=true;
+  }ctx.stroke();
+
+  ctx.strokeStyle='#888';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(PAD.l,H-PAD.b);ctx.lineTo(W-PAD.r,H-PAD.b);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(PAD.l,PAD.t);ctx.lineTo(PAD.l,H-PAD.b);ctx.stroke();
+  ctx.fillStyle='#555';ctx.font='11px Georgia';ctx.textAlign='center';
+  [0,0.25,0.5,0.75,1].forEach(x=>ctx.fillText(x,sx(x,x0,x1),H-PAD.b+14));
+  ctx.textAlign='right';
+  [2,4,6,8,10].filter(y=>y<ymax).forEach(y=>{const py=sy(y,ymin,ymax);if(py>PAD.t)ctx.fillText(y,PAD.l-4,py+4);});
+
+  /* η κατακόρυφη ασύμπτωτη x=0 και η θέση του ε */
+  ctx.strokeStyle='#c85000';ctx.lineWidth=2;ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.moveTo(sx(0,x0,x1),PAD.t);ctx.lineTo(sx(0,x0,x1),H-PAD.b);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.strokeStyle='#008c46';ctx.lineWidth=1.6;
+  ctx.beginPath();ctx.moveTo(sx(e,x0,x1),PAD.t);ctx.lineTo(sx(e,x0,x1),H-PAD.b);ctx.stroke();
+  ctx.fillStyle='#008c46';ctx.font='bold 12px Georgia';ctx.textAlign='left';
+  ctx.fillText('ε='+e.toFixed(3),sx(e,x0,x1)+4,PAD.t+14);
+  ctx.fillStyle='#c85000';ctx.textAlign='left';
+  ctx.fillText('ασύμπτωτη x=0',sx(0,x0,x1)+4,H-PAD.b-8);
+  ctx.fillStyle='#004080';ctx.font='bold 12px Georgia';
+  ctx.fillText('f(x)=1/x^'+p.toFixed(1),sx(0.55,x0,x1),sy(Math.min(f(0.55)*1.15,ymax*0.92),ymin,ymax));
+
+  document.getElementById('pVal').textContent=p.toFixed(1);
+  document.getElementById('eVal').textContent=e.toFixed(3);
+  /* ∫_ε^1 x^(-p) dx = (1-ε^(1-p))/(1-p),  και για p=1: -ln ε */
+  const intVal = (Math.abs(p-1)<1e-9) ? -Math.log(e) : (1-Math.pow(e,1-p))/(1-p);
+  document.getElementById('intVal').textContent=intVal.toFixed(4);
+  const sb=document.getElementById('statusBox');
+  if(converges){
+    sb.className='status converges';sb.textContent='✓ Συγκλίνει (p='+p.toFixed(1)+' < 1)';
+    document.getElementById('limVal').textContent=(1/(1-p)).toFixed(4);
+    document.getElementById('formulaBox').textContent='∫₀¹ x⁻ᵖ dx = 1/(1−p) = '+(1/(1-p)).toFixed(3);
+  } else {
+    sb.className='status diverges';sb.textContent='✗ Αποκλίνει (p='+p.toFixed(1)+' ≥ 1)';
+    document.getElementById('limVal').textContent='+∞';
+    document.getElementById('formulaBox').textContent='∫₀¹ x⁻ᵖ dx → +∞  (p ≥ 1)';
+  }
+}
+
+function render(){
+  const mode=document.getElementById('selMode').value;
+  const B=mode==='A';
+  document.getElementById('grpB').style.display=B?'':'none';
+  document.getElementById('grpE').style.display=B?'none':'';
+  document.getElementById('intLbl').textContent=B?'∫₁ᵇ 1/xᵖ dx':'∫_ε¹ 1/xᵖ dx';
+  document.getElementById('limLbl').textContent=B?'Όριο b→∞':'Όριο ε→0⁺';
+  document.getElementById('critTitle').textContent=B
+    ? 'Κριτήριο p (άπειρο διάστημα):' : 'Κριτήριο p (ιδιόμορφο σημείο):';
+  document.getElementById('critBody').innerHTML=B
+    ? 'p &gt; 1 → Συγκλίνει σε 1/(p−1)<br>p ≤ 1 → Αποκλίνει (→ +∞)'
+    : 'p &lt; 1 → Συγκλίνει σε 1/(1−p)<br>p ≥ 1 → Αποκλίνει (→ +∞)<br><em>Προσοχή: ακριβώς αντίστροφα από το Α΄ είδους.</em>';
+  B ? draw() : drawB();
+}
+
+['slP','slB','slE'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+document.getElementById('selMode').addEventListener('change',render);
+render();
 </script>
 
 <div class="expl-section" style="max-width:980px;margin:0 auto 1rem auto;padding:0 1rem">

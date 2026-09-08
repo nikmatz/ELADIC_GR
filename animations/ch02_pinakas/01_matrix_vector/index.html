@@ -20,6 +20,9 @@
   <p>Σύρε το διάνυσμα $\mathbf{x}$ (πορτοκαλί) και δες πώς ο πίνακας $A$ το
      μεταμορφώνει στο $A\mathbf{x}$ (πράσινο). Αλλαγή στοιχείων πίνακα μέσω
      των sliders.</p>
+  <p>Με γκρι φαίνεται το <b>μοναδιαίο τετράγωνο</b> και με πράσινο η εικόνα του υπό
+     τον $A$· τα βέλη $A\mathbf{e}_1$ (μωβ) και $A\mathbf{e}_2$ (ροζ) είναι ακριβώς
+     οι <b>στήλες</b> του $A$. Έτσι διαβάζεται γεωμετρικά ένας πίνακας.</p>
 </div>
 <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:0.8rem">
   <label style="font-family:sans-serif;font-size:0.85rem">
@@ -81,6 +84,27 @@ new p5(p=>{
     const {a11,a12,a21,a22}=getA();
     const rx=a11*vx+a12*vy, ry=a21*vx+a22*vy;
     const [o1,o2]=ts(0,0),[vx2,vy2]=ts(vx,vy),[rx2,ry2]=ts(rx,ry);
+
+    // --- μοναδιαίο τετράγωνο (γκρι) και η εικόνα του υπό τον A (πράσινο) ---
+    p.push(); p.noStroke(); p.fill(120,120,120,45);
+    p.beginShape();
+    [[0,0],[1,0],[1,1],[0,1]].forEach(([ux,uy])=>{const[q1,q2]=ts(ux,uy);p.vertex(q1,q2);});
+    p.endShape(p.CLOSE);
+    p.fill(0,140,70,55);
+    p.beginShape();
+    [[0,0],[1,0],[1,1],[0,1]].forEach(([ux,uy])=>{
+      const[q1,q2]=ts(a11*ux+a12*uy, a21*ux+a22*uy); p.vertex(q1,q2);});
+    p.endShape(p.CLOSE);
+    p.pop();
+
+    // --- διανύσματα βάσης e1,e2 και οι εικόνες τους = οι ΣΤΗΛΕΣ του A ---
+    const [e1x,e1y]=ts(1,0), [e2x,e2y]=ts(0,1);
+    arrow(o1,o2,e1x,e1y,p.color(150),'e\u2081',1.8);
+    arrow(o1,o2,e2x,e2y,p.color(150),'e\u2082',1.8);
+    const [c1x,c1y]=ts(a11,a21), [c2x,c2y]=ts(a12,a22);
+    arrow(o1,o2,c1x,c1y,p.color('#7a3fb5'),'Ae\u2081',2);
+    arrow(o1,o2,c2x,c2y,p.color('#b53f8f'),'Ae\u2082',2);
+
     arrow(o1,o2,vx2,vy2,p.color('#be5000'),'x',3);
     arrow(o1,o2,rx2,ry2,p.color('#008c46'),'Ax',3);
     // Drag handle
@@ -89,7 +113,10 @@ new p5(p=>{
     document.getElementById('rtext').innerHTML=
       `$A = \\begin{pmatrix}${a11} & ${a12}\\\\ ${a21} & ${a22}\\end{pmatrix}$, &ensp;`+
       `$\\mathbf{x} = (${vx.toFixed(1)},\\,${vy.toFixed(1)})$, &ensp;`+
-      `$A\\mathbf{x} = (${rx.toFixed(2)},\\,${ry.toFixed(2)})$`;
+      `$A\\mathbf{x} = (${rx.toFixed(2)},\\,${ry.toFixed(2)})$<br>`+
+      `<span style="font-size:.92em">1η στήλη $= A\\mathbf{e}_1 = (${a11},\\,${a21})$, &ensp;`+
+      `2η στήλη $= A\\mathbf{e}_2 = (${a12},\\,${a22})$. &ensp;`+
+      `Εμβαδόν εικόνας μοναδιαίου τετραγώνου $=|\\det A| = ${Math.abs(a11*a22-a12*a21).toFixed(2)}$</span>`;
     if(window.MathJax) MathJax.typeset([document.getElementById('rtext')]);
   };
   p.mousePressed=()=>{ const [px,py]=ts(vx,vy); if(p.dist(p.mouseX,p.mouseY,px,py)<14) dragging=true; };

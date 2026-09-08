@@ -33,8 +33,8 @@
 </head>
 <body>
 <header>
-  <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Ανάπτυγμα Taylor — Πολυωνυμική Προσέγγιση</h1>
-  <p>Κεφάλαιο 11 · Εφαρμογές Παραγώγου · Σύγκλιση πολυωνύμου Taylor προς f(x)</p>
+  <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Ανάπτυγμα Taylor — Πολυωνυμική Προσέγγιση</h1>
+  <p>Κεφάλαιο 12 · Εφαρμογές Παραγώγου · Σύγκλιση πολυωνύμου Taylor προς f(x)</p>
 </header>
 <div class="container">
   <div class="layout">
@@ -65,7 +65,7 @@
         <div id="errDisplay">—</div>
       </div>
       <div class="result-box" style="border-color:#008c46">
-        <div class="lbl">Ακτίνα Σύγκλισης</div>
+        <div class="lbl">Διάστημα Σύγκλισης</div>
         <div id="convDisplay">—</div>
       </div>
     </div>
@@ -97,11 +97,11 @@ function taylorVal(f,a,n,x){
   return s;
 }
 const FN={
-  sin:{f:x=>Math.sin(x),conv:'∞',xr:[-4,4]},
-  cos:{f:x=>Math.cos(x),conv:'∞',xr:[-4,4]},
-  exp:{f:x=>Math.exp(x),conv:'∞',xr:[-3,3]},
-  ln:{f:x=>Math.log(1+x),conv:'|x+1|<1',xr:[-0.95,2.5]},
-  atan:{f:x=>Math.atan(x),conv:'|x|≤1',xr:[-3,3]}
+  sin:{f:x=>Math.sin(x),conv:'κάθε x∈ℝ (R=∞)',xr:[-4,4]},
+  cos:{f:x=>Math.cos(x),conv:'κάθε x∈ℝ (R=∞)',xr:[-4,4]},
+  exp:{f:x=>Math.exp(x),conv:'κάθε x∈ℝ (R=∞)',xr:[-3,3]},
+  ln:{f:x=>Math.log(1+x),conv:'−1<x≤1 (R=1)',xr:[-0.95,2.5]},
+  atan:{f:x=>Math.atan(x),conv:'−1≤x≤1 (R=1)',xr:[-3,3]}
 };
 function getFn(){return FN[document.getElementById('selF').value];}
 function scX(x,a,b){return P.l+(x-a)/(b-a)*(W-P.l-P.r);}
@@ -180,7 +180,7 @@ function draw(){
   document.getElementById('polyDisplay').textContent='Tₙ = '+(terms.join(' ')||'0');
   try{const xtest=1;const err=Math.abs(fn.f(xtest)-taylorVal(fn.f,a,n,xtest));
     document.getElementById('errDisplay').innerHTML='<b>'+err.toFixed(7)+'</b>';}catch(e){document.getElementById('errDisplay').textContent='—';}
-  document.getElementById('convDisplay').textContent='R = '+fn.conv;
+  document.getElementById('convDisplay').textContent='Συγκλίνει για: '+fn.conv;
 }
 ['slA','slN','selF'].forEach(id=>document.getElementById(id).addEventListener('input',draw));
 document.getElementById('explBtn').addEventListener('click',()=>{

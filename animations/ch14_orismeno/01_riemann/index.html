@@ -31,21 +31,21 @@
   </style>
 </head>
 <body>
-<header><div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Άθροισμα Riemann — Ορισμένο Ολοκλήρωμα</h1><p>Κεφάλαιο 13 · Γεωμετρική ερμηνεία του ∫ₐᵇ f(x)dx</p></header>
+<header><div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Άθροισμα Riemann — Ορισμένο Ολοκλήρωμα</h1><p>Κεφάλαιο 14 · Γεωμετρική ερμηνεία του ∫ₐᵇ f(x)dx</p></header>
 <div class="container">
   <div class="layout">
     <canvas id="cv" width="480" height="360"></canvas>
     <div class="panel">
       <h2>Παράμετροι</h2>
       <div class="slider-group"><label>Συνάρτηση:</label>
-        <select id="selF"><option value="x2">f(x) = x² + 1</option><option value="sin">f(x) = sin(x)+1.5</option><option value="sqrt">f(x) = √x + 0.5</option><option value="cubic">f(x) = 0.3x³−x+3</option></select>
+        <select id="selF"><option value="sinpi">f(x) = sin(x) στο [0, π]</option><option value="x2">f(x) = x² + 1 στο [0,3]</option><option value="sin">f(x) = sin(x)+1.5 στο [0,3]</option><option value="sqrt">f(x) = √x + 0.5 στο [0,3]</option><option value="cubic">f(x) = 0.3x³−x+3 στο [0,3]</option></select>
       </div>
       <div class="slider-group"><label>Ορθογώνια n = <strong id="nVal">8</strong></label><input type="range" id="slN" min="1" max="100" value="8"></div>
       <div class="slider-group"><label>Μέθοδος:</label>
         <select id="selM"><option value="left">Αριστερό Άθροισμα</option><option value="right">Δεξί Άθροισμα</option><option value="mid" selected>Μεσαίο Άθροισμα</option></select>
       </div>
       <div class="result-box"><div class="lbl">Άθροισμα Riemann Sₙ</div><div class="val" id="rVal">—</div></div>
-      <div class="result-box"><div class="lbl">Ακριβής Τιμή ∫₀³</div><div class="val" id="eVal">—</div></div>
+      <div class="result-box"><div class="lbl" id="exLbl">Ακριβής Τιμή</div><div class="val" id="eVal">—</div></div>
       <div class="result-box" style="border-color:#c85000"><div class="lbl">Σφάλμα</div><div class="val" id="errVal" style="color:#c85000">—</div></div>
       <div class="formula">Sₙ = Σᵢ f(xᵢ*)·Δx &nbsp;,&nbsp; Δx=(b−a)/n</div>
     </div>
@@ -53,17 +53,28 @@
 </div>
 <script>
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
-const P={l:48,r:15,t:15,b:35},a=0,b=3;
+const P={l:48,r:15,t:15,b:35};
+let a=0,b=3;                       /* το τρέχον διάστημα ολοκλήρωσης */
 const FN={
-  x2:{f:x=>x*x+1,ex:(b*b*b/3+b)},
-  sin:{f:x=>Math.sin(x)+1.5,ex:b-Math.cos(b)-(-Math.cos(a))},
-  sqrt:{f:x=>Math.sqrt(x)+0.5,ex:2*Math.pow(b,1.5)/3+0.5*b},
-  cubic:{f:x=>0.3*x*x*x-x+3,ex:0.075*b*b*b*b-0.5*b*b+3*b}
+  /* ∫₀^π sin x dx = [−cos x]₀^π = 2  — η κλασική περίπτωση του βιβλίου */
+  sinpi:{a:0,b:Math.PI,f:x=>Math.sin(x),           ex:2,
+         lbl:'∫₀^π sin x dx', ticks:[0,Math.PI/4,Math.PI/2,3*Math.PI/4,Math.PI],
+         tickLbl:['0','π/4','π/2','3π/4','π']},
+  x2:   {a:0,b:3,f:x=>x*x+1,                        ex:3*3*3/3+3,
+         lbl:'∫₀³ (x²+1) dx'},
+  sin:  {a:0,b:3,f:x=>Math.sin(x)+1.5,              ex:(1-Math.cos(3))+1.5*3,
+         lbl:'∫₀³ (sin x + 1,5) dx'},
+  sqrt: {a:0,b:3,f:x=>Math.sqrt(x)+0.5,             ex:2*Math.pow(3,1.5)/3+0.5*3,
+         lbl:'∫₀³ (√x + 0,5) dx'},
+  cubic:{a:0,b:3,f:x=>0.3*x*x*x-x+3,                ex:0.075*81-0.5*9+3*3,
+         lbl:'∫₀³ (0,3x³ − x + 3) dx'}
 };
 function sx(x){return P.l+(x-a)/(b-a)*(W-P.l-P.r);}
 function sy(y,ym,yM){return H-P.b-(y-ym)/(yM-ym)*(H-P.t-P.b);}
 function draw(){
   const key=document.getElementById('selF').value,fn=FN[key],f=fn.f;
+  a=fn.a; b=fn.b;
+  document.getElementById('exLbl').textContent='Ακριβής Τιμή '+fn.lbl;
   const n=+document.getElementById('slN').value,method=document.getElementById('selM').value,dx=(b-a)/n;
   let ymin=0,ymax=0.1;
   for(let i=0;i<=300;i++){let y=f(a+(b-a)*i/300);if(y<ymin)ymin=y;if(y>ymax)ymax=y;}
@@ -88,7 +99,8 @@ function draw(){
   ctx.beginPath();ctx.moveTo(P.l,H-P.b);ctx.lineTo(W-P.r,H-P.b);ctx.stroke();
   ctx.beginPath();ctx.moveTo(P.l,P.t);ctx.lineTo(P.l,H-P.b);ctx.stroke();
   ctx.fillStyle='#555';ctx.font='11px Georgia';ctx.textAlign='center';
-  for(let x=0;x<=3;x++)ctx.fillText(x,sx(x),H-P.b+14);
+  if(fn.ticks){fn.ticks.forEach((x,i)=>ctx.fillText(fn.tickLbl[i],sx(x),H-P.b+14));}
+  else{for(let x=Math.ceil(a);x<=b;x++)ctx.fillText(x,sx(x),H-P.b+14);}
   ctx.textAlign='right';
   [1,2,3,4].forEach(y=>{let py=sy(y,ymin,ymax);if(py>P.t&&py<H-P.b)ctx.fillText(y,P.l-4,py+4);});
   // labels

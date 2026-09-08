@@ -128,16 +128,16 @@
 </head>
 <body>
     <div class="container">
-        <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Μερικά Αθροίσματα Σειράς</h1>
+        <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Μερικά Αθροίσματα Σειράς</h1>
 
         <div class="controls">
             <div class="control-group">
-                <label for="seriesSelect">Σειρά Σₙ:</label>
+                <label for="seriesSelect">Σειρά Σₙ:</label><div style="font-size:.8rem;color:#666;margin:.15rem 0 .35rem">Όλες οι σειρές εδώ αθροίζονται από <b>n = 1</b>. Στο βιβλίο η γεωμετρική γράφεται συχνά από n = 0, οπότε Σ<sub>n=0</sub>(0,5)ⁿ = 2 = 1 + Σ<sub>n=1</sub>(0,5)ⁿ.</div>
                 <select id="seriesSelect">
-                    <option value="geom05">Γεωμετρική r = 0.5: Σₙ = Σ(0.5)ⁿ</option>
-                    <option value="geom11">Γεωμετρική r = 1.1: Σₙ = Σ(1.1)ⁿ</option>
-                    <option value="inv2">Σₙ = Σ 1/n²</option>
-                    <option value="harm">Σₙ = Σ 1/n (Αρμονική)</option>
+                    <option value="geom05">Γεωμετρική r = 0,5: Σ<sub>n=1</sub><sup>∞</sup> (0,5)ⁿ = 1</option>
+                    <option value="geom11">Γεωμετρική r = 1,1: Σ<sub>n=1</sub><sup>∞</sup> (1,1)ⁿ (αποκλίνει)</option>
+                    <option value="inv2">Σ<sub>n=1</sub><sup>∞</sup> 1/n² = π²/6</option>
+                    <option value="harm">Σ<sub>n=1</sub><sup>∞</sup> 1/n — αρμονική (αποκλίνει)</option>
                 </select>
             </div>
 
@@ -208,25 +208,25 @@ document.getElementById('explBtn').addEventListener('click',function(){
 
         const series = {
             geom05: {
-                name: 'Σ(0.5)ⁿ',
+                name: 'Σ (0,5)ⁿ, n≥1',
                 term: n => Math.pow(0.5, n),
                 limit: 1,
                 converges: true
             },
             geom11: {
-                name: 'Σ(1.1)ⁿ',
+                name: 'Σ (1,1)ⁿ, n≥1',
                 term: n => Math.pow(1.1, n),
                 limit: null,
                 converges: false
             },
             inv2: {
-                name: 'Σ 1/n²',
+                name: 'Σ 1/n², n≥1',
                 term: n => 1 / (n * n),
                 limit: Math.PI * Math.PI / 6,
                 converges: true
             },
             harm: {
-                name: 'Σ 1/n (Αρμονική)',
+                name: 'Σ 1/n, n≥1 (αρμονική)',
                 term: n => 1 / n,
                 limit: null,
                 converges: false

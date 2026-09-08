@@ -110,6 +110,18 @@
     <button class="tab on" onclick="loadEx(0)">Παράδειγμα 1 — Μοναδική Λύση</button>
     <button class="tab"    onclick="loadEx(1)">Παράδειγμα 2 — Άπειρες Λύσεις</button>
     <button class="tab"    onclick="loadEx(2)">Παράδειγμα 3 — Καμία Λύση</button>
+    <button class="tab"    onclick="showCustom()">✏️ Δικό σας σύστημα 3×3</button>
+  </div>
+
+  <div id="customPanel" style="display:none;background:#f6f9fc;border:1px solid #d7e2ec;border-radius:10px;padding:.9rem 1rem;margin:.6rem 0 1rem">
+    <div style="font-weight:600;color:#0b5d84;margin-bottom:.55rem">Εισαγάγετε τον επαυξημένο πίνακα [A|b] του συστήματος 3×3:</div>
+    <div id="cgrid" style="display:inline-grid;grid-template-columns:repeat(3,3.4rem) .7rem 3.4rem;gap:.35rem;align-items:center"></div>
+    <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-blue" onclick="runCustom()">Απαλοιφή ▶</button>
+      <button class="btn btn-gray" onclick="fillCustom([[1,1,1,6],[0,2,5,-4],[2,5,-1,27]])">Παράδειγμα</button>
+      <button class="btn btn-gray" onclick="fillCustom([[0,0,0,0],[0,0,0,0],[0,0,0,0]])">Καθαρισμός</button>
+      <span id="cmsg" style="color:#b03030;font-size:.85rem"></span>
+    </div>
   </div>
 
   <div class="ctrls">
@@ -139,17 +151,17 @@
 <script>
 const EX=[
   {name:'Μοναδική Λύση',type:'uniq',
-   res:'✓ Κλιμακωτή μορφή — Μοναδική λύση: x<sub>1</sub>=3, x<sub>2</sub>=2, x<sub>3</sub>=−⅔',
+   res:'✓ Κλιμακωτή μορφή — Μοναδική λύση: x<sub>1</sub>=2, x<sub>2</sub>=3, x<sub>3</sub>=−1',
    mats:[
-     [[2,1,-1,8],[1,-1,1,0],[3,2,1,13]],
-     [[2,1,-1,8],[0,-1.5,1.5,-4],[3,2,1,13]],
-     [[2,1,-1,8],[0,-1.5,1.5,-4],[0,0.5,2.5,1]],
-     [[2,1,-1,8],[0,-1.5,1.5,-4],[0,0,3,-2]]
+     [[2,1,-1,8],[-3,-1,2,-11],[-2,1,2,-3]],
+     [[2,1,-1,8],[0,0.5,0.5,1],[-2,1,2,-3]],
+     [[2,1,-1,8],[0,0.5,0.5,1],[0,2,1,5]],
+     [[2,1,-1,8],[0,0.5,0.5,1],[0,0,-1,1]]
    ],
    ops:[
-     {html:'R<sub>2</sub> ← R<sub>2</sub> − ½·R<sub>1</sub>', note:'Εξάλειψη a₂₁: pivot γραμμή 1, αλλάζει γραμμή 2', piv:0,chg:1},
-     {html:'R<sub>3</sub> ← R<sub>3</sub> − <sup>3</sup>/<sub>2</sub>·R<sub>1</sub>', note:'Εξάλειψη a₃₁: pivot γραμμή 1, αλλάζει γραμμή 3', piv:0,chg:2},
-     {html:'R<sub>3</sub> ← R<sub>3</sub> + <sup>1</sup>/<sub>3</sub>·R<sub>2</sub>', note:'Εξάλειψη a₃₂: pivot γραμμή 2, αλλάζει γραμμή 3', piv:1,chg:2}
+     {html:'R<sub>2</sub> ← R<sub>2</sub> + <sup>3</sup>/<sub>2</sub>·R<sub>1</sub>', note:'Εξάλειψη a₂₁: pivot γραμμή 1, αλλάζει γραμμή 2', piv:0,chg:1},
+     {html:'R<sub>3</sub> ← R<sub>3</sub> + R<sub>1</sub>', note:'Εξάλειψη a₃₁: pivot γραμμή 1, αλλάζει γραμμή 3', piv:0,chg:2},
+     {html:'R<sub>3</sub> ← R<sub>3</sub> − 4·R<sub>2</sub>', note:'Εξάλειψη a₃₂: pivot γραμμή 2, αλλάζει γραμμή 3', piv:1,chg:2}
    ]},
   {name:'Άπειρες Λύσεις',type:'inf',
    res:'∞ Άπειρες λύσεις: rank(A)=rank([A|b])=1&lt;3 &nbsp;→&nbsp; x<sub>1</sub>=6−2x<sub>2</sub>−3x<sub>3</sub>, x<sub>2</sub> x<sub>3</sub> ελεύθερες',
@@ -320,6 +332,149 @@ document.getElementById('eTog').addEventListener('click',function(){
   const b=document.getElementById('eBody'),o=b.classList.toggle('open');
   this.textContent=o?'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▲':'📐 Θεωρία & Αιτιολόγηση — Απαλοιφή Gauss ▼';
 });
+
+/* ============================================================
+   Δικό σας σύστημα: πραγματική απαλοιφή Gauss σε 3x4 πίνακα.
+   Παράγει την ίδια δομή {mats, ops, type, res} με τα έτοιμα
+   παραδείγματα, ώστε να δουλεύουν τα ίδια κουμπιά.
+   ============================================================ */
+function fillCustom(M){
+  for(let r=0;r<3;r++)for(let c=0;c<4;c++){
+    const el=document.getElementById(`c${r}${c}`);
+    if(el) el.value = M[r][c];
+  }
+  document.getElementById('cmsg').textContent='';
+}
+
+function buildCustomGrid(){
+  const g=document.getElementById('cgrid');
+  if(g.dataset.ready) return;
+  let h='';
+  for(let r=0;r<3;r++){
+    for(let c=0;c<3;c++)
+      h+=`<input id="c${r}${c}" type="number" step="any" value="0" style="width:3.4rem;padding:.3rem;text-align:center;border:1px solid #bcd;border-radius:6px;font-size:.95rem">`;
+    h+=`<div style="text-align:center;color:#789;font-weight:700">|</div>`;
+    h+=`<input id="c${r}3" type="number" step="any" value="0" style="width:3.4rem;padding:.3rem;text-align:center;border:1px solid #f0b27a;border-radius:6px;font-size:.95rem;background:#fff8f0">`;
+  }
+  g.innerHTML=h; g.dataset.ready='1';
+  fillCustom([[2,1,-1,8],[1,-1,1,0],[3,2,1,13]]);
+}
+
+function showCustom(){
+  stopAuto();
+  buildCustomGrid();
+  document.getElementById('customPanel').style.display='block';
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===3));
+  document.getElementById('steps').innerHTML='';
+  document.getElementById('bNext').disabled=true;
+}
+
+function rankOf(M,cols){
+  /* βαθμίδα με απαλοιφή σε αντίγραφο */
+  const A=M.map(r=>r.slice(0,cols)); const n=A.length; let rank=0;
+  for(let c=0;c<cols && rank<n;c++){
+    let p=-1;
+    for(let r=rank;r<n;r++) if(Math.abs(A[r][c])>1e-9){p=r;break;}
+    if(p<0) continue;
+    [A[rank],A[p]]=[A[p],A[rank]];
+    for(let r=rank+1;r<n;r++){
+      const f=A[r][c]/A[rank][c];
+      for(let k=c;k<cols;k++) A[r][k]-=f*A[rank][k];
+    }
+    rank++;
+  }
+  return rank;
+}
+
+function sub(i){return `<sub>${i}</sub>`;}
+function numTxt(v){
+  if(Math.abs(v-Math.round(v))<1e-9) return String(Math.round(v));
+  return v.toFixed(3).replace(/0+$/,'').replace(/\.$/,'');
+}
+
+function buildFromMatrix(M0){
+  const M=M0.map(r=>r.slice());
+  const mats=[M.map(r=>r.slice())], ops=[];
+  let rank=0;
+  for(let c=0;c<3 && rank<3;c++){
+    let p=-1;
+    for(let r=rank;r<3;r++) if(Math.abs(M[r][c])>1e-9){p=r;break;}
+    if(p<0) continue;
+    if(p!==rank){
+      [M[rank],M[p]]=[M[p],M[rank]];
+      ops.push({html:`R${sub(rank+1)} ↔ R${sub(p+1)}`,
+                note:`Εναλλαγή γραμμών: το στοιχείο οδηγός της στήλης ${c+1} ήταν μηδέν`,
+                piv:rank,chg:p});
+      mats.push(M.map(r=>r.slice()));
+    }
+    for(let r=rank+1;r<3;r++){
+      if(Math.abs(M[r][c])<1e-9) continue;
+      const f=M[r][c]/M[rank][c];
+      for(let k=0;k<4;k++) M[r][k]-=f*M[rank][k];
+      M[r]=M[r].map(v=>Math.abs(v)<1e-9?0:v);
+      const sg=f>0?'−':'+';
+      ops.push({html:`R${sub(r+1)} ← R${sub(r+1)} ${sg} ${numTxt(Math.abs(f))}·R${sub(rank+1)}`,
+                note:`Εξάλειψη του a${sub(''+(r+1)+(c+1))}: γραμμή οδηγός ${rank+1}, αλλάζει η γραμμή ${r+1}`,
+                piv:rank,chg:r});
+      mats.push(M.map(r2=>r2.slice()));
+    }
+    rank++;
+  }
+  const rA=rankOf(M,3), rAb=rankOf(M,4);
+  let type,res;
+  if(rAb>rA){
+    type='none';
+    res=`✗ Καμία λύση: rank(A)=${rA} &lt; rank([A|b])=${rAb} &nbsp;→&nbsp; προκύπτει αντιφατική γραμμή`;
+  }else if(rA<3){
+    type='inf';
+    res=`∞ Άπειρες λύσεις: rank(A)=rank([A|b])=${rA}&lt;3 &nbsp;→&nbsp; ${3-rA} ελεύθερη(ες) μεταβλητή(ές)`;
+  }else{
+    /* πίσω αντικατάσταση */
+    const x=[0,0,0];
+    for(let r=2;r>=0;r--){
+      let sum=M[r][3];
+      for(let k=r+1;k<3;k++) sum-=M[r][k]*x[k];
+      x[r]=sum/M[r][r];
+    }
+    type='uniq';
+    res=`✓ Κλιμακωτή μορφή — Μοναδική λύση: x${sub(1)}=${numTxt(x[0])}, x${sub(2)}=${numTxt(x[1])}, x${sub(3)}=${numTxt(x[2])}`;
+  }
+  if(ops.length===0){
+    ops.push({html:'—',note:'Ο πίνακας είναι ήδη σε κλιμακωτή μορφή',piv:0,chg:-1});
+    mats.push(M.map(r=>r.slice()));
+  }
+  return {name:'Δικό σας σύστημα',type:type,res:res,mats:mats,ops:ops};
+}
+
+function runCustom(){
+  const msg=document.getElementById('cmsg'); msg.textContent='';
+  const M=[];
+  for(let r=0;r<3;r++){
+    const row=[];
+    for(let c=0;c<4;c++){
+      const v=parseFloat(document.getElementById(`c${r}${c}`).value);
+      if(!isFinite(v)){msg.textContent='Συμπληρώστε όλα τα κελιά με αριθμούς.';return;}
+      row.push(v);
+    }
+    M.push(row);
+  }
+  if(M.every(r=>r.slice(0,3).every(v=>Math.abs(v)<1e-9))){
+    msg.textContent='Ο πίνακας των συντελεστών είναι μηδενικός — δώστε ένα ουσιαστικό σύστημα.';
+    return;
+  }
+  EX[3]=buildFromMatrix(M);
+  curEx=3; revealed=0;
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===3));
+  renderSteps();
+}
+
+/* Οι έτοιμες καρτέλες κρύβουν το πλαίσιο εισαγωγής */
+const _loadExOrig = loadEx;
+loadEx = function(i){
+  if(i<3) document.getElementById('customPanel').style.display='none';
+  _loadExOrig(i);
+};
+
 loadEx(0);
 </script>
 <footer class="tex2jax_ignore" style="text-align:center;padding:1.4rem 1rem;color:#555;font-size:.82rem;font-family:'Helvetica Neue',Arial,sans-serif;border-top:1px solid #e3e8ef;margin-top:2rem;line-height:1.55">Συμπληρωματικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</footer>

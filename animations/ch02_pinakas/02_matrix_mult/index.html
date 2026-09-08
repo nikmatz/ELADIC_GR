@@ -40,7 +40,7 @@
 </head>
 <body>
     <header>
-        <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Πολλαπλασιασμός Πινάκων 2×2</h1>
+        <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Πολλαπλασιασμός Πινάκων 2×2</h1>
         <p>Κεφάλαιο 2: Πίνακες - Βήμα προς βήμα ανάλυση</p>
     </header>
 
@@ -92,7 +92,10 @@
             <button class="btn" id="step3">Στοιχείο C₂₁</button>
             <button class="btn" id="step4">Στοιχείο C₂₂</button>
             <button class="btn" id="reset">Επαναφορά</button>
+            <button class="btn orange" id="swapAB">⇄ Εναλλαγή A ↔ B</button>
+            <button class="btn" id="cmpAB">Σύγκριση AB με BA</button>
         </div>
+        <div id="cmpBox" style="display:none;margin:.8rem auto;max-width:640px;background:#f6f9fc;border:1px solid #d7e2ec;border-radius:10px;padding:.9rem 1rem;font-family:Georgia,serif"></div>
 
         <canvas id="canvas" width="700" height="300"></canvas>
 
@@ -275,6 +278,42 @@ document.getElementById('explBtn').addEventListener('click',function(){
             currentStep = null;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             document.getElementById('steps').innerHTML = '<div class="calculation-step"><strong>✓ Γινόμενο υπολογισμένο</strong></div>';
+        });
+
+        /* --- Εναλλαγή A <-> B: δείχνει ότι ο πολλαπλασιασμός ΔΕΝ είναι αντιμεταθετικός --- */
+        function mul(X,Y){
+          return [[X[0][0]*Y[0][0]+X[0][1]*Y[1][0], X[0][0]*Y[0][1]+X[0][1]*Y[1][1]],
+                  [X[1][0]*Y[0][0]+X[1][1]*Y[1][0], X[1][0]*Y[0][1]+X[1][1]*Y[1][1]]];
+        }
+        function matHTML(M,lbl,col){
+          return `<div style="display:inline-block;text-align:center;margin:0 .8rem">
+            <div style="font-weight:700;color:${col};margin-bottom:.25rem">${lbl}</div>
+            <table style="border-collapse:collapse;display:inline-table">
+              <tr><td style="padding:.18rem .55rem">${M[0][0]}</td><td style="padding:.18rem .55rem">${M[0][1]}</td></tr>
+              <tr><td style="padding:.18rem .55rem">${M[1][0]}</td><td style="padding:.18rem .55rem">${M[1][1]}</td></tr>
+            </table></div>`;
+        }
+        document.getElementById('swapAB').addEventListener('click', () => {
+          ['11','12','21','22'].forEach(k=>{
+            const a=document.getElementById('a'+k), b=document.getElementById('b'+k);
+            const t=a.value; a.value=b.value; b.value=t;
+          });
+          clearVisualization();
+          document.getElementById('cmpAB').click();
+        });
+        document.getElementById('cmpAB').addEventListener('click', () => {
+          const {A,B}=getMatrices();
+          const AB=mul(A,B), BA=mul(B,A);
+          const same = AB.flat().every((v,i)=>Math.abs(v-BA.flat()[i])<1e-9);
+          const box=document.getElementById('cmpBox');
+          box.style.display='block';
+          box.innerHTML =
+            matHTML(AB,'A·B','#0082b4') + matHTML(BA,'B·A','#be5000') +
+            `<div style="margin-top:.7rem;font-weight:700;color:${same?'#008c46':'#c62828'}">` +
+            (same
+              ? '✓ Εδώ τυχαίνει AB = BA. Οι δύο πίνακες μετατίθενται — αυτό ισχύει μόνο σε ειδικές περιπτώσεις (π.χ. αν ο ένας είναι πολλαπλάσιο του I ή έχουν κοινά ιδιοδιανύσματα).'
+              : '✗ AB ≠ BA. Ο πολλαπλασιασμός πινάκων ΔΕΝ είναι αντιμεταθετικός: η σειρά αλλάζει το αποτέλεσμα.') +
+            '</div>';
         });
 
         document.getElementById('step1').addEventListener('click', () => drawStep(0));

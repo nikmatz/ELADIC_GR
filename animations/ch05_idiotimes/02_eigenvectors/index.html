@@ -33,7 +33,7 @@
 </head>
 <body>
     <header>
-        <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Γεωμετρική Ερμηνεία Ιδιοδιανυσμάτων</h1>
+        <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Γεωμετρική Ερμηνεία Ιδιοδιανυσμάτων</h1>
         <p>Κεφάλαιο 5: Ιδιοδιανύσματα - Συγχώνευση προς κύρια κατεύθυνση</p>
     </header>
 
@@ -86,6 +86,8 @@ document.getElementById('explBtn').addEventListener('click',function(){
         const scale = 70;
 
         let matrix = {a11: 2, a12: 0.5, a21: 0.5, a22: 1};
+        let dragV = {x: 1, y: 0.6};   // το διάνυσμα που σύρει ο χρήστης
+        let dragging = false;
         let vectors = [];
         let iteration = 0;
         let isAnimating = false;
@@ -185,10 +187,51 @@ document.getElementById('explBtn').addEventListener('click',function(){
                 ctx.fill();
             }
 
+            // --- Το διάνυσμα v που σύρει ο χρήστης και η εικόνα του Av ---
+            const Av = applyMatrix(dragV);
+            drawArrow(dragV.x, dragV.y, '#c85000', 'v');
+            drawArrow(Av.x,   Av.y,   '#0082b4', 'Av');
+            // λαβή
+            ctx.fillStyle = '#c85000';
+            ctx.beginPath();
+            ctx.arc(centerX + dragV.x*scale, centerY - dragV.y*scale, 7, 0, 2*Math.PI);
+            ctx.fill();
+
             // Draw info
             ctx.fillStyle = '#333';
             ctx.font = 'bold 12px Georgia';
             ctx.fillText(`Επανάληψη: ${iteration}`, 20, 30);
+
+            // γωνία v, Av  —  0° (ή 180°) σημαίνει ιδιοδιεύθυνση
+            const nv = Math.hypot(dragV.x, dragV.y), na = Math.hypot(Av.x, Av.y);
+            let msg = '—';
+            if (nv > 1e-6 && na > 1e-6) {
+                let cosA = (dragV.x*Av.x + dragV.y*Av.y)/(nv*na);
+                cosA = Math.max(-1, Math.min(1, cosA));
+                const deg = Math.acos(cosA) * 180/Math.PI;
+                const par = (deg < 2 || deg > 178);
+                const lam = (dragV.x*Av.x + dragV.y*Av.y)/(nv*nv);
+                msg = par
+                  ? `✓ Το Av είναι παράλληλο με το v — ιδιοδιεύθυνση! λ ≈ ${lam.toFixed(3)}`
+                  : `Γωνία(v, Av) = ${deg.toFixed(1)}°  ·  |Av|/|v| = ${(na/nv).toFixed(3)}  →  όχι ιδιοδιάνυσμα`;
+                ctx.fillStyle = par ? '#008c46' : '#555';
+                ctx.font = par ? 'bold 13px Georgia' : '13px Georgia';
+                ctx.fillText(msg, 20, canvas.height - 18);
+            }
+        }
+
+        // βοηθητικό: βέλος από την αρχή των αξόνων
+        function drawArrow(vx, vy, col, lbl){
+            const x2 = centerX + vx*scale, y2 = centerY - vy*scale;
+            ctx.save();
+            ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(centerX, centerY); ctx.lineTo(x2, y2); ctx.stroke();
+            const ang = Math.atan2(y2-centerY, x2-centerX);
+            ctx.translate(x2, y2); ctx.rotate(ang);
+            ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-11,-5); ctx.lineTo(-11,5); ctx.closePath(); ctx.fill();
+            ctx.restore();
+            ctx.save(); ctx.fillStyle = col; ctx.font = 'bold italic 14px Georgia';
+            ctx.fillText(lbl, x2 + 8, y2 - 8); ctx.restore();
         }
 
         function animate() {
@@ -208,6 +251,34 @@ document.getElementById('explBtn').addEventListener('click',function(){
                 isAnimating = false;
             }
         }
+
+        // --- σύρσιμο του v πάνω στον καμβά (ποντίκι και αφή) ---
+        function canvasPt(ev){
+            const r = canvas.getBoundingClientRect();
+            const src = ev.touches ? ev.touches[0] : ev;
+            return { x: (src.clientX - r.left) * canvas.width / r.width,
+                     y: (src.clientY - r.top)  * canvas.height / r.height };
+        }
+        function toWorld(pt){ return { x: (pt.x - centerX)/scale, y: (centerY - pt.y)/scale }; }
+        function startDrag(ev){
+            const w = toWorld(canvasPt(ev));
+            if (Math.hypot(w.x - dragV.x, w.y - dragV.y) < 0.35) { dragging = true; ev.preventDefault(); }
+        }
+        function moveDrag(ev){
+            if (!dragging) return;
+            const w = toWorld(canvasPt(ev));
+            dragV.x = Math.max(-2.4, Math.min(2.4, w.x));
+            dragV.y = Math.max(-2.4, Math.min(2.4, w.y));
+            updateDisplay(); ev.preventDefault();
+        }
+        function endDrag(){ dragging = false; }
+        canvas.addEventListener('mousedown', startDrag);
+        canvas.addEventListener('mousemove', moveDrag);
+        window.addEventListener('mouseup', endDrag);
+        canvas.addEventListener('touchstart', startDrag, {passive:false});
+        canvas.addEventListener('touchmove', moveDrag, {passive:false});
+        window.addEventListener('touchend', endDrag);
+        canvas.style.cursor = 'crosshair';
 
         document.getElementById('start').addEventListener('click', () => {
             if (!isAnimating) {

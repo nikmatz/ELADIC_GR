@@ -132,7 +132,7 @@
 </head>
 <body>
     <div class="container">
-        <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Σύγκλιση Ακολουθίας</h1>
+        <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Σύγκλιση Ακολουθίας</h1>
 
         <div class="controls">
             <div class="control-group">
@@ -160,9 +160,18 @@
                     <span class="slider-value" id="nValue">20</span>
                 </div>
             </div>
+
+            <div class="control-group">
+                <label for="epsSlider">Ανοχή ε (πλάτος ζώνης):</label>
+                <div class="slider-container">
+                    <input type="range" id="epsSlider" min="0.01" max="0.5" step="0.01" value="0.1">
+                    <span class="slider-value" id="epsValue">0,10</span>
+                </div>
+            </div>
         </div>
 
         <div class="result-box" id="resultBox">Σύγκλιση σε L = 0</div>
+        <div class="result-box" id="n0Box">N₀ = —</div>
 
         <canvas id="canvas" width="480" height="360"></canvas>
 
@@ -320,10 +329,10 @@ document.getElementById('explBtn').addEventListener('click',function(){
                 ctx.stroke();
                 ctx.setLineDash([]);
 
-                // Draw ε-band
-                const epsilon = 0.1;
+                // Draw ε-band (ημι-ύψος = ε, άρα η ζώνη είναι L ± ε)
+                const epsilon = parseFloat(document.getElementById('epsSlider').value);
                 ctx.fillStyle = 'rgba(244, 67, 54, 0.1)';
-                const band = (2 * epsilon / (maxY - minY)) * graphHeight;
+                const band = (epsilon / (maxY - minY)) * graphHeight;
                 ctx.fillRect(padding, limitPy - band, graphWidth, 2 * band);
             }
 
@@ -381,8 +390,10 @@ document.getElementById('explBtn').addEventListener('click',function(){
             const maxN = parseInt(nSlider.value);
             const r = parseFloat(rSlider.value);
 
+            const epsilon = parseFloat(document.getElementById('epsSlider').value);
             nValue.textContent = maxN.toString();
             rValue.textContent = r.toFixed(2);
+            document.getElementById('epsValue').textContent = epsilon.toFixed(2).replace('.', ',');
 
             // Show/hide r slider
             if (type === 'power') {
@@ -416,11 +427,44 @@ document.getElementById('explBtn').addEventListener('click',function(){
                 resultBox.textContent = 'Αποκλίνουσα';
                 resultBox.className = 'result-box diverging';
             }
+
+            // ---- N0: το μικρότερο N ώστε |a_n - L| < ε για κάθε n >= N ----
+            const n0Box = document.getElementById('n0Box');
+            let L = null, fn = null;
+            if (type === 'power') {
+                if (Math.abs(r) < 1) { L = 0; fn = k => Math.pow(r, k); }
+            } else if (seq.limit !== null) {
+                L = seq.limit; fn = seq.func;
+            }
+            if (L === null) {
+                n0Box.textContent = 'N₀ = — (η ακολουθία δεν συγκλίνει)';
+                n0Box.className = 'result-box diverging';
+            } else {
+                const LIM = 100000;
+                let n0 = null;
+                for (let k = 1; k <= LIM; k++) {
+                    if (Math.abs(fn(k) - L) < epsilon) {
+                        let ok = true;
+                        for (let j = k; j <= Math.min(k + 200, LIM); j++) {
+                            if (!(Math.abs(fn(j) - L) < epsilon)) { ok = false; break; }
+                        }
+                        if (ok) { n0 = k; break; }
+                    }
+                }
+                if (n0 === null) {
+                    n0Box.textContent = `N₀ > ${LIM} για ε = ${epsilon.toFixed(2).replace('.', ',')}`;
+                    n0Box.className = 'result-box diverging';
+                } else {
+                    n0Box.textContent = `N₀ = ${n0}  (για ε = ${epsilon.toFixed(2).replace('.', ',')}: |aₙ − L| < ε για κάθε n ≥ ${n0})`;
+                    n0Box.className = 'result-box';
+                }
+            }
         }
 
         seqSelect.addEventListener('change', draw);
         nSlider.addEventListener('input', draw);
         rSlider.addEventListener('input', draw);
+        document.getElementById('epsSlider').addEventListener('input', draw);
 
         draw();
     </script>

@@ -22,7 +22,7 @@ input[type=range]{width:100%;accent-color:#c85000}select{width:100%;padding:.4re
     .expl-body .formula{background:#fff;border-left:4px solid #c85000;padding:.5rem .8rem;margin:.6rem 0;border-radius:0 6px 6px 0;font-style:italic}
   </style></head>
 <body>
-<header><div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Εμβαδόν μεταξύ Καμπυλών</h1><p>Κεφάλαιο 16 · Εφαρμογές Ολοκληρωμάτων · ∫ₐᵇ |f(x)−g(x)| dx</p></header>
+<header><div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Εμβαδόν μεταξύ Καμπυλών</h1><p>Κεφάλαιο 17 · Εφαρμογές Ολοκληρωμάτων · ∫ₐᵇ |f(x)−g(x)| dx</p></header>
 <div class="container"><div class="layout">
 <canvas id="cv" width="460" height="360"></canvas>
 <div class="panel"><h2>Επιλογές</h2>
@@ -33,7 +33,7 @@ input[type=range]{width:100%;accent-color:#c85000}select{width:100%;padding:.4re
   <option value="2">f(x)=√x, g(x)=x²</option>
   <option value="3">f(x)=4−x², g(x)=x+2</option>
 </select></div>
-<div class="result-box"><div class="lbl">Εμβαδόν A</div><div class="val" id="areaVal">—</div></div>
+<div class="result-box"><div class="lbl">Εμβαδόν A (μεταξύ των τομών)</div><div class="val" id="areaVal">—</div></div>
 <div class="result-box"><div class="lbl">Σημεία Τομής</div><div class="val" id="intPts" style="font-size:.95rem">—</div></div>
 <div class="formula">A = ∫ₐᵇ |f(x)−g(x)| dx</div>
 <div style="display:flex;gap:.3rem;margin-top:.5rem">
@@ -86,9 +86,13 @@ function draw(){
   for(let i=0;i<=300;i++){let x=x0+(x1-x0)*i/300,y=g(x);if(!isFinite(y))continue;i?ctx.lineTo(sx(x,x0,x1),sy(y,ymin,ymax)):ctx.moveTo(sx(x,x0,x1),sy(y,ymin,ymax));}ctx.stroke();
   // Intersection dots
   roots.forEach(r=>{ctx.fillStyle='#333';ctx.beginPath();ctx.arc(sx(r,x0,x1),sy(f(r),ymin,ymax),5,0,2*Math.PI);ctx.fill();});
-  // Area
-  let area=integrate(x=>Math.abs(f(x)-g(x)),x0+0.001,x1-0.001);
-  document.getElementById('areaVal').textContent=area.toFixed(4);
+  // Area — ΜΟΝΟ μεταξύ των σημείων τομής (το περικλειόμενο χωρίο),
+  // όχι στα άκρα του παραθύρου σχεδίασης.
+  let area=NaN;
+  if(roots.length>=2){
+    area=integrate(x=>Math.abs(f(x)-g(x)),roots[0],roots[roots.length-1]);
+  }
+  document.getElementById('areaVal').textContent=isFinite(area)?area.toFixed(4):'—';
   document.getElementById('intPts').textContent=roots.length?roots.map(r=>'x='+r).join(', '):'Καμία';
 }
 document.getElementById('selP').addEventListener('change',draw);

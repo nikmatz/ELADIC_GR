@@ -41,8 +41,8 @@
 </head>
 <body>
     <header>
-        <div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Αλυσίδες Markov</h1>
-        <p>Κεφάλαιο 6b: Στοχαστικές διαδικασίες - Σύγκλιση σε στάσιμη κατανομή</p>
+        <div style="display:inline-block;background:#2196F3;color:#fff;font-size:.72rem;font-weight:bold;padding:.18rem .6rem;border-radius:4px;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.5px;margin-bottom:.45rem">▶ ANIMATION</div><h1>Αλυσίδες Markov</h1>
+        <p>Κεφάλαιο 7: Στοχαστικές διαδικασίες - Σύγκλιση σε στάσιμη κατανομή</p>
     </header>
 
     <div class="container">
@@ -66,6 +66,22 @@
             <label>Πιθανότητα Κ₂ → Κ₂: <span id="p22-val">0.6</span></label>
             <div class="slider-container">
                 <input type="range" id="p22" min="0" max="1" step="0.05" value="0.6">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Αρχική κατανομή x₀ &nbsp;—&nbsp; x₀ = (<span id="x0-val">0.50</span>, <span id="x0c-val">0.50</span>)</label>
+            <div class="slider-container">
+                <input type="range" id="x0" min="0" max="1" step="0.05" value="0.5">
+            </div>
+            <div style="font-size:.84rem;color:#555;margin-top:.3rem">
+                Η δεύτερη συνιστώσα προκύπτει αυτόματα ώστε το άθροισμα να είναι 1.
+                Δοκιμάστε <b>x₀=(1,0)</b> και <b>x₀=(0,1)</b>: η στάσιμη κατανομή είναι η ίδια.
+            </div>
+            <div style="margin-top:.6rem;display:flex;gap:.4rem;flex-wrap:wrap">
+                <button class="btn" id="x0a">x₀ = (1, 0)</button>
+                <button class="btn" id="x0b">x₀ = (0, 1)</button>
+                <button class="btn" id="x0c">x₀ = (0.5, 0.5)</button>
             </div>
         </div>
 
@@ -137,9 +153,26 @@ document.getElementById('explBtn').addEventListener('click',function(){
                 document.getElementById(slider.display).textContent = val.toFixed(2);
                 slider.setter(val);
                 isRunning = false;
+                step = 0;
+                prob = [x0, 1 - x0];
                 updateDisplay();
             });
         });
+
+        // --- Αρχική κατανομή x0 ---
+        let x0 = 0.5;
+        function setX0(v){
+            x0 = v;
+            document.getElementById('x0').value = v;
+            document.getElementById('x0-val').textContent = v.toFixed(2);
+            document.getElementById('x0c-val').textContent = (1-v).toFixed(2);
+            isRunning = false; step = 0; prob = [x0, 1-x0];
+            updateDisplay();
+        }
+        document.getElementById('x0').addEventListener('input', e => setX0(parseFloat(e.target.value)));
+        document.getElementById('x0a').addEventListener('click', () => setX0(1));
+        document.getElementById('x0b').addEventListener('click', () => setX0(0));
+        document.getElementById('x0c').addEventListener('click', () => setX0(0.5));
 
         document.getElementById('start').addEventListener('click', () => {
             if (!isRunning) {
@@ -155,7 +188,7 @@ document.getElementById('explBtn').addEventListener('click',function(){
         document.getElementById('reset').addEventListener('click', () => {
             isRunning = false;
             step = 0;
-            prob = [0.5, 0.5];
+            prob = [x0, 1 - x0];
             updateDisplay();
         });
 
