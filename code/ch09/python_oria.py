@@ -81,3 +81,28 @@ plt.title(r'$\sin(x)/x$ — αφαιρετή ασυνέχεια')
 plt.tight_layout(); plt.savefig('ch08_sinc.png', dpi=100)
 print("\n  Γράφημα: ch08_sinc.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Αναπτύγματα σειράς για τον υπολογισμό ορίων
+#   sympy.series
+# ============================================================
+import sympy as sp
+
+x = sp.symbols('x')
+
+# Το ανάπτυγμα Taylor εξηγεί «γιατί» βγαίνει το όριο:
+print("sin(x)      ~", sp.series(sp.sin(x), x, 0, 6))
+print("(1-cos x)   ~", sp.series(1 - sp.cos(x), x, 0, 7))
+print("e^x - 1     ~", sp.series(sp.exp(x) - 1, x, 0, 5))
+
+# sin(x)/x -> 1, επειδή sin(x) = x - x^3/6 + ...
+print("\nsin(x)/x    ~", sp.series(sp.sin(x)/x, x, 0, 6))
+print("όριο        =", sp.limit(sp.sin(x)/x, x, 0))
+
+# (1-cos x)/x^2 -> 1/2
+print("\n(1-cos x)/x^2 ~", sp.series((1 - sp.cos(x))/x**2, x, 0, 4))
+print("όριο          =", sp.limit((1 - sp.cos(x))/x**2, x, 0))
+
+# Όριο στο άπειρο μέσω αναπτύγματος ως προς 1/x:
+print("\nx*(sqrt(x^2+1)-x) όταν x->oo :",
+      sp.limit(x*(sp.sqrt(x**2 + 1) - x), x, sp.oo))

@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 8 — Συναρτήσεις Πραγματικής Μεταβλητής</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 8
@@ -122,6 +122,37 @@ print("h2(-x)+h2(x) =", expand(h2(-x)+h2(x)), " (0 =&gt; περιττή)");
 plot2d(x^3 - 3*x, [x,-3,3],
        [xlabel,"x"],[ylabel,"f(x)"],
        [title,"f(x) = x³ - 3x"]);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Πεδίο ορισμού, συμμετρίες, κλάδοι              */
+/*   solve(ineq,x), subst, charfun, ratsimp                     */
+/* ============================================================ */
+
+/* 1. Πεδίο ορισμού: πού μηδενίζεται ο παρονομαστής;            */
+f : (x^2-1)/(x^2-4)$
+print("Εξαιρετέα σημεία της f:", solve(denom(f)=0, x))$
+
+/* Ρίζα: ποιο διάστημα κάνει το υπόρριζο &gt;= 0;                  */
+print("4-x^2 &gt;= 0  &lt;=&gt;  x in [-2,2];  άκρα:", solve(4-x^2=0, x))$
+
+/* 2. Άρτια / περιττή: συγκρίνουμε την f(-x) με την f(x)        */
+g : x^3 - 4*x$
+print("g(-x)  =", ratsimp(subst(-x, x, g)))$
+print("περιττή; g(-x)+g(x) =", ratsimp(subst(-x,x,g) + g))$
+h : x^4 - 3*x^2 + 1$
+print("άρτια;  h(-x)-h(x) =", ratsimp(subst(-x,x,h) - h))$
+
+/* 3. Απλοποίηση ρητής παράστασης                               */
+print("ratsimp:", ratsimp((x^2-1)/(x-1)))$
+
+/* 4. Συνάρτηση κατά κλάδους με charfun                          */
+/*    charfun(συνθήκη) = 1 όταν η συνθήκη ισχύει, αλλιώς 0      */
+p(x) := -x*charfun(x&lt;0) + x^2*charfun(x&gt;=0)$
+for a in [-2,-1,0,1,2] do print("  p(", a, ") =", p(a))$
+
+/* Η απόλυτη τιμή ως συνδυασμός χαρακτηριστικών συναρτήσεων     */
+q(x) := -x*charfun(x&lt;0) + x*charfun(x&gt;=0)$
+print("q(-3)=", q(-3), "  q(3)=", q(3), "  (δηλαδή |x|)")$
 </code></pre>
     </div>
   </div>
@@ -224,6 +255,32 @@ plt.title('f(x) = x³ - 3x'); plt.tight_layout()
 plt.savefig('ch08_graph.png', dpi=100)
 print("\n  Γράφημα: ch08_graph.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Συναρτήσεις κατά κλάδους με sympy.Piecewise
+# ============================================================
+import sympy as sp
+
+x = sp.symbols('x', real=True)
+
+# Η συνάρτηση απόλυτης τιμής ως Piecewise:
+f = sp.Piecewise((-x, x &lt; 0), (x**2, x &gt;= 0))
+print("f(x) =", f)
+for v in (-2, -1, 0, 1, 2):
+    print(f"  f({v}) = {f.subs(x, v)}")
+
+# Πεδίο ορισμού και συνέχεια στο σημείο ραφής x=0:
+print("lim x-&gt;0-  :", sp.limit(f, x, 0, '-'))
+print("lim x-&gt;0+  :", sp.limit(f, x, 0, '+'))
+print("f(0)       :", f.subs(x, 0))
+print("Συνεχής στο 0;", sp.limit(f, x, 0, '-') == sp.limit(f, x, 0, '+') == f.subs(x, 0))
+
+# Η ίδια η |x| και η προσημοσυνάρτηση:
+print("|x| ως Piecewise:", sp.Abs(x).rewrite(sp.Piecewise))
+
+# Πεδίο ορισμού ρητής/άρρητης συνάρτησης:
+g = sp.sqrt(4 - x**2) / (x - 1)
+print("Πεδίο ορισμού της g:", sp.calculus.util.continuous_domain(g, x, sp.S.Reals))
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

@@ -83,3 +83,29 @@ plt.title('f(x) = x³ - 3x'); plt.tight_layout()
 plt.savefig('ch08_graph.png', dpi=100)
 print("\n  Γράφημα: ch08_graph.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Συναρτήσεις κατά κλάδους με sympy.Piecewise
+# ============================================================
+import sympy as sp
+
+x = sp.symbols('x', real=True)
+
+# Η συνάρτηση απόλυτης τιμής ως Piecewise:
+f = sp.Piecewise((-x, x < 0), (x**2, x >= 0))
+print("f(x) =", f)
+for v in (-2, -1, 0, 1, 2):
+    print(f"  f({v}) = {f.subs(x, v)}")
+
+# Πεδίο ορισμού και συνέχεια στο σημείο ραφής x=0:
+print("lim x->0-  :", sp.limit(f, x, 0, '-'))
+print("lim x->0+  :", sp.limit(f, x, 0, '+'))
+print("f(0)       :", f.subs(x, 0))
+print("Συνεχής στο 0;", sp.limit(f, x, 0, '-') == sp.limit(f, x, 0, '+') == f.subs(x, 0))
+
+# Η ίδια η |x| και η προσημοσυνάρτηση:
+print("|x| ως Piecewise:", sp.Abs(x).rewrite(sp.Piecewise))
+
+# Πεδίο ορισμού ρητής/άρρητης συνάρτησης:
+g = sp.sqrt(4 - x**2) / (x - 1)
+print("Πεδίο ορισμού της g:", sp.calculus.util.continuous_domain(g, x, sp.S.Reals))

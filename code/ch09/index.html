@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 9 — Όρια και Συνέχεια</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 9
@@ -121,6 +121,31 @@ print("  lim x-&gt;inf =", limit((2*x+1)/(x-3), x, inf));
 /* 5. Γράφημα */
 plot2d(sin(x)/x, [x, -4*%pi, 4*%pi],
        [title, "sin(x)/x"], [xlabel,"x"]);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Αναπτύγματα Taylor και όρια                     */
+/*   taylor(f,x,0,n)                                            */
+/* ============================================================ */
+
+/* Το ανάπτυγμα δείχνει ΓΙΑΤΙ προκύπτει το όριο.                */
+print("sin(x)      ~", taylor(sin(x), x, 0, 5))$
+print("cos(x)      ~", taylor(cos(x), x, 0, 6))$
+print("exp(x)      ~", taylor(exp(x), x, 0, 4))$
+print("log(1+x)    ~", taylor(log(1+x), x, 0, 4))$
+
+print("")$
+print("sin(x)/x    ~", taylor(sin(x)/x, x, 0, 4))$
+print("  όριο      =", limit(sin(x)/x, x, 0))$
+
+print("(1-cos(x))/x^2 ~", taylor((1-cos(x))/x^2, x, 0, 2))$
+print("  όριο         =", limit((1-cos(x))/x^2, x, 0))$
+
+print("(e^x-1)/x   ~", taylor((exp(x)-1)/x, x, 0, 3))$
+print("  όριο      =", limit((exp(x)-1)/x, x, 0))$
+
+/* Ανάπτυγμα γύρω από σημείο a&lt;&gt;0 */
+print("")$
+print("sqrt(x) γύρω από το 1:", taylor(sqrt(x), x, 1, 3))$
 </code></pre>
     </div>
   </div>
@@ -221,6 +246,31 @@ plt.title(r'$\sin(x)/x$ — αφαιρετή ασυνέχεια')
 plt.tight_layout(); plt.savefig('ch08_sinc.png', dpi=100)
 print("\n  Γράφημα: ch08_sinc.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Αναπτύγματα σειράς για τον υπολογισμό ορίων
+#   sympy.series
+# ============================================================
+import sympy as sp
+
+x = sp.symbols('x')
+
+# Το ανάπτυγμα Taylor εξηγεί «γιατί» βγαίνει το όριο:
+print("sin(x)      ~", sp.series(sp.sin(x), x, 0, 6))
+print("(1-cos x)   ~", sp.series(1 - sp.cos(x), x, 0, 7))
+print("e^x - 1     ~", sp.series(sp.exp(x) - 1, x, 0, 5))
+
+# sin(x)/x -&gt; 1, επειδή sin(x) = x - x^3/6 + ...
+print("\nsin(x)/x    ~", sp.series(sp.sin(x)/x, x, 0, 6))
+print("όριο        =", sp.limit(sp.sin(x)/x, x, 0))
+
+# (1-cos x)/x^2 -&gt; 1/2
+print("\n(1-cos x)/x^2 ~", sp.series((1 - sp.cos(x))/x**2, x, 0, 4))
+print("όριο          =", sp.limit((1 - sp.cos(x))/x**2, x, 0))
+
+# Όριο στο άπειρο μέσω αναπτύγματος ως προς 1/x:
+print("\nx*(sqrt(x^2+1)-x) όταν x-&gt;oo :",
+      sp.limit(x*(sp.sqrt(x**2 + 1) - x), x, sp.oo))
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

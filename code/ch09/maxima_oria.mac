@@ -41,3 +41,28 @@ print("  lim x->inf =", limit((2*x+1)/(x-3), x, inf));
 /* 5. Γράφημα */
 plot2d(sin(x)/x, [x, -4*%pi, 4*%pi],
        [title, "sin(x)/x"], [xlabel,"x"]);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Αναπτύγματα Taylor και όρια                     */
+/*   taylor(f,x,0,n)                                            */
+/* ============================================================ */
+
+/* Το ανάπτυγμα δείχνει ΓΙΑΤΙ προκύπτει το όριο.                */
+print("sin(x)      ~", taylor(sin(x), x, 0, 5))$
+print("cos(x)      ~", taylor(cos(x), x, 0, 6))$
+print("exp(x)      ~", taylor(exp(x), x, 0, 4))$
+print("log(1+x)    ~", taylor(log(1+x), x, 0, 4))$
+
+print("")$
+print("sin(x)/x    ~", taylor(sin(x)/x, x, 0, 4))$
+print("  όριο      =", limit(sin(x)/x, x, 0))$
+
+print("(1-cos(x))/x^2 ~", taylor((1-cos(x))/x^2, x, 0, 2))$
+print("  όριο         =", limit((1-cos(x))/x^2, x, 0))$
+
+print("(e^x-1)/x   ~", taylor((exp(x)-1)/x, x, 0, 3))$
+print("  όριο      =", limit((exp(x)-1)/x, x, 0))$
+
+/* Ανάπτυγμα γύρω από σημείο a<>0 */
+print("")$
+print("sqrt(x) γύρω από το 1:", taylor(sqrt(x), x, 1, 3))$

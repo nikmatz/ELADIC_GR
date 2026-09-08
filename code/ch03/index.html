@@ -62,7 +62,7 @@
 
 <header>
   <h1>📐 Κεφάλαιο 3 — Γραμμικά Συστήματα</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 
 <div class="breadcrumb">
@@ -396,6 +396,36 @@ plt.tight_layout()
 plt.savefig("linear_systems.png", dpi=120, bbox_inches='tight')
 print("Το διάγραμμα αποθηκεύτηκε: linear_systems.png")
 plt.show()
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Πίνακας Vandermonde &amp; προσαρμογή πολυωνύμου
+#   np.vander, np.polyfit, np.polyval
+# ============================================================
+import numpy as np
+
+# Παρεμβολή: βρίσκουμε το πολυώνυμο 2ου βαθμού από 3 σημεία,
+# λύνοντας το γραμμικό σύστημα V c = y με πίνακα Vandermonde.
+xi = np.array([0.0, 1.0, 2.0])
+yi = np.array([1.0, 3.0, 9.0])
+V  = np.vander(xi, 3)          # στήλες: x^2, x^1, x^0
+c  = np.linalg.solve(V, yi)    # συντελεστές (a, b, c) του ax^2+bx+c
+print("Vandermonde V =\n", V)
+print("Συντελεστές (από np.linalg.solve):", np.round(c, 6))
+
+# Το ίδιο αποτέλεσμα με np.polyfit (ελάχιστα τετράγωνα):
+c2 = np.polyfit(xi, yi, 2)
+print("Συντελεστές (από np.polyfit)     :", np.round(c2, 6))
+
+# Αποτίμηση του πολυωνύμου με np.polyval:
+for x0 in (0.0, 1.0, 1.5, 2.0):
+    print(f"  p({x0}) = {np.polyval(c, x0):.4f}")
+
+# Υπερκαθορισμένο σύστημα (περισσότερα σημεία από αγνώστους):
+xs = np.array([0., 1., 2., 3., 4.])
+ys = np.array([1.1, 2.9, 9.2, 19.1, 32.8])
+cls = np.polyfit(xs, ys, 2)    # βέλτιστη προσαρμογή κατά ελάχιστα τετράγωνα
+print("Ελάχιστα τετράγωνα, βαθμός 2:", np.round(cls, 4))
+print("Υπόλοιπα:", np.round(ys - np.polyval(cls, xs), 4))
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

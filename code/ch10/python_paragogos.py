@@ -75,3 +75,28 @@ plt.title('Εφαπτόμενη γραμμή'); plt.tight_layout()
 plt.savefig('ch09_tangent.png',dpi=100)
 print(f"  κλίση={slope}  Γράφημα: ch09_tangent.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Αριθμητική παράγωγος από δείγμα τιμών
+#   np.gradient
+# ============================================================
+import numpy as np
+
+# Δεν έχουμε πάντα τύπο· συχνά έχουμε μόνο μετρήσεις.
+xs = np.linspace(0, 2*np.pi, 200)
+ys = np.sin(xs)
+
+dydx = np.gradient(ys, xs)          # κεντρικές διαφορές
+print("max |np.gradient(sin) - cos| =", np.max(np.abs(dydx - np.cos(xs))))
+
+# Δεύτερη παράγωγος: np.gradient δύο φορές
+d2 = np.gradient(dydx, xs)
+print("max |δεύτερη παράγωγος + sin| =", np.max(np.abs(d2 + np.sin(xs))))
+
+# Πραγματικό σενάριο: θέση -> ταχύτητα -> επιτάχυνση
+t = np.linspace(0, 5, 51)                  # s
+s = 2.0*t**2 + 3.0*t                       # m
+v = np.gradient(s, t)                      # m/s   (θεωρητικά 4t+3)
+a = np.gradient(v, t)                      # m/s^2 (θεωρητικά 4)
+for i in (0, 10, 25, 50):
+    print(f"  t={t[i]:4.1f}s  s={s[i]:7.2f} m  v={v[i]:6.2f} m/s  a={a[i]:5.2f} m/s^2")
