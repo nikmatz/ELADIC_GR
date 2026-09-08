@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Κώδικας Κεφ. 13 — Αόριστο Ολοκλήρωμα · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<title>Κώδικας — Διαφορικές Εξισώσεις (Τόμος 2) · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
 <style>
   :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
@@ -53,16 +53,20 @@
 </head>
 <body>
 <header>
-  <h1>📐 Κεφάλαιο 13 — Αόριστο Ολοκλήρωμα</h1>
+  <h1>📐 Διαφορικές Εξισώσεις — Τόμος 2</h1>
   <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
-  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 13
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Διαφορικές Εξισώσεις (Τόμος 2)
 </div>
 <div class="container">
+  <div class="info-box" style="border-left-color:#ca6f1e">
+    <h2>ℹ️ Υλικό 2ου Τόμου</h2>
+    <p>Οι <strong>Διαφορικές Εξισώσεις</strong> δεν περιλαμβάνονται στον παρόντα τόμο· το υλικό διατηρείται εδώ ως προδημοσίευση για τον <strong>Τόμο 2</strong>.</p>
+  </div>
   <div class="info-box">
     <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
-    <p><strong>Αντικείμενο:</strong> βασικοί τύποι, αντικατάσταση, κατά μέρη, επαλήθευση<br><br>
+    <p><strong>Αντικείμενο:</strong> διαχωρίσιμη ΔΕ, γραμμική 1ης τάξης, ομογενής 2ης τάξης, πεδίο κλίσεων, μέθοδος Euler<br><br>
     Επιλέξτε γλώσσα από τις καρτέλες. Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.</p>
   </div>
   <div class="tabs">
@@ -72,158 +76,165 @@
   <div id="tab-maxima" class="tab-content active">
     <div class="code-card">
       <div class="code-header maxima">
-        <span>maxima_aoristo.mac</span>
-        <a class="download-btn" href="maxima_aoristo.mac" download>⬇ Λήψη .mac</a>
+        <span>maxima_diafex.mac</span>
+        <a class="download-btn" href="maxima_diafex.mac" download>⬇ Λήψη .mac</a>
       </div>
       <div class="commands-box" style="margin:12px 16px 0">
-        <strong>Βασικές εντολές:</strong> integrate(f,x) &nbsp; partfrac() &nbsp; trigreduce()
+        <strong>Βασικές εντολές:</strong> ode2() &nbsp; plotdf() &nbsp; rk()
       </div>
-      <pre><code class="language-maxima" id="maxima-code">/* Κεφάλαιο 13 — Αόριστο Ολοκλήρωμα */
-/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications. */
-print("int(x^5)         =", integrate(x^5,x));
-print("int(1/x)         =", integrate(1/x,x));
-print("int(e^x)         =", integrate(exp(x),x));
-print("int(sin(x))      =", integrate(sin(x),x));
-print("int(cos(x))      =", integrate(cos(x),x));
-print("int(sin(2x+1))   =", integrate(sin(2*x+1),x));
-print("int(x*e^(x^2))   =", integrate(x*exp(x^2),x));
-print("int(x/sqrt(x^2+4))=",integrate(x/sqrt(x^2+4),x));
-print("int(x*e^x)       =", integrate(x*exp(x),x));
-print("int(x*sin(x))    =", integrate(x*sin(x),x));
-print("int(x^2*log(x))  =", integrate(x^2*log(x),x));
-print("int(log(x))      =", integrate(log(x),x));
-result : integrate(x^3*exp(x),x);
-print("Επαλήθευση:", ratsimp(diff(result,x)-x^3*exp(x))=0);
+      <pre><code class="language-maxima" id="maxima-code">;; maxima_diafex.mac — Διαφορικές Εξισώσεις (Τόμος 2)
+;; Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
 
-/* ============================================================ */
-/* ΣΥΜΠΛΗΡΩΜΑ — Αντικατάσταση, επαλήθευση, οικογένεια F+c       */
-/*   changevar, solve, plot2d                                    */
-/* ============================================================ */
+/* 1. Διαχωρίσιμη ΔΕ: y' = y*x */
+sol1: ode2(diff(y,x) - y*x, y, x);
+print("1. y' = y*x -&gt;", sol1);
 
-/* 1. changevar: αλλαγή μεταβλητής σε ΑΝΕΚΤΕΛΕΣΤΟ ολοκλήρωμα.   */
-/*    Γράφουμε 'integrate (με απόστροφο) για να μην υπολογιστεί. */
-I : 'integrate(2*x*exp(x^2), x)$
-print("Αρχικό:", I)$
-J : changevar(I, u = x^2, u, x)$
-print("Μετά την u = x^2:", J)$
-print("Αποτέλεσμα:", ev(J, integrate))$
+/* Αρχική συνθήκη y(0)=2 */
+eq1: ev(sol1, x=0);
+C_val: solve(eq1 = 2, %c);
+print("   y(0)=2 -&gt;", ev(sol1, C_val[1]));
 
-/* 2. Τριγωνομετρική αντικατάσταση                               */
-K : 'integrate(cos(x)*sin(x)^3, x)$
-print("")$
-print("∫ cos(x)sin^3(x) dx =", ev(changevar(K, u = sin(x), u, x), integrate))$
+/* 2. Γραμμική 1ης τάξης: y' + 2y = 4x */
+sol2: ode2(diff(y,x) + 2*y - 4*x, y, x);
+print("2. y' + 2y = 4x -&gt;", sol2);
 
-/* 3. Επαλήθευση με παραγώγιση — ο ασφαλέστερος έλεγχος         */
-F : integrate(x*exp(x), x)$
-print("")$
-print("∫ x·e^x dx =", F, "+ c")$
-print("Έλεγχος: d/dx F - f =", ratsimp(diff(F, x) - x*exp(x)))$
+/* 3. Ομογενής 2ης τάξης: y'' - 3y' + 2y = 0 */
+sol3: ode2(diff(y,x,2) - 3*diff(y,x) + 2*y, y, x);
+print("3. y'' - 3y' + 2y = 0 -&gt;", sol3);
 
-/* 4. Ποιο μέλος της οικογένειας περνά από δοσμένο σημείο;      */
-Fg : integrate(3*x^2 - 2*x, x)$
-sol : solve(subst(1, x, Fg) + c = 5, c)$
-print("")$
-print("F(x) =", Fg, "+ c    με F(1)=5  =&gt;", sol)$
+/* 4. Μη-ομογενής: y'' + y = sin(x) */
+sol4: ode2(diff(y,x,2) + y - sin(x), y, x);
+print("4. y'' + y = sin(x) -&gt;", sol4);
 
-/* 5. Γραφική εικόνα: ίδια καμπύλη, κατακόρυφες μετατοπίσεις    */
-plot2d([Fg-3, Fg, Fg+3], [x, -1.5, 2.5],
-       [legend, "F-3", "F", "F+3"],
-       [title, "Οικογένεια αντιπαραγώγων F(x)+c"])$
+/* 5. Πεδίο κλίσεων: y' = x - y */
+plotdf(x - y, [x, -2, 4], [y, -2, 4],
+       [title, "Πεδίο κλίσεων: y' = x-y"])$
+
+/* 6. Μέθοδος Euler με Runge-Kutta 4ης τάξης */
+/* (wxMaxima: Numerical -&gt; Diff. equations) */
+ode_sys: [diff(y, t) = -2*y]$
+ic: [y(0) = 1]$
+sol_numeric: rk(ode_sys, [y], ic, [t, 0, 3, 0.1])$
+plot2d(
+  [discrete, map(lambda([p], [p[1], p[2]]), sol_numeric)],
+  [legend, "RK4: y'=-2y"], [title, "Αριθμητική λύση"])$
 </code></pre>
     </div>
   </div>
   <div id="tab-python" class="tab-content">
     <div class="code-card">
       <div class="code-header python">
-        <span>python_aoristo.py</span>
-        <a class="download-btn" href="python_aoristo.py" download>⬇ Λήψη .py</a>
+        <span>python_diafex.py</span>
+        <a class="download-btn" href="python_diafex.py" download>⬇ Λήψη .py</a>
       </div>
       <div class="commands-box" style="margin:12px 16px 0">
-        <strong>Βιβλιοθήκες / εντολές:</strong> sympy.integrate(f,x) &nbsp; sympy.apart() &nbsp; sympy.diff()
+        <strong>Βιβλιοθήκες / εντολές:</strong> sympy.dsolve() &nbsp; scipy.solve_ivp() &nbsp; matplotlib.quiver()
       </div>
             <div class="py-toolbar">
         <button class="run-btn" id="py-run">▶ Τρέξε</button>
         <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
         <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
       </div>
-      <textarea class="py-editor" id="py-editor" spellcheck="false"># ============================================================
-# python_aoristo.py
-# Κεφάλαιο 13 — Αόριστο Ολοκλήρωμα
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># python_diafex.py — Διαφορικές Εξισώσεις (Τόμος 2)
 # Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
-# ============================================================
-# ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:
-#   sympy.integrate(f, x)   -&gt; αόριστο ολοκλήρωμα
-#   sympy.apart(f, x)       -&gt; μερικά κλάσματα
-#   sympy.diff(result, x)   -&gt; επαλήθευση
-# ============================================================
-import sympy as sp
+# Απαιτεί: pip install sympy matplotlib numpy scipy
 
-x = sp.symbols('x')
-print("=" * 55)
-print(" Κεφάλαιο 13: Αόριστο Ολοκλήρωμα")
-print("=" * 55)
-
-# 1. Βασικά
-print("\n[1] Βασικοί τύποι")
-for name, f_ in [("x^5",x**5),("1/x",1/x),("e^x",sp.exp(x)),
-                  ("sin(x)",sp.sin(x)),("cos(x)",sp.cos(x)),
-                  ("1/sqrt(1-x^2)",1/sp.sqrt(1-x**2)),
-                  ("1/(1+x^2)",1/(1+x**2))]:
-    print(f"  int({name:18s}) = {sp.integrate(f_,x)} + C")
-
-# 2. Αντικατάσταση
-print("\n[2] Αντικατάσταση u=g(x)")
-for name, f_ in [("sin(2x+1)",sp.sin(2*x+1)),
-                  ("x*e^(x^2)",x*sp.exp(x**2)),
-                  ("x/sqrt(x^2+4)",x/sp.sqrt(x**2+4)),
-                  ("cos^3(x)*sin(x)",sp.cos(x)**3*sp.sin(x))]:
-    print(f"  int({name:22s}) = {sp.simplify(sp.integrate(f_,x))} + C")
-
-# 3. Κατά μέρη
-print("\n[3] Κατά μέρη: int(u dv) = uv - int(v du)")
-for name, f_ in [("x*e^x",x*sp.exp(x)),("x*sin(x)",x*sp.sin(x)),
-                  ("x^2*ln(x)",x**2*sp.log(x)),("ln(x)",sp.log(x))]:
-    print(f"  int({name:15s}) = {sp.integrate(f_,x)} + C")
-
-# 4. Επαλήθευση
-print("\n[4] Επαλήθευση")
-f_test = x**3 * sp.exp(x)
-I = sp.integrate(f_test, x)
-chk = sp.simplify(sp.diff(I,x) - f_test) == 0
-print(f"  d/dx[int(x^3*e^x)] = x^3*e^x ?  {chk}")
-print("\n✓ Ολοκληρώθηκε.")
-
-# ============================================================
-# ΣΥΜΠΛΗΡΩΜΑ — Η οικογένεια αντιπαραγώγων F(x)+c
-#   sympy.lambdify, matplotlib.pyplot
-# ============================================================
+from sympy import *
 import numpy as np
 import matplotlib.pyplot as plt
-import sympy as sp
+from scipy.integrate import solve_ivp
 
-x = sp.symbols('x')
-f = 3*x**2 - 2*x
-F = sp.integrate(f, x)
-print("f(x) =", f, "   F(x) =", F, "+ c")
-print("Έλεγχος: F'(x) =", sp.simplify(sp.diff(F, x)))
+x, t = symbols('x t', real=True)
+y = Function('y')
+C1, C2 = symbols('C1 C2')
 
-F_num = sp.lambdify(x, F, 'numpy')
-f_num = sp.lambdify(x, f, 'numpy')
-xs = np.linspace(-1.5, 2.5, 400)
+print("=" * 60)
+print("ΔΙΑΦΟΡΙΚΕΣ ΕΞΙΣΩΣΕΙΣ (ΔΕ)")
+print("=" * 60)
 
-plt.figure(figsize=(7, 4.5))
-for c in (-3, -1, 0, 1, 3):
-    plt.plot(xs, F_num(xs) + c, lw=1.6, label=f"F(x) + ({c})")
-plt.axhline(0, color='k', lw=.6); plt.axvline(0, color='k', lw=.6)
-plt.title("Οικογένεια αντιπαραγώγων: κατακόρυφες μετατοπίσεις της ίδιας καμπύλης")
-plt.legend(fontsize=8); plt.grid(alpha=.3)
-plt.tight_layout(); plt.savefig('ch13_antiparagogoi.png', dpi=100)
-print("Γράφημα: ch13_antiparagogoi.png")
+# ── 1. Διαχωρίσιμη ΔΕ ───────────────────────────────────────────────────────
+print()
+print("1. ΔΙΑΧΩΡΙΣΙΜΗ ΔΕ:  y' = y·x")
+ode1 = Eq(y(x).diff(x), y(x)*x)
+sol1 = dsolve(ode1, y(x))
+print(f"   Γενική λύση: {sol1}")
 
-# Η κλίση είναι ίδια για κάθε c — αυτό ακριβώς σημαίνει «+ c»:
-for c in (-3, 0, 3):
-    print(f"  c={c:+d}: κλίση στο x=1 -&gt; {float(sp.diff(F + c, x).subs(x, 1))}"
-          f"   (f(1) = {float(f.subs(x, 1))})")
+# Αρχική συνθήκη y(0)=2
+C_val = solve(sol1.rhs.subs(x, 0) - 2, symbols('C1'))[0]
+sol1_part = sol1.rhs.subs(symbols('C1'), C_val)
+print(f"   Μερική λύση (y(0)=2): y = {sol1_part}")
+
+# ── 2. Γραμμική 1ης τάξης ───────────────────────────────────────────────────
+print()
+print("2. ΓΡΑΜΜΙΚΗ ΔΕ 1ης ΤΑΞΗΣ:  y' + 2y = 4x")
+ode2 = Eq(y(x).diff(x) + 2*y(x), 4*x)
+sol2 = dsolve(ode2, y(x))
+print(f"   Γενική λύση: {sol2}")
+
+# ── 3. Ομογενής 2ης τάξης με σταθερούς συντελεστές ─────────────────────────
+print()
+print("3. ΟΜΟΓΕΝΗΣ 2ης ΤΑΞΗΣ:  y'' - 3y' + 2y = 0")
+ode3 = Eq(y(x).diff(x, 2) - 3*y(x).diff(x) + 2*y(x), 0)
+sol3 = dsolve(ode3, y(x))
+print(f"   Γενική λύση: {sol3}")
+
+# ── 4. Μη-ομογενής — Μέθοδος Αόριστης Συνιστάμενης ────────────────────────
+print()
+print("4. ΜΗ-ΟΜΟΓΕΝΗΣ:  y'' + y = sin(x)")
+ode4 = Eq(y(x).diff(x, 2) + y(x), sin(x))
+sol4 = dsolve(ode4, y(x))
+print(f"   Γενική λύση: {sol4}")
+
+# ── 5. Πεδίο κλίσεων (slope field) ──────────────────────────────────────────
+print()
+print("5. ΠΕΔΙΟ ΚΛΙΣΕΩΝ:  y' = x - y")
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# Slope field
+xv = np.linspace(-2, 4, 20)
+yv = np.linspace(-2, 4, 20)
+X, Y = np.meshgrid(xv, yv)
+dydx = X - Y
+norm = np.sqrt(1 + dydx**2)
+axes[0].quiver(X, Y, 1/norm, dydx/norm, alpha=0.6, color='gray')
+
+# Μερικές λύσεις (για διάφορες αρχικές συνθήκες)
+t_span = (xv.min(), xv.max())
+t_eval = np.linspace(*t_span, 200)
+for y0 in [-1, 0, 1, 2, 3]:
+    sol = solve_ivp(lambda t, y: t - y[0], t_span, [y0], t_eval=t_eval, method='RK45')
+    axes[0].plot(sol.t, sol.y[0], 'b-', linewidth=1.5, alpha=0.8)
+axes[0].set_xlim(-2, 4); axes[0].set_ylim(-2, 4)
+axes[0].set_title("Πεδίο κλίσεων: y' = x - y")
+axes[0].set_xlabel("x"); axes[0].set_ylabel("y")
+axes[0].grid(True, alpha=0.2)
+
+# Euler vs Ακριβής
+print()
+print("6. ΜΕΘΟΔΟΣ EULER:  y' = -2y,  y(0)=1")
+def euler_method(f, x0, y0, h, n_steps):
+    xs, ys = [x0], [y0]
+    for _ in range(n_steps):
+        y0 = y0 + h * f(xs[-1], y0)
+        x0 = x0 + h
+        xs.append(x0); ys.append(y0)
+    return np.array(xs), np.array(ys)
+
+f_euler = lambda xi, yi: -2*yi
+x_exact = np.linspace(0, 3, 300)
+y_exact = np.exp(-2*x_exact)
+
+for h, color, label in [(0.5, 'r', 'h=0.5'), (0.2, 'g', 'h=0.2'), (0.1, 'm', 'h=0.1')]:
+    n_steps = int(3/h)
+    xe, ye = euler_method(f_euler, 0, 1, h, n_steps)
+    axes[1].plot(xe, ye, f'{color}o--', markersize=4, label=f'Euler {label}')
+axes[1].plot(x_exact, y_exact, 'b-', linewidth=2, label='Ακριβής $e^{-2x}$')
+axes[1].set_title("Μέθοδος Euler: y' = -2y")
+axes[1].set_xlabel("x"); axes[1].set_ylabel("y")
+axes[1].legend(fontsize=9); axes[1].grid(True, alpha=0.3)
+
+plt.tight_layout(); plt.savefig('diafex.png', dpi=100); plt.show()
+print("Αρχείο 'diafex.png' αποθηκεύτηκε.")
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

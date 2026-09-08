@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 18 — Γενικευμένα Ολοκληρώματα</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 18
@@ -111,6 +111,46 @@ print("∫x²·e^(-x) dx από 0 ως ∞ =",
 plot2d([1/x^2, 1/x], [x, 1, 10],
        [legend, "1/x² (σύγκλ.)", "1/x (αποκλ.)"],
        [title, "Σύγκριση 1/x και 1/x²"])$
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Γάμμα, Βήτα και αριθμητική επαλήθευση           */
+/*   gamma(n), beta(m,n), romberg(f,x,a,b)                       */
+/* ============================================================ */
+
+load(romberg)$
+
+/* 1. Η Γάμμα επεκτείνει το παραγοντικό σε μη ακέραιους.        */
+print("Γ(1/2) =", gamma(1/2), " = sqrt(%pi) =", float(sqrt(%pi)))$
+print("Γ(5)   =", gamma(5),   " = 4! =", 4!)$
+print("Γ(5/2) =", gamma(5/2), " =", float(gamma(5/2)))$
+
+/* Η αναδρομική σχέση Γ(s+1) = s·Γ(s)                            */
+print("")$
+print("Γ(7/2) =", float(gamma(7/2)),
+      "   (5/2)·Γ(5/2) =", float((5/2)*gamma(5/2)))$
+
+/* 2. Η Βήτα και η σχέση της με τη Γάμμα                         */
+print("")$
+print("B(2,3) =", beta(2,3), "=", float(beta(2,3)))$
+print("Γ(2)Γ(3)/Γ(5) =", float(gamma(2)*gamma(3)/gamma(5)))$
+
+/* 3. Ορισμός της Γάμμα ως γενικευμένο ολοκλήρωμα               */
+print("")$
+print("∫_0^inf x^(1/2-1) e^(-x) dx =",
+      integrate(x^(1/2-1)*exp(-x), x, 0, inf))$
+
+/* 4. Αριθμητική επαλήθευση σε πεπερασμένο διάστημα (romberg)   */
+print("")$
+print("∫_0^5 e^(-x^2) dx (romberg) =", romberg(exp(-x^2), x, 0, 5))$
+print("∫_0^inf e^(-x^2) dx        =", integrate(exp(-x^2), x, 0, inf),
+      "=", float(sqrt(%pi)/2))$
+
+/* 5. Κριτήριο σύγκρισης: e^(-x)/x &lt;= e^(-x) για x&gt;=1           */
+print("")$
+print("∫_1^inf e^(-x) dx     =", float(integrate(exp(-x), x, 1, inf)),
+      "= e^(-1) =", float(exp(-1)))$
+print("∫_1^20 e^(-x)/x dx    =", romberg(exp(-x)/x, x, 1, 20),
+      "  (μικρότερο, άρα συγκλίνει)")$
 </code></pre>
     </div>
   </div>
@@ -199,6 +239,41 @@ axes[1].set_title(r'Ιδιαίτερο σημείο $x=0$'); axes[1].grid(True, 
 plt.tight_layout(); plt.savefig('improper.png', dpi=100); plt.show()
 print()
 print("Αρχείο 'improper.png' αποθηκεύτηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Αριθμητικά γενικευμένα ολοκληρώματα &amp; Γάμμα
+#   scipy.integrate.quad, scipy.special.gamma
+# ============================================================
+import numpy as np
+from scipy.integrate import quad
+from scipy.special import gamma, beta
+import math
+
+# --- Ολοκληρώματα σε άπειρο διάστημα: το quad δέχεται np.inf ---
+val, err = quad(lambda x: np.exp(-x**2), 0, np.inf)
+print(f"∫_0^∞ e^(-x²) dx = {val:.12f}   (√π/2 = {np.sqrt(np.pi)/2:.12f})   σφάλμα ~ {err:.1e}")
+
+val, err = quad(lambda x: np.exp(-x)/x, 1, np.inf)
+print(f"∫_1^∞ e^(-x)/x dx = {val:.12f}   (συγκλίνει, μικρότερο του ∫_1^∞ e^(-x) dx = {np.exp(-1):.12f})")
+
+# --- Ολοκλήρωμα με ιδιαίτερο σημείο στο άκρο ---
+val, err = quad(lambda x: 1/np.sqrt(x), 0, 1)
+print(f"\n∫_0^1 dx/√x = {val:.12f}   (ακριβές 2)")
+
+# --- Συνάρτηση Γάμμα: η επέκταση του παραγοντικού ---
+print("\nΓ(1/2) =", gamma(0.5), " (√π =", np.sqrt(np.pi), ")")
+print("Γ(5)   =", gamma(5), " = 4! =", math.factorial(4))
+print("Γ(5/2) =", gamma(2.5))
+
+# Ορισμός μέσω ολοκληρώματος: Γ(s) = ∫_0^∞ x^(s-1) e^(-x) dx
+for s in (0.5, 2.5, 5.0):
+    I, _ = quad(lambda x, s=s: x**(s-1)*np.exp(-x), 0, np.inf)
+    print(f"  ∫_0^∞ x^({s}-1)e^(-x)dx = {I:.10f}   Γ({s}) = {gamma(s):.10f}")
+
+# --- Συνάρτηση Βήτα και η σχέση της με τη Γάμμα ---
+m, n = 2.0, 3.0
+print(f"\nB({m},{n}) = {beta(m, n):.12f}")
+print(f"Γ(m)Γ(n)/Γ(m+n) = {gamma(m)*gamma(n)/gamma(m+n):.12f}")
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

@@ -48,3 +48,31 @@ ax2.set_xlabel('x'); ax2.grid(True,alpha=0.3)
 plt.tight_layout(); plt.savefig('ch14_ftc.png',dpi=100)
 print("\n  Γράφημα: ch14_ftc.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Η συνάρτηση συσσώρευσης F(x)=∫_a^x f
+#   np.cumsum, scipy.integrate.quad
+# ============================================================
+import numpy as np
+from scipy.integrate import quad
+
+f = lambda t: np.sin(t)
+
+# Διακριτή συσσώρευση: το άθροισμα των εμβαδών ως τη θέση x.
+xs = np.linspace(0, np.pi, 2001)
+h  = xs[1] - xs[0]
+F_num = np.cumsum(f(xs)) * h          # προσεγγιστικά ∫_0^x sin t dt
+F_exact = 1 - np.cos(xs)              # η ακριβής αντιπαράγωγος
+
+print("max σφάλμα np.cumsum vs 1-cos x :", np.max(np.abs(F_num - F_exact)))
+
+# Το ίδιο σημείο-σημείο με αριθμητική ολοκλήρωση υψηλής ακρίβειας:
+for x0 in (np.pi/4, np.pi/2, np.pi):
+    val, err = quad(f, 0, x0)
+    print(f"  quad ∫_0^{x0:.4f} sin t dt = {val:.10f}"
+          f"   ακριβές = {1-np.cos(x0):.10f}   εκτ. σφάλμα = {err:.1e}")
+
+# Το Α΄ μέρος του ΘΘΟΛ αριθμητικά: F'(x) = f(x)
+dF = np.gradient(F_num, xs)
+print("\nmax |F'(x) - sin x| =", np.max(np.abs(dF - f(xs))[5:-5]))
+print("δηλαδή η παράγωγος της συνάρτησης συσσώρευσης επιστρέφει την f.")

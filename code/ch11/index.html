@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 11 — Μονοτονία, Κυρτότητα και Ακρότατα</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 11
@@ -93,6 +93,38 @@ for xi in crits do (
 infl : solve(f2=0,x);
 print("Σημεία καμπής:",infl);
 plot2d([f,f1,f2],[x,-4,7],[legend,"f","f'","f''"],[title,"Μελέτη"]);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Κριτήριο 2ης παραγώγου με subst και float       */
+/* ============================================================ */
+
+f : x^3 - 3*x^2 - 9*x + 2$
+f1 : diff(f, x)$
+f2 : diff(f, x, 2)$
+print("f  =", f)$
+print("f' =", f1, "   f'' =", f2)$
+
+crit : map(rhs, solve(f1 = 0, x))$
+print("Κρίσιμα σημεία:", crit)$
+
+/* Αντικαθιστούμε κάθε κρίσιμο σημείο στη δεύτερη παράγωγο.     */
+for c in crit do
+  block([v : subst(c, x, f2), y : subst(c, x, f)],
+    print("  x =", c,
+          " f''=", v,
+          " f =", float(y),
+          if v &gt; 0 then " -&gt; τοπικό ΕΛΑΧΙΣΤΟ"
+          else if v &lt; 0 then " -&gt; τοπικό ΜΕΓΙΣΤΟ"
+          else " -&gt; ασαφές (χρειάζεται άλλο κριτήριο)"))$
+
+/* Σημείο καμπής: εκεί μηδενίζεται η f'' και αλλάζει πρόσημο.   */
+infl : map(rhs, solve(f2 = 0, x))$
+print("Σημεία καμπής:", infl,
+      "  f σε αυτά:", float(subst(first(infl), x, f)))$
+
+/* Δεκαδικές τιμές για σύγκριση                                  */
+print("Τιμές f στα κρίσιμα σημεία:",
+      float(map(lambda([c], subst(c, x, f)), crit)))$
 </code></pre>
     </div>
   </div>
@@ -163,6 +195,38 @@ plt.suptitle('Μελέτη f(x)=x³-3x²-9x+2')
 plt.tight_layout(); plt.savefig('ch10_study.png',dpi=100)
 print("\n  Γράφημα: ch10_study.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Πίνακας προσήμου της f' με np.sign
+# ============================================================
+import numpy as np
+from sympy import symbols, diff, lambdify, solve
+
+x = symbols('x')
+f  = x**3 - 3*x**2 - 9*x + 2
+f1 = diff(f, x)
+
+crit = sorted([float(r) for r in solve(f1, x) if r.is_real])
+print("Κρίσιμα σημεία:", crit)
+
+f1n = lambdify(x, f1, 'numpy')
+xs  = np.linspace(-4, 7, 1101)
+s   = np.sign(f1n(xs))              # +1 / 0 / -1
+
+# Εντοπίζουμε τις αλλαγές προσήμου: εκεί βρίσκονται τα ακρότατα.
+changes = np.where(np.diff(s) != 0)[0]
+print("Αλλαγές προσήμου της f' κοντά στα x =",
+      np.round(xs[changes], 3))
+
+for i in changes:
+    before, after = s[i], s[i+1]
+    kind = "τοπικό μέγιστο" if before &gt; 0 &gt; after else \
+           "τοπικό ελάχιστο" if before &lt; 0 &lt; after else "χωρίς ακρότατο"
+    print(f"  x ~ {xs[i]:6.3f}: {before:+.0f} -&gt; {after:+.0f}  =&gt;  {kind}")
+
+# Διαστήματα μονοτονίας από το πρόσημο:
+print("f' &gt; 0 (αύξουσα) στο ποσοστό δείγματος:",
+      f"{100*np.mean(s &gt; 0):.1f}%")
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

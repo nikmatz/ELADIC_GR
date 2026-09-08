@@ -48,3 +48,41 @@ for i in range(8):
     if abs(fxi)<1e-12: break
     xi -= fxi/df_n_num(xi)
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Newton & βελτιστοποίηση με SciPy
+#   scipy.optimize.newton, scipy.optimize.minimize_scalar,
+#   np.linspace, matplotlib.pyplot
+# ============================================================
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import newton, minimize_scalar
+
+# --- Μέθοδος Newton: ρίζα της f(x) = x^3 - 2x - 5 ---
+f  = lambda x: x**3 - 2*x - 5
+df = lambda x: 3*x**2 - 2
+
+r = newton(f, x0=2.0, fprime=df, tol=1e-12, full_output=True)
+print("Ρίζα (Newton) =", r[0])
+print("Επαναλήψεις   =", r[1].iterations, " f(ρίζα) =", f(r[0]))
+
+# Χωρίς παράγωγο (τέμνουσα):
+print("Ρίζα (τέμνουσα) =", newton(f, x0=2.0, tol=1e-12))
+
+# --- Βελτιστοποίηση: ελάχιστο της g(x) = x^2 - 4x + 7 ---
+g = lambda x: x**2 - 4*x + 7
+res = minimize_scalar(g, bounds=(-10, 10), method='bounded')
+print(f"\nΕλάχιστο της g στο x = {res.x:.6f}, g(x) = {res.fun:.6f}")
+print("Αναλυτικά: x = 2, g(2) = 3")
+
+# --- Γραφική επιβεβαίωση ---
+xs = np.linspace(-1, 5, 400)
+fig, ax = plt.subplots(1, 2, figsize=(11, 4))
+ax[0].plot(xs, f(xs), lw=2); ax[0].axhline(0, color='k', lw=.6)
+ax[0].plot(r[0], 0, 'ro'); ax[0].set_title("f(x)=x³-2x-5 και η ρίζα της")
+ax[0].grid(alpha=.3)
+ax[1].plot(xs, g(xs), lw=2, color='seagreen')
+ax[1].plot(res.x, res.fun, 'ro'); ax[1].set_title("g(x)=x²-4x+7 και το ελάχιστο")
+ax[1].grid(alpha=.3)
+plt.tight_layout(); plt.savefig('ch12_newton_opt.png', dpi=100)
+print("\nΓράφημα: ch12_newton_opt.png")

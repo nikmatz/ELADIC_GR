@@ -14,3 +14,38 @@ print("int(x^2*log(x))  =", integrate(x^2*log(x),x));
 print("int(log(x))      =", integrate(log(x),x));
 result : integrate(x^3*exp(x),x);
 print("Επαλήθευση:", ratsimp(diff(result,x)-x^3*exp(x))=0);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Αντικατάσταση, επαλήθευση, οικογένεια F+c       */
+/*   changevar, solve, plot2d                                    */
+/* ============================================================ */
+
+/* 1. changevar: αλλαγή μεταβλητής σε ΑΝΕΚΤΕΛΕΣΤΟ ολοκλήρωμα.   */
+/*    Γράφουμε 'integrate (με απόστροφο) για να μην υπολογιστεί. */
+I : 'integrate(2*x*exp(x^2), x)$
+print("Αρχικό:", I)$
+J : changevar(I, u = x^2, u, x)$
+print("Μετά την u = x^2:", J)$
+print("Αποτέλεσμα:", ev(J, integrate))$
+
+/* 2. Τριγωνομετρική αντικατάσταση                               */
+K : 'integrate(cos(x)*sin(x)^3, x)$
+print("")$
+print("∫ cos(x)sin^3(x) dx =", ev(changevar(K, u = sin(x), u, x), integrate))$
+
+/* 3. Επαλήθευση με παραγώγιση — ο ασφαλέστερος έλεγχος         */
+F : integrate(x*exp(x), x)$
+print("")$
+print("∫ x·e^x dx =", F, "+ c")$
+print("Έλεγχος: d/dx F - f =", ratsimp(diff(F, x) - x*exp(x)))$
+
+/* 4. Ποιο μέλος της οικογένειας περνά από δοσμένο σημείο;      */
+Fg : integrate(3*x^2 - 2*x, x)$
+sol : solve(subst(1, x, Fg) + c = 5, c)$
+print("")$
+print("F(x) =", Fg, "+ c    με F(1)=5  =>", sol)$
+
+/* 5. Γραφική εικόνα: ίδια καμπύλη, κατακόρυφες μετατοπίσεις    */
+plot2d([Fg-3, Fg, Fg+3], [x, -1.5, 2.5],
+       [legend, "F-3", "F", "F+3"],
+       [title, "Οικογένεια αντιπαραγώγων F(x)+c"])$

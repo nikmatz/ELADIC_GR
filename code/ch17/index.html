@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 17 — Εφαρμογές Ολοκληρωτικού Λογισμού</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 17
@@ -111,6 +111,40 @@ print("Μήκος L =", ratsimp(L));
 assume(rho &gt; 0, L_len &gt; 0)$
 I: rho * integrate(x^2, x, 0, L_len);
 print("Ροπή αδράνειας I =", I);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Αριθμητική ολοκλήρωση με romberg                */
+/* ============================================================ */
+
+load(romberg)$
+
+/* Όταν δεν υπάρχει στοιχειώδης αντιπαράγωγος, ολοκληρώνουμε    */
+/* αριθμητικά. Η romberg είναι εκλέπτυνση του κανόνα τραπεζίου. */
+print("∫_0^1 e^(-x^2) dx  =", romberg(exp(-x^2), x, 0, 1))$
+print("  (αναφορά: 0.7468241328)")$
+
+print("")$
+print("∫_0^1 sin(x)/x dx  =", romberg(sin(x)/x, x, 1e-12, 1))$
+print("∫_0^2 sqrt(1+x^4) dx =", romberg(sqrt(1+x^4), x, 0, 2))$
+
+/* Μήκος τόξου της y = x^2 στο [0,1]                             */
+print("")$
+y : x^2$
+ds : sqrt(1 + diff(y, x)^2)$
+print("Μήκος τόξου (romberg)  =", romberg(ds, x, 0, 1))$
+print("Μήκος τόξου (συμβολικά)=", float(integrate(ds, x, 0, 1)))$
+
+/* Έλεγχος ακρίβειας: μεταβάλλουμε την ανοχή                     */
+print("")$
+rombergtol : 1e-10$
+print("Με rombergtol=1e-10: ∫_0^1 e^(-x^2) dx =", romberg(exp(-x^2), x, 0, 1))$
+
+/* Εμβαδόν μεταξύ καμπυλών: πρώτα τα σημεία τομής με solve      */
+print("")$
+pts : map(rhs, solve(x^2 = x, x))$
+print("Τομές y=x^2 και y=x:", pts)$
+print("Εμβαδόν =", integrate(x - x^2, x, 0, 1), "=",
+      float(integrate(x - x^2, x, 0, 1)))$
 </code></pre>
     </div>
   </div>
@@ -206,6 +240,56 @@ print(f"Ροπή αδράνειας Ι = ρ ∫x² dx = {I}  (= mL²/3)")
 
 print()
 print("Αρχείο 'area_between.png' αποθηκεύτηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Αριθμητική ολοκλήρωση, καμπύλες &amp; επιφάνειες
+#   np.trapz, scipy.integrate.simpson, scipy.integrate.quad,
+#   sympy.lambdify, mpl_toolkits.mplot3d
+# ============================================================
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+from scipy.integrate import simpson, quad
+from mpl_toolkits.mplot3d import Axes3D          # noqa: F401  (ενεργοποιεί το 3D)
+
+# Σημείωση: από το NumPy 2 η np.trapz μετονομάστηκε σε np.trapezoid.
+# Η επόμενη γραμμή δουλεύει και στις δύο εκδόσεις.
+trapezoid = getattr(np, "trapezoid", None) or np.trapz
+
+# --- 1. Τραπέζιο, Simpson και «ακριβής» τιμή για το ∫_0^1 e^{-x^2} dx ---
+f = lambda x: np.exp(-x**2)
+exact, _ = quad(f, 0, 1)
+print(f"{'n':&gt;5} {'τραπέζιο':&gt;14} {'Simpson':&gt;14} {'σφάλμα Simpson':&gt;16}")
+for n in (4, 8, 16, 32):
+    xs = np.linspace(0, 1, n+1); ys = f(xs)
+    T = trapezoid(ys, xs)                # κανόνας τραπεζίου
+    S = simpson(ys, x=xs)                # κανόνας Simpson
+    print(f"{n:5d} {T:14.10f} {S:14.10f} {abs(S-exact):16.2e}")
+print(f"quad (αναφορά): {exact:.10f}")
+
+# --- 2. Μήκος τόξου της y = x^2 στο [0,1] με sympy.lambdify ---
+x = sp.symbols('x')
+y = x**2
+ds = sp.sqrt(1 + sp.diff(y, x)**2)
+ds_num = sp.lambdify(x, ds, 'numpy')
+L, _ = quad(ds_num, 0, 1)
+L_sym = float(sp.integrate(ds, (x, 0, 1)))
+print(f"\nΜήκος τόξου y=x²  στο [0,1]: αριθμητικά {L:.10f} | συμβολικά {L_sym:.10f}")
+
+# --- 3. Στερεό εκ περιστροφής: η επιφάνεια σε 3D ---
+t = np.linspace(0, 1, 60); th = np.linspace(0, 2*np.pi, 60)
+T, TH = np.meshgrid(t, th)
+X, Y, Z = T, (T**2)*np.cos(TH), (T**2)*np.sin(TH)
+fig = plt.figure(figsize=(6, 4.5))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis', alpha=.85, linewidth=0)
+ax.set_xlabel('x'); ax.set_ylabel('y'); ax.set_zlabel('z')
+ax.set_title('Περιστροφή της y=x² γύρω από τον άξονα x')
+plt.tight_layout(); plt.savefig('ch17_solid_rev.png', dpi=100)
+
+V_disk = np.pi*float(sp.integrate(y**2, (x, 0, 1)))
+print(f"Όγκος (μέθοδος δίσκων) = π/5 = {V_disk:.10f}")
+print("Γράφημα: ch17_solid_rev.png")
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

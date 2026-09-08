@@ -13,3 +13,41 @@ print("Riemann (n=100):", float(S));
 area : integrate(x-x^2,x,0,1);
 print("Εμβαδόν y=x vs y=x^2:",area);
 plot2d([sin(x),0],[x,0,%pi],[title,"int_0^pi sin(x)dx=2"]);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Αθροίσματα Riemann: από το άθροισμα στο όριο    */
+/*   sum(expr,i,1,n), limit(...,n,inf), float, solve, plot2d     */
+/* ============================================================ */
+
+/* f(x)=x^2 στο [0,2]:  Δx = 2/n,  δεξιά άκρα x_i = 2i/n        */
+declare(n, integer)$
+Rn : sum((2*i/n)^2 * (2/n), i, 1, n)$
+Rn : ratsimp(ev(Rn, simpsum:true))$
+print("R_n =", Rn)$
+print("lim R_n (n->inf) =", limit(Rn, n, inf), "   [αναμενόμενο 8/3]")$
+
+/* Αριστερά άκρα: ίδιο όριο, διαφορετικό άθροισμα               */
+Ln : ratsimp(ev(sum((2*(i-1)/n)^2 * (2/n), i, 1, n), simpsum:true))$
+print("L_n =", Ln, "   lim L_n =", limit(Ln, n, inf))$
+
+/* Αριθμητικά: L_n < 8/3 < R_n                                   */
+print("")$
+for N in [4, 10, 50, 200] do
+  print("  n =", N,
+        "  L_n =", float(subst(N, n, Ln)),
+        "  R_n =", float(subst(N, n, Rn)))$
+
+/* Το ίδιο με αντιπαράγωγο — για επαλήθευση                      */
+print("")$
+print("∫_0^2 x^2 dx =", integrate(x^2, x, 0, 2), "=", float(8/3))$
+
+/* Θεώρημα Μέσης Τιμής: βρίσκουμε το ξ με solve                  */
+mean : integrate(x^2, x, 0, 3)/3$
+print("")$
+print("Μέση τιμή της x^2 στο [0,3] =", mean, "=", float(mean))$
+print("ξ από solve:", map(rhs, solve(x^2 = mean, x)),
+      " -> δεκτό:", float(sqrt(mean)))$
+
+plot2d([x^2, mean], [x, 0, 3],
+       [legend, "f(x)=x^2", "μέση τιμή"],
+       [title, "Θεώρημα Μέσης Τιμής του Ολοκληρωτικού Λογισμού"])$

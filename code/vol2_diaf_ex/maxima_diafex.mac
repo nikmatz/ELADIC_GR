@@ -1,0 +1,36 @@
+;; maxima_diafex.mac — Διαφορικές Εξισώσεις (Τόμος 2)
+;; Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+
+/* 1. Διαχωρίσιμη ΔΕ: y' = y*x */
+sol1: ode2(diff(y,x) - y*x, y, x);
+print("1. y' = y*x ->", sol1);
+
+/* Αρχική συνθήκη y(0)=2 */
+eq1: ev(sol1, x=0);
+C_val: solve(eq1 = 2, %c);
+print("   y(0)=2 ->", ev(sol1, C_val[1]));
+
+/* 2. Γραμμική 1ης τάξης: y' + 2y = 4x */
+sol2: ode2(diff(y,x) + 2*y - 4*x, y, x);
+print("2. y' + 2y = 4x ->", sol2);
+
+/* 3. Ομογενής 2ης τάξης: y'' - 3y' + 2y = 0 */
+sol3: ode2(diff(y,x,2) - 3*diff(y,x) + 2*y, y, x);
+print("3. y'' - 3y' + 2y = 0 ->", sol3);
+
+/* 4. Μη-ομογενής: y'' + y = sin(x) */
+sol4: ode2(diff(y,x,2) + y - sin(x), y, x);
+print("4. y'' + y = sin(x) ->", sol4);
+
+/* 5. Πεδίο κλίσεων: y' = x - y */
+plotdf(x - y, [x, -2, 4], [y, -2, 4],
+       [title, "Πεδίο κλίσεων: y' = x-y"])$
+
+/* 6. Μέθοδος Euler με Runge-Kutta 4ης τάξης */
+/* (wxMaxima: Numerical -> Diff. equations) */
+ode_sys: [diff(y, t) = -2*y]$
+ic: [y(0) = 1]$
+sol_numeric: rk(ode_sys, [y], ic, [t, 0, 3, 0.1])$
+plot2d(
+  [discrete, map(lambda([p], [p[1], p[2]]), sol_numeric)],
+  [legend, "RK4: y'=-2y"], [title, "Αριθμητική λύση"])$

@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 16 — Τεχνικές Ολοκλήρωσης</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 16
@@ -102,6 +102,40 @@ print("int(tan(x))        =", integrate(tan(x),x));
 /* Επαλήθευση */
 r:integrate(x^3*exp(x),x);
 print("Επαλήθευση:", ratsimp(diff(r,x)-x^3*exp(x))=0);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Αντικατάσταση σε ανεκτέλεστο ολοκλήρωμα         */
+/*   changevar(expr, eq, u, x)                                   */
+/* ============================================================ */
+
+/* Η changevar δουλεύει σε ΑΝΕΚΤΕΛΕΣΤΟ ολοκλήρωμα ('integrate). */
+/* Έτσι βλέπουμε την ίδια την αλλαγή μεταβλητής, όχι μόνο το    */
+/* τελικό αποτέλεσμα.                                            */
+
+I1 : 'integrate(2*x*sqrt(x^2 + 1), x)$
+print("Αρχικό:", I1)$
+print("u = x^2+1 :", changevar(I1, u = x^2 + 1, u, x))$
+print("Αποτέλεσμα:", ratsimp(ev(changevar(I1, u = x^2+1, u, x), integrate)))$
+
+/* Όταν η αντικατάσταση δεν αντιστρέφεται μονοσήμαντα (εδώ η    */
+/* u=sin(x)), η Maxima προειδοποιεί ότι «χάνονται λύσεις»: αυτό  */
+/* αφορά την αντιστροφή, όχι το ίδιο το ολοκλήρωμα.              */
+print("")$
+I2 : 'integrate(sin(x)^3*cos(x), x)$
+print("u = sin(x):", changevar(I2, u = sin(x), u, x))$
+print("Αποτέλεσμα:", ev(changevar(I2, u = sin(x), u, x), integrate))$
+
+print("")$
+I3 : 'integrate(1/(x*log(x)), x)$
+print("u = log(x):", changevar(I3, u = log(x), u, x))$
+print("Αποτέλεσμα:", ev(changevar(I3, u = log(x), u, x), integrate))$
+
+/* Σε ορισμένο ολοκλήρωμα η changevar αλλάζει ΚΑΙ τα άκρα.      */
+print("")$
+I4 : 'integrate(2*x*exp(x^2), x, 0, 1)$
+print("Ορισμένο, u = x^2:", changevar(I4, u = x^2, u, x))$
+print("Τιμή:", ev(changevar(I4, u = x^2, u, x), integrate),
+      "=", float(exp(1) - 1))$
 </code></pre>
     </div>
   </div>
@@ -170,6 +204,33 @@ for name,f_ in [("sin^2(x)",sp.sin(x)**2),("cos^3(x)",sp.cos(x)**3),
                  ("sin(x)*cos(x)",sp.sin(x)*sp.cos(x)),("tan(x)",sp.tan(x))]:
     print(f"  int({name:18s}) = {sp.trigsimp(sp.integrate(f_,x))} + C")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Βήμα-βήμα ολοκλήρωση &amp; αριθμητικός έλεγχος
+#   sympy.integrals.manualintegrate, scipy.integrate.quad
+# ============================================================
+import sympy as sp
+from sympy.integrals.manualintegrate import manualintegrate, integral_steps
+from scipy.integrate import quad
+import numpy as np
+
+x = sp.symbols('x')
+
+for f in (x*sp.exp(x), sp.sin(x)**2, 1/(x**2 - 1), x*sp.sqrt(x + 1)):
+    F = manualintegrate(f, x)          # ακολουθεί τις «σχολικές» τεχνικές
+    print(f"∫ {f} dx = {sp.simplify(F)} + c")
+    print("   έλεγχος με παραγώγιση:", sp.simplify(sp.diff(F, x) - f) == 0)
+
+# Ποιον κανόνα διάλεξε; (χρήσιμο διδακτικά)
+print("\nΒήματα για ∫ x·e^x dx:")
+print("  ", integral_steps(x*sp.exp(x), x).__class__.__name__)
+
+# Συμβολικό vs αριθμητικό αποτέλεσμα σε ορισμένο ολοκλήρωμα:
+f = x*sp.exp(x)
+sym = float(sp.integrate(f, (x, 0, 1)))
+num, err = quad(lambda t: t*np.exp(t), 0, 1)
+print(f"\n∫_0^1 x·e^x dx: συμβολικά = {sym:.12f}")
+print(f"                αριθμητικά (quad) = {num:.12f}  (σφάλμα ~ {err:.1e})")
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

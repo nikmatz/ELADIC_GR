@@ -76,3 +76,53 @@ print(f"Ροπή αδράνειας Ι = ρ ∫x² dx = {I}  (= mL²/3)")
 
 print()
 print("Αρχείο 'area_between.png' αποθηκεύτηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Αριθμητική ολοκλήρωση, καμπύλες & επιφάνειες
+#   np.trapz, scipy.integrate.simpson, scipy.integrate.quad,
+#   sympy.lambdify, mpl_toolkits.mplot3d
+# ============================================================
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+from scipy.integrate import simpson, quad
+from mpl_toolkits.mplot3d import Axes3D          # noqa: F401  (ενεργοποιεί το 3D)
+
+# Σημείωση: από το NumPy 2 η np.trapz μετονομάστηκε σε np.trapezoid.
+# Η επόμενη γραμμή δουλεύει και στις δύο εκδόσεις.
+trapezoid = getattr(np, "trapezoid", None) or np.trapz
+
+# --- 1. Τραπέζιο, Simpson και «ακριβής» τιμή για το ∫_0^1 e^{-x^2} dx ---
+f = lambda x: np.exp(-x**2)
+exact, _ = quad(f, 0, 1)
+print(f"{'n':>5} {'τραπέζιο':>14} {'Simpson':>14} {'σφάλμα Simpson':>16}")
+for n in (4, 8, 16, 32):
+    xs = np.linspace(0, 1, n+1); ys = f(xs)
+    T = trapezoid(ys, xs)                # κανόνας τραπεζίου
+    S = simpson(ys, x=xs)                # κανόνας Simpson
+    print(f"{n:5d} {T:14.10f} {S:14.10f} {abs(S-exact):16.2e}")
+print(f"quad (αναφορά): {exact:.10f}")
+
+# --- 2. Μήκος τόξου της y = x^2 στο [0,1] με sympy.lambdify ---
+x = sp.symbols('x')
+y = x**2
+ds = sp.sqrt(1 + sp.diff(y, x)**2)
+ds_num = sp.lambdify(x, ds, 'numpy')
+L, _ = quad(ds_num, 0, 1)
+L_sym = float(sp.integrate(ds, (x, 0, 1)))
+print(f"\nΜήκος τόξου y=x²  στο [0,1]: αριθμητικά {L:.10f} | συμβολικά {L_sym:.10f}")
+
+# --- 3. Στερεό εκ περιστροφής: η επιφάνεια σε 3D ---
+t = np.linspace(0, 1, 60); th = np.linspace(0, 2*np.pi, 60)
+T, TH = np.meshgrid(t, th)
+X, Y, Z = T, (T**2)*np.cos(TH), (T**2)*np.sin(TH)
+fig = plt.figure(figsize=(6, 4.5))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis', alpha=.85, linewidth=0)
+ax.set_xlabel('x'); ax.set_ylabel('y'); ax.set_zlabel('z')
+ax.set_title('Περιστροφή της y=x² γύρω από τον άξονα x')
+plt.tight_layout(); plt.savefig('ch17_solid_rev.png', dpi=100)
+
+V_disk = np.pi*float(sp.integrate(y**2, (x, 0, 1)))
+print(f"Όγκος (μέθοδος δίσκων) = π/5 = {V_disk:.10f}")
+print("Γράφημα: ch17_solid_rev.png")

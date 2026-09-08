@@ -85,3 +85,40 @@ axes[1].legend(); axes[1].set_title('Σύγκλιση προς π'); axes[1].gri
 
 plt.tight_layout(); plt.savefig('dynamoseires.png', dpi=100); plt.show()
 print("\nΑρχείο 'dynamoseires.png' αποθηκεύτηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Από τη σειρά στη συνάρτηση
+#   sympy.lambdify, sympy.removeO
+# ============================================================
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+
+x = sp.symbols('x')
+
+# Το ανάπτυγμα φέρει έναν όρο O(x^n)· τον αφαιρούμε με removeO()
+# για να πάρουμε το πολυώνυμο Taylor ως αποτιμήσιμη έκφραση.
+for n in (3, 5, 7):
+    s = sp.series(sp.sin(x), x, 0, n)
+    print(f"series έως x^{n-1}: {s}    ->  removeO(): {s.removeO()}")
+
+plt.figure(figsize=(7, 4.5))
+xs = np.linspace(-2*np.pi, 2*np.pi, 500)
+plt.plot(xs, np.sin(xs), 'k', lw=2.2, label='sin x')
+
+for n, col in zip((4, 6, 8, 12), ('tab:blue', 'tab:orange', 'tab:green', 'tab:red')):
+    P = sp.series(sp.sin(x), x, 0, n).removeO()
+    P_num = sp.lambdify(x, P, 'numpy')          # συμβολικό -> αριθμητικό
+    plt.plot(xs, P_num(xs), color=col, lw=1.4, label=f'Taylor βαθμού {n-1}')
+
+plt.ylim(-2, 2); plt.grid(alpha=.3); plt.legend(fontsize=8)
+plt.title('Πολυώνυμα Taylor της sin x: όσο μεγαλώνει ο βαθμός, τόσο πλαταίνει η προσέγγιση')
+plt.tight_layout(); plt.savefig('ch20_taylor_sin.png', dpi=100)
+print("\nΓράφημα: ch20_taylor_sin.png")
+
+# Πόσο μακριά είναι «καλή» η προσέγγιση;
+P = sp.series(sp.exp(x), x, 0, 6).removeO()
+P_num = sp.lambdify(x, P, 'numpy')
+for x0 in (0.1, 0.5, 1.0, 2.0):
+    print(f"  x={x0:4.1f}: Taylor5 = {P_num(x0):.8f}   e^x = {np.exp(x0):.8f}"
+          f"   σφάλμα = {abs(P_num(x0)-np.exp(x0)):.2e}")

@@ -69,3 +69,38 @@ axes[1].set_title(r'Ιδιαίτερο σημείο $x=0$'); axes[1].grid(True, 
 plt.tight_layout(); plt.savefig('improper.png', dpi=100); plt.show()
 print()
 print("Αρχείο 'improper.png' αποθηκεύτηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Αριθμητικά γενικευμένα ολοκληρώματα & Γάμμα
+#   scipy.integrate.quad, scipy.special.gamma
+# ============================================================
+import numpy as np
+from scipy.integrate import quad
+from scipy.special import gamma, beta
+import math
+
+# --- Ολοκληρώματα σε άπειρο διάστημα: το quad δέχεται np.inf ---
+val, err = quad(lambda x: np.exp(-x**2), 0, np.inf)
+print(f"∫_0^∞ e^(-x²) dx = {val:.12f}   (√π/2 = {np.sqrt(np.pi)/2:.12f})   σφάλμα ~ {err:.1e}")
+
+val, err = quad(lambda x: np.exp(-x)/x, 1, np.inf)
+print(f"∫_1^∞ e^(-x)/x dx = {val:.12f}   (συγκλίνει, μικρότερο του ∫_1^∞ e^(-x) dx = {np.exp(-1):.12f})")
+
+# --- Ολοκλήρωμα με ιδιαίτερο σημείο στο άκρο ---
+val, err = quad(lambda x: 1/np.sqrt(x), 0, 1)
+print(f"\n∫_0^1 dx/√x = {val:.12f}   (ακριβές 2)")
+
+# --- Συνάρτηση Γάμμα: η επέκταση του παραγοντικού ---
+print("\nΓ(1/2) =", gamma(0.5), " (√π =", np.sqrt(np.pi), ")")
+print("Γ(5)   =", gamma(5), " = 4! =", math.factorial(4))
+print("Γ(5/2) =", gamma(2.5))
+
+# Ορισμός μέσω ολοκληρώματος: Γ(s) = ∫_0^∞ x^(s-1) e^(-x) dx
+for s in (0.5, 2.5, 5.0):
+    I, _ = quad(lambda x, s=s: x**(s-1)*np.exp(-x), 0, np.inf)
+    print(f"  ∫_0^∞ x^({s}-1)e^(-x)dx = {I:.10f}   Γ({s}) = {gamma(s):.10f}")
+
+# --- Συνάρτηση Βήτα και η σχέση της με τη Γάμμα ---
+m, n = 2.0, 3.0
+print(f"\nB({m},{n}) = {beta(m, n):.12f}")
+print(f"Γ(m)Γ(n)/Γ(m+n) = {gamma(m)*gamma(n)/gamma(m+n):.12f}")

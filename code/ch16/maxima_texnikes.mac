@@ -22,3 +22,37 @@ print("int(tan(x))        =", integrate(tan(x),x));
 /* Επαλήθευση */
 r:integrate(x^3*exp(x),x);
 print("Επαλήθευση:", ratsimp(diff(r,x)-x^3*exp(x))=0);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Αντικατάσταση σε ανεκτέλεστο ολοκλήρωμα         */
+/*   changevar(expr, eq, u, x)                                   */
+/* ============================================================ */
+
+/* Η changevar δουλεύει σε ΑΝΕΚΤΕΛΕΣΤΟ ολοκλήρωμα ('integrate). */
+/* Έτσι βλέπουμε την ίδια την αλλαγή μεταβλητής, όχι μόνο το    */
+/* τελικό αποτέλεσμα.                                            */
+
+I1 : 'integrate(2*x*sqrt(x^2 + 1), x)$
+print("Αρχικό:", I1)$
+print("u = x^2+1 :", changevar(I1, u = x^2 + 1, u, x))$
+print("Αποτέλεσμα:", ratsimp(ev(changevar(I1, u = x^2+1, u, x), integrate)))$
+
+/* Όταν η αντικατάσταση δεν αντιστρέφεται μονοσήμαντα (εδώ η    */
+/* u=sin(x)), η Maxima προειδοποιεί ότι «χάνονται λύσεις»: αυτό  */
+/* αφορά την αντιστροφή, όχι το ίδιο το ολοκλήρωμα.              */
+print("")$
+I2 : 'integrate(sin(x)^3*cos(x), x)$
+print("u = sin(x):", changevar(I2, u = sin(x), u, x))$
+print("Αποτέλεσμα:", ev(changevar(I2, u = sin(x), u, x), integrate))$
+
+print("")$
+I3 : 'integrate(1/(x*log(x)), x)$
+print("u = log(x):", changevar(I3, u = log(x), u, x))$
+print("Αποτέλεσμα:", ev(changevar(I3, u = log(x), u, x), integrate))$
+
+/* Σε ορισμένο ολοκλήρωμα η changevar αλλάζει ΚΑΙ τα άκρα.      */
+print("")$
+I4 : 'integrate(2*x*exp(x^2), x, 0, 1)$
+print("Ορισμένο, u = x^2:", changevar(I4, u = x^2, u, x))$
+print("Τιμή:", ev(changevar(I4, u = x^2, u, x), integrate),
+      "=", float(exp(1) - 1))$

@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 15 — Θεμελιώδες Θεώρημα Λογισμού</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 15
@@ -98,6 +98,39 @@ intersect : solve(x^2=2*x,x);
 print("Τομές x^2=2x:", intersect);
 print("Εμβαδόν =", integrate(2*x-x^2,x,0,2));
 plot2d([x^2,2*x],[x,-0.5,2.5],[legend,"x^2","2x"],[title,"ΘΘΛ"]);
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Συνάρτηση συσσώρευσης και το ΘΘΟΛ               */
+/*   integrate(f,t,0,x), diff, subst, float                      */
+/* ============================================================ */
+
+/* Δηλώνουμε ότι το άνω όριο είναι θετικό· διαφορετικά η Maxima  */
+/* ρωτά «Is x positive, negative or zero?» και περιμένει απάντηση.*/
+assume(x &gt; 0)$
+
+/* Μέρος Α: F(x) = ∫_0^x f(t) dt  =&gt;  F'(x) = f(x)              */
+F : integrate(sin(t), t, 0, x)$
+print("F(x) = ∫_0^x sin(t) dt =", F)$
+print("F'(x) =", trigsimp(diff(F, x)), "   (δηλαδή sin(x))")$
+
+/* Τιμές της συνάρτησης συσσώρευσης με subst                     */
+print("")$
+for a in [%pi/4, %pi/2, %pi] do
+  print("  F(", a, ") =", subst(a, x, F), "=", float(subst(a, x, F)))$
+
+/* Μέρος Β: ∫_a^b f = G(b) - G(a)                                */
+print("")$
+G : integrate(x^3 - 2*x, x)$
+print("Αντιπαράγωγος G(x) =", G)$
+print("G(3) - G(1) =", subst(3, x, G) - subst(1, x, G),
+      "=", float(subst(3, x, G) - subst(1, x, G)))$
+print("integrate(...,1,3) =", integrate(x^3 - 2*x, x, 1, 3))$
+
+/* Σύνθετο άνω όριο: κανόνας αλυσίδας */
+print("")$
+H : integrate(exp(-t^2), t, 0, x^2)$
+print("d/dx ∫_0^{x^2} e^{-t^2} dt =", diff(H, x),
+      "   [αναμενόμενο 2x·e^{-x^4}]")$
 </code></pre>
     </div>
   </div>
@@ -165,6 +198,34 @@ ax2.set_xlabel('x'); ax2.grid(True,alpha=0.3)
 plt.tight_layout(); plt.savefig('ch14_ftc.png',dpi=100)
 print("\n  Γράφημα: ch14_ftc.png")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Η συνάρτηση συσσώρευσης F(x)=∫_a^x f
+#   np.cumsum, scipy.integrate.quad
+# ============================================================
+import numpy as np
+from scipy.integrate import quad
+
+f = lambda t: np.sin(t)
+
+# Διακριτή συσσώρευση: το άθροισμα των εμβαδών ως τη θέση x.
+xs = np.linspace(0, np.pi, 2001)
+h  = xs[1] - xs[0]
+F_num = np.cumsum(f(xs)) * h          # προσεγγιστικά ∫_0^x sin t dt
+F_exact = 1 - np.cos(xs)              # η ακριβής αντιπαράγωγος
+
+print("max σφάλμα np.cumsum vs 1-cos x :", np.max(np.abs(F_num - F_exact)))
+
+# Το ίδιο σημείο-σημείο με αριθμητική ολοκλήρωση υψηλής ακρίβειας:
+for x0 in (np.pi/4, np.pi/2, np.pi):
+    val, err = quad(f, 0, x0)
+    print(f"  quad ∫_0^{x0:.4f} sin t dt = {val:.10f}"
+          f"   ακριβές = {1-np.cos(x0):.10f}   εκτ. σφάλμα = {err:.1e}")
+
+# Το Α΄ μέρος του ΘΘΟΛ αριθμητικά: F'(x) = f(x)
+dF = np.gradient(F_num, xs)
+print("\nmax |F'(x) - sin x| =", np.max(np.abs(dF - f(xs))[5:-5]))
+print("δηλαδή η παράγωγος της συνάρτησης συσσώρευσης επιστρέφει την f.")
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

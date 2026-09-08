@@ -44,3 +44,35 @@ I = sp.integrate(f_test, x)
 chk = sp.simplify(sp.diff(I,x) - f_test) == 0
 print(f"  d/dx[int(x^3*e^x)] = x^3*e^x ?  {chk}")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Η οικογένεια αντιπαραγώγων F(x)+c
+#   sympy.lambdify, matplotlib.pyplot
+# ============================================================
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+
+x = sp.symbols('x')
+f = 3*x**2 - 2*x
+F = sp.integrate(f, x)
+print("f(x) =", f, "   F(x) =", F, "+ c")
+print("Έλεγχος: F'(x) =", sp.simplify(sp.diff(F, x)))
+
+F_num = sp.lambdify(x, F, 'numpy')
+f_num = sp.lambdify(x, f, 'numpy')
+xs = np.linspace(-1.5, 2.5, 400)
+
+plt.figure(figsize=(7, 4.5))
+for c in (-3, -1, 0, 1, 3):
+    plt.plot(xs, F_num(xs) + c, lw=1.6, label=f"F(x) + ({c})")
+plt.axhline(0, color='k', lw=.6); plt.axvline(0, color='k', lw=.6)
+plt.title("Οικογένεια αντιπαραγώγων: κατακόρυφες μετατοπίσεις της ίδιας καμπύλης")
+plt.legend(fontsize=8); plt.grid(alpha=.3)
+plt.tight_layout(); plt.savefig('ch13_antiparagogoi.png', dpi=100)
+print("Γράφημα: ch13_antiparagogoi.png")
+
+# Η κλίση είναι ίδια για κάθε c — αυτό ακριβώς σημαίνει «+ c»:
+for c in (-3, 0, 3):
+    print(f"  c={c:+d}: κλίση στο x=1 -> {float(sp.diff(F + c, x).subs(x, 1))}"
+          f"   (f(1) = {float(f.subs(x, 1))})")

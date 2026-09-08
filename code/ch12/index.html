@@ -54,7 +54,7 @@
 <body>
 <header>
   <h1>📐 Κεφάλαιο 12 — Εφαρμογές Παραγώγου</h1>
-  <p>«Στοιχεία Γραμμικής Άλγεβρας και Στοιχεία Διαφορικού και Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
 </header>
 <div class="breadcrumb">
   <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 12
@@ -97,6 +97,40 @@ print("Βέλτιστο:",l_opt,"A_max=",ev(A,l_opt[1]));
 f(t):=t^3-2; df(t):=diff(f(t),t);
 xi:1.5;
 for i:1 thru 8 do (xi:xi-f(xi)/df(xi), print("x_",i,"=",xi));
+
+/* ============================================================ */
+/* ΣΥΜΠΛΗΡΩΜΑ — Υποθέσεις, αριθμητική ρίζα, δεκαδικά            */
+/*   assume, find_root, float                                    */
+/* ============================================================ */
+
+/* 1. assume: δηλώνουμε τι ξέρουμε, ώστε η Maxima να μη ρωτά.   */
+assume(x &gt; 0)$
+print("Με assume(x&gt;0):  d/dx log(x) =", diff(log(x), x))$
+print("  όριο x*log(x) καθώς x-&gt;0+ :", limit(x*log(x), x, 0, plus))$
+print("  sqrt(x^2) =", radcan(sqrt(x^2)))$
+forget(x &gt; 0)$
+
+/* 2. find_root: αριθμητική ρίζα σε διάστημα όπου αλλάζει πρόσημο */
+f(x) := x^3 - 2*x - 5$
+print("")$
+print("f(2) =", f(2), "  f(3) =", f(3), " -&gt; αλλαγή προσήμου στο [2,3]")$
+r : find_root(f(x), x, 2, 3)$
+print("Ρίζα (find_root):", r, "   f(ρίζα) =", float(f(r)))$
+
+/* Σύγκριση με τη συμβολική λύση: η κυβική έχει μία πραγματική   */
+/* και δύο μιγαδικές ρίζες. Η realroots δίνει μόνο την πραγματική.*/
+print("Πραγματική ρίζα (realroots):", float(map(rhs, realroots(f(x)))))$
+
+/* 3. Εξίσωση που ΔΕΝ λύνεται συμβολικά                          */
+print("")$
+print("Λύση της cos(x) = x :", find_root(cos(x) - x, x, 0, 1))$
+print("Λύση της e^x = 3x   :", find_root(exp(x) - 3*x, x, 0, 1))$
+
+/* 4. Βελτιστοποίηση: κρίσιμο σημείο και δεκαδική τιμή          */
+g : x^2 - 4*x + 7$
+c : rhs(first(solve(diff(g, x) = 0, x)))$
+print("")$
+print("Ελάχιστο της g στο x =", c, ", g =", float(subst(c, x, g)))$
 </code></pre>
     </div>
   </div>
@@ -164,6 +198,44 @@ for i in range(8):
     if abs(fxi)&lt;1e-12: break
     xi -= fxi/df_n_num(xi)
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Newton &amp; βελτιστοποίηση με SciPy
+#   scipy.optimize.newton, scipy.optimize.minimize_scalar,
+#   np.linspace, matplotlib.pyplot
+# ============================================================
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import newton, minimize_scalar
+
+# --- Μέθοδος Newton: ρίζα της f(x) = x^3 - 2x - 5 ---
+f  = lambda x: x**3 - 2*x - 5
+df = lambda x: 3*x**2 - 2
+
+r = newton(f, x0=2.0, fprime=df, tol=1e-12, full_output=True)
+print("Ρίζα (Newton) =", r[0])
+print("Επαναλήψεις   =", r[1].iterations, " f(ρίζα) =", f(r[0]))
+
+# Χωρίς παράγωγο (τέμνουσα):
+print("Ρίζα (τέμνουσα) =", newton(f, x0=2.0, tol=1e-12))
+
+# --- Βελτιστοποίηση: ελάχιστο της g(x) = x^2 - 4x + 7 ---
+g = lambda x: x**2 - 4*x + 7
+res = minimize_scalar(g, bounds=(-10, 10), method='bounded')
+print(f"\nΕλάχιστο της g στο x = {res.x:.6f}, g(x) = {res.fun:.6f}")
+print("Αναλυτικά: x = 2, g(2) = 3")
+
+# --- Γραφική επιβεβαίωση ---
+xs = np.linspace(-1, 5, 400)
+fig, ax = plt.subplots(1, 2, figsize=(11, 4))
+ax[0].plot(xs, f(xs), lw=2); ax[0].axhline(0, color='k', lw=.6)
+ax[0].plot(r[0], 0, 'ro'); ax[0].set_title("f(x)=x³-2x-5 και η ρίζα της")
+ax[0].grid(alpha=.3)
+ax[1].plot(xs, g(xs), lw=2, color='seagreen')
+ax[1].plot(res.x, res.fun, 'ro'); ax[1].set_title("g(x)=x²-4x+7 και το ελάχιστο")
+ax[1].grid(alpha=.3)
+plt.tight_layout(); plt.savefig('ch12_newton_opt.png', dpi=100)
+print("\nΓράφημα: ch12_newton_opt.png")
 </textarea>
       <pre class="py-output" id="py-output"></pre>
       <div class="py-plots" id="py-plots"></div>

@@ -49,3 +49,30 @@ for name,f_ in [("sin^2(x)",sp.sin(x)**2),("cos^3(x)",sp.cos(x)**3),
                  ("sin(x)*cos(x)",sp.sin(x)*sp.cos(x)),("tan(x)",sp.tan(x))]:
     print(f"  int({name:18s}) = {sp.trigsimp(sp.integrate(f_,x))} + C")
 print("\n✓ Ολοκληρώθηκε.")
+
+# ============================================================
+# ΣΥΜΠΛΗΡΩΜΑ — Βήμα-βήμα ολοκλήρωση & αριθμητικός έλεγχος
+#   sympy.integrals.manualintegrate, scipy.integrate.quad
+# ============================================================
+import sympy as sp
+from sympy.integrals.manualintegrate import manualintegrate, integral_steps
+from scipy.integrate import quad
+import numpy as np
+
+x = sp.symbols('x')
+
+for f in (x*sp.exp(x), sp.sin(x)**2, 1/(x**2 - 1), x*sp.sqrt(x + 1)):
+    F = manualintegrate(f, x)          # ακολουθεί τις «σχολικές» τεχνικές
+    print(f"∫ {f} dx = {sp.simplify(F)} + c")
+    print("   έλεγχος με παραγώγιση:", sp.simplify(sp.diff(F, x) - f) == 0)
+
+# Ποιον κανόνα διάλεξε; (χρήσιμο διδακτικά)
+print("\nΒήματα για ∫ x·e^x dx:")
+print("  ", integral_steps(x*sp.exp(x), x).__class__.__name__)
+
+# Συμβολικό vs αριθμητικό αποτέλεσμα σε ορισμένο ολοκλήρωμα:
+f = x*sp.exp(x)
+sym = float(sp.integrate(f, (x, 0, 1)))
+num, err = quad(lambda t: t*np.exp(t), 0, 1)
+print(f"\n∫_0^1 x·e^x dx: συμβολικά = {sym:.12f}")
+print(f"                αριθμητικά (quad) = {num:.12f}  (σφάλμα ~ {err:.1e})")
