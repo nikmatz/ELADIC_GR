@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Όρια και Συνέχεια Συνάρτησης</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Όρια και Συνέχεια Συνάρτησης</h1>
+  <p class="chapter-label">Κεφάλαιο 9 · Όρια και Συνέχεια Συνάρτησης</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά τεχνική</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Κάθε απροσδιόριστη μορφή αντιμετωπίζεται αποκλειστικά με τα εργαλεία του παρόντος
+  κεφαλαίου: παραγοντοποίηση, πολλαπλασιασμό με τη συζυγή παράσταση, διαίρεση με την επικρατούσα
+  δύναμη, το θεμελιώδες όριο $\displaystyle\lim_{x\to0}\frac{\sin x}{x}=1$ και το Κριτήριο
+  Παρεμβολής. Η παράγωγος και ο κανόνας του L'Hôpital δεν έχουν ακόμη εισαχθεί και δεν
+  επιτρέπεται να χρησιμοποιηθούν. Σε κάθε βήμα να δικαιολογείτε ποιος νόμος ορίων εφαρμόζεται.</p>
+</div>
+
+<div class="grp"><h2>Α. Όριο — βασικοί υπολογισμοί</h2>
+<p class="lead">Όταν η συνάρτηση είναι συνεχής στο σημείο, το όριο προκύπτει με απευθείας αντικατάσταση· ελέγξτε το πρώτα.</p></div>
+
+<div class="ex"><div class="num">9E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε: (α) $\displaystyle\lim_{x\to-1}\left(x^4-2x^2+3x\right)$,   (β) $\displaystyle\lim_{x\to2}\frac{x^2+3}{x+5}$.</p></div>
+
+<div class="ex"><div class="num">9E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε: (α) $\displaystyle\lim_{x\to3}\sqrt{2x^2-5}$,   (β) $\displaystyle\lim_{x\to0}\frac{x^3-2x+5}{x^2+1}$.</p>
+<p class="ypod">Υπόδειξη: αναφέρετε ρητά ποιος νόμος ορίων επιτρέπει την εναλλαγή ορίου και ρίζας.</p></div>
+
+<div class="ex"><div class="num">9E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω ότι $\displaystyle\lim_{x\to2}f(x)=4$ και $\displaystyle\lim_{x\to2}g(x)=-2$. Υπολογίστε το
+$\displaystyle\lim_{x\to2}\frac{3f(x)-\bigl(g(x)\bigr)^2}{f(x)+g(x)}$, δικαιολογώντας κάθε βήμα με τον αντίστοιχο νόμο ορίων.</p>
+<p class="ypod">Ποια συνθήκη πρέπει να ελεγχθεί πριν εφαρμοστεί ο νόμος του πηλίκου;</p></div>
+
+<div class="grp"><h2>Β. Απροσδιόριστες μορφές και ρίζες</h2>
+<p class="lead">Μορφή $\tfrac{0}{0}$: απαλείψτε τον κοινό παράγοντα με παραγοντοποίηση, συζυγή παράσταση ή κατάλληλη αντικατάσταση.</p></div>
+
+<div class="ex"><div class="num">9E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε: (α) $\displaystyle\lim_{x\to1}\frac{x^2+x-2}{x^2+2x-3}$,   (β) $\displaystyle\lim_{x\to2}\frac{x^3-3x^2+2x}{x^2-4}$.</p></div>
+
+<div class="ex"><div class="num">9E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε: (α) $\displaystyle\lim_{x\to0}\frac{\sqrt{4+x}-\sqrt{4-x}}{x}$,   (β) $\displaystyle\lim_{x\to2}\frac{\sqrt{x+2}-2}{x-2}$.</p>
+<p class="ypod">Υπόδειξη: πολλαπλασιάστε αριθμητή και παρονομαστή με τη συζυγή παράσταση του αριθμητή.</p></div>
+
+<div class="ex"><div class="num">9E.6 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε το $\displaystyle\lim_{x\to1}\frac{\sqrt[3]{x}-1}{\sqrt{x}-1}$  $(x&gt;0)$.</p>
+<p class="ypod">Υπόδειξη: θέστε $x=t^6$ με $t&gt;0$· καθώς $x\to1$ ισχύει $t\to1$. Έτσι και οι δύο ρίζες γίνονται πολυώνυμα του $t$.</p></div>
+
+<div class="grp"><h2>Γ. Πλευρικά όρια</h2>
+<p class="lead">Απόλυτες τιμές, τμηματικοί τύποι και μηδενισμοί παρονομαστή απαιτούν χωριστή μελέτη από αριστερά και από δεξιά.</p></div>
+
+<div class="ex"><div class="num">9E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για την $\displaystyle h(x)=\frac{x^2-x}{|x-1|}$ υπολογίστε τα $\displaystyle\lim_{x\to1^-}h(x)$ και $\displaystyle\lim_{x\to1^+}h(x)$ και κρίνετε αν υπάρχει το $\displaystyle\lim_{x\to1}h(x)$.</p></div>
+
+<div class="ex"><div class="num">9E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε τα $\displaystyle\lim_{x\to2^-}\frac{x-3}{x^2-4}$ και $\displaystyle\lim_{x\to2^+}\frac{x-3}{x^2-4}$.</p>
+<p class="ypod">Υπόδειξη: μελετήστε χωριστά το πρόσημο του αριθμητή και το πρόσημο του παρονομαστή εκατέρωθεν του $2$.</p></div>
+
+<div class="ex"><div class="num">9E.9 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται η $\displaystyle f(x)=\frac{1}{1+2^{1/x}}$, $x\neq0$. Υπολογίστε τα πλευρικά όρια της $f$ στο $x=0$ και εξετάστε αν η $f$ επεκτείνεται σε συνεχή συνάρτηση στο $x=0$.</p>
+<p class="ypod">Υπόδειξη: εξετάστε πρώτα τη συμπεριφορά του εκθέτη $1/x$ και κατόπιν της δύναμης $2^{1/x}$ εκατέρωθεν του μηδενός.</p></div>
+
+<div class="grp"><h2>Δ. Όρια στο άπειρο και ασύμπτωτες</h2>
+<p class="lead">Διαιρέστε με την επικρατούσα δύναμη του $x$ και προσέξτε το πρόσημο όταν $x\to-\infty$.</p></div>
+
+<div class="ex"><div class="num">9E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε: (α) $\displaystyle\lim_{x\to+\infty}\frac{4x^3-2x+1}{x^3+5x^2}$,   (β) $\displaystyle\lim_{x\to-\infty}\frac{2x+1}{x^2-3}$.</p></div>
+
+<div class="ex"><div class="num">9E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται η $\displaystyle f(x)=\frac{3x^2-12}{x^2-x-6}$. Προσδιορίστε το πεδίο ορισμού της, όλες τις κατακόρυφες και τις οριζόντιες ασύμπτωτές της, και εξετάστε τη συμπεριφορά της στα σημεία όπου μηδενίζεται ο παρονομαστής.</p>
+<p class="ypod">Υπόδειξη: παραγοντοποιήστε αριθμητή και παρονομαστή πριν βγάλετε συμπέρασμα· δεν οδηγεί κάθε ρίζα του παρονομαστή σε κατακόρυφη ασύμπτωτη.</p></div>
+
+<div class="ex"><div class="num">9E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε το $\displaystyle\lim_{x\to+\infty}\left(\sqrt{x^2+x+1}-\sqrt{x^2-x}\right)$.</p>
+<p class="ypod">Υπόδειξη: πρόκειται για απροσδιόριστη μορφή $\infty-\infty$· πολλαπλασιάστε και διαιρέστε με το άθροισμα των δύο ριζών.</p></div>
+
+<div class="ex"><div class="num">9E.13 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται η $\displaystyle f(x)=\frac{x^3}{x^2+1}$. Δείξτε ότι η $f$ δεν έχει κατακόρυφες ούτε οριζόντιες ασύμπτωτες και βρείτε την πλάγια ασύμπτωτή της για $x\to+\infty$ και για $x\to-\infty$.</p>
+<p class="ypod">Υπόδειξη: εκτελέστε τη διαίρεση πολυωνύμων και μελετήστε το όριο της διαφοράς $f(x)-(\lambda x+\beta)$.</p></div>
+
+<div class="grp"><h2>Ε. Τριγωνομετρικά όρια και κριτήριο παρεμβολής</h2>
+<p class="lead">Ανάγετε τα πάντα στο θεμελιώδες όριο $\lim_{x\to0}\frac{\sin x}{x}=1$· για φραγμένους παράγοντες χρησιμοποιήστε παρεμβολή.</p></div>
+
+<div class="ex"><div class="num">9E.14 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε: (α) $\displaystyle\lim_{x\to0}\frac{\sin\frac{x}{2}}{x}$,   (β) $\displaystyle\lim_{x\to0}\frac{x}{\sin 4x}$.</p></div>
+
+<div class="ex"><div class="num">9E.15 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε το $\displaystyle\lim_{x\to0}\frac{1-\cos x}{x\sin x}$.</p>
+<p class="ypod">Υπόδειξη: πολλαπλασιάστε αριθμητή και παρονομαστή με $1+\cos x$ και αξιοποιήστε την ταυτότητα $1-\cos^2 x=\sin^2 x$.</p></div>
+
+<div class="ex"><div class="num">9E.16 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω συνάρτηση $f$ ορισμένη σε περιοχή του $1$ για την οποία ισχύει $\bigl|f(x)-3\bigr|\le 5(x-1)^2$ για κάθε $x\in\mathbb{R}$. Δείξτε, με το Κριτήριο Παρεμβολής, ότι το $\displaystyle\lim_{x\to1}f(x)$ υπάρχει και προσδιορίστε το.</p></div>
+
+<div class="ex"><div class="num">9E.17 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε το $\displaystyle\lim_{x\to0}\frac{\sin(\sin x)}{x}$.</p>
+<p class="ypod">Υπόδειξη: γράψτε το πηλίκο ως γινόμενο $\dfrac{\sin(\sin x)}{\sin x}\cdot\dfrac{\sin x}{x}$ και θέστε $u=\sin x$, εξηγώντας γιατί $u\neq0$ για $x$ κοντά στο $0$ με $x\neq0$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Συνέχεια και σημεία ασυνέχειας</h2>
+<p class="lead">Συνέχεια στο $x_0$ σημαίνει τρία πράγματα ταυτόχρονα: ορισμός, ύπαρξη ορίου και ισότητα των δύο.</p></div>
+
+<div class="ex"><div class="num">9E.18 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε αν η συνάρτηση $f(x)=\begin{cases}\dfrac{x^2-5x+6}{x-2}, &amp; x\neq2\\[4pt] -1, &amp; x=2\end{cases}$ είναι συνεχής στο $x=2$, ελέγχοντας χωριστά και τις τρεις προϋποθέσεις της συνέχειας.</p></div>
+
+<div class="ex"><div class="num">9E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>(α) Προσδιορίστε το σύνολο των σημείων στα οποία η $\displaystyle f(x)=\frac{\sqrt{x+1}}{x^2-4}$ είναι συνεχής, δικαιολογώντας την απάντησή σας με τα θεωρήματα συνέχειας πράξεων και σύνθεσης. (β) Για την $\displaystyle g(x)=\frac{x^2+x-6}{x^2+5x+6}$ εντοπίστε όλα τα σημεία ασυνέχειας και χαρακτηρίστε το είδος καθενός (αφαιρέσιμη ή άπειρη ασυνέχεια).</p>
+<p class="ypod">Υπόδειξη: στο (β) παραγοντοποιήστε πρώτα αριθμητή και παρονομαστή και μελετήστε χωριστά τα δύο πλευρικά όρια σε κάθε ύποπτο σημείο.</p></div>
+
+<div class="ex"><div class="num">9E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε τα $\alpha,\beta\in\mathbb{R}$ ώστε η $f(x)=\begin{cases}\dfrac{\sqrt{x+\beta}-3}{x}, &amp; x&gt;0\\[4pt] \alpha, &amp; x\le0\end{cases}$ να είναι συνεχής στο $x=0$.</p>
+<p class="ypod">Υπόδειξη: για ποια τιμή του $\beta$ μπορεί το δεξιό όριο να είναι πραγματικός αριθμός; Απαντήστε πρώτα σε αυτό.</p></div>
+
+<div class="grp"><h2>Ζ. Θεώρημα Bolzano και ενδιάμεσης τιμής</h2>
+<p class="lead">Κατασκευάστε κατάλληλη βοηθητική συνάρτηση, ελέγξτε συνέχεια σε κλειστό διάστημα και ετερόσημες τιμές στα άκρα.</p></div>
+
+<div class="ex"><div class="num">9E.21 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δείξτε ότι η εξίσωση $\cos x=x$ έχει τουλάχιστον μία λύση στο διάστημα $\left(0,\dfrac{\pi}{2}\right)$.</p>
+<p class="ypod">Υπόδειξη: θεωρήστε τη συνάρτηση $g(x)=\cos x-x$ και ελέγξτε τις προϋποθέσεις του θεωρήματος.</p></div>
+
+<div class="ex"><div class="num">9E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω συνεχής συνάρτηση $f:[0,1]\to[0,1]$. Αποδείξτε ότι υπάρχει $\xi\in[0,1]$ με $f(\xi)=\xi$ (σταθερό σημείο).</p>
+<p class="ypod">Υπόδειξη: εφαρμόστε το θεώρημα στη $g(x)=f(x)-x$ και εξετάστε ξεχωριστά τις περιπτώσεις $f(0)=0$ ή $f(1)=1$.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά — σύνθετα θέματα</h2>
+<p class="lead">Εδώ συνδυάζονται όριο, παράμετροι και συνέχεια· αναγνωρίστε πρώτα τη δομή του προβλήματος.</p></div>
+
+<div class="ex"><div class="num">9E.23 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε τα $\alpha,\beta\in\mathbb{R}$ ώστε $\displaystyle\lim_{x\to1}\frac{x^2+\alpha x+\beta}{x^2-1}=2$.</p>
+<p class="ypod">Υπόδειξη: ποια αναγκαία συνθήκη πρέπει να ικανοποιεί ο αριθμητής στο $x=1$, ώστε το όριο να μην απειρίζεται;</p></div>
+
+<div class="ex"><div class="num">9E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $f$ συνεχής στο $[0,2]$ με $f(0)=f(2)$. Αποδείξτε ότι υπάρχει $c\in[0,1]$ ώστε $f(c)=f(c+1)$.</p>
+<p class="ypod">Υπόδειξη: θεωρήστε τη $g(x)=f(x+1)-f(x)$ στο $[0,1]$ και συγκρίνετε τα $g(0)$ και $g(1)$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">9E.25</div>
+<p>Αποδείξτε από τον ορισμό ($\varepsilon$-$\delta$) ότι $\lim_{x\to1}\dfrac{1}{x}=1$. Βρείτε ρητά ένα $\delta(\varepsilon)$.</p></div>
+<div class="ex from-book"><div class="num">9E.26</div>
+<p>Δίνεται $f(x)=\begin{cases}x^2, &amp; x&lt;1\\ 2x-1, &amp; x\geq1\end{cases}$. Υπολογίστε $\lim_{x\to1^-}f(x)$, $\lim_{x\to1^+}f(x)$ και κρίνετε αν $\lim_{x\to1}f(x)$ υπάρχει.</p></div>
+<div class="ex from-book"><div class="num">9E.27</div>
+<p>Εξετάστε αν υπάρχει $\lim_{x\to0}\dfrac{1}{x^2}$ εξετάζοντας $x\to0^+$ και $x\to0^-$.</p></div>
+<div class="ex from-book"><div class="num">9E.28</div>
+<p>Βρείτε $a\in\mathbb{R}$ ώστε η $f(x)=\begin{cases}ax+3,&amp;x&lt;2\\x^2-1,&amp;x\geq2\end{cases}$ να έχει όριο στο $x=2$.</p></div>
+<div class="ex from-book"><div class="num">9E.29</div>
+<p>Βρείτε, αν υπάρχουν, τα όρια: (α) $\lim_{x\to1}\dfrac{x^2-1}{x-1}$, (β) $\lim_{x\to4}\dfrac{\sqrt{x}-2}{x-4}$.</p></div>
+<div class="ex from-book"><div class="num">9E.30</div>
+<p>Χρησιμοποιήστε τους νόμους ορίων για να υπολογίσετε: (α) $\lim_{x\to3}(x^2-5x+6)$, (β) $\lim_{x\to2}\dfrac{x^3-8}{x-2}$, (γ) $\lim_{x\to+\infty}\dfrac{3x^2-5}{2x^2+7}$.</p></div>
+<div class="ex from-book"><div class="num">9E.31</div>
+<p>Υπολογίστε: (α) $\lim_{x\to-2}\dfrac{x^2+5x+6}{x+2}$, (β) $\lim_{x\to3}\dfrac{x^3-27}{x-3}$, (γ) $\lim_{x\to3}\dfrac{x^2-9}{x^2-2x-3}$.</p></div>
+<div class="ex from-book"><div class="num">9E.32</div>
+<p>Αν $3-x^2\leq f(x)\leq 3+x^2$ για κάθε $x\in\mathbb{R}$, βρείτε $\lim_{x\to0}f(x)$ με το Κριτήριο Παρεμβολής.</p></div>
+<div class="ex from-book"><div class="num">9E.33</div>
+<p>Υπολογίστε: (α) $\lim_{x\to0}\dfrac{\sin 3x}{x}$, (β) $\lim_{x\to0}\dfrac{\sin(3x^2)}{x^2}$.</p></div>
+<div class="ex from-book"><div class="num">9E.34</div>
+<p>Υπολογίστε: (α) $\lim_{x\to0}\dfrac{\sin 7x}{\sin 2x}$, (β) $\lim_{x\to0}\dfrac{1-\cos 2x}{x^2}$.</p></div>
+<div class="ex from-book"><div class="num">9E.35</div>
+<p>Δείξτε με το Κριτήριο Παρεμβολής ότι $\lim_{x\to+\infty}\dfrac{\cos x}{x}=0$ και ότι $\lim_{x\to0}x^2\sin\dfrac{1}{x^2}=0$.</p></div>
+<div class="ex from-book"><div class="num">9E.36</div>
+<p>Υπολογίστε: (α) $\lim_{x\to3^+}\dfrac{1}{x-3}$, (β) $\lim_{x\to3^-}\dfrac{1}{x-3}$, (γ) $\lim_{x\to3}\dfrac{1}{(x-3)^2}$.</p></div>
+<div class="ex from-book"><div class="num">9E.37</div>
+<p>Δείξτε ότι $\lim_{x\to\infty}\dfrac{5x^3-2x}{3x^3+x^2}=\dfrac{5}{3}$ διαιρώντας αριθμητή και παρονομαστή με $x^3$.</p></div>
+<div class="ex from-book"><div class="num">9E.38</div>
+<p>Ελέγξτε αν υπάρχουν κατακόρυφες ασύμπτωτες για $h(x)=\dfrac{x^2-1}{x^2-3x+2}$ και υπολογίστε τα αντίστοιχα μονόπλευρα άπειρα όρια. Τι συμβαίνει στο $x=1$;</p></div>
+<div class="ex from-book"><div class="num">9E.39</div>
+<p>Βρείτε όλες τις ασύμπτωτες (κατακόρυφες, οριζόντιες, λοξές) της $f(x)=\dfrac{2x^2-3x+1}{x+2}$. <em>Υπόδειξη:</em> πολυωνυμική διαίρεση.</p></div>
+<div class="ex from-book"><div class="num">9E.40</div>
+<p>Αφαιρέσιμη ασυνέχεια: Για ποιο $c$ η συνάρτηση $f(x)=\begin{cases}\dfrac{x^2-9}{x-3}&amp;x\neq3\\c&amp;x=3\end{cases}$ είναι συνεχής στο $x=3$;</p></div>
+<div class="ex from-book"><div class="num">9E.41</div>
+<p>Βρείτε παραμέτρους $a,b$ ώστε $f(x)=\begin{cases}ax+b&amp;x&lt;1\\2&amp;x=1\\bx^2+a&amp;x&gt;1\end{cases}$ να είναι συνεχής παντού και επιπλέον $f(2)=5$. (Υπόδειξη: εξισώστε τα πλευρικά όρια στο $x=1$ με το $f(1)$.)</p></div>
+<div class="ex from-book"><div class="num">9E.42</div>
+<p>Συνέχεια τμηματικής συνάρτησης: Βρείτε τα $a,b$ ώστε $f(x)=\begin{cases}ax+b,&amp;x&lt;0\\x^2+1,&amp;0\leq x\leq 1\\ ax-b,&amp;x&gt;1\end{cases}$ να είναι συνεχής παντού. (α) Εξετάστε συνέχεια στα $x=0$ και $x=1$. (β) Θέστε πλευρικά όρια ίσα. (γ) Λύστε το σύστημα.</p></div>
+<div class="ex from-book"><div class="num">9E.43</div>
+<p>Εξετάστε τη συνέχεια της $g(x)=\begin{cases}\dfrac{\sin 3x}{x},&amp;x&lt;0\\ 3,&amp;x=0\\ 3\cos x,&amp;x&gt;0\end{cases}$ στο $x=0$.</p></div>
+<div class="ex from-book"><div class="num">9E.44</div>
+<p>Θεώρημα Bolzano: Δείξτε ότι η $f(x)=x^3-x-1$ έχει τουλάχιστον μία ρίζα στο $(1,2)$. (α) Ελέγξτε τις προϋποθέσεις. (β) Υπολογίστε $f(1)$ και $f(2)$.</p></div>
+<div class="ex from-book"><div class="num">9E.45</div>
+<p>Εφαρμόστε το Θεώρημα Bolzano για να δείξετε ότι η εξίσωση $x^5+x-3=0$ έχει τουλάχιστον μία ρίζα στο $[1,2]$ και αποδείξτε ότι η ρίζα αυτή είναι μοναδική (μονοτονία).</p></div>
+<div class="ex from-book"><div class="num">9E.46</div>
+<p>Χρησιμοποιήστε το Θεώρημα Ενδιάμεσης Τιμής για να δείξετε ότι η εξίσωση $e^x=3-x$ έχει λύση στο $(0,2)$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">9E.47</div>
+<p>Δείξτε ότι η $g(x)=x\sin(1/x)$, $x\neq0$, επεκτείνεται συνεχώς στο $x=0$ με $g(0)=0$. Γιατί η $\sin(1/x)$ <em>δεν</em> επεκτείνεται;</p></div>
+<div class="ex from-book"><div class="num">9E.48</div>
+<p><strong>Ασύμπτωτες και μοντελοποίηση.</strong> Το κόστος παραγωγής $x$ μονάδων είναι $K(x)=5000+20x$ (σε ευρώ). Το <em>μέσο</em> κόστος ανά μονάδα είναι $\bar{K}(x)=K(x)/x$. (α) Βρείτε τα $\lim_{x\to0^+}\bar{K}(x)$ και $\lim_{x\to+\infty}\bar{K}(x)$. (β) Ποιες ασύμπτωτες έχει η $\bar{K}$; (γ) Ερμηνεύστε οικονομικά την οριζόντια ασύμπτωτη.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

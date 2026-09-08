@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Θεμελιώδες Θεώρημα του Ολοκληρωτικού Λογισμού</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Θεμελιώδες Θεώρημα του Ολοκληρωτικού Λογισμού</h1>
+  <p class="chapter-label">Κεφάλαιο 15 · Θεμελιώδες Θεώρημα του Ολοκληρωτικού Λογισμού</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Κάθε ορισμένο ολοκλήρωμα υπολογίζεται με τον τύπο Newton–Leibniz: βρίσκετε μία
+  αντιπαράγωγο και αφαιρείτε τις τιμές της στα άκρα. Ελέγχετε πάντα το πρόσημο και το μέγεθος του
+  αποτελέσματος γεωμετρικά: αν η ολοκληρωτέα συνάρτηση είναι θετική στο διάστημα, το ολοκλήρωμα
+  οφείλει να είναι θετικό και συγκρίσιμο με το εμβαδόν ενός ορθογωνίου που την περιβάλλει. Στην
+  αντικατάσταση μεταφέρετε πάντοτε και τα όρια ολοκλήρωσης. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Το πρώτο μέρος του θεμελιώδους θεωρήματος</h2>
+<p class="lead">Η παραγώγιση αναιρεί την ολοκλήρωση: δεν υπολογίζετε το ολοκλήρωμα, το παραγωγίζετε.</p></div>
+
+<div class="ex"><div class="num">15E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε την $F'(x)$ σε καθεμία από τις παρακάτω περιπτώσεις:</p>
+<p>(α) $\displaystyle F(x)=\int_1^{x}\frac{t}{1+t^{2}}\,dt$ &nbsp;&nbsp; (β) $\displaystyle F(x)=\int_0^{x}\cos(t^{3})\,dt$ &nbsp;&nbsp; (γ) $\displaystyle F(x)=\int_x^{2}e^{t^{2}}\,dt$</p>
+<p class="ypod">Υπόδειξη: στο (γ) η μεταβλητή βρίσκεται στο κάτω άκρο· εναλλάξτε πρώτα τα άκρα.</p></div>
+
+<div class="ex"><div class="num">15E.2 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Θεωρήστε τη συνάρτηση $\displaystyle F(x)=\int_0^{x}\frac{t-1}{t^{2}+1}\,dt$, $x\in\mathbb{R}$.
+Βρείτε την $F'(x)$, αποδείξτε ότι η $F$ παρουσιάζει ολικό ελάχιστο στο $x=1$ και υπολογίστε την $F''(0)$.</p>
+<p class="ypod">Υπόδειξη: το πρόσημο της $F'$ καθορίζεται αποκλειστικά από τον αριθμητή.</p></div>
+
+<div class="ex"><div class="num">15E.3 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε το όριο $\displaystyle\lim_{x\to 0}\frac{1}{x^{3}}\int_0^{x}t\sin t\,dt$.</p>
+<p class="ypod">Υπόδειξη: πρόκειται για απροσδιόριστη μορφή $0/0$· συνδυάστε τον κανόνα L'Hôpital (Κεφ. 12) με το πρώτο μέρος του θεμελιώδους θεωρήματος.</p></div>
+
+<div class="grp"><h2>Β. Τύπος Newton–Leibniz</h2>
+<p class="lead">Μία αντιπαράγωγος, δύο τιμές, μία αφαίρεση — αρκεί να προσέξετε τα σημεία αλλαγής προσήμου.</p></div>
+
+<div class="ex"><div class="num">15E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε:</p>
+<p>(α) $\displaystyle\int_1^{2}\left(x^{3}-\frac{1}{x^{2}}\right)dx$ &nbsp;&nbsp; (β) $\displaystyle\int_0^{1}\frac{dx}{\sqrt{4-x^{2}}}$ &nbsp;&nbsp; (γ) $\displaystyle\int_0^{3}\frac{dx}{9+x^{2}}$</p>
+<p class="ypod">Υπόδειξη: στα (β) και (γ) χρησιμοποιήστε τους τύπους του βασικού πίνακα με παράμετρο $a$.</p></div>
+
+<div class="ex"><div class="num">15E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε το $\displaystyle\int_{-1}^{2}\bigl|x^{2}-1\bigr|\,dx$.</p>
+<p class="ypod">Υπόδειξη: προσδιορίστε πρώτα το πρόσημο του $x^{2}-1$ και σπάστε το διάστημα στα σημεία μηδενισμού.</p></div>
+
+<div class="ex"><div class="num">15E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε <em>όλες</em> τις τιμές της παραμέτρου $a&gt;0$ για τις οποίες ισχύει
+$\displaystyle\int_0^{a}(4-2x)\,dx=3$.</p>
+<p class="ypod">Υπόδειξη: ο υπολογισμός οδηγεί σε δευτεροβάθμια εξίσωση ως προς $a$· ελέγξτε ποιες ρίζες είναι δεκτές.</p></div>
+
+<div class="grp"><h2>Γ. Αντικατάσταση σε ορισμένο ολοκλήρωμα</h2>
+<p class="lead">Αλλάζοντας μεταβλητή αλλάζετε και τα όρια· έτσι δεν χρειάζεται επιστροφή στην αρχική μεταβλητή.</p></div>
+
+<div class="ex"><div class="num">15E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int_0^{1}x\sqrt{1+x^{2}}\,dx$</p>
+<p class="ypod">Υπόδειξη: θέστε $u=1+x^{2}$ και μετασχηματίστε τα άκρα $0$ και $1$.</p></div>
+
+<div class="ex"><div class="num">15E.8 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int_0^{\pi/2}\sin^{3}x\,\cos x\,dx$</p></div>
+
+<div class="ex"><div class="num">15E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int_0^{4}\frac{dx}{1+\sqrt{x}}$</p>
+<p class="ypod">Υπόδειξη: με $u=\sqrt{x}$ προκύπτει ρητή παράσταση της μορφής $\dfrac{2u}{1+u}$· εκτελέστε τη διαίρεση πριν ολοκληρώσετε.</p></div>
+
+<div class="grp"><h2>Δ. Ολοκλήρωση κατά μέρη σε ορισμένο ολοκλήρωμα</h2>
+<p class="lead">Ο όρος $\bigl[uv\bigr]_a^b$ υπολογίζεται αμέσως στα άκρα· δεν μεταφέρεται σταθερά ολοκλήρωσης.</p></div>
+
+<div class="ex"><div class="num">15E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int_0^{1}x\,e^{-x}\,dx$</p></div>
+
+<div class="ex"><div class="num">15E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int_1^{e}x^{2}\ln x\,dx$</p>
+<p class="ypod">Υπόδειξη: ως $u$ επιλέγετε τον λογαριθμικό παράγοντα.</p></div>
+
+<div class="ex"><div class="num">15E.12 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>$\displaystyle\int_0^{\pi/2}e^{x}\sin x\,dx$</p>
+<p class="ypod">Υπόδειξη: μετά από δύο εφαρμογές του τύπου εμφανίζεται ξανά το αρχικό ολοκλήρωμα· αντιμετωπίστε τη σχέση ως εξίσωση ως προς αυτό, χωρίς να ξεχάσετε τους συνοριακούς όρους.</p></div>
+
+<div class="grp"><h2>Ε. Κανόνας Leibniz με μεταβλητά άκρα</h2>
+<p class="lead">Όταν τα άκρα είναι συναρτήσεις του $x$, το θεμελιώδες θεώρημα συνδυάζεται με τον κανόνα της αλυσίδας.</p></div>
+
+<div class="ex"><div class="num">15E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε την $F'(x)$:</p>
+<p>(α) $\displaystyle F(x)=\int_0^{e^{x}}\ln(1+t)\,dt$ &nbsp;&nbsp; (β) $\displaystyle F(x)=\int_{x^{2}}^{4}\ln\!\left(1+t^{2}\right)dt$</p></div>
+
+<div class="ex"><div class="num">15E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τη συνάρτηση $\displaystyle F(x)=\int_{x}^{2x}\frac{dt}{\sqrt{1+t^{4}}}$ βρείτε την $F'(x)$
+και υπολογίστε την τιμή $F'(0)$.</p>
+<p class="ypod">Υπόδειξη: και τα δύο άκρα είναι μεταβλητά· γράψτε το ολοκλήρωμα ως διαφορά δύο ολοκληρωμάτων με σταθερό κάτω άκρο.</p></div>
+
+<div class="ex"><div class="num">15E.15 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $\displaystyle F(x)=\int_{x}^{x+1}t^{2}\,dt$. Βρείτε την $F'(x)$ με δύο τρόπους:
+(α) εφαρμόζοντας τον κανόνα Leibniz και (β) υπολογίζοντας πρώτα ρητά το ολοκλήρωμα.
+Επιβεβαιώστε ότι τα δύο αποτελέσματα ταυτίζονται και προσδιορίστε το ολικό ελάχιστο της $F$ στο $\mathbb{R}$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Εμβαδόν μεταξύ καμπυλών</h2>
+<p class="lead">Βρείτε πρώτα τα σημεία τομής και μετά ποια καμπύλη βρίσκεται πάνω σε κάθε υποδιάστημα.</p></div>
+
+<div class="ex"><div class="num">15E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε το εμβαδόν του χωρίου που περικλείεται από τις καμπύλες $y=x^{2}$ και $y=\sqrt{x}$.</p></div>
+
+<div class="ex"><div class="num">15E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε το εμβαδόν του χωρίου που περικλείεται από την παραβολή $y=x^{2}-4x+3$ και τον άξονα $x$.</p>
+<p class="ypod">Υπόδειξη: στο διάστημα μεταξύ των ριζών η παραβολή βρίσκεται κάτω από τον άξονα· το εμβαδόν είναι θετικό μέγεθος.</p></div>
+
+<div class="ex"><div class="num">15E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Βρείτε το εμβαδόν του χωρίου που περικλείεται από τις καμπύλες $y=|x|$ και $y=2-x^{2}$.</p>
+<p class="ypod">Υπόδειξη: εκμεταλλευτείτε τη συμμετρία ως προς τον άξονα $y$ και εργαστείτε μόνο για $x\ge 0$.</p></div>
+
+<div class="grp"><h2>Ζ. Εφαρμογές</h2>
+<p class="lead">Το ολοκλήρωμα ενός ρυθμού μεταβολής δίνει τη συνολική συσσωρευμένη ποσότητα.</p></div>
+
+<div class="ex"><div class="num">15E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Σώμα κινείται σε ευθεία γραμμή με ταχύτητα $v(t)=4t-t^{2}$ (σε m/s) για $0\le t\le 3$ (σε s).
+Υπολογίστε τη μετατόπιση του σώματος στο διάστημα αυτό και τη μέση ταχύτητά του.</p>
+<p class="ypod">Υπόδειξη: ελέγξτε πρώτα ότι η $v$ διατηρεί σταθερό πρόσημο στο $[0,3]$.</p></div>
+
+<div class="ex"><div class="num">15E.20 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τη μέση τιμή της συνάρτησης $f(x)=\dfrac{1}{x}$ στο διάστημα $[1,e^{2}]$ και προσδιορίστε
+το σημείο $c\in(1,e^{2})$ στο οποίο η $f$ λαμβάνει αυτή τη μέση τιμή, όπως εξασφαλίζει το
+Θεώρημα Μέσης Τιμής του Ολοκληρωτικού Λογισμού.</p></div>
+
+<div class="ex"><div class="num">15E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Η στιγμιαία ισχύς που καταναλώνει μια εγκατάσταση δίνεται από τη σχέση
+$P(t)=100+40\sin\!\left(\dfrac{\pi t}{12}\right)$ (σε kW), όπου $t$ ο χρόνος σε ώρες με $0\le t\le 24$.
+Υπολογίστε τη συνολική ενέργεια που καταναλώνεται σε ένα εικοσιτετράωρο, καθώς και τη μέση ισχύ.</p>
+<p class="ypod">Υπόδειξη: η ημιτονοειδής διακύμανση διαγράφει ακέραιο πλήθος περιόδων στο $[0,24]$.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Συχνά η συμμετρία ή μια απλή ανισότητα οδηγεί στο ζητούμενο ταχύτερα από τον ευθύ υπολογισμό.</p></div>
+
+<div class="ex"><div class="num">15E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $f$ συνεχής στο $[-a,a]$. Αποδείξτε ότι, αν η $f$ είναι άρτια, τότε
+$\displaystyle\int_{-a}^{a}f(x)\,dx=2\int_{0}^{a}f(x)\,dx$, ενώ αν είναι περιττή, τότε
+$\displaystyle\int_{-a}^{a}f(x)\,dx=0$. Εφαρμόστε το συμπέρασμα στο
+$\displaystyle\int_{-1}^{1}\frac{x^{3}\cos x}{1+x^{2}}\,dx$.</p>
+<p class="ypod">Υπόδειξη: σπάστε το ολοκλήρωμα στο $0$ και στο πρώτο τμήμα θέστε $x=-u$.</p></div>
+
+<div class="ex"><div class="num">15E.23 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p><em>Χωρίς</em> να υπολογίσετε τα ολοκληρώματα, αποδείξτε ότι:</p>
+<p>(α) $\displaystyle\frac{1}{2}\le\int_0^{1}\frac{dx}{1+x^{2}}\le 1$ &nbsp;&nbsp;
+(β) $\displaystyle\int_0^{1}e^{-x^{2}}dx\ \ge\ \int_0^{1}e^{-x}\,dx$</p>
+<p class="ypod">Υπόδειξη: στο (β) συγκρίνετε τα $x^{2}$ και $x$ για $0\le x\le 1$ και αξιοποιήστε τη μονοτονία της εκθετικής.</p></div>
+
+<div class="ex"><div class="num">15E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>$\displaystyle\int_0^{1}x\arctan x\,dx$</p>
+<p class="ypod">Υπόδειξη: ολοκληρώστε κατά μέρη με $u=\arctan x$· στη συνέχεια γράψτε $\dfrac{x^{2}}{1+x^{2}}=1-\dfrac{1}{1+x^{2}}$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">15E.25</div>
+<p>Αν $F(x)=\displaystyle\int_0^x\sqrt{1+t^4}\,dt$, βρείτε την $F'(x)$ και εξηγήστε γιατί η $F$ είναι γνησίως αύξουσα.</p></div>
+<div class="ex from-book"><div class="num">15E.26</div>
+<p>Για την $F(x)=\displaystyle\int_0^x (t^2-4)\,dt$ βρείτε τα διαστήματα μονοτονίας και τα τοπικά ακρότατα της $F$, <em>χωρίς</em> να υπολογίσετε το ολοκλήρωμα.</p></div>
+<div class="ex from-book"><div class="num">15E.27</div>
+<p>Έστω $F(x)=\displaystyle\int_0^x e^{-t^2}\,dt$. Δείξτε ότι $F(0)=0$, ότι η $F$ είναι γνησίως αύξουσα και ότι είναι <em>περιττή</em> συνάρτηση.</p></div>
+<div class="ex from-book"><div class="num">15E.28</div>
+<p>Αν $\displaystyle\int_0^x f(t)\,dt=x\sin x$, βρείτε την $f(x)$ και υπολογίστε το $f(\pi/2)$.</p></div>
+<div class="ex from-book"><div class="num">15E.29</div>
+<p>$\displaystyle\int_0^2 (x^2-x)\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.30</div>
+<p>$\displaystyle\int_1^e \frac{(\ln x)^2}{x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.31</div>
+<p>$\displaystyle\int_{-1}^1 |x|\,dx$ (σπάστε σε δύο διαστήματα).</p></div>
+<div class="ex from-book"><div class="num">15E.32</div>
+<p>(α) $\displaystyle\int_0^1(3x^2+2x)\,dx$, (β) $\displaystyle\int_0^{\pi/3}\sin x\,dx$.</p></div>
+<div class="ex from-book"><div class="num">15E.33</div>
+<p>Υπολογίστε: <ol class="sub"><li>$\displaystyle\int_0^2(3x^2-2x+1)\,dx$ </li><li>$\displaystyle\int_0^{\pi/2}\cos x\,dx$ </li><li>$\displaystyle\int_1^e\frac{dx}{x}$ </li><li>$\displaystyle\int_0^1 e^x\,dx$ </li></ol></p></div>
+<div class="ex from-book"><div class="num">15E.34</div>
+<p>$\displaystyle\int_0^{\pi/2}(\sin x+\cos x)\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.35</div>
+<p>$\displaystyle\int_1^2 \frac{\ln x}{x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.36</div>
+<p>$\displaystyle\int_0^1 x^2(x^3+1)^3\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.37</div>
+<p>$\displaystyle\int_0^3 \frac{x}{\sqrt{x^2+16}}\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.38</div>
+<p>$\displaystyle\int_1^{e} \frac{1+\ln x}{x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.39</div>
+<p>$\displaystyle\int_0^1 \frac{2x+1}{x^2+x+1}\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.40</div>
+<p>$\displaystyle\int_0^1 x e^{x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.41</div>
+<p>$\displaystyle\int_0^{\pi/2} x\cos x\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.42</div>
+<p>$\displaystyle\int_0^1 \arctan x\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.43</div>
+<p>$\displaystyle\int_1^2 x\ln x\,dx$</p></div>
+<div class="ex from-book"><div class="num">15E.44</div>
+<p>Αν $H(x)=\displaystyle\int_0^{x^2}e^{-t}\,dt$, βρείτε τις $H'(x)$ και $H''(x)$.</p></div>
+<div class="ex from-book"><div class="num">15E.45</div>
+<p>Υπολογίστε το $\dfrac{d}{dx}\displaystyle\int_x^{x^3}\cos(t^2)\,dt$.</p></div>
+<div class="ex from-book"><div class="num">15E.46</div>
+<p>Για την $F(x)=\displaystyle\int_1^{x^2}\frac{\cos t}{t}\,dt$ βρείτε την $F'(x)$. Σε ποια σημεία μηδενίζεται η $F'$; Έχει η $F$ τοπικά ακρότατα;</p></div>
+<div class="ex from-book"><div class="num">15E.47</div>
+<p>Για την $y(x)=\displaystyle\int_0^{x}e^{-t^2}\,dt$ βρείτε την εξίσωση της εφαπτομένης στο σημείο $x=0$.</p></div>
+<div class="ex from-book"><div class="num">15E.48</div>
+<p>Βρείτε το εμβαδόν του χωρίου μεταξύ $y=x^3$ και $y=x$ στο $[0,1]$.</p></div>
+<div class="ex from-book"><div class="num">15E.49</div>
+<p>Βρείτε το εμβαδόν του χωρίου που περικλείεται από την παραβολή $y=9-x^2$ και τον $x$-άξονα.</p></div>
+<div class="ex from-book"><div class="num">15E.50</div>
+<p>Υπολογίστε το $\displaystyle\int_0^4 \sqrt{x}\,dx$ και ερμηνεύστε το γεωμετρικά.</p></div>
+<div class="ex from-book"><div class="num">15E.51</div>
+<p>Βρείτε το εμβαδόν της περιοχής που περικλείεται από την $f(x)=x^2+1$, τον $x$-άξονα και τις ευθείες $x=0$, $x=2$.</p></div>
+<div class="ex from-book"><div class="num">15E.52</div>
+<p>Βρείτε το εμβαδόν του χωρίου μεταξύ των $y=\dfrac{1}{x}$ και $y=\dfrac{1}{x^2}$ στο $[1,2]$.</p></div>
+<div class="ex from-book"><div class="num">15E.53</div>
+<p>Βρείτε το εμβαδόν του χωρίου μεταξύ των καμπυλών $x=y^2$ και $x=2-y^2$.</p></div>
+<div class="ex from-book"><div class="num">15E.54</div>
+<p>Βρείτε το εμβαδόν του χωρίου που περικλείεται από την καμπύλη $x=y(4-y)$ και τον $y$-άξονα.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">15E.55</div>
+<p>Για την $F(x)=\displaystyle\int_0^x (t^2-2t)\,dt$ κάντε πλήρη μελέτη: ρίζες, μονοτονία, τοπικά ακρότατα και σημεία καμπής της $F$.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

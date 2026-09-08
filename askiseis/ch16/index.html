@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Τεχνικές Ολοκλήρωσης</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Τεχνικές Ολοκλήρωσης</h1>
+  <p class="chapter-label">Κεφάλαιο 16 · Τεχνικές Ολοκλήρωσης</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά τεχνική</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Σε κάθε αόριστο ολοκλήρωμα εννοείται η σταθερά $+C$. Το αποτέλεσμα κάθε άσκησης
+  ελέγχεται πάντα με παραγώγιση: αν η παράγωγος της αντιπαραγώγου σας δίνει την ολοκληρωτέα
+  συνάρτηση, η λύση είναι σωστή. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Αντικατάσταση</h2>
+<p class="lead">Ψάξτε το ζεύγος «συνάρτηση – παράγωγός της» μέσα στο ολοκλήρωμα.</p></div>
+
+<div class="ex"><div class="num">16E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int x\,e^{x^2}\,dx$</p></div>
+
+<div class="ex"><div class="num">16E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int \frac{x}{\sqrt{x^2+1}}\,dx$</p></div>
+
+<div class="ex"><div class="num">16E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int \tan x\,dx$</p>
+<p class="ypod">Υπόδειξη: γράψτε $\tan x=\dfrac{\sin x}{\cos x}$.</p></div>
+
+<div class="ex"><div class="num">16E.4 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int \frac{\ln x}{x}\,dx$</p></div>
+
+<div class="grp"><h2>Β. Κατά παράγοντες</h2>
+<p class="lead">Ως $u$ επιλέγετε τον παράγοντα που <em>απλοποιείται</em> με την παραγώγιση (κανόνας LIATE).</p></div>
+
+<div class="ex"><div class="num">16E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int x\cos x\,dx$</p></div>
+
+<div class="ex"><div class="num">16E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int x^2 e^{x}\,dx$</p>
+<p class="ypod">Πόσες διαδοχικές εφαρμογές χρειάζονται και γιατί;</p></div>
+
+<div class="ex"><div class="num">16E.7 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int \arctan x\,dx$</p>
+<p class="ypod">Υπόδειξη: γράψτε $\arctan x=\arctan x\cdot 1$.</p></div>
+
+<div class="ex"><div class="num">16E.8 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>$\displaystyle\int e^{x}\cos x\,dx$</p>
+<p class="ypod">Μετά από δύο εφαρμογές το αρχικό ολοκλήρωμα ξαναεμφανίζεται. Αντιμετωπίστε το ως εξίσωση.</p></div>
+
+<div class="grp"><h2>Γ. Τριγωνομετρικά ολοκληρώματα</h2>
+<p class="lead">Περιττός εκθέτης → αντικατάσταση. Άρτιοι εκθέτες → ταυτότητες υποβιβασμού.</p></div>
+
+<div class="ex"><div class="num">16E.9 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int \sin^3 x\,dx$</p></div>
+
+<div class="ex"><div class="num">16E.10 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int \sin^2 x\cos^3 x\,dx$</p></div>
+
+<div class="ex"><div class="num">16E.11 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int \cos^2 x\,dx$</p></div>
+
+<div class="grp"><h2>Δ. Τριγωνομετρική αντικατάσταση &amp; συμπλήρωση τετραγώνου</h2>
+<p class="lead">Ρίζα της μορφής $\sqrt{a^2-x^2}$, $\sqrt{a^2+x^2}$ ή $\sqrt{x^2-a^2}$: ένα τρίγωνο λύνει τη ρίζα.</p></div>
+
+<div class="ex"><div class="num">16E.12 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int \frac{dx}{\sqrt{4-x^2}}$</p></div>
+
+<div class="ex"><div class="num">16E.13 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>$\displaystyle\int \sqrt{1-x^2}\,dx$</p>
+<p class="ypod">Μετά την αντικατάσταση προκύπτει άρτια δύναμη· χρειάζεται και υποβιβασμός.</p></div>
+
+<div class="ex"><div class="num">16E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int \frac{dx}{x^2+2x+5}$</p>
+<p class="ypod">Συμπληρώστε πρώτα το τετράγωνο στον παρονομαστή.</p></div>
+
+<div class="grp"><h2>Ε. Μερικά κλάσματα</h2>
+<p class="lead">Παραγοντοποιήστε πρώτα τον παρονομαστή· ανάγωγος τετραγωνικός παράγοντας δίνει λογάριθμο και τόξο εφαπτομένης.</p></div>
+
+<div class="ex"><div class="num">16E.15 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int \frac{dx}{x^2-1}$</p></div>
+
+<div class="ex"><div class="num">16E.16 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int \frac{3x+1}{(x-1)(x+2)}\,dx$</p></div>
+
+<div class="ex"><div class="num">16E.17 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>$\displaystyle\int \frac{dx}{x(x^2+1)}$</p>
+<p class="ypod">Ο παράγοντας $x^2+1$ είναι ανάγωγος: ποια μορφή πρέπει να έχει ο αντίστοιχος αριθμητής;</p></div>
+
+<div class="grp"><h2>ΣΤ. Μεικτά — επιλογή μεθόδου</h2>
+<p class="lead">Εδώ δεν δίνεται η τεχνική. Αναγνωρίστε πρώτα τη δομή, μετά υπολογίστε.</p></div>
+
+<div class="ex"><div class="num">16E.18 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int \frac{x}{x+1}\,dx$</p>
+<p class="ypod">Προσοχή: δεν χρειάζονται μερικά κλάσματα.</p></div>
+
+<div class="ex"><div class="num">16E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>$\displaystyle\int x\ln x\,dx$</p></div>
+
+<div class="ex"><div class="num">16E.20 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>$\displaystyle\int e^{\sqrt{x}}\,dx$</p>
+<p class="ypod">Χρειάζονται δύο τεχνικές, με αυτή τη σειρά.</p></div>
+
+<div class="ex"><div class="num">16E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>$\displaystyle\int \frac{dx}{1+e^{x}}$</p>
+<p class="ypod">Υπόδειξη: $\dfrac{1}{1+e^x}=1-\dfrac{e^x}{1+e^x}$.</p></div>
+
+<div class="ex"><div class="num">16E.22 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>$\displaystyle\int \sec^3 x\,dx$</p>
+<p class="ypod">Το κλασικό παράδειγμα κυκλικής ολοκλήρωσης κατά παράγοντες.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">16E.23</div>
+<p>$\displaystyle\int x e^{-x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.24</div>
+<p>$\displaystyle\int x^2 e^{-2x}\,dx$ (δύο εφαρμογές· κάθε εφαρμογή μειώνει τον βαθμό του πολυωνύμου).</p></div>
+<div class="ex from-book"><div class="num">16E.25</div>
+<p>$\displaystyle\int e^x\cos x\,dx$ (δύο εφαρμογές και επαναφορά: λύστε ως προς το ζητούμενο ολοκλήρωμα).</p></div>
+<div class="ex from-book"><div class="num">16E.26</div>
+<p>$\displaystyle\int\arctan x\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.27</div>
+<p>$\displaystyle\int x^3 e^{x^2}\,dx$ (πρώτα $u=x^2$, έπειτα κατά παράγοντες).</p></div>
+<div class="ex from-book"><div class="num">16E.28</div>
+<p>$\displaystyle\int x\sec^2 x\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.29</div>
+<p><strong>Εφαρμογή:</strong> Η ταχύτητα σωματιδίου είναι $v(t)=t^2e^{-t}$ (m/s). Υπολογίστε τη μετατόπιση $\displaystyle\int_0^1 v(t)\,dt$ με ολοκλήρωση κατά παράγοντες (δύο εφαρμογές).</p></div>
+<div class="ex from-book"><div class="num">16E.30</div>
+<p>$\displaystyle\int \frac{2x}{x^2+1}\,dx$ και $\displaystyle\int \sin(5x)\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.31</div>
+<p>$\displaystyle\int x\sqrt{x^2+4}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.32</div>
+<p>$\displaystyle\int \frac{e^{\sqrt{x}}}{\sqrt{x}}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.33</div>
+<p>$\displaystyle\int \frac{dx}{x\ln x}$ ($u=\ln x$).</p></div>
+<div class="ex from-book"><div class="num">16E.34</div>
+<p>$\displaystyle\int \frac{x}{\sqrt{x-1}}\,dx$ ($u=x-1$· εκφράστε το $x$ συναρτήσει του $u$).</p></div>
+<div class="ex from-book"><div class="num">16E.35</div>
+<p>$\displaystyle\int \sin^2 x\,dx$ (τύπος ημιγωνίας $\sin^2 x=\tfrac{1-\cos 2x}{2}$).</p></div>
+<div class="ex from-book"><div class="num">16E.36</div>
+<p>$\displaystyle\int \sin^3 x\,dx$ (γράψτε $\sin^3 x=\sin x\,(1-\cos^2 x)$ και θέστε $u=\cos x$).</p></div>
+<div class="ex from-book"><div class="num">16E.37</div>
+<p>$\displaystyle\int \sin^2 x\cos^2 x\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.38</div>
+<p>$\displaystyle\int \cos^4 x\,dx$ (άρτιοι εκθέτες: διαδοχικοί τύποι υποβιβασμού).</p></div>
+<div class="ex from-book"><div class="num">16E.39</div>
+<p>$\displaystyle\int \sec^2 x\tan x\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.40</div>
+<p>$\displaystyle\int \frac{dx}{\sqrt{x^2+4}}$ ($x=2\tan\theta$).</p></div>
+<div class="ex from-book"><div class="num">16E.41</div>
+<p>$\displaystyle\int \frac{x^2}{\sqrt{4-x^2}}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.42</div>
+<p>$\displaystyle\int \frac{dx}{(x^2+1)^{3/2}}$</p></div>
+<div class="ex from-book"><div class="num">16E.43</div>
+<p>$\displaystyle\int \frac{dx}{\sqrt{x^2+9}}$ και $\displaystyle\int \frac{\sqrt{x^2-9}}{x^2}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.44</div>
+<p>$\displaystyle\int \frac{2x+1}{x^2+x-2}\,dx$ (παραγοντοποιήστε τον παρονομαστή).</p></div>
+<div class="ex from-book"><div class="num">16E.45</div>
+<p>$\displaystyle\int \frac{x}{(x-1)(x+2)}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.46</div>
+<p>$\displaystyle\int \frac{5x-4}{x^2-x-2}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.47</div>
+<p>$\displaystyle\int \frac{3x^2+2x-1}{x(x^2+1)}\,dx$ (ανάγωγος τετραγωνικός παράγοντας).</p></div>
+<div class="ex from-book"><div class="num">16E.48</div>
+<p>$\displaystyle\int \frac{dx}{x^3+x}$</p></div>
+<div class="ex from-book"><div class="num">16E.49</div>
+<p>$\displaystyle\int \frac{x^3+1}{x^4-x^2}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.50</div>
+<p>$\displaystyle\int \frac{x+3}{x^3-x}\,dx$ (παραγοντοποιήστε $x^3-x=x(x-1)(x+1)$).</p></div>
+<div class="ex from-book"><div class="num">16E.51</div>
+<p>$\displaystyle\int \frac{4x-1}{2x^2-x+3}\,dx$ (παρατηρήστε ότι ο αριθμητής είναι πολλαπλάσιο της παραγώγου του παρονομαστή).</p></div>
+<div class="ex from-book"><div class="num">16E.52</div>
+<p>$\displaystyle\int \frac{e^{2x}}{1+e^x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">16E.53</div>
+<p>$\displaystyle\int \frac{dx}{1+\cos x}$ (πολλαπλασιάστε με $\dfrac{1-\cos x}{1-\cos x}$).</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">16E.54</div>
+<p>$\displaystyle\int x^2\sqrt{1-x^2}\,dx$ (τριγωνομετρική αντικατάσταση και έπειτα υποβιβασμός άρτιας δύναμης).</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

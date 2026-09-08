@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Ακολουθίες και Άπειρες Σειρές</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Ακολουθίες και Άπειρες Σειρές</h1>
+  <p class="chapter-label">Κεφάλαιο 19 · Ακολουθίες και Άπειρες Σειρές</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά θεματική ενότητα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Σε κάθε ερώτημα σύγκλισης να δηλώνετε ρητά ποιο κριτήριο εφαρμόζετε και να ελέγχετε ότι
+  πληρούνται οι υποθέσεις του. Τα αποτελέσματά σας μπορείτε να τα επαληθεύσετε αριθμητικά:
+  υπολογίστε αρκετά μερικά αθροίσματα $S_N$ ή αρκετούς όρους $a_n$ και συγκρίνετε με το συμπέρασμά σας.
+  Αν το κριτήριο του λόγου ή της ρίζας δώσει $L=1$, δεν αποφασίζει: αναζητήστε άλλο εργαλείο.</p>
+</div>
+
+<div class="grp"><h2>Α. Όρια ακολουθιών</h2>
+<p class="lead">Απομονώστε τον κυρίαρχο όρο και επιλέξτε το κατάλληλο εργαλείο: διαίρεση, συζυγής παράσταση ή παρεμβολή.</p></div>
+
+<div class="ex"><div class="num">19E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε το $\displaystyle\lim_{n\to\infty}\frac{\sqrt{4n^{2}+n}}{n+3}$.</p></div>
+
+<div class="ex"><div class="num">19E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε το $\displaystyle\lim_{n\to\infty}\frac{3^{n}-2^{n}}{3^{n}+2^{n}}$.</p>
+<p class="ypod">Υπόδειξη: διαιρέστε αριθμητή και παρονομαστή με την ταχύτερα αυξανόμενη ποσότητα.</p></div>
+
+<div class="ex"><div class="num">19E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε με το κριτήριο παρεμβολής ότι η ακολουθία $a_n=\sqrt[n]{2^{n}+3^{n}}$ συγκλίνει και βρείτε το όριό της.</p>
+<p class="ypod">Υπόδειξη: φράξτε την παράσταση $2^{n}+3^{n}$ ανάμεσα σε $3^{n}$ και $2\cdot 3^{n}$.</p></div>
+
+<div class="grp"><h2>Β. Μονοτονία και φράγματα</h2>
+<p class="lead">Το Θεώρημα Μονότονης Σύγκλισης εξασφαλίζει την ύπαρξη ορίου χωρίς να το υπολογίζει.</p></div>
+
+<div class="ex"><div class="num">19E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε αν η ακολουθία $a_n=\dfrac{n}{n^{2}+1}$ είναι μονότονη και φραγμένη και συμπεράνετε αν συγκλίνει.</p>
+<p class="ypod">Υπόδειξη: μελετήστε το πρόσημο της διαφοράς $a_n-a_{n+1}$.</p></div>
+
+<div class="ex"><div class="num">19E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Θεωρήστε την ακολουθία $\displaystyle a_n=\frac{1\cdot 3\cdot 5\cdots(2n-1)}{2\cdot 4\cdot 6\cdots(2n)}$.
+Δείξτε ότι είναι γνησίως φθίνουσα και κάτω φραγμένη και συμπεράνετε ότι συγκλίνει.</p>
+<p class="ypod">Υπόδειξη: υπολογίστε τον λόγο $a_{n+1}/a_n$· δεν χρειάζεται να βρείτε το όριο.</p></div>
+
+<div class="ex"><div class="num">19E.6 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $H_n=\displaystyle\sum_{k=1}^{n}\frac{1}{k}$ και $c_n=H_n-\ln n$. Δείξτε ότι η $(c_n)$ είναι φθίνουσα
+και κάτω φραγμένη από το $0$, και συμπεράνετε ότι συγκλίνει.</p>
+<p class="ypod">Υπόδειξη: γράψτε $\ln(n+1)-\ln n=\displaystyle\int_{n}^{n+1}\frac{dx}{x}$ και συγκρίνετε το ολοκλήρωμα
+με τις τιμές της $1/x$ στα άκρα του διαστήματος. Το όριο είναι η σταθερά Euler–Mascheroni.</p></div>
+
+<div class="grp"><h2>Γ. Αναδρομικές ακολουθίες</h2>
+<p class="lead">Πρώτα φράγμα και μονοτονία με επαγωγή, έπειτα εξίσωση σταθερού σημείου για το όριο.</p></div>
+
+<div class="ex"><div class="num">19E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνεται $a_1=1$ και $a_{n+1}=\sqrt{3a_n}$. Δείξτε επαγωγικά ότι $a_n&lt;3$ για κάθε $n$, ότι η ακολουθία
+είναι αύξουσα, και βρείτε το όριό της.</p></div>
+
+<div class="ex"><div class="num">19E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $a_1=0$ και $a_{n+1}=\dfrac{1}{2-a_n}$. Δείξτε ότι $0\le a_n&lt;1$ για κάθε $n$, ότι η ακολουθία
+είναι αύξουσα, και υπολογίστε το όριό της.</p>
+<p class="ypod">Υπόδειξη: για τη μονοτονία δείξτε ότι $a_{n+1}-a_n=\dfrac{(1-a_n)^{2}}{2-a_n}$.</p></div>
+
+<div class="ex"><div class="num">19E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $x_1=1$ και $x_{n+1}=1+\dfrac{1}{x_n}$. Δείξτε ότι $1\le x_n\le 2$ για κάθε $n\ge 2$ και ότι,
+αν η ακολουθία συγκλίνει σε όριο $L&gt;0$, τότε $L^{2}=L+1$. Προσδιορίστε την τιμή του $L$.</p>
+<p class="ypod">Υπόδειξη: οι όροι δεν σχηματίζουν μονότονη ακολουθία· η υπόθεση της σύγκλισης δίνεται και δεν ζητείται απόδειξή της.</p></div>
+
+<div class="grp"><h2>Δ. Γεωμετρικές και τηλεσκοπικές σειρές</h2>
+<p class="lead">Οι δύο μόνες οικογένειες όπου το άθροισμα υπολογίζεται σε κλειστή μορφή μέσω του $S_N$.</p></div>
+
+<div class="ex"><div class="num">19E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε το άθροισμα της σειράς $\displaystyle\sum_{n=1}^{\infty}\frac{2^{n}+3^{n}}{6^{n}}$.</p>
+<p class="ypod">Υπόδειξη: αναλύστε τη σε δύο γεωμετρικές σειρές.</p></div>
+
+<div class="ex"><div class="num">19E.11 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε το άθροισμα $\displaystyle\sum_{n=2}^{\infty}\frac{(-1)^{n}}{3^{n}}$, αφού πρώτα προσδιορίσετε
+τον πρώτο όρο και τον λόγο της.</p>
+<p class="ypod">Προσοχή στον δείκτη εκκίνησης: η σειρά δεν ξεκινά από το $n=0$.</p></div>
+
+<div class="ex"><div class="num">19E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι η σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{2n+1}{n^{2}(n+1)^{2}}$ είναι τηλεσκοπική,
+βρείτε το μερικό άθροισμα $S_N$ σε κλειστή μορφή και υπολογίστε το άθροισμά της.</p>
+<p class="ypod">Υπόδειξη: εξετάστε τη διαφορά $\dfrac{1}{n^{2}}-\dfrac{1}{(n+1)^{2}}$.</p></div>
+
+<div class="grp"><h2>Ε. Κριτήρια σύγκρισης και ολοκληρώματος</h2>
+<p class="lead">Επιλέξτε σειρά αναφοράς ($p$-σειρά ή γεωμετρική) με την ίδια τάξη μεγέθους γενικού όρου.</p></div>
+
+<div class="ex"><div class="num">19E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Με το κριτήριο σύγκρισης εξετάστε τη σύγκλιση της σειράς $\displaystyle\sum_{n=1}^{\infty}\frac{1}{2^{n}+n}$.</p></div>
+
+<div class="ex"><div class="num">19E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Με το οριακό κριτήριο σύγκρισης εξετάστε τη σύγκλιση της σειράς
+$\displaystyle\sum_{n=1}^{\infty}\frac{\sqrt{n+1}-\sqrt{n}}{n}$.</p>
+<p class="ypod">Υπόδειξη: πολλαπλασιάστε με τη συζυγή παράσταση και εντοπίστε την κατάλληλη $p$-σειρά αναφοράς.</p></div>
+
+<div class="ex"><div class="num">19E.15 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Με το κριτήριο του ολοκληρώματος εξετάστε τη σύγκλιση της σειράς
+$\displaystyle\sum_{n=1}^{\infty} n\,e^{-n^{2}}$.</p>
+<p class="ypod">Υπόδειξη: ελέγξτε πρώτα ότι η $f(x)=x e^{-x^{2}}$ είναι φθίνουσα στο $[1,+\infty)$ και μετά υπολογίστε
+το γενικευμένο ολοκλήρωμα με αντικατάσταση.</p></div>
+
+<div class="grp"><h2>ΣΤ. Κριτήρια λόγου και ρίζας</h2>
+<p class="lead">Παραγοντικά και δυνάμεις $n$-οστής τάξης: λόγος για τα πρώτα, ρίζα για τα δεύτερα.</p></div>
+
+<div class="ex"><div class="num">19E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Με το κριτήριο του λόγου εξετάστε τη σύγκλιση της σειράς $\displaystyle\sum_{n=1}^{\infty}\frac{n^{2}}{3^{n}}$.</p></div>
+
+<div class="ex"><div class="num">19E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Με το κριτήριο της ρίζας εξετάστε τη σύγκλιση της σειράς
+$\displaystyle\sum_{n=2}^{\infty}\frac{n^{2}}{(\ln n)^{n}}$.</p>
+<p class="ypod">Υπόδειξη: θα χρειαστείτε το όριο $\sqrt[n]{n}\to 1$.</p></div>
+
+<div class="ex"><div class="num">19E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Εξετάστε με το κριτήριο του λόγου τη σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{n^{n}}{3^{n}\,n!}$.</p>
+<p class="ypod">Υπόδειξη: ο λόγος διαδοχικών όρων ανάγεται στην παράσταση $\left(1+\frac{1}{n}\right)^{n}$·
+το συμπέρασμα κρίνεται από τη σύγκριση του $e$ με το $3$, οπότε αιτιολογήστε ρητά αν το κριτήριο αποφασίζει.</p></div>
+
+<div class="grp"><h2>Ζ. Εναλλάσσουσες σειρές και απόλυτη σύγκλιση</h2>
+<p class="lead">Δύο ερωτήματα κάθε φορά: συγκλίνει η σειρά και συγκλίνει η σειρά των απολύτων τιμών;</p></div>
+
+<div class="ex"><div class="num">19E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε αν η σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{3n-1}$ συγκλίνει και κρίνετε αν η
+σύγκλιση είναι απόλυτη ή υπό συνθήκη.</p></div>
+
+<div class="ex"><div class="num">19E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Εξετάστε αν η σειρά $\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\,\frac{\sqrt{n}}{n+1}$ συγκλίνει και κρίνετε
+αν η σύγκλιση είναι απόλυτη ή υπό συνθήκη.</p>
+<p class="ypod">Υπόδειξη: για τη μονοτονία του $b_n=\dfrac{\sqrt{n}}{n+1}$ μελετήστε τη συνάρτηση
+$f(x)=\dfrac{\sqrt{x}}{x+1}$ στο $[1,+\infty)$.</p></div>
+
+<div class="ex"><div class="num">19E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται η σειρά $\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\bigl(\sqrt{n+1}-\sqrt{n}\bigr)$.
+(α) Εξετάστε τη σύγκλισή της και κρίνετε αν είναι απόλυτη ή υπό συνθήκη.
+(β) Βρείτε τον ελάχιστο αριθμό όρων $N$ ώστε το μερικό άθροισμα $S_N$ να προσεγγίζει το άθροισμα
+με σφάλμα μικρότερο από $0{,}05$.</p>
+<p class="ypod">Υπόδειξη: γράψτε $\sqrt{n+1}-\sqrt{n}=\dfrac{1}{\sqrt{n+1}+\sqrt{n}}$ και χρησιμοποιήστε τη
+φραγή σφάλματος $|S-S_N|\le b_{N+1}$ του κριτηρίου Leibniz.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Εδώ δεν δίνεται το εργαλείο: αναγνωρίστε πρώτα τη δομή και μετά επιλέξτε κριτήριο.</p></div>
+
+<div class="ex"><div class="num">19E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε το όριο $\displaystyle\lim_{n\to\infty}\frac{\ln\!\left(n^{2}+1\right)}{\ln\!\left(n^{3}+n\right)}$.</p>
+<p class="ypod">Υπόδειξη: γράψτε $\ln(n^{2}+1)=2\ln n+\ln\!\left(1+n^{-2}\right)$ και ανάλογα για τον παρονομαστή.</p></div>
+
+<div class="ex"><div class="num">19E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Εξετάστε τη σύγκλιση της σειράς $\displaystyle\sum_{n=1}^{\infty}\left(\sqrt[n]{2}-1\right)$.</p>
+<p class="ypod">Υπόδειξη: γράψτε $\sqrt[n]{2}=e^{(\ln 2)/n}$ και συγκρίνετε οριακά με την αρμονική σειρά,
+αξιοποιώντας το όριο $\displaystyle\lim_{t\to 0}\frac{e^{t}-1}{t}=1$.</p></div>
+
+<div class="ex"><div class="num">19E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $a_n\ge 0$ για κάθε $n$ και έστω ότι η σειρά $\displaystyle\sum_{n=1}^{\infty}a_n$ συγκλίνει.
+Αποδείξτε ότι συγκλίνει και η σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{\sqrt{a_n}}{n}$.</p>
+<p class="ypod">Υπόδειξη: από την ανισότητα αριθμητικού–γεωμετρικού μέσου, $\sqrt{xy}\le\frac{1}{2}(x+y)$ για
+$x,y\ge 0$· εφαρμόστε την με $x=a_n$ και $y=1/n^{2}$ και χρησιμοποιήστε το κριτήριο σύγκρισης.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">19E.25</div>
+<p>Γράψτε τους πρώτους πέντε όρους της ακολουθίας $a_n=\dfrac{2n+1}{n+3}$ και υπολογίστε το όριό της καθώς $n\to\infty$.</p></div>
+<div class="ex from-book"><div class="num">19E.26</div>
+<p>Εξετάστε αν η ακολουθία $a_n=(-1)^n\dfrac{1}{n}$ συγκλίνει και, αν ναι, βρείτε το όριό της.</p></div>
+<div class="ex from-book"><div class="num">19E.27</div>
+<p>Εξετάστε αν η ακολουθία $a_n=\dfrac{n+1}{n+2}$ είναι μονότονη και φραγμένη· στη συνέχεια συμπεράνετε τη σύγκλισή της με το Θεώρημα Μονότονης Σύγκλισης (χωρίς να υπολογίσετε το όριο) και τέλος βρείτε το όριο.</p></div>
+<div class="ex from-book"><div class="num">19E.28</div>
+<p>Δείξτε με το κριτήριο παρεμβολής ότι $a_n=\dfrac{\sin(n^2)}{\sqrt{n}}\to 0$.</p></div>
+<div class="ex from-book"><div class="num">19E.29</div>
+<p>Σχεδιάστε στον πραγματικό άξονα τους πρώτους 8 όρους της $a_n=\dfrac{\sin(n\pi/4)}{n}$ και εξηγήστε γεωμετρικά γιατί η ακολουθία συγκλίνει στο $0$.</p></div>
+<div class="ex from-book"><div class="num">19E.30</div>
+<p>Εξηγήστε γεωμετρικά τον ορισμό $\varepsilon$-$N$: ποια η σημασία του $\varepsilon$ και του $N$;</p></div>
+<div class="ex from-book"><div class="num">19E.31</div>
+<p>Για την ακολουθία $a_n=\dfrac{1}{n}$ βρείτε τον μικρότερο δείκτη $N$ ώστε $|a_n-0|&lt;\varepsilon$ για κάθε $n&gt;N$, όταν $\varepsilon=0{,}01$ και όταν $\varepsilon=0{,}001$.</p></div>
+<div class="ex from-book"><div class="num">19E.32</div>
+<p>Υπολογίστε το άθροισμα $\displaystyle\sum_{n=0}^{\infty}\frac{2^{n}}{3^{n+1}}$, γράφοντάς το πρώτα ως γεωμετρική σειρά.</p></div>
+<div class="ex from-book"><div class="num">19E.33</div>
+<p>Με το κριτήριο του λόγου εξετάστε αν η σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{n!}{2^{n}}$ συγκλίνει ή αποκλίνει.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">19E.34</div>
+<p>Υπολογίστε το $\displaystyle\lim_{n\to\infty}\frac{4n-1}{2n+3}$ και αποδείξτε το αποτέλεσμα από τον ορισμό ($\varepsilon$-$N$).</p></div>
+<div class="ex from-book"><div class="num">19E.35</div>
+<p>$\displaystyle\sum_{n=1}^\infty\frac{1}{n(n+2)}$, βρείτε το ακριβές άθροισμα (τηλεσκοπική, μέσω μερικών κλασμάτων).</p></div>
+<div class="ex from-book"><div class="num">19E.36</div>
+<p>Εξετάστε αν η σειρά $\displaystyle\sum_{n=2}^{\infty}\frac{(-1)^{n}}{n\ln n}$ συγκλίνει απόλυτα, υπό συνθήκη ή αποκλίνει.</p></div>
+<div class="ex from-book"><div class="num">19E.37</div>
+<p>Παρατηρώντας ότι $\cos(n\pi)=(-1)^{n}$, εξετάστε αν η σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{\cos(n\pi)}{n^{2}}$ συγκλίνει απόλυτα.</p></div>
+<div class="ex from-book"><div class="num">19E.38</div>
+<p>Με το <em>οριακό κριτήριο σύγκρισης</em> εξετάστε τη σύγκλιση της $\displaystyle\sum_{n=1}^{\infty}\frac{2n+3}{n^3-n+4}$.</p></div>
+<div class="ex from-book"><div class="num">19E.39</div>
+<p>Υπολογίστε το όριο $\displaystyle\lim_{n\to\infty}\left(\frac{n+2}{n-1}\right)^{n}$ (υπόδειξη: γράψτε το ως $\left(1+\tfrac{3}{n-1}\right)^{n}$).</p></div>
+<div class="ex from-book"><div class="num">19E.40</div>
+<p>Εξετάστε τη σύγκλιση και βρείτε το άθροισμα: <ol class="sub"><li>$\displaystyle\sum_{n=1}^\infty\left(\frac{3}{5}\right)^n$ </li><li>$\displaystyle\sum_{n=0}^\infty(-1)^n 2^n$ </li><li>$\displaystyle\sum_{n=2}^\infty\frac{1}{n^2-1}$ </li></ol></p></div>
+<div class="ex from-book"><div class="num">19E.41</div>
+<p>Εφαρμόστε το κριτήριο λόγου: <ol class="sub"><li>$\displaystyle\sum_{n=1}^\infty\frac{(2n)!}{(n!)^2}$ </li><li>$\displaystyle\sum_{n=1}^\infty\frac{(-1)^n n}{2^n}$ </li><li>$\displaystyle\sum_{n=1}^\infty\frac{n^{100}}{n!}$ </li></ol></p></div>
+<div class="ex from-book"><div class="num">19E.42</div>
+<p>Εξετάστε τη σύγκλιση: <ol class="sub"><li>$\displaystyle\sum_{n=1}^\infty\frac{n}{n^2+1}$ (κριτήριο ολοκληρώματος) </li><li>$\displaystyle\sum_{n=1}^\infty\frac{1}{n^2+3n+2}$ </li><li>$\displaystyle\sum_{n=1}^\infty\frac{\sin^2 n}{n^2}$ </li><li>$\displaystyle\sum_{n=1}^\infty\frac{\sqrt{n}}{n^2+1}$ </li></ol></p></div>
+<div class="ex from-book"><div class="num">19E.43</div>
+<p>Αναδρομική ακολουθία: $a_1=2$, $a_{n+1}=\dfrac{a_n+6}{2}$. Δείξτε ότι $a_n\to6$.</p></div>
+<div class="ex from-book"><div class="num">19E.44</div>
+<p>Εναλλάσσουσα σειρά $\displaystyle\sum_{n=1}^\infty\frac{(-1)^{n+1}}{\sqrt{n}}$: σύγκλιση και εκτίμηση σφάλματος ώστε $|\text{σφάλμα}|&lt;0{,}01$.</p></div>
+<div class="ex from-book"><div class="num">19E.45</div>
+<p>Εξετάστε τη μονοτονία και το φράγμα της ακολουθίας $a_n=\dfrac{3n-1}{n+2}$ και υπολογίστε το $\lim_{n\to\infty}a_n$.</p></div>
+<div class="ex from-book"><div class="num">19E.46</div>
+<p>Δείξτε ότι η ακολουθία $a_n=\dfrac{2^{n}}{n!}$ συγκλίνει στο $0$, εξετάζοντας τον λόγο $a_{n+1}/a_n$ διαδοχικών όρων.</p></div>
+<div class="ex from-book"><div class="num">19E.47</div>
+<p>Εφαρμόστε το κριτήριο λόγου στη σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{(n!)^2}{(2n)!}$. Συγκλίνει ή αποκλίνει;</p></div>
+<div class="ex from-book"><div class="num">19E.48</div>
+<p>Εφαρμόστε το κριτήριο Leibniz στη σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n}\,n}{n^2+1}$ και κρίνετε αν η σύγκλιση είναι απόλυτη ή υπό συνθήκη.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

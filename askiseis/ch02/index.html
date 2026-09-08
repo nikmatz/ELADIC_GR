@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Άλγεβρα Πινάκων</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">&#8853; Επιπλέον Ασκήσεις</div>
+  <h1>Άλγεβρα Πινάκων</h1>
+  <p class="chapter-label">Κεφάλαιο 2 &middot; Άλγεβρα Πινάκων</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα του κεφαλαίου</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Κάθε αριθμητικό αποτέλεσμα ελέγχεται από εσάς: ο αντίστροφος επαληθεύεται με το γινόμενο
+  $AA^{-1}=I$, η ιδιοτιμή με τη σχέση $A\vec{v}=\lambda\vec{v}$, το άθροισμα των ιδιοτιμών με το ίχνος και
+  το γινόμενό τους με την ορίζουσα. Δεν χρειάζεστε λυσάρι. Όλες οι ασκήσεις λύνονται με τα εργαλεία
+  του παρόντος και των προηγούμενων κεφαλαίων.</p>
+</div>
+
+<div class="grp"><h2>Α. Είδη πινάκων και βασικές έννοιες</h2>
+<p class="lead">Αναγνωρίστε τη δομή ενός πίνακα πριν κάνετε την παραμικρή πράξη.</p></div>
+
+<div class="ex"><div class="num">2E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Γράψτε αναλυτικά τον πίνακα $A=[a_{ij}]\in\mathcal{M}_{3\times 3}$ με $a_{ij}=i-j$, υπολογίστε το ίχνος
+$\mathrm{tr}(A)$ και χαρακτηρίστε τον πίνακα ως προς τη σχέση του με τον ανάστροφό του.</p></div>
+
+<div class="ex"><div class="num">2E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τις τιμές των $x,y\in\mathbb{R}$ για τις οποίες ο πίνακας
+$A=\begin{bmatrix}2 &amp; x+y &amp; 3\\ 1 &amp; 4 &amp; x-y\\ 3 &amp; 5 &amp; 6\end{bmatrix}$ είναι συμμετρικός.</p>
+<p class="ypod">Υπόδειξη: η συνθήκη $A^\top=A$ δίνει μία εξίσωση για κάθε ζεύγος συμμετρικών θέσεων.</p></div>
+
+<div class="ex"><div class="num">2E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Αποδείξτε ότι το ίχνος είναι γραμμική απεικόνιση, δηλαδή ότι
+$\mathrm{tr}(\alpha A+\beta B)=\alpha\,\mathrm{tr}(A)+\beta\,\mathrm{tr}(B)$ για κάθε
+$A,B\in\mathcal{M}_{n\times n}$ και $\alpha,\beta\in\mathbb{R}$. Στη συνέχεια, χρησιμοποιώντας και τη
+σχέση $\mathrm{tr}(AB)=\mathrm{tr}(BA)$, αποδείξτε ότι δεν υπάρχουν πίνακες $A,B\in\mathcal{M}_{n\times n}$
+με $AB-BA=I_n$.</p></div>
+
+<div class="grp"><h2>Β. Πράξεις πινάκων</h2>
+<p class="lead">Ο πολλαπλασιασμός πινάκων δεν είναι μεταθετικός &mdash; ελέγχετε πάντα τις διαστάσεις πριν πολλαπλασιάσετε.</p></div>
+
+<div class="ex"><div class="num">2E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για $A=\begin{bmatrix}1 &amp; -2 &amp; 0\\ 3 &amp; 1 &amp; 4\end{bmatrix}$ και
+$B=\begin{bmatrix}2 &amp; 1\\ 0 &amp; -3\\ 1 &amp; 5\end{bmatrix}$ υπολογίστε τα γινόμενα $AB$ και $BA$
+και εξηγήστε γιατί έχουν διαφορετικές διαστάσεις.</p></div>
+
+<div class="ex"><div class="num">2E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο πίνακας $N=\begin{bmatrix}0 &amp; 1 &amp; 2\\ 0 &amp; 0 &amp; 3\\ 0 &amp; 0 &amp; 0\end{bmatrix}$.
+Υπολογίστε τους $N^2$ και $N^3$ και επαληθεύστε με απευθείας πολλαπλασιασμό ότι
+$(I_3-N)(I_3+N+N^2)=I_3$.</p>
+<p class="ypod">Υπόδειξη: αναπτύξτε πρώτα το γινόμενο συμβολικά, προσέχοντας ότι ο $N$ μετατίθεται με τον $I_3$.</p></div>
+
+<div class="ex"><div class="num">2E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Θεωρήστε το σύνολο $\mathcal{C}=\left\{\begin{bmatrix}a &amp; -b\\ b &amp; a\end{bmatrix}: a,b\in\mathbb{R}\right\}$.
+Αποδείξτε ότι το γινόμενο δύο στοιχείων του $\mathcal{C}$ ανήκει και αυτό στο $\mathcal{C}$ και ότι ο
+πολλαπλασιασμός μέσα στο $\mathcal{C}$ είναι μεταθετικός.</p></div>
+
+<div class="grp"><h2>Γ. Ορίζουσα</h2>
+<p class="lead">Πριν αναπτύξετε, κοιτάξτε αν υπάρχει γραμμή ή στήλη με πολλά μηδενικά.</p></div>
+
+<div class="ex"><div class="num">2E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε την $\det\begin{bmatrix}3 &amp; 1 &amp; -2\\ 0 &amp; 2 &amp; 4\\ 1 &amp; -1 &amp; 5\end{bmatrix}$
+με ανάπτυξη κατά Laplace ως προς την πρώτη στήλη.</p></div>
+
+<div class="ex"><div class="num">2E.8 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Έστω $A\in\mathcal{M}_{3\times 3}$ με $\det A=4$. Υπολογίστε, χωρίς να γνωρίζετε τα στοιχεία του $A$,
+τις ορίζουσες: (α) $\det(2A)$, (β) $\det(A^\top)$, (γ) $\det(-A)$, (δ) $\det(A^3)$,
+(ε) $\det(A^\top A)$. Αιτιολογήστε σε κάθε περίπτωση ποια ιδιότητα χρησιμοποιείτε.</p></div>
+
+<div class="ex"><div class="num">2E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε την ορίζουσα του τριδιαγώνιου πίνακα
+$\begin{bmatrix}2 &amp; 1 &amp; 0 &amp; 0\\ 1 &amp; 2 &amp; 1 &amp; 0\\ 0 &amp; 1 &amp; 2 &amp; 1\\ 0 &amp; 0 &amp; 1 &amp; 2\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: με στοιχειώδεις πράξεις γραμμών φέρτε τον πίνακα σε άνω τριγωνική μορφή, παρακολουθώντας
+πώς μεταβάλλεται η ορίζουσα σε κάθε βήμα.</p></div>
+
+<div class="grp"><h2>Δ. Αντίστροφος πίνακας</h2>
+<p class="lead">Ο αντίστροφος υπάρχει ακριβώς όταν $\det A\neq 0$&nbsp;&mdash; και επαληθεύεται πάντα με πολλαπλασιασμό.</p></div>
+
+<div class="ex"><div class="num">2E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για $A=\begin{bmatrix}4 &amp; 7\\ 1 &amp; 2\end{bmatrix}$ υπολογίστε την $\det A$, βρείτε τον $A^{-1}$ με τον
+τύπο των $2\times 2$ πινάκων και επαληθεύστε ότι $AA^{-1}=A^{-1}A=I_2$.</p></div>
+
+<div class="ex"><div class="num">2E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε τον αντίστροφο του $A=\begin{bmatrix}2 &amp; -1 &amp; 0\\ -1 &amp; 2 &amp; -1\\ 0 &amp; -1 &amp; 2\end{bmatrix}$
+με τη μέθοδο του επαυξημένου πίνακα $[A\,|\,I_3]$ και ελέγξτε αν ο $A^{-1}$ είναι επίσης συμμετρικός.</p></div>
+
+<div class="ex"><div class="num">2E.12 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A\in\mathcal{M}_{n\times n}$ που ικανοποιεί τη σχέση $A^2-3A+2I_n=O$. Αποδείξτε ότι ο $A$ είναι
+αντιστρέψιμος και εκφράστε τον $A^{-1}$ ως πολυώνυμο πρώτου βαθμού ως προς $A$.</p>
+<p class="ypod">Υπόδειξη: απομονώστε το $I_n$ και γράψτε το ως γινόμενο του $A$ με έναν κατάλληλο πίνακα.</p></div>
+
+<div class="grp"><h2>Ε. Τάξη πίνακα και θεμελιώδεις υπόχωροι</h2>
+<p class="lead">Η τάξη μετρά τις πραγματικά ανεξάρτητες γραμμές &mdash; όλα τα υπόλοιπα προκύπτουν από το θεώρημα τάξης&ndash;μηδενικότητας.</p></div>
+
+<div class="ex"><div class="num">2E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε την τάξη του $A=\begin{bmatrix}1 &amp; 2 &amp; -1\\ 2 &amp; 4 &amp; -2\\ -1 &amp; -2 &amp; 1\end{bmatrix}$
+και δώστε μία βάση του χώρου στηλών του.</p></div>
+
+<div class="ex"><div class="num">2E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τον $A=\begin{bmatrix}1 &amp; 2 &amp; 0 &amp; 3\\ 2 &amp; 4 &amp; 1 &amp; 7\\ 1 &amp; 2 &amp; 1 &amp; 4\end{bmatrix}$
+βρείτε την τάξη, μία βάση του πυρήνα $\ker A$ και επαληθεύστε το θεώρημα τάξης&ndash;μηδενικότητας.</p></div>
+
+<div class="ex"><div class="num">2E.15 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $B\in\mathcal{M}_{5\times 3}$ του οποίου οι τρεις στήλες είναι γραμμικά ανεξάρτητες. Προσδιορίστε
+την τάξη του $B$, δείξτε ότι η εξίσωση $B\vec{x}=\vec{0}$ έχει μόνο τη μηδενική λύση και βρείτε τη
+διάσταση του αριστερού πυρήνα $\ker(B^\top)$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Ορθογώνιοι και συμμετρικοί πίνακες</h2>
+<p class="lead">Για έναν ορθογώνιο πίνακα η αντιστροφή είναι απλή ανάστροφη &mdash; και διατηρεί μήκη και γωνίες.</p></div>
+
+<div class="ex"><div class="num">2E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε αν ο $Q=\dfrac{1}{3}\begin{bmatrix}2 &amp; -2 &amp; 1\\ 1 &amp; 2 &amp; 2\\ 2 &amp; 1 &amp; -2\end{bmatrix}$
+είναι ορθογώνιος, ελέγχοντας τα εσωτερικά γινόμενα των στηλών του, και γράψτε τον $Q^{-1}$.</p></div>
+
+<div class="ex"><div class="num">2E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $\vec{u}\in\mathbb{R}^n$ με $\|\vec{u}\|=1$ και $H=I_n-2\vec{u}\vec{u}^{\top}$. Αποδείξτε ότι ο $H$
+είναι συμμετρικός, ότι $H^2=I_n$ και ότι είναι ορθογώνιος. Στη συνέχεια γράψτε αναλυτικά τον $H$ για
+$\vec{u}=\dfrac{1}{\sqrt{5}}\begin{bmatrix}1\\ 2\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: η συνθήκη $\|\vec{u}\|=1$ γράφεται ισοδύναμα $\vec{u}^{\top}\vec{u}=1$.</p></div>
+
+<div class="ex"><div class="num">2E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $S\in\mathcal{M}_{n\times n}$ αντισυμμετρικός, δηλαδή $S^{\top}=-S$, με $n$ περιττό. Αποδείξτε ότι
+$\det S=0$ και συμπεράνετε ότι ο $S$ δεν είναι αντιστρέψιμος.</p>
+<p class="ypod">Υπόδειξη: συνδυάστε τις ιδιότητες $\det(S^{\top})=\det S$ και $\det(cS)=c^{n}\det S$.</p></div>
+
+<div class="grp"><h2>Ζ. Πρώτη γνωριμία με τις ιδιοτιμές</h2>
+<p class="lead">Ιδιοδιάνυσμα είναι κάθε μη μηδενικό διάνυσμα που ο πίνακας απλώς το επιμηκύνει ή το συστέλλει.</p></div>
+
+<div class="ex"><div class="num">2E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε το χαρακτηριστικό πολυώνυμο, τις ιδιοτιμές και ένα ιδιοδιάνυσμα για καθεμία ιδιοτιμή του
+$A=\begin{bmatrix}2 &amp; 2\\ 1 &amp; 3\end{bmatrix}$.</p></div>
+
+<div class="ex"><div class="num">2E.20 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνεται ο $A=\begin{bmatrix}1 &amp; 4\\ 2 &amp; 3\end{bmatrix}$ και τα διανύσματα
+$\vec{v}_1=\begin{bmatrix}1\\ 1\end{bmatrix}$, $\vec{v}_2=\begin{bmatrix}2\\ -1\end{bmatrix}$,
+$\vec{v}_3=\begin{bmatrix}1\\ 0\end{bmatrix}$. Ελέγξτε ποια από αυτά είναι ιδιοδιανύσματα του $A$ και
+προσδιορίστε την αντίστοιχη ιδιοτιμή, χωρίς να υπολογίσετε το χαρακτηριστικό πολυώνυμο.</p></div>
+
+<div class="ex"><div class="num">2E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τον $A=\begin{bmatrix}2 &amp; 0 &amp; 0\\ 1 &amp; 3 &amp; -1\\ 1 &amp; -1 &amp; 3\end{bmatrix}$ βρείτε το
+χαρακτηριστικό πολυώνυμο και τις ιδιοτιμές με τις αλγεβρικές πολλαπλότητές τους, και επαληθεύστε ότι
+το άθροισμα των ιδιοτιμών ισούται με $\mathrm{tr}(A)$ και το γινόμενό τους με $\det A$.</p>
+<p class="ypod">Υπόδειξη: αναπτύξτε την $\det(A-\lambda I_3)$ ως προς την πρώτη γραμμή.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Εδώ συνδυάζονται ορίζουσα, τάξη, αντιστροφή και ιδιοτιμές μέσα στην ίδια άσκηση.</p></div>
+
+<div class="ex"><div class="num">2E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $A\in\mathcal{M}_{n\times n}$ με $\mathrm{rank}(A)=n-1$. Αποδείξτε ότι $\det A=0$, ότι ο αριθμός $0$
+είναι ιδιοτιμή του $A$ και προσδιορίστε τη διάσταση του αντίστοιχου ιδιοχώρου.</p></div>
+
+<div class="ex"><div class="num">2E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $P\in\mathcal{M}_{n\times n}$ με $P^2=P$. Αποδείξτε ότι κάθε ιδιοτιμή του $P$ είναι $0$ ή $1$, ότι
+$\ker P$ ταυτίζεται με τον χώρο στηλών του $I_n-P$ και ότι $\mathrm{rank}(P)+\mathrm{rank}(I_n-P)=n$.</p>
+<p class="ypod">Υπόδειξη: για το τελευταίο σκέλος συνδυάστε το προηγούμενο συμπέρασμα με το θεώρημα
+τάξης&ndash;μηδενικότητας για τον $P$.</p></div>
+
+<div class="ex"><div class="num">2E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Αποδείξτε ότι κάθε $A\in\mathcal{M}_{2\times 2}$ ικανοποιεί τη σχέση
+$A^2-\mathrm{tr}(A)\,A+\det(A)\,I_2=O$. Χρησιμοποιώντας τη σχέση αυτή &mdash; και όχι διαδοχικούς
+πολλαπλασιασμούς &mdash; υπολογίστε τον $A^4$ για $A=\begin{bmatrix}1 &amp; 1\\ 2 &amp; 0\end{bmatrix}$,
+εκφράζοντάς τον πρώτα στη μορφή $\alpha A+\beta I_2$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">2E.25</div>
+<p>Γράψτε τον $3\times3$ πίνακα $A$ με $a_{ij}=i+j$ και τον ανάστροφό του $A^\top$. Τι παρατηρείτε;</p></div>
+<div class="ex from-book"><div class="num">2E.26</div>
+<p>Δοθέντος $A=\begin{bmatrix}2&amp;3\\3&amp;5\end{bmatrix}$, ελέγξτε αν είναι συμμετρικός και υπολογίστε το $\mathrm{tr}(A)$.</p></div>
+<div class="ex from-book"><div class="num">2E.27</div>
+<p>Αποδείξτε ότι για κάθε τετραγωνικό πίνακα $A$ ο $A+A^\top$ είναι συμμετρικός.</p></div>
+<div class="ex from-book"><div class="num">2E.28</div>
+<p>Ποιοι $2\times2$ πίνακες ικανοποιούν $A^\top=A$; Περιγράψτε τη γενική τους μορφή και προσδιορίστε πόσες ανεξάρτητες παραμέτρους έχουν.</p></div>
+<div class="ex from-book"><div class="num">2E.29</div>
+<p>Βρείτε τον πίνακα $X$ αν $2X-A=B$, όπου $A=\begin{bmatrix}1&amp;-1\\2&amp;3\end{bmatrix}$ και $B=\begin{bmatrix}3&amp;1\\0&amp;5\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">2E.30</div>
+<p>Αποδείξτε ότι για διαγώνιο $D=\mathrm{diag}(d_1,\ldots,d_n)$ ισχύει $D^k=\mathrm{diag}(d_1^k,\ldots,d_n^k)$.</p></div>
+<div class="ex from-book"><div class="num">2E.31</div>
+<p>Χωρίς υπολογισμό, ποια είναι η ορίζουσα ενός πίνακα με δύο ίδιες γραμμές; Αιτιολογήστε.</p></div>
+<div class="ex from-book"><div class="num">2E.32</div>
+<p>Αποδείξτε ότι $\det(cA)=c^n\det(A)$ για $A\in\mathcal{M}_{n\times n}$ και $c\in\R$.</p></div>
+<div class="ex from-book"><div class="num">2E.33</div>
+<p>Βρείτε τις τιμές του $x$ για τις οποίες $\det\begin{bmatrix}x&amp;1&amp;0\\2&amp;x&amp;1\\0&amp;1&amp;x\end{bmatrix}=0$.</p></div>
+<div class="ex from-book"><div class="num">2E.34</div>
+<p>Βρείτε το αλγεβρικό συμπλήρωμα $A_{12}$ του $A=\begin{bmatrix}2&amp;1&amp;0\\3&amp;2&amp;1\\0&amp;1&amp;2\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">2E.35</div>
+<p>Βρείτε τον $A^{-1}$ για $A=\begin{bmatrix}1&amp;0&amp;2\\0&amp;1&amp;-1\\1&amp;-1&amp;4\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">2E.36</div>
+<p>Για ποιες τιμές του $k$ είναι ο $A=\begin{bmatrix}k&amp;2\\3&amp;6\end{bmatrix}$ αντιστρέψιμος;</p></div>
+<div class="ex from-book"><div class="num">2E.37</div>
+<p>Αποδείξτε ότι $(A^\top)^{-1}=(A^{-1})^\top$.</p></div>
+<div class="ex from-book"><div class="num">2E.38</div>
+<p>Χρησιμοποιήστε τον $A^{-1}$ για να λύσετε το $A\vecx=\vecb$ με $A=\begin{bmatrix}3&amp;2\\4&amp;3\end{bmatrix}$ και $\vecb=\begin{bmatrix}5\\7\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">2E.39</div>
+<p>Βρείτε την τάξη του $A=\begin{bmatrix}1&amp;1&amp;0&amp;2\\2&amp;1&amp;-1&amp;3\\1&amp;0&amp;-1&amp;1\end{bmatrix}$ και δώστε βάση για καθέναν από τους θεμελιώδεις υποχώρους του.</p></div>
+<div class="ex from-book"><div class="num">2E.40</div>
+<p>Αν $A\in\mathcal{M}_{3\times5}$ και $\mathrm{rank}(A)=2$, ποια είναι η διάσταση του $\ker A$;</p></div>
+<div class="ex from-book"><div class="num">2E.41</div>
+<p>Γράψτε τον πίνακα στροφής $R_\theta$ για $\theta=\pi/3$ και επαληθεύστε ότι είναι ορθογώνιος με $\det(R_\theta)=1$.</p></div>
+<div class="ex from-book"><div class="num">2E.42</div>
+<p>Δείξτε ότι $\begin{bmatrix}\cos\theta&amp;-\sin\theta\\\sin\theta&amp;\cos\theta\end{bmatrix}^{-1}=\begin{bmatrix}\cos\theta&amp;\sin\theta\\-\sin\theta&amp;\cos\theta\end{bmatrix}$ και ερμηνεύστε γεωμετρικά το αποτέλεσμα.</p></div>
+<div class="ex from-book"><div class="num">2E.43</div>
+<p>Δείξτε ότι αν οι $Q_1,Q_2$ είναι ορθογώνιοι, τότε και ο $Q_1Q_2$ είναι ορθογώνιος.</p></div>
+<div class="ex from-book"><div class="num">2E.44</div>
+<p>Βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματα του $A=\begin{bmatrix}3&amp;1\\1&amp;3\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">2E.45</div>
+<p>Βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματα του $A=\begin{bmatrix}0&amp;1\\-2&amp;3\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">2E.46</div>
+<p>Αποδείξτε ότι αν $\lambda$ είναι ιδιοτιμή του $A$ με ιδιοδιάνυσμα $\vecv$, τότε ο $\lambda^2$ είναι ιδιοτιμή του $A^2$ με το ίδιο ιδιοδιάνυσμα.</p></div>
+<div class="ex from-book"><div class="num">2E.47</div>
+<p>Για τον πίνακα αντιστάσεων $R=\begin{bmatrix}5&amp;-2\\-2&amp;4\end{bmatrix}$ και το διάνυσμα τάσεων $\mathbf{V}=(10,8)^\top$, βρείτε τα ρεύματα βρόχων από τη σχέση $\mathbf{I}=R^{-1}\mathbf{V}$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">2E.48</div>
+<p>Για $A=\begin{bmatrix}-1&amp;0\\0&amp;4\end{bmatrix}$ υπολογίστε τον $A^5$ απευθείας και επαληθεύστε το αποτέλεσμα μέσω των ιδιοτιμών του.</p></div>
+<div class="ex from-book"><div class="num">2E.49</div>
+<p>Αν $\vecv$ είναι ιδιοδιάνυσμα του αντιστρέψιμου $A$ για την ιδιοτιμή $\lambda$, αποδείξτε ότι το $\vecv$ είναι ιδιοδιάνυσμα του $A^{-1}$ και βρείτε την αντίστοιχη ιδιοτιμή.</p></div>
+<div class="ex from-book"><div class="num">2E.50</div>
+<p>Αποδείξτε ότι ιδιοδιανύσματα που αντιστοιχούν σε διαφορετικές ιδιοτιμές είναι γραμμικά ανεξάρτητα.</p></div>
+<div class="ex from-book"><div class="num">2E.51</div>
+<p>Βρείτε τις ιδιοτιμές του συμμετρικού $A=\begin{bmatrix}5&amp;-4\\-4&amp;5\end{bmatrix}$ και κατασκευάστε ορθοκανονική βάση του $\R^2$ από ιδιοδιανύσματά του.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

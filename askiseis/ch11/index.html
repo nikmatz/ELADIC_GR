@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Μονοτονία, Ακρότατα και Καμπυλότητα</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Μονοτονία, Ακρότατα και Καμπυλότητα</h1>
+  <p class="chapter-label">Κεφάλαιο 11 · Μονοτονία, Ακρότατα και Καμπυλότητα</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά έννοια</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Σε κάθε άσκηση ξεκινήστε από το πεδίο ορισμού και κατασκευάστε πίνακα προσήμου της
+  $f'$ (για μονοτονία και ακρότατα) ή της $f''$ (για κυρτότητα και σημεία καμπής). Ο έλεγχος γίνεται
+  πάντα μόνοι σας: μια τιμή δοκιμής σε κάθε διάστημα επιβεβαιώνει το πρόσημο, και μια σύγκριση τιμών
+  επιβεβαιώνει το είδος του ακροτάτου. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Μονοτονία και κρίσιμα σημεία</h2>
+<p class="lead">Πρώτα το πεδίο ορισμού, έπειτα οι ρίζες και τα σημεία μη ύπαρξης της $f'$, και τέλος ο πίνακας προσήμου.</p></div>
+
+<div class="ex"><div class="num">11E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τα κρίσιμα σημεία και τα διαστήματα μονοτονίας της $f(x)=x^{3}-12x+5$.</p></div>
+
+<div class="ex"><div class="num">11E.2 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τη συνάρτηση $\displaystyle f(x)=\frac{x^{2}}{x-1}$ προσδιορίστε το πεδίο ορισμού, τα κρίσιμα σημεία και τα διαστήματα μονοτονίας.</p>
+<p class="ypod">Υπόδειξη: το $x=1$ δεν είναι κρίσιμο σημείο, διότι δεν ανήκει στο πεδίο ορισμού· ο παρονομαστής της $f'$ διατηρεί σταθερό πρόσημο.</p></div>
+
+<div class="ex"><div class="num">11E.3 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δείξτε ότι η $f(x)=2x+\sin x$ είναι γνησίως αύξουσα στο $\mathbb{R}$ και συμπεράνετε ότι η εξίσωση $2x+\sin x=1$ έχει ακριβώς μία πραγματική λύση.</p>
+<p class="ypod">Υπόδειξη: η μονοτονία δίνει τη μοναδικότητα· για την ύπαρξη χρησιμοποιήστε το θεώρημα Bolzano σε κατάλληλο κλειστό διάστημα.</p></div>
+
+<div class="grp"><h2>Β. Τοπικά ακρότατα</h2>
+<p class="lead">Κάθε κρίσιμο σημείο ελέγχεται είτε με το κριτήριο της πρώτης είτε με το κριτήριο της δεύτερης παραγώγου.</p></div>
+
+<div class="ex"><div class="num">11E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τα τοπικά ακρότατα της $\displaystyle f(x)=x^{2}+\frac{16}{x}$, $x\neq 0$, και επαληθεύστε το είδος τους με το κριτήριο της δεύτερης παραγώγου. Τι συμβαίνει στον κλάδο $x&lt;0$;</p></div>
+
+<div class="ex"><div class="num">11E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε το τοπικό ακρότατο της $f(x)=x^{4}-4x+1$ και προσδιορίστε το είδος του.</p></div>
+
+<div class="ex"><div class="num">11E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για την $\displaystyle f(x)=\sin x+\tfrac{1}{2}\sin 2x$ στο $[0,2\pi]$ βρείτε όλα τα κρίσιμα σημεία και προσδιορίστε ποια από αυτά είναι τοπικά ακρότατα.</p>
+<p class="ypod">Υπόδειξη: γράψτε $\cos 2x=2\cos^{2}x-1$ και παραγοντοποιήστε την $f'$ ως προς $\cos x$. Ένα από τα κρίσιμα σημεία δίνει διπλή ρίζα.</p></div>
+
+<div class="grp"><h2>Γ. Ολικά ακρότατα σε κλειστό διάστημα</h2>
+<p class="lead">Σε κλειστό και φραγμένο διάστημα συγκρίνετε τις τιμές στα κρίσιμα σημεία <em>και</em> στα δύο άκρα.</p></div>
+
+<div class="ex"><div class="num">11E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε το ολικό μέγιστο και το ολικό ελάχιστο της $f(x)=x^{3}-3x$ στο $[-2,3]$.</p>
+<p class="ypod">Προσοχή: το ολικό ελάχιστο μπορεί να λαμβάνεται σε περισσότερα του ενός σημεία.</p></div>
+
+<div class="ex"><div class="num">11E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε τα ολικά ακρότατα της $f(x)=x+2\cos x$ στο $[0,\pi]$ και δώστε τις ακριβείς τιμές τους.</p></div>
+
+<div class="ex"><div class="num">11E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε τα ολικά ακρότατα της $f(x)=(x-1)^{2/3}$ στο $[0,9]$.</p>
+<p class="ypod">Υπόδειξη: υπάρχει σημείο του διαστήματος στο οποίο η $f$ δεν είναι παραγωγίσιμη· και αυτό είναι υποψήφιο.</p></div>
+
+<div class="grp"><h2>Δ. Προβλήματα βελτιστοποίησης</h2>
+<p class="lead">Σχήμα, μεταβλητή, συνθήκη περιορισμού, συνάρτηση μιας μεταβλητής, πεδίο ορισμού — και μόνο τότε παραγώγιση.</p></div>
+
+<div class="ex"><div class="num">11E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Ορθογώνιο οικόπεδο εμβαδού $800\ \mathrm{m^2}$ πρόκειται να περιφραχθεί. Η μία πλευρά συνορεύει με ποτάμι και δεν απαιτεί φράχτη. Βρείτε τις διαστάσεις που ελαχιστοποιούν το συνολικό μήκος του φράχτη και υπολογίστε το μήκος αυτό.</p></div>
+
+<div class="ex"><div class="num">11E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Από τετράγωνο φύλλο χαρτονιού πλευράς $12$ cm κόβονται τέσσερα ίσα τετράγωνα πλευράς $x$ από τις γωνίες και οι πλευρές αναδιπλώνονται, ώστε να σχηματιστεί ανοικτό κουτί. (α) Εκφράστε τον όγκο $V(x)$. (β) Βρείτε το πεδίο ορισμού της $V$. (γ) Βρείτε το $x$ που δίνει τον μέγιστο όγκο και υπολογίστε τον.</p></div>
+
+<div class="ex"><div class="num">11E.12 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Βρείτε τα σημεία της παραβολής $y=x^{2}$ που απέχουν ελάχιστη απόσταση από το σημείο $\bigl(0,\tfrac{3}{2}\bigr)$ και υπολογίστε την ελάχιστη απόσταση.</p>
+<p class="ypod">Υπόδειξη: ελαχιστοποιήστε το τετράγωνο της απόστασης και θέστε $u=x^{2}\geq 0$.</p></div>
+
+<div class="grp"><h2>Ε. Κυρτότητα και κοιλότητα</h2>
+<p class="lead">Το πρόσημο της $f''$ καθορίζει τη θέση της καμπύλης ως προς τις εφαπτομένες της.</p></div>
+
+<div class="ex"><div class="num">11E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τα διαστήματα κυρτότητας και κοιλότητας της $f(x)=\mathrm{e}^{x}-x^{2}$.</p></div>
+
+<div class="ex"><div class="num">11E.14 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Μελετήστε την κυρτότητα και την κοιλότητα της $f(x)=\tan x$ στο $\left(-\tfrac{\pi}{2},\tfrac{\pi}{2}\right)$.</p></div>
+
+<div class="ex"><div class="num">11E.15 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι η $f(x)=\sqrt{1+x^{2}}$ είναι κυρτή σε ολόκληρο το $\mathbb{R}$.</p>
+<p class="ypod">Υπόδειξη: μετά την απλοποίηση, η $f''$ γράφεται ως κλάσμα με αριθμητή σταθερό.</p></div>
+
+<div class="grp"><h2>ΣΤ. Σημεία καμπής</h2>
+<p class="lead">Δεν αρκεί $f''=0$: απαιτείται <em>αλλαγή προσήμου</em> της $f''$ εκατέρωθεν του σημείου.</p></div>
+
+<div class="ex"><div class="num">11E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τα σημεία καμπής και τα διαστήματα κυρτότητας και κοιλότητας της $f(x)=x+\cos x$ στο $[0,2\pi]$.</p></div>
+
+<div class="ex"><div class="num">11E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι το $(0,0)$ είναι σημείο καμπής της $f(x)=\sqrt[3]{x}$, παρότι η $f$ δεν είναι παραγωγίσιμη στο $0$. Ποια είναι η θέση της εφαπτομένης εκεί;</p></div>
+
+<div class="ex"><div class="num">11E.18 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Προσδιορίστε τις σταθερές $a,b\in\mathbb{R}$ ώστε η $f(x)=x^{3}+ax^{2}+bx$ να έχει σημείο καμπής το $(1,3)$. Στη συνέχεια επαληθεύστε ότι πρόκειται πράγματι για σημείο καμπής.</p></div>
+
+<div class="grp"><h2>Ζ. Πολυώνυμο Taylor και εκτίμηση σφάλματος</h2>
+<p class="lead">Το πολυώνυμο δίνει την προσέγγιση· το υπόλοιπο Lagrange δίνει την εγγύηση.</p></div>
+
+<div class="ex"><div class="num">11E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε το πολυώνυμο Taylor $P_{2}(x)$ της $\displaystyle f(x)=\frac{1}{x}$ γύρω από το $a=1$ και χρησιμοποιήστε το για να προσεγγίσετε το $\dfrac{1}{1{,}1}$.</p></div>
+
+<div class="ex"><div class="num">11E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε το πολυώνυμο Taylor $P_{2}(x)$ της $f(x)=\sqrt[3]{x}$ γύρω από το $a=8$ και προσεγγίστε το $\sqrt[3]{9}$.</p></div>
+
+<div class="ex"><div class="num">11E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Ζητείται να προσεγγιστεί η $f(x)=\mathrm{e}^{x}$ στο $[0,1]$ με πολυώνυμο Maclaurin $P_{n}(x)$, ώστε το σφάλμα να είναι μικρότερο από $10^{-3}$ για κάθε $x\in[0,1]$. Βρείτε τον ελάχιστο βαθμό $n$ που εξασφαλίζει αυτή την ακρίβεια.</p>
+<p class="ypod">Υπόδειξη: φράξτε πρώτα το $\mathrm{e}^{\xi}$ για $\xi\in[0,1]$ με έναν απλό ακέραιο και λύστε την ανισότητα ως προς $(n+1)!$.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Εδώ συνδυάζονται μονοτονία, ακρότατα και καμπυλότητα — συχνά με παραμέτρους ή με φυσική ερμηνεία.</p></div>
+
+<div class="ex"><div class="num">11E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Προσδιορίστε τις σταθερές $a,b,c,d\in\mathbb{R}$ ώστε η $f(x)=ax^{3}+bx^{2}+cx+d$ να έχει τοπικό μέγιστο στο σημείο $(-1,6)$ και τοπικό ελάχιστο στο σημείο $(1,2)$.</p>
+<p class="ypod">Υπόδειξη: οι τέσσερις συνθήκες είναι $f(-1)=6$, $f(1)=2$, $f'(-1)=0$, $f'(1)=0$.</p></div>
+
+<div class="ex"><div class="num">11E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Αποδείξτε ότι για κάθε $x&gt;0$ ισχύει $\displaystyle x-\frac{x^{2}}{2}&lt;\ln(1+x)&lt;x$.</p>
+<p class="ypod">Υπόδειξη: μελετήστε χωριστά τη μονοτονία των βοηθητικών συναρτήσεων $g(x)=x-\ln(1+x)$ και $h(x)=\ln(1+x)-x+\dfrac{x^{2}}{2}$, παρατηρώντας ότι $g(0)=h(0)=0$.</p></div>
+
+<div class="ex"><div class="num">11E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p><strong>Δοκός.</strong> Η ελαστική γραμμή αμφιέρειστης δοκού μήκους $L$ υπό ομοιόμορφο κατανεμημένο φορτίο $q$ δίνεται από
+$\displaystyle y(x)=-\frac{q}{24EI}\bigl(x^{4}-2Lx^{3}+L^{3}x\bigr)$, $0\leq x\leq L$, με το $y$ μετρούμενο προς τα άνω.
+(α) Δείξτε ότι η ελαστική γραμμή είναι κυρτή σε ολόκληρο το $(0,L)$, άρα δεν έχει σημείο καμπής.
+(β) Βρείτε τη θέση της μέγιστης βύθισης.
+(γ) Με τη σχέση $EI\,y''=M$ βρείτε τη θέση και την τιμή της μέγιστης ροπής κάμψης και σχολιάστε το πρόσημό της.</p>
+<p class="ypod">Υπόδειξη: στο (β) επαληθεύστε ότι το $x=L/2$ μηδενίζει την $y'$ και δικαιολογήστε με τη συμμετρία του προβλήματος.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">11E.25</div>
+<p>Εξετάστε αν ισχύει το Θεώρημα Rolle για $f(x)=x^3-4x$ στο $[-2,2]$ και βρείτε <em>όλες</em> τις τιμές του $c$.</p></div>
+<div class="ex from-book"><div class="num">11E.26</div>
+<p>Θεώρημα Μέσης Τιμής (Lagrange): Για $f(x)=x^3-x$ στο $[-1,1]$, (α) ελέγξτε τις προϋποθέσεις, (β) βρείτε όλα τα $c\in(-1,1)$ ώστε $f'(c) = \dfrac{f(1)-f(-1)}{1-(-1)}$.</p></div>
+<div class="ex from-book"><div class="num">11E.27</div>
+<p>Για $f(x)=\sqrt{x}$ στο $[1,4]$: εφαρμόστε το ΘΜΤ και βρείτε το $c$.</p></div>
+<div class="ex from-book"><div class="num">11E.28</div>
+<p>Ανισότητα: Αποδείξτε με το ΘΜΤ ότι $\sqrt{x+1}&lt;1+\dfrac{x}{2}$ για $x&gt;0$. (Υπόδειξη: εφαρμόστε ΘΜΤ για $f(x)=\sqrt{x+1}$ στο $[0,x]$.)</p></div>
+<div class="ex from-book"><div class="num">11E.29</div>
+<p>Βρείτε όλα τα τοπικά ακρότατα της $f(x)=x^4-4x^3+4x^2$, χρησιμοποιώντας το κριτήριο της πρώτης ή της δεύτερης παραγώγου.</p></div>
+<div class="ex from-book"><div class="num">11E.30</div>
+<p>Μονοτονία και Ακρότατα: Για $f(x)=x\mathrm{e}^{-x}$ στο $\mathbb{R}$: (α) βρείτε $f'(x)$, (β) προσδιορίστε τα διαστήματα μονοτονίας, (γ) βρείτε το τοπικό μέγιστο.</p></div>
+<div class="ex from-book"><div class="num">11E.31</div>
+<p>Βρείτε τα καθολικά ακρότατα της $f(x)=\sin x+\cos x$ στο $[0,2\pi]$.</p></div>
+<div class="ex from-book"><div class="num">11E.32</div>
+<p>Αποδείξτε ότι $\ln x \leq x-1$ για κάθε $x&gt;0$, μελετώντας τη μονοτονία κατάλληλης βοηθητικής συνάρτησης.</p></div>
+<div class="ex from-book"><div class="num">11E.33</div>
+<p>Ανισότητα: Για $f(x)=\ln x - x + 1$: (α) υπολογίστε $f'(x)$ και τα κρίσιμα σημεία, (β) προσδιορίστε τα διαστήματα μονοτονίας, (γ) βρείτε το απόλυτο μέγιστο, (δ) συμπεράνετε ότι $f(x)\leq0$ για κάθε $x&gt;0$.</p></div>
+<div class="ex from-book"><div class="num">11E.34</div>
+<p>$f(x)=x^4-8x^2+7$: μελέτη μονοτονίας, ακροτάτων, κυρτότητας και σημείων καμπής· σκαρίφημα.</p></div>
+<div class="ex from-book"><div class="num">11E.35</div>
+<p>Μελετήστε πλήρως τη συνάρτηση $f(x)=2x^3+3x^2-12x+1$: κρίσιμα σημεία, διαστήματα μονοτονίας, τοπικά ακρότατα, κυρτότητα/κοιλότητα και σημείο καμπής.</p></div>
+<div class="ex from-book"><div class="num">11E.36</div>
+<p>Μελετήστε πλήρως την $f(x)=\dfrac{x}{x^2+1}$: αρτιότητα, μονοτονία, ακρότατα, κυρτότητα και σκαρίφημα.</p></div>
+<div class="ex from-book"><div class="num">11E.37</div>
+<p>Βρείτε τα διαστήματα κυρτότητας/κοιλότητας και τα σημεία καμπής της $f(x)=x^3-6x^2+9x+1$.</p></div>
+<div class="ex from-book"><div class="num">11E.38</div>
+<p>Βρείτε τα διαστήματα κυρτότητας/κοιλότητας και τα σημεία καμπής της $f(x)=x^4-6x^2+5$.</p></div>
+<div class="ex from-book"><div class="num">11E.39</div>
+<p>Κυρτότητα και Σημεία Καμπής: Για $f(x)=2x^3-9x^2+12x$: (α) υπολογίστε $f''(x)$, (β) βρείτε τα διαστήματα κυρτότητας και κοιλότητας, (γ) προσδιορίστε το σημείο καμπής.</p></div>
+<div class="ex from-book"><div class="num">11E.40</div>
+<p><strong>Εφαρμογή:</strong> Η ελαστική γραμμή δοκού δίνεται (σε κατάλληλες μονάδες) από $y(x)=2x^3-3x^2$, $0\le x\le 2$. Το πρόσημο της $y''$ καθορίζει τη φορά της καμπυλότητας (πρόσημο ροπής κάμψης). Βρείτε το σημείο στο οποίο αλλάζει η φορά της καμπυλότητας.</p></div>
+<div class="ex from-book"><div class="num">11E.41</div>
+<p>Taylor και Προσέγγιση: Αναπτύξτε την $f(x)=\ln(1+x)$ γύρω από $a=0$ μέχρι $n=4$. Προσεγγίστε το $\ln(1{,}5)$ (θέστε $x=0{,}5$). Ποιο φράγμα σφάλματος δίνει ο τύπος του υπολοίπου Lagrange;</p></div>
+<div class="ex from-book"><div class="num">11E.42</div>
+<p>Maclaurin 4ης τάξης της $f(x)=(1+x)^{1/2}$. Προσεγγίστε το $\sqrt{1{,}2}$ και συγκρίνετε με την ακριβή τιμή.</p></div>
+<div class="ex from-book"><div class="num">11E.43</div>
+<p>Βρείτε το πολυώνυμο Taylor $P_3(x)$ της $f(x)=\mathrm{e}^{-x}$ γύρω από $a=0$ και εκτιμήστε το σφάλμα $|R_3(x)|$ για $x\in[0,\,1]$ με τον τύπο υπολοίπου Lagrange.</p></div>
+<div class="ex from-book"><div class="num">11E.44</div>
+<p>Taylor 3ης τάξης της $\sin x$ γύρω από $x_0=\pi/6$. Προσεγγίστε το $\sin(34^{\circ})$.</p></div>
+<div class="ex from-book"><div class="num">11E.45</div>
+<p>Βρείτε το πολυώνυμο Taylor $P_2(x)$ της $f(x)=\arctan x$ γύρω από $a=1$: $P_2(x) = f(1) + f'(1)(x-1) + \dfrac{f''(1)}{2!}(x-1)^2$.</p></div>
+<div class="ex from-book"><div class="num">11E.46</div>
+<p>Όριο με Taylor: Υπολογίστε $\lim_{x\to0}\dfrac{\tan x-x}{x^3}$ χρησιμοποιώντας το ανάπτυγμα $\tan x = x + \dfrac{x^3}{3} + \ldots$</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">11E.47</div>
+<p>Αποδείξτε ότι $\sin x\geq x-\dfrac{x^3}{6}$ για κάθε $x\geq0$, μελετώντας διαδοχικά τη μονοτονία κατάλληλων βοηθητικών συναρτήσεων (χρησιμοποιήστε την $\cos x\geq1-\tfrac{x^2}{2}$).</p></div>
+<div class="ex from-book"><div class="num">11E.48</div>
+<p>Ορθογώνιο εγγεγραμμένο σε έλλειψη $\dfrac{x^2}{9}+\dfrac{y^2}{4}=1$ (πλευρές παράλληλες στους άξονες): βρείτε τις διαστάσεις που μεγιστοποιούν το εμβαδόν.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

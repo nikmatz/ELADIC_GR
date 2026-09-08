@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Εισαγωγή σε Δυναμικά Συστήματα</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Εισαγωγή σε Δυναμικά Συστήματα</h1>
+  <p class="chapter-label">Κεφάλαιο 7 · Εισαγωγή σε Δυναμικά Συστήματα</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά θέμα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Κάθε αποτέλεσμα ελέγχεται μόνο του. Ένα ιδιοζεύγος επαληθεύεται με έναν
+  πολλαπλασιασμό ($A\mathbf{v}=\lambda\mathbf{v}$), ένας κλειστός τύπος για το $\mathbf{x}_k$
+  επαληθεύεται θέτοντας $k=0$ και $k=1$, και μια στάσιμη κατανομή επαληθεύεται από τις σχέσεις
+  $P\boldsymbol{\pi}=\boldsymbol{\pi}$ και $\sum_i\pi_i=1$. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Διακριτά γραμμικά συστήματα</h2>
+<p class="lead">Η λύση είναι πάντα $\mathbf{x}_k=A^k\mathbf{x}_0$· το ζητούμενο είναι να τη γράψετε <em>χωρίς</em> να υψώσετε τον πίνακα σε δύναμη.</p></div>
+
+<div class="ex"><div class="num">7E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για το σύστημα $\mathbf{x}_{k+1}=A\mathbf{x}_k$ με $A=\begin{bmatrix}0&amp;2\\1&amp;1\end{bmatrix}$ και $\mathbf{x}_0=\begin{bmatrix}1\\0\end{bmatrix}$, υπολογίστε τα $\mathbf{x}_1$, $\mathbf{x}_2$ και $\mathbf{x}_3$ με διαδοχικούς πολλαπλασιασμούς. Στη συνέχεια βρείτε τις ιδιοτιμές του $A$ και πείτε αν το σύστημα φθίνει, παραμένει φραγμένο ή απειρίζεται.</p></div>
+
+<div class="ex"><div class="num">7E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνεται $A=\begin{bmatrix}4&amp;1\\1&amp;4\end{bmatrix}$ και $\mathbf{x}_0=\begin{bmatrix}2\\0\end{bmatrix}$. Βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματα του $A$, αναπτύξτε το $\mathbf{x}_0$ στη βάση των ιδιοδιανυσμάτων και γράψτε κλειστό τύπο για το $\mathbf{x}_k$.</p>
+<p class="ypod">Υπόδειξη: για συμμετρικό πίνακα της μορφής $\begin{bmatrix}a&amp;b\\b&amp;a\end{bmatrix}$ τα διανύσματα $(1,1)^\top$ και $(1,-1)^\top$ είναι πάντα ιδιοδιανύσματα.</p></div>
+
+<div class="ex"><div class="num">7E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $A=\begin{bmatrix}1&amp;1\\0&amp;1\end{bmatrix}$. (α) Δείξτε ότι ο $A$ έχει διπλή ιδιοτιμή αλλά ένα μόνο γραμμικώς ανεξάρτητο ιδιοδιάνυσμα, επομένως δεν διαγωνιοποιείται. (β) Αποδείξτε με επαγωγή ότι $A^k=\begin{bmatrix}1&amp;k\\0&amp;1\end{bmatrix}$ για κάθε $k\ge 1$. (γ) Βρείτε το $\mathbf{x}_k$ για $\mathbf{x}_0=(0,1)^\top$ και περιγράψτε την τροχιά.</p></div>
+
+<div class="ex"><div class="num">7E.4 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Θεωρήστε την αναδρομική ακολουθία $a_{k+2}=a_{k+1}+2a_k$ με $a_0=1$ και $a_1=0$. Θέτοντας $\mathbf{x}_k=(a_k,a_{k+1})^\top$, γράψτε την αναδρομή στη μορφή $\mathbf{x}_{k+1}=A\mathbf{x}_k$, βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματα του $A$ και δώστε κλειστό τύπο για το $a_k$. Επαληθεύστε τον τύπο για $k=0,1,2$.</p>
+<p class="ypod">Υπόδειξη: ο πίνακας συνοδείας έχει πρώτη γραμμή $(0\ \ 1)$.</p></div>
+
+<div class="grp"><h2>Β. Ρόλος των ιδιοτιμών</h2>
+<p class="lead">Η μοίρα του συστήματος διαβάζεται από τον όρο με το μεγαλύτερο $|\lambda|$ — αρκεί ο συντελεστής του να μην είναι μηδέν.</p></div>
+
+<div class="ex"><div class="num">7E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Η λύση ενός διακριτού συστήματος είναι $\displaystyle \mathbf{x}_k=2\,(0{,}8)^k\begin{bmatrix}1\\2\end{bmatrix}+(0{,}5)^k\begin{bmatrix}1\\-1\end{bmatrix}$. (α) Υπολογίστε τα $\mathbf{x}_0$ και $\mathbf{x}_1$. (β) Βρείτε το $\lim_{k\to\infty}\mathbf{x}_k$. (γ) Ποιος από τους δύο όρους σβήνει ταχύτερα και ποια είναι, κατά συνέπεια, η οριακή <em>κατεύθυνση</em> του $\mathbf{x}_k$;</p></div>
+
+<div class="ex"><div class="num">7E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για $A=\begin{bmatrix}6&amp;-2\\2&amp;1\end{bmatrix}$ και $\mathbf{x}_0=\begin{bmatrix}3\\3\end{bmatrix}$, γράψτε τη λύση $\mathbf{x}_k$ σε κλειστή μορφή, προσδιορίστε τον κυρίαρχο όρο και υπολογίστε το $\displaystyle\lim_{k\to\infty}\frac{\mathbf{x}_k}{5^k}$.</p></div>
+
+<div class="ex"><div class="num">7E.7 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A=\begin{bmatrix}2&amp;0\\0&amp;-2\end{bmatrix}$ και $\mathbf{x}_0=(1,1)^\top$. (α) Γράψτε το $\mathbf{x}_k$. (β) Δείξτε ότι η ακολουθία $\mathbf{x}_k/2^k$ <em>δεν</em> συγκλίνει και προσδιορίστε τα δύο σημεία συσσώρευσής της. (γ) Ποια υπόθεση του συμπεράσματος «η κατεύθυνση του $\mathbf{x}_k$ τείνει στην κυρίαρχη ιδιοκατεύθυνση» παραβιάζεται εδώ;</p>
+<p class="ypod">Υπόδειξη: συγκρίνετε τα μέτρα των δύο ιδιοτιμών.</p></div>
+
+<div class="grp"><h2>Γ. Ευστάθεια</h2>
+<p class="lead">Ένα και μόνο νούμερο κρίνει τα πάντα: η φασματική ακτίνα $\rho(A)=\max_i|\lambda_i|$ σε σχέση με τη μονάδα.</p></div>
+
+<div class="ex"><div class="num">7E.8 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για καθέναν από τους παρακάτω πίνακες υπολογίστε τη φασματική ακτίνα $\rho(A)$ και χαρακτηρίστε το σύστημα $\mathbf{x}_{k+1}=A\mathbf{x}_k$ ως ασυμπτωτικά ευσταθές, φραγμένο ή ασταθές:
+(α) $\begin{bmatrix}0{,}4&amp;0\\0&amp;-0{,}9\end{bmatrix}$, (β) $\begin{bmatrix}1&amp;0{,}3\\0&amp;0{,}2\end{bmatrix}$, (γ) $\begin{bmatrix}-1{,}1&amp;0\\0{,}5&amp;0{,}3\end{bmatrix}$.</p></div>
+
+<div class="ex"><div class="num">7E.9 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για $A=\begin{bmatrix}0&amp;-0{,}6\\0{,}6&amp;0\end{bmatrix}$ υπολογίστε τις (μιγαδικές) ιδιοτιμές και το μέτρο τους, χαρακτηρίστε την ευστάθεια του $\mathbf{x}_{k+1}=A\mathbf{x}_k$ και περιγράψτε ποιοτικά τις τροχιές στο επίπεδο.</p></div>
+
+<div class="ex"><div class="num">7E.10 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται το σύστημα $\mathbf{x}_{k+1}=\begin{bmatrix}0&amp;1\\-b&amp;0\end{bmatrix}\mathbf{x}_k$ με $b\in\mathbb{R}$. Προσδιορίστε για ποιες τιμές του $b$ το σύστημα είναι ασυμπτωτικά ευσταθές και για ποιες φραγμένο. Διακρίνετε τις περιπτώσεις $b&gt;0$ (μιγαδικές ιδιοτιμές) και $b&lt;0$ (πραγματικές).</p></div>
+
+<div class="ex"><div class="num">7E.11 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A=\begin{bmatrix}0{,}5&amp;a\\0&amp;0{,}5\end{bmatrix}$ με $a\neq0$. (α) Δείξτε ότι ο $A$ δεν είναι διαγωνιοποιήσιμος. (β) Γράφοντας $A=0{,}5\,I+N$ με $N^2=O$, βρείτε κλειστό τύπο για τον $A^k$. (γ) Αποδείξτε ότι $\mathbf{x}_k\to\mathbf{0}$ για κάθε $\mathbf{x}_0$ και για κάθε τιμή του $a$, παρότι ο πίνακας είναι ελλιπής.</p>
+<p class="ypod">Υπόδειξη: στο (γ) χρειάζεστε τη συμπεριφορά της ακολουθίας $k\,r^{k}$ όταν $0&lt;r&lt;1$.</p></div>
+
+<div class="grp"><h2>Δ. Αλυσίδες Markov</h2>
+<p class="lead">Σε στηλο-στοχαστικό πίνακα η ιδιοτιμή $1$ υπάρχει πάντα· το αντίστοιχο ιδιοδιάνυσμα, κανονικοποιημένο, είναι η στάσιμη κατανομή.</p></div>
+
+<div class="ex"><div class="num">7E.12 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνεται $P=\begin{bmatrix}0{,}7&amp;0{,}4\\0{,}3&amp;0{,}6\end{bmatrix}$. Επαληθεύστε ότι είναι στηλο-στοχαστικός και βρείτε τη στάσιμη κατανομή $\boldsymbol{\pi}$ με $P\boldsymbol{\pi}=\boldsymbol{\pi}$ και $\pi_1+\pi_2=1$.</p></div>
+
+<div class="ex"><div class="num">7E.13 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p><strong>Εφαρμογή:</strong> Ένα μηχάνημα παραγωγής βρίσκεται κάθε ημέρα σε μία από δύο καταστάσεις: <em>σε λειτουργία</em> ή <em>εκτός λειτουργίας</em>. Ένα μηχάνημα σε λειτουργία υφίσταται βλάβη μέσα στην ημέρα με πιθανότητα $0{,}1$, ενώ ένα εκτός λειτουργίας επισκευάζεται με πιθανότητα $0{,}6$. (α) Γράψτε τον στηλο-στοχαστικό πίνακα $P$ της αλυσίδας. (β) Βρείτε τη στάσιμη κατανομή. (γ) Βρείτε τη δεύτερη ιδιοτιμή του $P$ και εξηγήστε τι καθορίζει ως προς την ταχύτητα σύγκλισης.</p>
+<p class="ypod">Υπόδειξη: για $2\times2$ πίνακα ισχύει $\lambda_1+\lambda_2=\mathrm{tr}(P)$ και γνωρίζετε ήδη τη μία ιδιοτιμή.</p></div>
+
+<div class="ex"><div class="num">7E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο στηλο-στοχαστικός πίνακας τριών καταστάσεων
+$\displaystyle P=\begin{bmatrix}0{,}5&amp;0{,}2&amp;0\\0{,}5&amp;0{,}6&amp;0{,}3\\0&amp;0{,}2&amp;0{,}7\end{bmatrix}$.
+Επαληθεύστε ότι οι στήλες αθροίζουν στη μονάδα και βρείτε τη στάσιμη κατανομή $\boldsymbol{\pi}$ ως ακριβή κλάσματα.</p>
+<p class="ypod">Υπόδειξη: λύστε το ομογενές σύστημα $(P-I)\boldsymbol{\pi}=\mathbf{0}$ και κανονικοποιήστε στο τέλος· η μία από τις τρεις εξισώσεις είναι περιττή.</p></div>
+
+<div class="grp"><h2>Ε. Φασικά πορτρέτα</h2>
+<p class="lead">Στα συνεχή συστήματα $\dot{\mathbf{x}}=A\mathbf{x}$ τη θέση του μέτρου $|\lambda|$ παίρνει το πρόσημο του $\operatorname{Re}\lambda$.</p></div>
+
+<div class="ex"><div class="num">7E.15 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για καθένα από τα συστήματα $\dot{\mathbf{x}}=A\mathbf{x}$ βρείτε τις ιδιοτιμές και ταξινομήστε το σημείο ισορροπίας $(0,0)$:
+(α) $A=\begin{bmatrix}-4&amp;2\\1&amp;-3\end{bmatrix}$, (β) $A=\begin{bmatrix}1&amp;-2\\1&amp;3\end{bmatrix}$, (γ) $A=\begin{bmatrix}0&amp;3\\-3&amp;0\end{bmatrix}$.</p></div>
+
+<div class="ex"><div class="num">7E.16 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για $\dot{\mathbf{x}}=\begin{bmatrix}1&amp;2\\4&amp;3\end{bmatrix}\mathbf{x}$: βρείτε ιδιοτιμές και ιδιοδιανύσματα, γράψτε τη γενική λύση, ταξινομήστε το σημείο ισορροπίας και προσδιορίστε την <em>ευσταθή</em> και την <em>ασταθή</em> ιδιοκατεύθυνση. Δώστε τέλος τη λύση με αρχική συνθήκη $\mathbf{x}(0)=(2,1)^\top$.</p></div>
+
+<div class="ex"><div class="num">7E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για $\dot{\mathbf{x}}=\begin{bmatrix}-1&amp;-2\\2&amp;-1\end{bmatrix}\mathbf{x}$ υπολογίστε τις ιδιοτιμές, ταξινομήστε το σημείο ισορροπίας και προσδιορίστε (α) τον ρυθμό με τον οποίο συρρικνώνεται το πλάτος της τροχιάς και (β) την περίοδο μιας πλήρους περιστροφής γύρω από την αρχή.</p>
+<p class="ypod">Υπόδειξη: γράψτε $\lambda=\alpha\pm i\beta$· το $\alpha$ ελέγχει το πλάτος και το $\beta$ τη γωνιακή ταχύτητα.</p></div>
+
+<div class="ex"><div class="num">7E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται $\dot{\mathbf{x}}=A\mathbf{x}$ με $A=\begin{bmatrix}-2&amp;1\\0&amp;-2\end{bmatrix}$. (α) Δείξτε ότι η ιδιοτιμή $\lambda=-2$ είναι διπλή με ένα μόνο ανεξάρτητο ιδιοδιάνυσμα $\mathbf{v}$. (β) Βρείτε γενικευμένο ιδιοδιάνυσμα $\mathbf{w}$ με $(A-\lambda I)\mathbf{w}=\mathbf{v}$ και γράψτε τη γενική λύση. (γ) Ταξινομήστε το σημείο ισορροπίας και εξηγήστε γιατί, παρά τον όρο $t\,e^{-2t}$, όλες οι τροχιές καταλήγουν στην αρχή.</p></div>
+
+<div class="grp"><h2>ΣΤ. Εφαρμογές</h2>
+<p class="lead">Το ίδιο κριτήριο εμφανίζεται σε αριθμητικές μεθόδους, σε πληθυσμούς και σε ταλαντώσεις κατασκευών.</p></div>
+
+<div class="ex"><div class="num">7E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p><strong>Εφαρμογή:</strong> Το σφάλμα $\mathbf{e}_k$ μιας επαναληπτικής μεθόδου επίλυσης γραμμικού συστήματος ικανοποιεί $\mathbf{e}_{k+1}=T\mathbf{e}_k$ με $T=\begin{bmatrix}0&amp;0{,}4\\0{,}4&amp;0\end{bmatrix}$. (α) Υπολογίστε τη $\rho(T)$ και εξηγήστε γιατί η μέθοδος συγκλίνει. (β) Βρείτε το ελάχιστο πλήθος επαναλήψεων $k$ ώστε το μέτρο του σφάλματος να έχει μειωθεί κάτω από το $10^{-3}$ του αρχικού.</p></div>
+
+<div class="ex"><div class="num">7E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p><strong>Εφαρμογή:</strong> Πληθυσμός εντόμων χωρίζεται σε νεαρά ($n_k$) και ενήλικα ($e_k$) άτομα, με $n_{k+1}=3e_k$ και $e_{k+1}=0{,}5\,n_k+0{,}5\,e_k$. (α) Γράψτε τον πίνακα $A$ του συστήματος. (β) Βρείτε τις ιδιοτιμές και εξηγήστε αν ο συνολικός πληθυσμός αυξάνεται ή μειώνεται μακροπρόθεσμα, δίνοντας τον ρυθμό μεταβολής ανά χρονικό βήμα επί τοις εκατό. (γ) Βρείτε την οριακή αναλογία νεαρών προς ενήλικα.</p></div>
+
+<div class="ex"><div class="num">7E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p><strong>Εφαρμογή:</strong> Μονοβάθμιο σύστημα με μάζα $m=1000$ kg και δυσκαμψία $k=100\,000$ N/m περιγράφεται από την $m\ddot{x}+c\dot{x}+kx=0$. (α) Υπολογίστε την ιδιοσυχνότητα $\omega_n=\sqrt{k/m}$ και την κρίσιμη απόσβεση $c_{cr}=2\sqrt{km}$. (β) Για ποιες τιμές του $c$ η απόκριση είναι φθίνουσα ταλάντωση; (γ) Για $c=12\,000$ N$\cdot$s/m γράψτε το σύστημα πρώτης τάξης, υπολογίστε τις ιδιοτιμές και τον λόγο απόσβεσης $\zeta=c/c_{cr}$ και ταξινομήστε το σημείο ισορροπίας.</p></div>
+
+<div class="grp"><h2>Ζ. Μεικτά και σύνθετα</h2>
+<p class="lead">Εδώ δεν δίνεται ο δρόμος: αναγνωρίστε πρώτα αν το σύστημα είναι διακριτό ή συνεχές και ποιο κριτήριο ισχύει.</p></div>
+
+<div class="ex"><div class="num">7E.22 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για $A=\begin{bmatrix}2&amp;1\\1&amp;2\end{bmatrix}$ βρείτε τη διαγωνιοποίηση $A=PDP^{-1}$ και δώστε κλειστό τύπο για τον $A^k$ ως πίνακα $2\times2$ με στοιχεία συναρτήσει του $3^k$. Επαληθεύστε το αποτέλεσμα για $k=1$ και $k=2$.</p></div>
+
+<div class="ex"><div class="num">7E.23 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $A=\begin{bmatrix}0{,}5&amp;0\\1&amp;-0{,}9\end{bmatrix}$. (α) Βρείτε τις ιδιοτιμές. (β) Χαρακτηρίστε την ευστάθεια του <em>διακριτού</em> συστήματος $\mathbf{x}_{k+1}=A\mathbf{x}_k$. (γ) Χαρακτηρίστε την ευστάθεια του <em>συνεχούς</em> συστήματος $\dot{\mathbf{x}}=A\mathbf{x}$ και ταξινομήστε το σημείο ισορροπίας του. (δ) Εξηγήστε γιατί τα δύο συμπεράσματα διαφέρουν, αναφερόμενοι στα δύο διαφορετικά κριτήρια.</p></div>
+
+<div class="ex"><div class="num">7E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δύο δεξαμενές ανταλλάσσουν υγρό σύμφωνα με το $\dot{\mathbf{x}}=A\mathbf{x}$, όπου $A=\begin{bmatrix}-2&amp;1\\2&amp;-1\end{bmatrix}$. (α) Παρατηρήστε ότι κάθε στήλη του $A$ αθροίζει στο μηδέν και δείξτε ότι η ποσότητα $x_1(t)+x_2(t)$ παραμένει σταθερή. (β) Βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματα και εξηγήστε γιατί η μηδενική ιδιοτιμή ήταν αναμενόμενη. (γ) Για $\mathbf{x}(0)=(3,0)^\top$ γράψτε τη λύση $\mathbf{x}(t)$ και βρείτε το $\lim_{t\to\infty}\mathbf{x}(t)$, ελέγχοντας ότι το όριο είναι συμβατό με το (α).</p>
+<p class="ypod">Υπόδειξη: το (α) προκύπτει παραγωγίζοντας το άθροισμα και προσθέτοντας κατά μέλη τις δύο εξισώσεις.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">7E.25</div>
+<p>Για το σύστημα $\mathbf{x}_{k+1}=A\mathbf{x}_k$ με $A=\begin{bmatrix}2&amp;0\\0&amp;3\end{bmatrix}$ και $\mathbf{x}_0=\begin{bmatrix}1\\2\end{bmatrix}$, υπολογίστε τα $\mathbf{x}_1$, $\mathbf{x}_2$ και δώστε κλειστό τύπο για το $\mathbf{x}_k$.</p></div>
+<div class="ex from-book"><div class="num">7E.26</div>
+<p>Διαγωνιοποιήστε τον $A=\dfrac{1}{4}\begin{bmatrix}5&amp;3\\3&amp;5\end{bmatrix}$ και υπολογίστε τη λύση $\mathbf{x}_k=A^k\mathbf{x}_0$ για $\mathbf{x}_0=\begin{bmatrix}2\\0\end{bmatrix}$. Ποια είναι η μακροπρόθεσμη συμπεριφορά;</p></div>
+<div class="ex from-book"><div class="num">7E.27</div>
+<p><strong>Απόδειξη:</strong> Αν $A\mathbf{v}=\lambda\mathbf{v}$ και $\mathbf{x}_0=\mathbf{v}$, αποδείξτε με επαγωγή ότι $\mathbf{x}_k=\lambda^k\mathbf{v}$ για κάθε $k\ge0$.</p></div>
+<div class="ex from-book"><div class="num">7E.28</div>
+<p>Για $A=\begin{bmatrix}2&amp;1\\0&amp;1\end{bmatrix}$ και $\mathbf{x}_0=\begin{bmatrix}2\\1\end{bmatrix}$, βρείτε ιδιοτιμές και ιδιοδιανύσματα, αναπτύξτε το $\mathbf{x}_0$ σε βάση ιδιοδιανυσμάτων και δώστε κλειστό τύπο για το $\mathbf{x}_k$.</p></div>
+<div class="ex from-book"><div class="num">7E.29</div>
+<p>Για $A=\begin{bmatrix}3&amp;2\\2&amp;3\end{bmatrix}$ και $\mathbf{x}_0=\begin{bmatrix}4\\2\end{bmatrix}$, βρείτε τη λύση $\mathbf{x}_k$ και υπολογίστε το όριο του $\mathbf{x}_k/5^k$ καθώς $k\to\infty$.</p></div>
+<div class="ex from-book"><div class="num">7E.30</div>
+<p>Αν οι ιδιοτιμές ενός διακριτού συστήματος είναι $\lambda_1=0{,}8$ και $\lambda_2=-0{,}9$, το σύστημα είναι ασταθές, φραγμένο ή ασυμπτωτικά ευσταθές; Αιτιολογήστε.</p></div>
+<div class="ex from-book"><div class="num">7E.31</div>
+<p>Για το <em>διακριτό</em> σύστημα με $A=\begin{bmatrix}0&amp;1\\-0{,}5&amp;1\end{bmatrix}$ βρείτε τις ιδιοτιμές (μιγαδικές) και χαρακτηρίστε τη σταθερότητα.</p></div>
+<div class="ex from-book"><div class="num">7E.32</div>
+<p>Για $A=\begin{bmatrix}0{,}5&amp;0{,}3\\0{,}2&amp;0{,}6\end{bmatrix}$: (α) βρείτε τις ιδιοτιμές, (β) εξετάστε αν $\mathbf{x}_{k}\to\mathbf{0}$, (γ) υπάρχει μη μηδενικό σταθερό διάνυσμα $\mathbf{x}^\ast=A\mathbf{x}^\ast$; Δώστε φυσική ερμηνεία.</p></div>
+<div class="ex from-book"><div class="num">7E.33</div>
+<p>Για τον $P=\begin{bmatrix}0{,}85&amp;0{,}25\\0{,}15&amp;0{,}75\end{bmatrix}$ βρείτε τη στάσιμη κατανομή και τον ρυθμό σύγκλισης προς αυτήν (μέσω της δεύτερης ιδιοτιμής).</p></div>
+<div class="ex from-book"><div class="num">7E.34</div>
+<p>Δείξτε ότι ο $A=\begin{bmatrix}0{,}5&amp;0{,}3\\0{,}5&amp;0{,}7\end{bmatrix}$ είναι στηλο-στοχαστικός και βρείτε το $\lim_{k\to\infty}\mathbf{x}_k$ για $\mathbf{x}_0=(1,0)^\top$.</p></div>
+<div class="ex from-book"><div class="num">7E.35</div>
+<p>Για το σύστημα $\dot{\mathbf{x}}=A\mathbf{x}$ με $A=\begin{bmatrix}1&amp;2\\0&amp;-1\end{bmatrix}$, βρείτε τις ιδιοτιμές, τη γενική λύση και ταξινομήστε το σημείο ισορροπίας.</p></div>
+<div class="ex from-book"><div class="num">7E.36</div>
+<p>Για $\dot{\mathbf{x}}=\begin{bmatrix}-2&amp;0\\0&amp;-3\end{bmatrix}\mathbf{x}$ ταξινομήστε το σημείο ισορροπίας, λύστε με αρχική συνθήκη $\mathbf{x}(0)=(1,2)^\top$ και βρείτε το $\lim_{t\to\infty}\mathbf{x}(t)$.</p></div>
+<div class="ex from-book"><div class="num">7E.37</div>
+<p>Ταξινομήστε το σημείο ισορροπίας του $\dot{\mathbf{x}}=\begin{bmatrix}1&amp;2\\2&amp;1\end{bmatrix}\mathbf{x}$ και σχεδιάστε ποιοτικά το φασικό πορτρέτο.</p></div>
+<div class="ex from-book"><div class="num">7E.38</div>
+<p>Για $A=\begin{bmatrix}-3&amp;1\\1&amp;-3\end{bmatrix}$ βρείτε ιδιοτιμές και ιδιοδιανύσματα και γράψτε τη λύση $\mathbf{x}(t)$ με $\mathbf{x}(0)=(2,-1)^\top$. Ταξινομήστε το σημείο ισορροπίας.</p></div>
+<div class="ex from-book"><div class="num">7E.39</div>
+<p><strong>Θεωρητικό:</strong> Πότε ένα $2\times2$ γραμμικό σύστημα $\dot{\mathbf{x}}=A\mathbf{x}$ έχει <em>κέντρο</em>; Διατυπώστε τις συνθήκες ως προς το ίχνος και την ορίζουσα του $A$ και δώστε ένα αριθμητικό παράδειγμα.</p></div>
+<div class="ex from-book"><div class="num">7E.40</div>
+<p><strong>Εφαρμογή:</strong> Σεισμικός αποσβεστήρας με $m=500$ kg, $k=2000$ N/m και $b=100$ N$\cdot$s/m. Καθορίστε τον τύπο απόσβεσης και ταξινομήστε το σημείο ισορροπίας του φασικού πορτρέτου.</p></div>
+<div class="ex from-book"><div class="num">7E.41</div>
+<p><strong>Εφαρμογή:</strong> Για λόγο απόσβεσης $\zeta=0{,}05$ (τυπικός για κτήριο σκυροδέματος) δείξτε ότι οι ιδιοτιμές είναι μιγαδικές με αρνητικό πραγματικό μέρος και εξηγήστε γιατί η απόκριση είναι φθίνουσα ταλάντωση.</p></div>
+<div class="ex from-book"><div class="num">7E.42</div>
+<p>Εξηγήστε γιατί το φασικό πορτρέτο ενός αποσβεσμένου ταλαντωτή είναι <em>ευσταθής εστία</em>, ενώ χωρίς απόσβεση είναι <em>κέντρο</em>. Συνδέστε την απάντηση με το πραγματικό μέρος των ιδιοτιμών.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">7E.43</div>
+<p>Η εξίσωση $\ddot{x}+5\dot{x}+6x=0$ γράφεται ως $\dot{\mathbf{x}}=A\mathbf{x}$. Βρείτε τον $A$, τις ιδιοτιμές του, ταξινομήστε το σημείο ισορροπίας και χαρακτηρίστε τη σταθερότητα.</p></div>
+<div class="ex from-book"><div class="num">7E.44</div>
+<p>Η εξίσωση $\ddot{x}+2\dot{x}+5x=0$: γράψτε τη ως σύστημα πρώτης τάξης, βρείτε τις ιδιοτιμές και ταξινομήστε το σημείο ισορροπίας. Είναι ευσταθές;</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

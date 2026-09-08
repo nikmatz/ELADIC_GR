@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Γραμμικοί Μετασχηματισμοί</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Γραμμικοί Μετασχηματισμοί</h1>
+  <p class="chapter-label">Κεφάλαιο 4 · Γραμμικοί Μετασχηματισμοί</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα του κεφαλαίου</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Όπου δεν δηλώνεται διαφορετικά, τα διανύσματα γράφονται ως στήλες και οι μήτρες αναφέρονται
+  στην τυπική βάση. Κάθε αποτέλεσμα επαληθεύεται από εσάς: η μήτρα ενός μετασχηματισμού ελέγχεται
+  εφαρμόζοντάς την στα διανύσματα της βάσης, ο πυρήνας και η εικόνα με το θεώρημα βαθμού–μηδενικότητας,
+  ο αντίστροφος με τη σύνθεση και ο γεωμετρικός χαρακτήρας με ένα πρόχειρο σχήμα. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Έλεγχος γραμμικότητας</h2>
+<p class="lead">Η γραμμικότητα αποδεικνύεται για <em>τυχαία</em> διανύσματα, ενώ καταρρίπτεται με ένα και μόνο αντιπαράδειγμα.</p></div>
+
+<div class="ex"><div class="num">4E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε ποιες από τις παρακάτω απεικονίσεις είναι γραμμικοί μετασχηματισμοί:<br>
+(α) $T(x,y)=(3x-2y,\ y)$, &nbsp; (β) $T(x,y)=(x,\ |y|)$, &nbsp;
+(γ) $T(x,y,z)=(x-z,\ 0,\ 2y)$, &nbsp; (δ) $T(x,y)=(x+2,\ y-1)$.</p>
+<p class="ypod">Υπόδειξη: ξεκινήστε από την εικόνα του μηδενικού διανύσματος, είναι ο ταχύτερος έλεγχος.</p></div>
+
+<div class="ex"><div class="num">4E.2 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Στον γραμμικό χώρο $M_{2\times2}(\mathbb{R})$ των πινάκων $2\times2$ θεωρήστε τις απεικονίσεις
+$T(A)=\mathrm{tr}(A)$ και $S(A)=\det(A)$, με τιμές στο $\mathbb{R}$.
+Δείξτε ότι ο $T$ είναι γραμμικός, ενώ ο $S$ δεν είναι.</p>
+<p class="ypod">Υπόδειξη: για τον $S$ εξετάστε την ομογένεια, δηλαδή τη σχέση μεταξύ $S(cA)$ και $c\,S(A)$.</p></div>
+
+<div class="ex"><div class="num">4E.3 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $T:\mathbb{R}^n\to\mathbb{R}^m$ γραμμικός. Αποδείξτε με επαγωγή στο $k$ ότι
+$\displaystyle T\!\left(\sum_{i=1}^{k}c_i\mathbf{v}_i\right)=\sum_{i=1}^{k}c_i\,T(\mathbf{v}_i)$
+για κάθε $c_1,\dots,c_k\in\mathbb{R}$ και $\mathbf{v}_1,\dots,\mathbf{v}_k\in\mathbb{R}^n$.
+Συμπεράνετε ότι ένας γραμμικός μετασχηματισμός καθορίζεται πλήρως από τις τιμές του στα διανύσματα μιας βάσης.</p></div>
+
+<div class="grp"><h2>Β. Μήτρα γραμμικού μετασχηματισμού</h2>
+<p class="lead">Οι στήλες της μήτρας δεν είναι τίποτε άλλο από τις εικόνες των διανυσμάτων της βάσης του χώρου αφετηρίας.</p></div>
+
+<div class="ex"><div class="num">4E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τη μήτρα του $T:\mathbb{R}^2\to\mathbb{R}^3$ με $T(x,y)=(2x-y,\ x+3y,\ y)$ ως προς τις τυπικές βάσεις,
+δηλώστε τις διαστάσεις της και υπολογίστε το $T(1,-2)$.</p></div>
+
+<div class="ex"><div class="num">4E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Ο $T:\mathbb{R}^4\to\mathbb{R}^2$ ορίζεται από $T(x_1,x_2,x_3,x_4)=(x_1-x_3,\ x_2+2x_4)$.
+Γράψτε τη μήτρα του ως προς τις τυπικές βάσεις και υπολογίστε το $T(1,0,1,2)$.</p></div>
+
+<div class="ex"><div class="num">4E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $D:\mathcal{P}_2\to\mathcal{P}_1$ η απεικόνιση της παραγώγισης, $D(p)=p'$.
+(α) Δείξτε ότι ο $D$ είναι γραμμικός. (β) Βρείτε τη μήτρα του ως προς τις βάσεις $\{1,x,x^2\}$ του $\mathcal{P}_2$
+και $\{1,x\}$ του $\mathcal{P}_1$. (γ) Χρησιμοποιήστε τη μήτρα για να υπολογίσετε την παράγωγο του
+$p(x)=4-3x+2x^2$ και επαληθεύστε το αποτέλεσμα με απευθείας παραγώγιση.</p></div>
+
+<div class="grp"><h2>Γ. Πυρήνας και εικόνα</h2>
+<p class="lead">Ο πυρήνας είναι το σύνολο λύσεων ενός ομογενούς συστήματος, ενώ η εικόνα παράγεται από τις στήλες της μήτρας.</p></div>
+
+<div class="ex"><div class="num">4E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για τον $T:\mathbb{R}^3\to\mathbb{R}^2$ με $T(x,y,z)=(x+y+z,\ x+y+z)$ βρείτε μια βάση του $\ker T$,
+μια βάση της $\mathrm{Im}\,T$ και επαληθεύστε το θεώρημα βαθμού–μηδενικότητας.</p></div>
+
+<div class="ex"><div class="num">4E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $A=\begin{bmatrix}1&amp;1&amp;0\\0&amp;1&amp;1\\1&amp;0&amp;-1\end{bmatrix}$ και ο $T(\mathbf{x})=A\mathbf{x}$.
+Βρείτε μια βάση του $\ker T$, μια βάση της $\mathrm{Im}\,T$ και τον βαθμό του $A$. Είναι ο $T$ ένα προς ένα;</p>
+<p class="ypod">Υπόδειξη: παρατηρήστε τη σχέση της τρίτης γραμμής με τις δύο πρώτες πριν ξεκινήσετε την απαλοιφή.</p></div>
+
+<div class="ex"><div class="num">4E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $T:\mathbb{R}^n\to\mathbb{R}^m$ γραμμικός και $\mathbf{v}_1,\dots,\mathbf{v}_k\in\mathbb{R}^n$.
+Δείξτε ότι αν τα $T(\mathbf{v}_1),\dots,T(\mathbf{v}_k)$ είναι γραμμικά ανεξάρτητα, τότε και τα
+$\mathbf{v}_1,\dots,\mathbf{v}_k$ είναι γραμμικά ανεξάρτητα. Ισχύει το αντίστροφο;</p>
+<p class="ypod">Υπόδειξη: για το αντίστροφο αναζητήστε αντιπαράδειγμα με μετασχηματισμό που έχει μη τετριμμένο πυρήνα.</p></div>
+
+<div class="ex"><div class="num">4E.10 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Ζητείται γραμμικός $T:\mathbb{R}^3\to\mathbb{R}^3$ με $\ker T=\mathrm{span}\{(1,1,1)\}$ και
+$\mathrm{Im}\,T$ το επίπεδο $x+y+z=0$. (α) Ελέγξτε με το θεώρημα βαθμού–μηδενικότητας ότι οι δύο
+απαιτήσεις είναι συμβατές. (β) Κατασκευάστε ρητά μια μήτρα $A$ που τις ικανοποιεί και δικαιολογήστε
+την επιλογή των στηλών της. (γ) Είναι ο $T$ επί του $\mathbb{R}^3$;</p></div>
+
+<div class="grp"><h2>Δ. Σύνθεση μετασχηματισμών</h2>
+<p class="lead">Η σύνθεση αντιστοιχεί σε γινόμενο μητρών, με τη σειρά των παραγόντων αντεστραμμένη ως προς τη σειρά εφαρμογής.</p></div>
+
+<div class="ex"><div class="num">4E.11 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Έστω $T:\mathbb{R}^3\to\mathbb{R}^2$ με μήτρα $A=\begin{bmatrix}1&amp;0&amp;-1\\2&amp;1&amp;0\end{bmatrix}$ και
+$S:\mathbb{R}^2\to\mathbb{R}^2$ με μήτρα $B=\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}$.
+Βρείτε τη μήτρα της $S\circ T$ και εξηγήστε γιατί η σύνθεση $T\circ S$ δεν ορίζεται.</p></div>
+
+<div class="ex"><div class="num">4E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ο $T:\mathbb{R}^3\to\mathbb{R}^3$ ορίζεται από $T(\mathbf{e}_1)=\mathbf{e}_2$, $T(\mathbf{e}_2)=\mathbf{e}_3$
+και $T(\mathbf{e}_3)=\mathbf{e}_1$. (α) Γράψτε τη μήτρα $C$ του $T$. (β) Υπολογίστε τις $C^2$ και $C^3$.
+(γ) Βρείτε τον ελάχιστο θετικό ακέραιο $k$ με $C^k=I$ και ερμηνεύστε το αποτέλεσμα.</p></div>
+
+<div class="ex"><div class="num">4E.13 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $T:\mathbb{R}^2\to\mathbb{R}^2$ γραμμικός με $T\circ T=0$ και $T\neq 0$.
+(α) Δείξτε ότι $\mathrm{Im}\,T\subseteq\ker T$. (β) Με το θεώρημα βαθμού–μηδενικότητας δείξτε ότι
+$\mathrm{Im}\,T=\ker T$. (γ) Κατασκευάστε μια μήτρα $2\times2$ με αυτή την ιδιότητα.</p></div>
+
+<div class="grp"><h2>Ε. Γεωμετρικοί μετασχηματισμοί του επιπέδου</h2>
+<p class="lead">Κάθε μήτρα $2\times2$ αφηγείται μια γεωμετρική ιστορία: στροφή, ανάκλαση, κλιμάκωση, προβολή ή στρέβλωση.</p></div>
+
+<div class="ex"><div class="num">4E.14 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Περιγράψτε γεωμετρικά τον μετασχηματισμό $T(\mathbf{x})=A\mathbf{x}$ για:<br>
+(α) $A=\begin{bmatrix}-1&amp;0\\0&amp;-1\end{bmatrix}$, &nbsp;
+(β) $A=\begin{bmatrix}1&amp;0\\0&amp;3\end{bmatrix}$, &nbsp;
+(γ) $A=\begin{bmatrix}0&amp;1\\-1&amp;0\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: παρακολουθήστε τις εικόνες των $\mathbf{e}_1$ και $\mathbf{e}_2$ και σχεδιάστε τις.</p></div>
+
+<div class="ex"><div class="num">4E.15 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Γράψτε τη μήτρα της στροφής κατά $45^\circ$ αντίθετα προς τη φορά των δεικτών του ρολογιού και
+υπολογίστε τις εικόνες των διανυσμάτων $(\sqrt{2},0)^{T}$ και $(0,\sqrt{2})^{T}$.</p></div>
+
+<div class="ex"><div class="num">4E.16 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ένα σχήμα του επιπέδου στρέφεται πρώτα κατά $90^\circ$ και έπειτα κλιμακώνεται κατά συντελεστή $2$
+ως προς τον άξονα $x$ και $\tfrac{1}{2}$ ως προς τον άξονα $y$. (α) Βρείτε τη συνολική μήτρα.
+(β) Υπολογίστε την ορίζουσά της και συμπεράνετε τι συμβαίνει στο εμβαδόν του σχήματος.</p>
+<p class="ypod">Υπόδειξη: προσέξτε τη σειρά των παραγόντων στο γινόμενο των μητρών.</p></div>
+
+<div class="grp"><h2>ΣΤ. Ισομορφισμός και αλλαγή βάσης</h2>
+<p class="lead">Η ίδια απεικόνιση αλλάζει μήτρα όταν αλλάζει η βάση, και η σχέση που συνδέει τις δύο μήτρες είναι η ομοιότητα.</p></div>
+
+<div class="ex"><div class="num">4E.17 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δείξτε ότι ο $T:\mathbb{R}^3\to\mathbb{R}^3$ με $T(x,y,z)=(x+y,\ y+z,\ z)$ είναι ισομορφισμός και
+βρείτε τη μήτρα του αντίστροφου μετασχηματισμού.</p></div>
+
+<div class="ex"><div class="num">4E.18 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι το σύνολο $\mathcal{B}=\{(1,1,0),\,(0,1,1),\,(1,0,1)\}$ είναι βάση του $\mathbb{R}^3$ και
+βρείτε τις συντεταγμένες $[\mathbf{v}]_{\mathcal{B}}$ του $\mathbf{v}=(2,4,2)^{T}$.</p>
+<p class="ypod">Υπόδειξη: για το πρώτο ερώτημα αρκεί μία ορίζουσα.</p></div>
+
+<div class="ex"><div class="num">4E.19 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ο $T:\mathbb{R}^2\to\mathbb{R}^2$ έχει ως προς την τυπική βάση τη μήτρα
+$A=\begin{bmatrix}4&amp;-2\\1&amp;1\end{bmatrix}$. Για τη βάση $\mathcal{B}=\{(1,1),\,(2,1)\}$ υπολογίστε
+τη μήτρα $[T]_{\mathcal{B}}=P^{-1}AP$, όπου $P$ η μήτρα με στήλες τα διανύσματα της $\mathcal{B}$.
+Σχολιάστε τη μορφή που προκύπτει και τι σημαίνει γεωμετρικά για τις δύο κατευθύνσεις της $\mathcal{B}$.</p></div>
+
+<div class="grp"><h2>Ζ. Εφαρμογές στα γραφικά</h2>
+<p class="lead">Στις ομογενείς συντεταγμένες η μετατόπιση γίνεται και αυτή πολλαπλασιασμός με μήτρα $3\times3$.</p></div>
+
+<div class="ex"><div class="num">4E.20 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Γράψτε σε ομογενείς συντεταγμένες τις μήτρες $3\times3$ (α) της μετατόπισης κατά $(3,-2)$ και
+(β) της κλιμάκωσης κατά συντελεστή $2$ και στους δύο άξονες. Εφαρμόστε καθεμία χωριστά στο σημείο $(1,4)$.</p></div>
+
+<div class="ex"><div class="num">4E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Θεωρήστε την ανάκλαση ως προς τον άξονα $y$ ακολουθούμενη από μετατόπιση κατά $(4,0)$.
+(α) Γράψτε τη συνολική μήτρα $3\times3$ σε ομογενείς συντεταγμένες.
+(β) Εφαρμόστε την στο τρίγωνο με κορυφές $(0,0)$, $(1,0)$, $(0,2)$.
+(γ) Δείξτε ότι ο συνολικός μετασχηματισμός είναι ανάκλαση ως προς μια κατακόρυφη ευθεία και προσδιορίστε την.</p>
+<p class="ypod">Υπόδειξη: γράψτε τον τύπο $(x,y)\mapsto(\ldots,\ldots)$ που δίνει η συνολική μήτρα και αναζητήστε τα σταθερά σημεία.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Εδώ συνδυάζονται στην ίδια άσκηση μήτρα, πυρήνας, εικόνα, ορίζουσα και γεωμετρία.</p></div>
+
+<div class="ex"><div class="num">4E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ο γραμμικός $T:\mathbb{R}^2\to\mathbb{R}^2$ απεικονίζει το μοναδιαίο τετράγωνο με κορυφές
+$(0,0)$, $(1,0)$, $(1,1)$, $(0,1)$ στο παραλληλόγραμμο με κορυφές $(0,0)$, $(2,1)$, $(3,3)$, $(1,2)$ αντιστοίχως.
+(α) Βρείτε τη μήτρα του $T$. (β) Υπολογίστε το εμβαδόν της εικόνας. (γ) Είναι ο $T$ αντιστρέψιμος;</p></div>
+
+<div class="ex"><div class="num">4E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται $A=\dfrac{1}{2}\begin{bmatrix}1&amp;\sqrt{3}\\ \sqrt{3}&amp;-1\end{bmatrix}$.
+(α) Δείξτε ότι $A^{2}=I$ και ότι $\det A=-1$. (β) Προσδιορίστε όλα τα διανύσματα $\mathbf{x}$ με $A\mathbf{x}=\mathbf{x}$.
+(γ) Προσδιορίστε όλα τα διανύσματα $\mathbf{x}$ με $A\mathbf{x}=-\mathbf{x}$ και ερμηνεύστε γεωμετρικά τον μετασχηματισμό.</p>
+<p class="ypod">Υπόδειξη: στα ερωτήματα (β) και (γ) γράψτε τη ζητούμενη σχέση ως ομογενές γραμμικό σύστημα $(A\mp I)\mathbf{x}=\mathbf{0}$.</p></div>
+
+<div class="ex"><div class="num">4E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>(α) Δείξτε ότι δεν υπάρχει γραμμικός μετασχηματισμός $T:\mathbb{R}^3\to\mathbb{R}^3$ με $\ker T=\mathrm{Im}\,T$.
+(β) Δείξτε ότι στον $\mathbb{R}^4$ ένας τέτοιος μετασχηματισμός υπάρχει, κατασκευάζοντας ρητά τη μήτρα του
+και επαληθεύοντας και τις δύο απαιτήσεις.</p>
+<p class="ypod">Υπόδειξη: τι λέει το θεώρημα βαθμού–μηδενικότητας για τη διάσταση του χώρου αφετηρίας, αν οι δύο υπόχωροι ταυτίζονται;</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">4E.25</div>
+<p>Βρείτε $\ker(T)$ και $\mathrm{Im}(T)$ για $T\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}x-y\\2x-2y\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">4E.26</div>
+<p>Αν $T: \mathbb{R}^4 \to \mathbb{R}^3$ και $\dim(\ker T)=2$, βρείτε $\dim(\mathrm{Im}\,T)$.</p></div>
+<div class="ex from-book"><div class="num">4E.27</div>
+<p>Έστω $T(x,y,z)=(x+y,\, 2z)$. Βρείτε $\dim(\ker T)$, $\dim(\mathrm{Im}\,T)$ και επαληθεύστε το θεώρημα βαθμού–μηδενικότητας.</p></div>
+<div class="ex from-book"><div class="num">4E.28</div>
+<p>Δείξτε ότι ο μετασχηματισμός $T(x,y)=(x+y, 2x-y)$ είναι γραμμικός. Βρείτε τη μήτρα αναπαράστασής του ως προς την τυπική βάση.</p></div>
+<div class="ex from-book"><div class="num">4E.29</div>
+<p>Για τον μετασχηματισμό $T:\mathbb{R}^2\to\mathbb{R}^2$ με $T(1,0)=(2,3)$ και $T(0,1)=(-1,4)$, υπολογίστε $T(3,2)$ και τη μήτρα αναπαράστασης.</p></div>
+<div class="ex from-book"><div class="num">4E.30</div>
+<p>Αν $A=\begin{bmatrix}1&amp;0\\0&amp;-1\end{bmatrix}$, περιγράψτε γεωμετρικά το $T(\mathbf{x})=A\mathbf{x}$.</p></div>
+<div class="ex from-book"><div class="num">4E.31</div>
+<p>Βρείτε τη μήτρα $T_2 \circ T_1$ για $A_1=\begin{bmatrix}1&amp;2\\0&amp;1\end{bmatrix}$, $A_2=\begin{bmatrix}1&amp;0\\3&amp;1\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">4E.32</div>
+<p>Βρείτε τη μήτρα της σύνθεσης: πρώτα στροφή $90°$, μετά ανάκλαση ως προς την ευθεία $y=x$.</p></div>
+<div class="ex from-book"><div class="num">4E.33</div>
+<p>Αν ο $T_1$ έχει μήτρα $\begin{bmatrix}1&amp;0\\0&amp;2\end{bmatrix}$ και ο $T_2$ μήτρα $\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}$, βρείτε τη μήτρα της σύνθεσης $T_2 \circ T_1$ και συγκρίνετέ την με εκείνη της $T_1\circ T_2$.</p></div>
+<div class="ex from-book"><div class="num">4E.34</div>
+<p>Εφαρμόστε στροφή $30°$ στο διάνυσμα $\mathbf{v}=(2,0)^T$.</p></div>
+<div class="ex from-book"><div class="num">4E.35</div>
+<p>Δείξτε ότι η προβολή $P=\begin{bmatrix}1&amp;0\\0&amp;0\end{bmatrix}$ ικανοποιεί $P^2=P$ και βρείτε τα ιδιοδιανύσματά της.</p></div>
+<div class="ex from-book"><div class="num">4E.36</div>
+<p>Βρείτε τη μήτρα της ανάκλασης ως προς την ευθεία $y=-x$ και ελέγξτε ότι το τετράγωνό της είναι ο μοναδιαίος πίνακας.</p></div>
+<div class="ex from-book"><div class="num">4E.37</div>
+<p>Δείξτε ότι $T: \mathbb{R}^2 \to \mathbb{R}^2$, $T(x,y)=(x+y, x-y)$ είναι ισομορφισμός.</p></div>
+<div class="ex from-book"><div class="num">4E.38</div>
+<p>Αν $\mathbf{b}_1=\begin{bmatrix}2\\1\end{bmatrix}$, $\mathbf{b}_2=\begin{bmatrix}1\\3\end{bmatrix}$, βρείτε τη μήτρα αλλαγής βάσης $P$ και την $P^{-1}$.</p></div>
+<div class="ex from-book"><div class="num">4E.39</div>
+<p>Για τον $A=\begin{bmatrix}0&amp;-1\\1&amp;0\end{bmatrix}$ (στροφή $90°$), βρείτε τη μήτρα σε βάση $\mathcal{B}=\{(1,1),(1,-1)\}/\sqrt{2}$.</p></div>
+<div class="ex from-book"><div class="num">4E.40</div>
+<p>Έστω $\mathcal{B}=\{(1,2),(3,5)\}$ βάση του $\R^2$. Βρείτε τις συντεταγμένες $[\mathbf{v}]_{\mathcal{B}}$ του $\mathbf{v}=(4,9)^T$ και εξηγήστε γιατί η απεικόνιση $\mathbf{v}\mapsto[\mathbf{v}]_{\mathcal{B}}$ είναι ισομορφισμός.</p></div>
+<div class="ex from-book"><div class="num">4E.41</div>
+<p>Ο $T:\mathbb{R}^2\to\mathbb{R}^2$ έχει $[T]_{\mathcal{B}}=\begin{bmatrix}2&amp;0\\0&amp;-1\end{bmatrix}$ ως προς τη βάση $\mathcal{B}=\{(1,1),(1,-1)\}$. Βρείτε τη μήτρα $A$ του $T$ ως προς την <em>τυπική</em> βάση (αντίστροφη κατεύθυνση: $A=P[T]_{\mathcal{B}}P^{-1}$).</p></div>
+<div class="ex from-book"><div class="num">4E.42</div>
+<p>Ένας μετασχηματισμός $T$ ικανοποιεί $T(1,0)=(3,1)$ και $T(1,1)=(4,3)$. (α) Βρείτε τη μήτρα του ως προς την τυπική βάση. (β) Είναι αντιστρέψιμος; (γ) Υπολογίστε το $T^{-1}(1,1)$.</p></div>
+<div class="ex from-book"><div class="num">4E.43</div>
+<p>Γράψτε τη μήτρα $3\times3$ (ομογενείς συντεταγμένες) για στροφή κατά γωνία $\theta=30°$ γύρω από την αρχή. Εφαρμόστε την στο σημείο $(\sqrt{3},1)^T$.</p></div>
+<div class="ex from-book"><div class="num">4E.44</div>
+<p>Γράψτε τη μήτρα αφινικού μετασχηματισμού σε ομογενείς συντεταγμένες: μετατόπιση κατά $(2,3)$ και έπειτα κλιμάκωση κατά $(2,1)$.</p></div>
+<div class="ex from-book"><div class="num">4E.45</div>
+<p>Περιστρέψτε το σημείο $(1,0)$ κατά $45°$ γύρω από το σημείο $(1,1)$ (μετατόπιση (στροφή) αντίστροφη μετατόπιση).</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">4E.46</div>
+<p>Αν $T: \mathbb{R}^5\to\mathbb{R}^3$ και $\mathrm{rank}(T)=2$, ποιο είναι το $\dim(\ker T)$; Δώστε παράδειγμα τέτοιου $T$.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

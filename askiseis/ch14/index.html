@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Ορισμένο Ολοκλήρωμα</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Ορισμένο Ολοκλήρωμα</h1>
+  <p class="chapter-label">Κεφάλαιο 14 · Ορισμένο Ολοκλήρωμα</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά θεματική ενότητα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p><strong>Προσοχή — τι επιτρέπεται.</strong> Το Θεμελιώδες Θεώρημα του Ολοκληρωτικού Λογισμού
+  και ο τύπος Newton&ndash;Leibniz $\displaystyle\int_a^b f(x)\,dx=F(b)-F(a)$ ανήκουν στο Κεφάλαιο 15
+  και <em>δεν</em> επιτρέπεται να χρησιμοποιηθούν εδώ. Εργαλεία σας είναι αποκλειστικά τα Κεφάλαια 0&ndash;14:
+  ο ορισμός ως όριο αθροισμάτων Riemann, τα άνω και κάτω αθροίσματα Darboux, το προσημασμένο
+  εμβαδόν στοιχειωδών σχημάτων, η γραμμικότητα, η προσθετικότητα διαστήματος, η μονοτονία,
+  οι συμμετρίες άρτιας και περιττής συνάρτησης, τα φράγματα $m(b-a)\le\int_a^b f\le M(b-a)$
+  και το Θεώρημα Μέσης Τιμής του Ολοκληρωτικού Λογισμού.</p>
+  <p class="ypod">Κάθε αποτέλεσμα ελέγχεται μόνο του: κάντε πάντα το σχήμα και ρωτήστε αν το πρόσημο και η τάξη μεγέθους
+  της απάντησής σας συμφωνούν με το χωρίο. Κάθε προσέγγιση με άθροισμα Riemann οφείλει να βρίσκεται
+  ανάμεσα στο κάτω και στο άνω άθροισμα της ίδιας διαμέρισης. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Αθροίσματα Riemann</h2>
+<p class="lead">Χτίζετε το άθροισμα, ελέγχετε τη μονοτονία και προβλέπετε το πρόσημο του σφάλματος πριν κάνετε την πράξη.</p></div>
+
+<div class="ex"><div class="num">14E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για την $f(x)=2x+3$ στο $[1,4]$ με $n=3$ ίσα υποδιαστήματα, υπολογίστε το άθροισμα μέσων σημείων $M_3$
+και συγκρίνετέ το με την ακριβή τιμή του $\displaystyle\int_1^4 (2x+3)\,dx$, την οποία βρίσκετε <em>γεωμετρικά</em>
+ως εμβαδόν τραπεζίου. Εξηγήστε γιατί, για κάθε γραμμική συνάρτηση, το άθροισμα μέσων σημείων
+δίνει το ακριβές ολοκλήρωμα για οποιοδήποτε $n$.</p>
+<p class="ypod">Υπόδειξη: σε κάθε υποδιάστημα, το ορθογώνιο ύψους $f$ του μέσου αφήνει απέξω ένα τρίγωνο
+και περικλείει ένα άλλο. Συγκρίνετε τα δύο τρίγωνα.</p></div>
+
+<div class="ex"><div class="num">14E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για την $f(x)=\dfrac{1}{1+x^{2}}$ στο $[0,1]$ με $n=4$, υπολογίστε το άθροισμα δεξιών άκρων $R_4$
+με ακρίβεια τριών δεκαδικών ψηφίων και κρίνετε, χωρίς να γνωρίζετε την ακριβή τιμή του ολοκληρώματος,
+αν υπερεκτιμά ή αν υποεκτιμά το $\displaystyle\int_0^1\frac{dx}{1+x^{2}}$. Αιτιολογήστε από τη μονοτονία της $f$.</p></div>
+
+<div class="ex"><div class="num">14E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Θεωρήστε την $f(x)=x$ στο $[0,1]$ και τη <em>μη ομοιόμορφη</em> διαμέριση
+$P:\ 0&lt;\tfrac14&lt;\tfrac12&lt;1$. Υπολογίστε το κάτω και το άνω άθροισμα Darboux $L(P)$ και $U(P)$,
+επαληθεύστε ότι εγκλωβίζουν την τιμή του $\displaystyle\int_0^1 x\,dx$ (την οποία βρίσκετε γεωμετρικά)
+και βρείτε το πλάτος $U(P)-L(P)$. Στη συνέχεια, προσδιορίστε πόσα ίσα υποδιαστήματα
+αρκούν ώστε μια ομοιόμορφη διαμέριση να δίνει μικρότερο πλάτος από το παραπάνω.</p>
+<p class="ypod">Υπόδειξη: η $f$ είναι αύξουσα, οπότε το $m_i$ και το $M_i$ κάθε υποδιαστήματος εντοπίζονται χωρίς κόπο.
+Προσοχή: τα $\Delta x_i$ δεν είναι όλα ίσα.</p></div>
+
+<div class="grp"><h2>Β. Το ολοκλήρωμα ως όριο διαμερίσεων</h2>
+<p class="lead">Ο ορισμός διαβάζεται και προς τις δύο κατευθύνσεις: από το άθροισμα στο ολοκλήρωμα και αντίστροφα.</p></div>
+
+<div class="ex"><div class="num">14E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Αναγνωρίστε το όριο
+$\displaystyle\lim_{n\to\infty}\sum_{i=1}^{n}\frac{3}{n}\left(1+\frac{3i}{n}\right)^{\!2}$
+ως ορισμένο ολοκλήρωμα, προσδιορίζοντας ρητά το $\Delta x$, τα σημεία $x_i$ και τα άκρα ολοκλήρωσης.
+Δεν ζητείται ο υπολογισμός του.</p></div>
+
+<div class="ex"><div class="num">14E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε <em>απευθείας από τον ορισμό</em>, με ομοιόμορφη διαμέριση και δεξιά άκρα,
+το $\displaystyle\int_1^3 (4-x)\,dx$ και επαληθεύστε το αποτέλεσμα γεωμετρικά, ως εμβαδόν τραπεζίου.</p>
+<p class="ypod">Υπόδειξη: $\Delta x=\dfrac{2}{n}$, $x_i=1+\dfrac{2i}{n}$ και $\displaystyle\sum_{i=1}^{n} i=\frac{n(n+1)}{2}$.</p></div>
+
+<div class="ex"><div class="num">14E.6 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>(α) Αποδείξτε, απευθείας από τον ορισμό, ότι $\displaystyle\int_0^{b} x^{2}\,dx=\frac{b^{3}}{3}$ για κάθε $b&gt;0$.
+(β) Συμπεράνετε, με την προσθετικότητα του διαστήματος και <em>χωρίς νέο όριο</em>, ότι
+$\displaystyle\int_a^{b} x^{2}\,dx=\frac{b^{3}-a^{3}}{3}$ για $0&lt;a&lt;b$.</p>
+<p class="ypod">Υπόδειξη: $\displaystyle\sum_{i=1}^{n} i^{2}=\frac{n(n+1)(2n+1)}{6}$. Στο (β) γράψτε το $[0,b]$ ως ένωση δύο διαστημάτων.</p></div>
+
+<div class="grp"><h2>Γ. Ιδιότητες του ορισμένου ολοκληρώματος</h2>
+<p class="lead">Συνδυάζετε γνωστές τιμές αλγεβρικά, χωρίς να γνωρίζετε τις ίδιες τις συναρτήσεις.</p></div>
+
+<div class="ex"><div class="num">14E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνονται $\displaystyle\int_{-1}^{4} f(x)\,dx=10$, $\displaystyle\int_{-1}^{2} f(x)\,dx=3$ και
+$\displaystyle\int_{2}^{4} g(x)\,dx=-5$. Υπολογίστε:
+(α) $\displaystyle\int_{2}^{4} f(x)\,dx$, \;
+(β) $\displaystyle\int_{4}^{2} f(x)\,dx$, \;
+(γ) $\displaystyle\int_{2}^{4}\bigl(3f(x)-2g(x)+1\bigr)\,dx$.</p></div>
+
+<div class="ex"><div class="num">14E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για μια συνεχή $f$ στο $[0,6]$ δίνονται $\displaystyle\int_0^2 f=4$, $\displaystyle\int_0^4 f=9$
+και $\displaystyle\int_0^6 f=5$. (α) Υπολογίστε τα $\displaystyle\int_2^6 f$ και $\displaystyle\int_4^6 f$.
+(β) Αποδείξτε ότι η $f$ παίρνει αρνητικές τιμές σε κάποιο σημείο του $[4,6]$.</p>
+<p class="ypod">Υπόδειξη: στο (β) χρησιμοποιήστε την ιδιότητα της θετικότητας, απαγωγή σε άτοπο.</p></div>
+
+<div class="ex"><div class="num">14E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $f$ συνεχής στο $[0,4]$ με $\displaystyle\int_0^4 f(x)\,dx=12$ και $0\le f(x)\le 5$ για κάθε $x\in[0,4]$.
+(α) Δείξτε ότι υπάρχει $x_0\in[0,4]$ με $f(x_0)&gt;2$.
+(β) Βρείτε ένα κάτω και ένα άνω φράγμα για το $\displaystyle\int_0^2 f(x)\,dx$, όσο πιο σφιχτά μπορείτε.</p>
+<p class="ypod">Υπόδειξη: στο (β) γράψτε το ζητούμενο ως $\int_0^4 f-\int_2^4 f$ και φράξτε τον αφαιρετέο όρο.</p></div>
+
+<div class="grp"><h2>Δ. Προσημασμένο εμβαδόν</h2>
+<p class="lead">Σχεδιάζετε πρώτα το χωρίο: το πρόσημο κάθε κομματιού το διαβάζετε από το σχήμα.</p></div>
+
+<div class="ex"><div class="num">14E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε <em>γεωμετρικά</em> τα $\displaystyle\int_{-2}^{3}(x-1)\,dx$ και $\displaystyle\int_{-2}^{3}|x-1|\,dx$
+και εξηγήστε ακριβώς από πού προκύπτει η διαφορά των δύο αποτελεσμάτων.</p></div>
+
+<div class="ex"><div class="num">14E.11 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε γεωμετρικά το $\displaystyle\int_{-3}^{0}\sqrt{9-x^{2}}\,dx$ και περιγράψτε ποιο τμήμα
+του κυκλικού δίσκου αντιστοιχεί στο χωρίο ολοκλήρωσης.</p>
+<p class="ypod">Υπόδειξη: η γραφική παράσταση της $y=\sqrt{9-x^{2}}$ είναι το άνω ημικύκλιο ακτίνας $3$ με κέντρο την αρχή.</p></div>
+
+<div class="ex"><div class="num">14E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $f$ γραμμική κατά τμήματα στο $[0,6]$, με διαδοχικά άκρα ευθυγράμμων τμημάτων
+τα σημεία $(0,-2)$, $(2,0)$, $(3,3)$, $(5,3)$ και $(6,0)$. Σχεδιάστε τη γραφική παράσταση
+και υπολογίστε γεωμετρικά τα $\displaystyle\int_0^6 f(x)\,dx$ και $\displaystyle\int_0^6 |f(x)|\,dx$,
+ερμηνεύοντας τη διαφορά τους.</p>
+<p class="ypod">Υπόδειξη: σπάστε το $[0,6]$ στα σημεία όπου αλλάζει ο τύπος της $f$ και χρησιμοποιήστε την προσθετικότητα διαστήματος.</p></div>
+
+<div class="grp"><h2>Ε. Συμμετρίες άρτιων και περιττών συναρτήσεων</h2>
+<p class="lead">Πριν από κάθε υπολογισμό, ελέγχετε αν το διάστημα είναι συμμετρικό και ποια είναι η αρτιότητα της συνάρτησης.</p></div>
+
+<div class="ex"><div class="num">14E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξηγήστε, <em>χωρίς κανέναν υπολογισμό</em>, γιατί μηδενίζονται τα ολοκληρώματα
+$\displaystyle\int_{-\pi}^{\pi} x\cos x\,dx$ και $\displaystyle\int_{-2}^{2}\frac{x^{3}}{1+x^{4}}\,dx$.
+Ποια ιδιότητα κάθε ολοκληρωτέας συνάρτησης χρησιμοποιείτε κάθε φορά;</p></div>
+
+<div class="ex"><div class="num">14E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δεδομένου ότι $\displaystyle\int_0^2 x^{2}\,dx=\frac{8}{3}$, υπολογίστε το
+$\displaystyle\int_{-2}^{2}\bigl(3x^{2}-5x^{3}+4\bigr)\,dx$, δικαιολογώντας ξεχωριστά τη συνεισφορά κάθε όρου.</p></div>
+
+<div class="ex"><div class="num">14E.15 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $f$ άρτια και $g$ περιττή, αμφότερες ολοκληρώσιμες στο $[-a,a]$.
+(α) Δείξτε ότι το γινόμενο $f\cdot g$ είναι περιττή συνάρτηση και συμπεράνετε ότι
+$\displaystyle\int_{-a}^{a} f(x)g(x)\,dx=0$.
+(β) Αν επιπλέον $\displaystyle\int_0^{3} f(x)\,dx=7$, βρείτε τα $\displaystyle\int_{-3}^{3} f(x)\,dx$ και
+$\displaystyle\int_{-3}^{0} f(x)\,dx$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Μέση τιμή συνάρτησης</h2>
+<p class="lead">Η μέση τιμή είναι το ύψος του ορθογωνίου που έχει το ίδιο εμβαδόν με το χωρίο.</p></div>
+
+<div class="ex"><div class="num">14E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε γεωμετρικά τη μέση τιμή $\bar f$ της $f(x)=5-2x$ στο $[1,4]$ και το σημείο $\xi$
+του Θεωρήματος Μέσης Τιμής του Ολοκληρωτικού Λογισμού. Ερμηνεύστε το αποτέλεσμα με βάση
+τα πρόσημα των δύο τμημάτων του χωρίου.</p></div>
+
+<div class="ex"><div class="num">14E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Η μέση τιμή μιας συνεχούς συνάρτησης $f$ είναι $4$ στο διάστημα $[0,3]$ και $1$ στο $[3,7]$.
+Βρείτε τη μέση τιμή της $f$ στο $[0,7]$ και εξηγήστε γιατί δεν ισούται με τον αριθμητικό
+μέσο $\tfrac{4+1}{2}$ των δύο τιμών.</p>
+<p class="ypod">Υπόδειξη: γυρίστε κάθε μέση τιμή σε ολοκλήρωμα πριν τα συνδυάσετε.</p></div>
+
+<div class="ex"><div class="num">14E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $f$ συνεχής και γνησίως αύξουσα στο $[a,b]$. Αποδείξτε ότι η μέση τιμή της
+ικανοποιεί $f(a)&lt;\bar f&lt;f(b)$ και ότι το σημείο $\xi$ του Θεωρήματος Μέσης Τιμής είναι μοναδικό.</p>
+<p class="ypod">Υπόδειξη: για τις αυστηρές ανισότητες χρειάζεστε ότι το ολοκλήρωμα μιας συνεχούς μη αρνητικής
+συνάρτησης που δεν είναι ταυτοτικά μηδέν είναι γνησίως θετικό.</p></div>
+
+<div class="grp"><h2>Ζ. Εκτιμήσεις και ανισότητες</h2>
+<p class="lead">Φράσσετε πρώτα την ολοκληρωτέα συνάρτηση και η μονοτονία της ολοκλήρωσης κάνει τα υπόλοιπα.</p></div>
+
+<div class="ex"><div class="num">14E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δείξτε, <em>χωρίς να υπολογίσετε το ολοκλήρωμα</em>, ότι
+$\displaystyle 2\le\int_0^{2}\sqrt{1+x^{3}}\,dx\le 6$.</p></div>
+
+<div class="ex"><div class="num">14E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>(α) Αποδείξτε ότι $\ln x\le x-1$ για κάθε $x&gt;0$.
+(β) Συμπεράνετε, με τη μονοτονία της ολοκλήρωσης, ότι
+$\displaystyle 0\le\int_1^{2}\ln x\,dx\le\frac{1}{2}$, όπου το άνω φράγμα προκύπτει γεωμετρικά, ως εμβαδόν τριγώνου.</p>
+<p class="ypod">Υπόδειξη: στο (α) μελετήστε τη μονοτονία της $h(x)=x-1-\ln x$ με τα εργαλεία του Κεφ. 11.</p></div>
+
+<div class="ex"><div class="num">14E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $f$ συνεχής στο $[0,1]$ με $0\le f(x)\le 1$ για κάθε $x$.
+(α) Δείξτε ότι $\displaystyle\int_0^1 \bigl(f(x)\bigr)^{2}dx\le\int_0^1 f(x)\,dx$.
+(β) Αποδείξτε ότι η ισότητα ισχύει αν και μόνο αν η $f$ είναι σταθερή, ίση με $0$ ή με $1$.</p>
+<p class="ypod">Υπόδειξη: εξετάστε το πρόσημο της διαφοράς $f-f^{2}$ και, στο (β), συνδυάστε με το θεώρημα ενδιάμεσων τιμών.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα</h2>
+<p class="lead">Εδώ δεν δίνεται το εργαλείο: αναγνωρίζετε πρώτα ποια ιδιότητα ανοίγει το πρόβλημα.</p></div>
+
+<div class="ex"><div class="num">14E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για κάθε συνάρτηση $h$ ολοκληρώσιμη στο $[-a,a]$ ορίζουμε
+$h_{+}(x)=\dfrac{h(x)+h(-x)}{2}$ και $h_{-}(x)=\dfrac{h(x)-h(-x)}{2}$.
+(α) Δείξτε ότι η $h_{+}$ είναι άρτια, η $h_{-}$ περιττή και $h=h_{+}+h_{-}$.
+(β) Συμπεράνετε ότι $\displaystyle\int_{-a}^{a} h(x)\,dx=2\int_0^{a} h_{+}(x)\,dx$.
+(γ) Εφαρμόστε το για την $h(x)=(x+1)^{2}$ στο $[-1,1]$, δεδομένου ότι $\displaystyle\int_0^1 x^{2}\,dx=\frac{1}{3}$.</p></div>
+
+<div class="ex"><div class="num">14E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $f,g$ συνεχείς στο $[a,b]$ με $\displaystyle\int_a^b f(x)\,dx=\int_a^b g(x)\,dx$.
+Αποδείξτε ότι υπάρχει $\xi\in[a,b]$ με $f(\xi)=g(\xi)$.</p>
+<p class="ypod">Υπόδειξη: εργαστείτε με τη διαφορά των δύο συναρτήσεων και υποθέστε, για άτοπο, ότι δεν μηδενίζεται πουθενά.</p></div>
+
+<div class="ex"><div class="num">14E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Γράψτε το όριο
+$\displaystyle\lim_{n\to\infty}\left(\frac{1}{n+1}+\frac{1}{n+2}+\cdots+\frac{1}{2n}\right)$
+ως ορισμένο ολοκλήρωμα στο $[0,1]$ και, <em>χωρίς να το υπολογίσετε</em>, δείξτε ότι η τιμή του
+ανήκει στο διάστημα $\left[\tfrac{1}{2},1\right]$.</p>
+<p class="ypod">Υπόδειξη: βγάλτε κοινό παράγοντα $\tfrac{1}{n}$ για να αναγνωρίσετε το $\Delta x$ και τα $x_i=\tfrac{i}{n}$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">14E.25</div>
+<p>Για την $f(x)=x^2$ στο $[0,2]$ με $n=4$, υπολογίστε το άθροισμα αριστερών άκρων $L_4$ και δείξτε ότι $L_4\le\displaystyle\int_0^2x^2\,dx\le R_4$, όπου $R_4$ το αντίστοιχο άθροισμα δεξιών άκρων (υπολογίστε το κι αυτό). Εξηγήστε γιατί ισχύει αυτός ο εγκλωβισμός για αύξουσα $f$.</p></div>
+<div class="ex from-book"><div class="num">14E.26</div>
+<p>Για την $f(x)=x+1$ στο $[0,4]$ με $n=4$, υπολογίστε τα $L_4$ και $R_4$ και δείξτε ότι ο μέσος όρος τους ισούται <em>ακριβώς</em> με την τιμή του ολοκληρώματος (εμβαδόν τραπεζίου). Γιατί συμβαίνει αυτό για γραμμικές συναρτήσεις;</p></div>
+<div class="ex from-book"><div class="num">14E.27</div>
+<p>Για την $f(x)=\sqrt{x}$ στο $[0,4]$ με $n=4$, υπολογίστε το $R_4$ με ακρίβεια τριών δεκαδικών ψηφίων.</p></div>
+<div class="ex from-book"><div class="num">14E.28</div>
+<p>Για την $f(x)=x^3$ στο $[0,1]$ με $n=5$, υπολογίστε τα $L_5$ και $R_5$ και δώστε φράγματα για το $\displaystyle\int_0^1 x^3\,dx$.</p></div>
+<div class="ex from-book"><div class="num">14E.29</div>
+<p>Για την $f(x)=e^{-x}$ στο $[0,1]$ με $n=4$, υπολογίστε το άθροισμα μέσων σημείων $M_4$.</p></div>
+<div class="ex from-book"><div class="num">14E.30</div>
+<p>Για την $f(x)=\dfrac{1}{x}$ στο $[1,2]$ με $n=4$, υπολογίστε τα $L_4$ και $R_4$ και επαληθεύστε ότι $L_4-R_4=\bigl(f(1)-f(2)\bigr)\Delta x$. Εξηγήστε γιατί ο τύπος αυτός ισχύει για κάθε μονότονη $f$.</p></div>
+<div class="ex from-book"><div class="num">14E.31</div>
+<p>Γράψτε ως ορισμένο ολοκλήρωμα το όριο $\displaystyle\lim_{n\to\infty}\sum_{i=1}^{n}\frac{1}{n}\sqrt{\frac{i}{n}}$, αναγνωρίζοντας το $\Delta x$ και το $x_i$.</p></div>
+<div class="ex from-book"><div class="num">14E.32</div>
+<p>Υπολογίστε από τον ορισμό (δεξιά άκρα) το $\displaystyle\int_0^2 (2x+1)\,dx$ και επαληθεύστε γεωμετρικά.</p></div>
+<div class="ex from-book"><div class="num">14E.33</div>
+<p>Υπολογίστε από τον ορισμό το $\displaystyle\int_0^1 x^3\,dx$ (υπόδειξη: $\sum_{i=1}^{n} i^3=\left[\tfrac{n(n+1)}{2}\right]^2$).</p></div>
+<div class="ex from-book"><div class="num">14E.34</div>
+<p>Αναγνωρίστε το όριο $\displaystyle\lim_{n\to\infty}\sum_{i=1}^{n}\frac{\pi}{n}\sin\!\left(\frac{i\pi}{n}\right)$ ως ορισμένο ολοκλήρωμα και γράψτε το.</p></div>
+<div class="ex from-book"><div class="num">14E.35</div>
+<p>Υπολογίστε το $\displaystyle\int_0^3(2x+1)\,dx$ <em>γεωμετρικά</em> (εμβαδόν τραπεζίου) και επαληθεύστε προσεγγιστικά με άθροισμα Riemann δεξιών άκρων για $n=3$.</p></div>
+<div class="ex from-book"><div class="num">14E.36</div>
+<p>Υπολογίστε γεωμετρικά το $\displaystyle\int_{-2}^{2}\sqrt{4-x^2}\,dx$ (ημικύκλιο ακτίνας $2$).</p></div>
+<div class="ex from-book"><div class="num">14E.37</div>
+<p>Υπολογίστε γεωμετρικά το $\displaystyle\int_0^2|x-1|\,dx$ (δύο τρίγωνα).</p></div>
+<div class="ex from-book"><div class="num">14E.38</div>
+<p>Δείξτε γεωμετρικά ότι $\displaystyle\int_{-1}^{1}3x\,dx=0$ και γενικεύστε: για κάθε περιττή $f$ ισχύει $\displaystyle\int_{-a}^{a}f(x)\,dx=0$.</p></div>
+<div class="ex from-book"><div class="num">14E.39</div>
+<p>Υπολογίστε γεωμετρικά το $\displaystyle\int_0^5(3-x)\,dx$ και εξηγήστε ποιο μέρος του χωρίου μετράει <em>αρνητικά</em>.</p></div>
+<div class="ex from-book"><div class="num">14E.40</div>
+<p>Αν $\displaystyle\int_0^4 f(x)\,dx=9$ και $\displaystyle\int_0^1 f(x)\,dx=2$, βρείτε το $\displaystyle\int_1^4 f(x)\,dx$ και τη μέση τιμή της $f$ στο $[1,4]$.</p></div>
+<div class="ex from-book"><div class="num">14E.41</div>
+<p>Αν $\displaystyle\int_0^5 f(x)\,dx=10$ και $\displaystyle\int_0^2 f(x)\,dx=4$, βρείτε το $\displaystyle\int_2^5 f(x)\,dx$.</p></div>
+<div class="ex from-book"><div class="num">14E.42</div>
+<p>Διασπώντας σε περιττό και άρτιο μέρος, υπολογίστε το $\displaystyle\int_{-1}^{1}(x^3+x^2)\,dx$, δεδομένου ότι $\displaystyle\int_0^1 x^2\,dx=\tfrac{1}{3}$.</p></div>
+<div class="ex from-book"><div class="num">14E.43</div>
+<p>Δείξτε, <em>χωρίς υπολογισμό</em>, ότι $\dfrac{1}{2}\leq\displaystyle\int_0^1\frac{dx}{1+x}\leq 1$.</p></div>
+<div class="ex from-book"><div class="num">14E.44</div>
+<p>Χρησιμοποιώντας τα φράγματα $m(b-a)\le\displaystyle\int_a^b f\le M(b-a)$, δείξτε ότι $0\le\displaystyle\int_0^1 x^2 e^{-x}\,dx\le 1$ και, παρατηρώντας ότι $e^{-x}\le 1$ στο $[0,1]$, βελτιώστε το άνω φράγμα σε $\tfrac{1}{3}$.</p></div>
+<div class="ex from-book"><div class="num">14E.45</div>
+<p>Έστω $f$ συνεχής στο $[0,1]$ με $2\leq f(x)\leq 5$ για κάθε $x$. Τι μπορείτε να πείτε για το $\displaystyle\int_0^1 f(x)\,dx$ και για τη μέση τιμή $\bar f$;</p></div>
+<div class="ex from-book"><div class="num">14E.46</div>
+<p>Για την $f(x)=x^2$ στο $[0,2]$ βρείτε το $\xi$ του Θεωρήματος Μέσης Τιμής του Ολοκληρωτικού Λογισμού, δεδομένου ότι $\displaystyle\int_0^2 x^2\,dx=\tfrac{8}{3}$.</p></div>
+<div class="ex from-book"><div class="num">14E.47</div>
+<p>Δείξτε, <em>χωρίς υπολογισμό</em>, ότι η μέση τιμή της $\sin x$ στο $[0,\pi]$ βρίσκεται αυστηρά ανάμεσα στο $0$ και το $1$.</p></div>
+<div class="ex from-book"><div class="num">14E.48</div>
+<p><strong>Μέση θερμοκρασία:</strong> Η θερμοκρασία αυξάνεται γραμμικά από $10\,^{\circ}$C σε $26\,^{\circ}$C μέσα σε $8$ ώρες. Βρείτε γεωμετρικά τη μέση θερμοκρασία του διαστήματος και τη χρονική στιγμή στην οποία επιτυγχάνεται.</p></div>
+<div class="ex from-book"><div class="num">14E.49</div>
+<p><strong>Μέση ταχύτητα:</strong> Όχημα κινείται με $v(t)=20+5t$ (m/s) για $t\in[0,4]$ s. Υπολογίστε <em>γεωμετρικά</em> τη μετατόπιση και τη μέση ταχύτητα και επαληθεύστε ότι η μέση ταχύτητα ισούται με $v(2)$.</p></div>
+<div class="ex from-book"><div class="num">14E.50</div>
+<p><strong>Μάζα καλωδίου:</strong> Καλώδιο μήκους $4$ m έχει γραμμική πυκνότητα $\lambda(x)=2+0{,}5x$ (kg/m). Εκφράστε τη μάζα ως ορισμένο ολοκλήρωμα (όριο αθροισμάτων Riemann) και υπολογίστε τη <em>γεωμετρικά</em>.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">14E.51</div>
+<p>Έστω $f$ συνεχής στο $[0,1]$. Δείξτε ότι υπάρχει $\xi\in[0,1]$ με $\displaystyle\int_0^1 f(x)\,dx=f(\xi)$ και δώστε τη γεωμετρική ερμηνεία (ισοδύναμο ορθογώνιο ίδιου εμβαδού).</p></div>
+<div class="ex from-book"><div class="num">14E.52</div>
+<p>Γράψτε το $\displaystyle\lim_{n\to\infty}\sum_{i=1}^{n}\frac{i}{n^2}$ ως ορισμένο ολοκλήρωμα και υπολογίστε το από τον ορισμό.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Αόριστο Ολοκλήρωμα</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Αόριστο Ολοκλήρωμα</h1>
+  <p class="chapter-label">Κεφάλαιο 13 · Αόριστο Ολοκλήρωμα</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες
+  <em>ανά τύπο ολοκληρώματος</em> και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p>Χρειάζεστε αποκλειστικά τα εργαλεία των Κεφαλαίων 0&ndash;13: τον πίνακα των βασικών
+  ολοκληρωμάτων, τη γραμμικότητα, τη γραμμική αντικατάσταση $\displaystyle\int f(ax+b)\,dx$,
+  τον λογαριθμικό κανόνα $\displaystyle\int \frac{f'(x)}{f(x)}\,dx$ και την απλή αντικατάσταση $u$.
+  Σε αρκετές περιπτώσεις μια αλγεβρική ή τριγωνομετρική απλοποίηση <em>πριν</em> από την
+  ολοκλήρωση καθιστά περιττή κάθε τεχνική.</p>
+  <p class="ypod">Σε κάθε αόριστο ολοκλήρωμα εννοείται η σταθερά $+C$. Το αποτέλεσμα κάθε άσκησης
+  ελέγχεται πάντα με παραγώγιση: αν η παράγωγος της αντιπαραγώγου σας δίνει την ολοκληρωτέα
+  συνάρτηση, η λύση είναι σωστή. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Βασικοί τύποι και γραμμικότητα</h2>
+<p class="lead">Αναλύστε το ολοκλήρωμα σε επιμέρους όρους και διαβάστε αντίστροφα τον πίνακα των παραγώγων.</p></div>
+
+<div class="ex"><div class="num">13E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \left(6x^{5}-8x^{3}+5\right)dx$.</p></div>
+
+<div class="ex"><div class="num">13E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \left(2\sec^{2}x+\frac{5}{1+x^{2}}-3e^{x}\right)dx$.</p></div>
+
+<div class="ex"><div class="num">13E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int 2^{x}\,3^{x}\,dx$.</p>
+<p class="ypod">Υπόδειξη: γράψτε πρώτα το γινόμενο ως δύναμη μίας μόνο βάσης και έπειτα εφαρμόστε τον τύπο του πίνακα για την $a^{x}$.</p></div>
+
+<div class="grp"><h2>Β. Δυνάμεις, ρίζες και κλάσματα</h2>
+<p class="lead">Μετατρέψτε κάθε ρίζα και κάθε κλάσμα σε δύναμη $x^{n}$ και μετά εφαρμόστε τον κανόνα δύναμης.</p></div>
+
+<div class="ex"><div class="num">13E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \left(\frac{5}{x^{3}}+4\sqrt[3]{x}\right)dx$, για $x&gt;0$.</p></div>
+
+<div class="ex"><div class="num">13E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{x^{3}-2\sqrt{x}+1}{x^{2}}\,dx$, για $x&gt;0$.</p>
+<p class="ypod">Υπόδειξη: χωρίστε το κλάσμα σε τρεις όρους και αφαιρέστε τους εκθέτες· προσέξτε τον ημιακέραιο εκθέτη του μεσαίου όρου.</p></div>
+
+<div class="ex"><div class="num">13E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{x^{4}+2x^{2}+1}{x^{2}+1}\,dx$.</p>
+<p class="ypod">Υπόδειξη: ο αριθμητής είναι τέλειο τετράγωνο· η απλοποίηση κάνει περιττή κάθε τεχνική ολοκλήρωσης.</p></div>
+
+<div class="grp"><h2>Γ. Εκθετικές και λογαριθμικές</h2>
+<p class="lead">Άμεσοι τύποι του πίνακα, σε συνδυασμό με τη γραμμική αντικατάσταση $ax+b$ όπου χρειάζεται.</p></div>
+
+<div class="ex"><div class="num">13E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \left(3e^{x}-e^{-2x}\right)dx$.</p></div>
+
+<div class="ex"><div class="num">13E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{1+\ln x}{x}\,dx$, για $x&gt;0$.</p>
+<p class="ypod">Υπόδειξη: θέστε $u=\ln x$ και παρατηρήστε ποιος παράγοντας αποτελεί το $du$.</p></div>
+
+<div class="ex"><div class="num">13E.9 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{dx}{e^{x}+e^{-x}}$.</p>
+<p class="ypod">Υπόδειξη: πολλαπλασιάστε αριθμητή και παρονομαστή με $e^{x}$ και στη συνέχεια θέστε $u=e^{x}$· θα αναγνωρίσετε έναν τύπο του βασικού πίνακα.</p></div>
+
+<div class="grp"><h2>Δ. Τριγωνομετρικά</h2>
+<p class="lead">Πριν ολοκληρώσετε, εξετάστε αν κάποια τριγωνομετρική ταυτότητα ανάγει τον ολοκληρωτέο σε όρο του πίνακα.</p></div>
+
+<div class="ex"><div class="num">13E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \left(3\sin x-\frac{2}{\cos^{2}x}\right)dx$.</p></div>
+
+<div class="ex"><div class="num">13E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \left(\sin x+\cos x\right)^{2}dx$.</p>
+<p class="ypod">Υπόδειξη: αναπτύξτε το τετράγωνο και χρησιμοποιήστε τη θεμελιώδη ταυτότητα μαζί με την ταυτότητα του διπλάσιου τόξου.</p></div>
+
+<div class="ex"><div class="num">13E.12 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{\cos 2x}{\cos x-\sin x}\,dx$, σε διάστημα όπου $\cos x\neq\sin x$.</p>
+<p class="ypod">Υπόδειξη: γράψτε το $\cos 2x$ ως διαφορά τετραγώνων και απλοποιήστε το κλάσμα.</p></div>
+
+<div class="grp"><h2>Ε. Απλή αντικατάσταση</h2>
+<p class="lead">Αναζητήστε μέσα στο ολοκλήρωμα το ζεύγος «συνάρτηση &ndash; παράγωγός της» και θέστε $u$ την εσωτερική συνάρτηση.</p></div>
+
+<div class="ex"><div class="num">13E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int x^{2}e^{-x^{3}}\,dx$.</p></div>
+
+<div class="ex"><div class="num">13E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{dx}{x\sqrt{\ln x}}$, για $x&gt;1$.</p>
+<p class="ypod">Υπόδειξη: με $u=\ln x$ το ολοκλήρωμα ανάγεται σε απλό κανόνα δύναμης με αρνητικό ημιακέραιο εκθέτη.</p></div>
+
+<div class="ex"><div class="num">13E.15 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{dx}{1+\sqrt{x+1}}$, για $x&gt;-1$.</p>
+<p class="ypod">Υπόδειξη: θέστε $u=\sqrt{x+1}$, οπότε $x=u^{2}-1$ και $dx=2u\,du$· στη συνέχεια εκτελέστε τη διαίρεση $\dfrac{u}{1+u}$ γράφοντάς την ως $1-\dfrac{1}{1+u}$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Αντιπαράγωγος με αρχική συνθήκη</h2>
+<p class="lead">Πρώτα η γενική αντιπαράγωγος με τη σταθερά και έπειτα η αρχική συνθήκη, η οποία προσδιορίζει τη σταθερά.</p></div>
+
+<div class="ex"><div class="num">13E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τη συνάρτηση $f$ για την οποία ισχύει $f'(x)=6x^{2}-4\sin x$ και $f(0)=3$.</p></div>
+
+<div class="ex"><div class="num">13E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Λύστε το πρόβλημα αρχικών τιμών $y'=\dfrac{x}{\sqrt{x^{2}+9}}$ με $y(0)=5$.</p>
+<p class="ypod">Υπόδειξη: η αντικατάσταση $u=x^{2}+9$ δίνει τη γενική λύση· η αρχική συνθήκη εφαρμόζεται στο τέλος.</p></div>
+
+<div class="ex"><div class="num">13E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Βρείτε τη συνάρτηση $f$ για την οποία ισχύουν $f''(x)=4e^{2x}$, $f'(0)=1$ και $f(0)=0$.</p>
+<p class="ypod">Υπόδειξη: απαιτούνται δύο διαδοχικές ολοκληρώσεις με δύο διαφορετικές σταθερές· κάθε συνθήκη προσδιορίζει μία από αυτές.</p></div>
+
+<div class="grp"><h2>Ζ. Εφαρμογές στη μηχανική (κίνηση, ρυθμοί)</h2>
+<p class="lead">Δίνεται ο ρυθμός μεταβολής και ζητείται η ίδια η ποσότητα: ολοκληρώνετε και προσδιορίζετε τη σταθερά από την αρχική κατάσταση.</p></div>
+
+<div class="ex"><div class="num">13E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίσκος περιστρέφεται με γωνιακή επιτάχυνση $\alpha(t)=6t$ (σε $\mathrm{rad/s^{2}}$), με αρχική
+γωνιακή ταχύτητα $\omega(0)=2$ $\mathrm{rad/s}$ και αρχική γωνία $\theta(0)=0$ $\mathrm{rad}$.
+Βρείτε τις συναρτήσεις $\omega(t)$ και $\theta(t)$.</p></div>
+
+<div class="ex"><div class="num">13E.20 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Σωματίδιο κινείται ευθύγραμμα με ταχύτητα $v(t)=\sqrt{t+4}$ (σε $\mathrm{m/s}$) και ξεκινά από
+τη θέση $s(0)=0$ $\mathrm{m}$. Βρείτε τη συνάρτηση θέσης $s(t)$ και τη θέση τη χρονική στιγμή
+$t=5$ $\mathrm{s}$.</p>
+<p class="ypod">Υπόδειξη: εφαρμόστε τον τύπο της γραμμικής αντικατάστασης στη ρίζα.</p></div>
+
+<div class="ex"><div class="num">13E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Σώμα μάζας $m$ κινείται υπό την επίδραση περιοδικής δύναμης, ώστε να ισχύει
+$m\,v'(t)=F_{0}\sin(\omega t)$, με $F_{0}$, $\omega$ θετικές σταθερές και $v(0)=0$.
+Βρείτε τη συνάρτηση ταχύτητας $v(t)$ και τη μέγιστη τιμή του μέτρου της.</p>
+<p class="ypod">Υπόδειξη: οι σταθερές $m$, $F_{0}$, $\omega$ αντιμετωπίζονται ως αριθμοί κατά την ολοκλήρωση ως προς $t$.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά / σύνθετα</h2>
+<p class="lead">Εδώ δεν δίνεται η μέθοδος: αναγνωρίστε πρώτα τη δομή του ολοκληρωτέου και μετά υπολογίστε.</p></div>
+
+<div class="ex"><div class="num">13E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{x+1}{x^{2}+1}\,dx$.</p>
+<p class="ypod">Υπόδειξη: χωρίστε σε δύο ολοκληρώματα· το ένα αντιμετωπίζεται με τον λογαριθμικό κανόνα και το άλλο είναι τύπος του πίνακα.</p></div>
+
+<div class="ex"><div class="num">13E.23 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{x^{2}}{x^{2}+1}\,dx$.</p>
+<p class="ypod">Υπόδειξη: προσθέστε και αφαιρέστε μονάδα στον αριθμητή, ώστε να προκύψει ακέραιο μέρος συν ένα γνωστό κλάσμα.</p></div>
+
+<div class="ex"><div class="num">13E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε $\displaystyle\int \frac{dx}{1+\cos x}$, σε διάστημα όπου $\cos x\neq-1$.</p>
+<p class="ypod">Υπόδειξη: πολλαπλασιάστε αριθμητή και παρονομαστή με $1-\cos x$ και χρησιμοποιήστε τη θεμελιώδη τριγωνομετρική ταυτότητα· θα προκύψουν δύο ολοκληρώματα του πίνακα.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">13E.25</div>
+<p>Με τον κανόνα δύναμης: (α) $\displaystyle\int x^5\,dx$, (β) $\displaystyle\int x^{-4}\,dx$, (γ) $\displaystyle\int x^{2/3}\,dx$.</p></div>
+<div class="ex from-book"><div class="num">13E.26</div>
+<p>Από τον βασικό πίνακα: (α) $\displaystyle\int e^x\,dx$, (β) $\displaystyle\int 3^x\,dx$, (γ) $\displaystyle\int\frac{dx}{x}$ ($x&gt;0$).</p></div>
+<div class="ex from-book"><div class="num">13E.27</div>
+<p>Από τον βασικό πίνακα: (α) $\displaystyle\int\sin x\,dx$, (β) $\displaystyle\int\cos x\,dx$, (γ) $\displaystyle\int\sec^2 x\,dx$, (δ) $\displaystyle\int\csc^2 x\,dx$.</p></div>
+<div class="ex from-book"><div class="num">13E.28</div>
+<p>Υπολογίστε $\displaystyle\int\sec x\tan x\,dx$ και $\displaystyle\int\csc x\cot x\,dx$ και επαληθεύστε παραγωγίζοντας.</p></div>
+<div class="ex from-book"><div class="num">13E.29</div>
+<p>$\displaystyle\int (5x^4-3x^2+2)\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.30</div>
+<p>$\displaystyle\int\!\left(\sqrt{x}+\frac{1}{\sqrt{x}}\right)dx$</p></div>
+<div class="ex from-book"><div class="num">13E.31</div>
+<p>$\displaystyle\int\!\left(\frac{1}{x^2}-\frac{1}{x^3}\right)dx$</p></div>
+<div class="ex from-book"><div class="num">13E.32</div>
+<p>$\displaystyle\int\frac{x^2+2x-3}{x}\,dx$ και $\displaystyle\int\frac{x^3+1}{x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.33</div>
+<p>$\displaystyle\int(\sin x-2\cos x)\,dx$ και $\displaystyle\int(e^x+2^x)\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.34</div>
+<p>$\displaystyle\int\!\left(\frac{3}{x}+2\sqrt{x}\right)dx$, $x&gt;0$</p></div>
+<div class="ex from-book"><div class="num">13E.35</div>
+<p>$\displaystyle\int\sin(5x-2)\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.36</div>
+<p>$\displaystyle\int e^{-x/2}\,dx$ και $\displaystyle\int e^{5-2x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.37</div>
+<p>$\displaystyle\int(1-2x)^7\,dx$ και $\displaystyle\int\frac{dx}{(2x+1)^2}$</p></div>
+<div class="ex from-book"><div class="num">13E.38</div>
+<p>$\displaystyle\int\sec^2(4x)\,dx$ και $\displaystyle\int\sin\!\left(\frac{x}{3}\right)dx$</p></div>
+<div class="ex from-book"><div class="num">13E.39</div>
+<p>$\displaystyle\int\frac{x}{x^2+1}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.40</div>
+<p>$\displaystyle\int\frac{3x^2-2}{x^3-2x+7}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.41</div>
+<p>$\displaystyle\int\frac{dx}{x\ln x}$</p></div>
+<div class="ex from-book"><div class="num">13E.42</div>
+<p>$\displaystyle\int\frac{2x+1}{x^2+x}\,dx$ και $\displaystyle\int\frac{4x-1}{2x^2-x+3}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.43</div>
+<p>$\displaystyle\int\frac{x}{(x^2+4)^3}\,dx$ ($u=x^2+4$).</p></div>
+<div class="ex from-book"><div class="num">13E.44</div>
+<p>$\displaystyle\int\frac{\cos x}{\sin^2 x}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.45</div>
+<p>$\displaystyle\int x^2(x^3+1)^4\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.46</div>
+<p>$\displaystyle\int\frac{e^{\sqrt{x}}}{\sqrt{x}}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.47</div>
+<p>$\displaystyle\int\frac{x}{\sqrt{1-x^2}}\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.48</div>
+<p>$\displaystyle\int \sec^2 x\,\tan^3 x\,dx$</p></div>
+<div class="ex from-book"><div class="num">13E.49</div>
+<p>$\displaystyle\int\sin(2x)\cos(2x)\,dx$ (δύο τρόποι: $u=\sin 2x$ ή ταυτότητα διπλάσιου τόξου).</p></div>
+<div class="ex from-book"><div class="num">13E.50</div>
+<p>Βρείτε την $F$ αν $F'(x)=x^2-x$ και $F(0)=2$.</p></div>
+<div class="ex from-book"><div class="num">13E.51</div>
+<p>Βρείτε την $f$ αν $f''(x)=6x-2$, $f'(0)=1$ και $f(0)=3$.</p></div>
+<div class="ex from-book"><div class="num">13E.52</div>
+<p>Λύστε το $y'=\dfrac{1}{x}$ με $y(1)=3$ ($x&gt;0$).</p></div>
+<div class="ex from-book"><div class="num">13E.53</div>
+<p>Λύστε το $y'=\sin x+\cos x$ με $y(0)=0$ και υπολογίστε το $y(\pi/2)$.</p></div>
+<div class="ex from-book"><div class="num">13E.54</div>
+<p>Λύστε το $f''(x)=\sin x$ με $f'(0)=0$ και $f(0)=1$.</p></div>
+<div class="ex from-book"><div class="num">13E.55</div>
+<p>Δεξαμενή γεμίζει με ρυθμό $r(t)=4+2t$ (L/min) και περιέχει αρχικά $10$ L. Βρείτε τον όγκο $V(t)$ και τον όγκο μετά από $5$ min.</p></div>
+<div class="ex from-book"><div class="num">13E.56</div>
+<p>Ο ρυθμός μεταβολής της θερμοκρασίας σώματος είναι $T'(t)=-5e^{-0{,}1t}$ ($^{\circ}$C/min) με $T(0)=80\,^{\circ}$C. Βρείτε τη $T(t)$ και τη θερμοκρασία ισορροπίας $\lim_{t\to\infty}T(t)$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">13E.57</div>
+<p>$\displaystyle\int\frac{x+1}{\sqrt{x^2+2x+5}}\,dx$ (υπόδειξη: $u=x^2+2x+5$).</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

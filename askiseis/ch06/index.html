@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Διαγωνιοποίηση Πινάκων</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">&#8853; Επιπλέον Ασκήσεις</div>
+  <h1>Διαγωνιοποίηση Πινάκων</h1>
+  <p class="chapter-label">Κεφάλαιο 6 &middot; Διαγωνιοποίηση Πινάκων</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Κάθε αποτέλεσμα ελέγχεται από εσάς τους ίδιους: η διαγωνιοποίηση επαληθεύεται με τη
+  σχέση $AP=PD$ (χωρίς καν να υπολογίσετε τον $P^{-1}$), η ορθογώνια διαγωνιοποίηση με τη σχέση
+  $Q^{\top}Q=I$, ενώ το άθροισμα και το γινόμενο των ιδιοτιμών οφείλουν πάντοτε να δίνουν το ίχνος
+  και την ορίζουσα του πίνακα. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Κριτήρια διαγωνιοποιησιμότητας</h2>
+<p class="lead">Πρώτα το ερώτημα «διαγωνιοποιείται;»: συγκρίνετε αλγεβρική και γεωμετρική πολλαπλότητα, πριν ξεκινήσετε οποιονδήποτε εκτενή υπολογισμό.</p></div>
+
+<div class="ex"><div class="num">6E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Αποφανθείτε ποιοι από τους παρακάτω πίνακες είναι διαγωνιοποιήσιμοι, αιτιολογώντας με βάση τις ιδιοτιμές και τις πολλαπλότητές τους:</p>
+<p>(α) $A=\begin{bmatrix}7&amp;-4\\0&amp;1\end{bmatrix}$, &nbsp; (β) $B=\begin{bmatrix}5&amp;0&amp;0\\1&amp;5&amp;0\\0&amp;0&amp;2\end{bmatrix}$, &nbsp; (γ) $C=\begin{bmatrix}0&amp;0&amp;3\\0&amp;2&amp;0\\3&amp;0&amp;0\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: σε μία από τις τρεις περιπτώσεις το συμπέρασμα προκύπτει από τη μορφή του πίνακα, χωρίς κανέναν υπολογισμό.</p></div>
+
+<div class="ex"><div class="num">6E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Πίνακας $A$ διάστασης $3\times3$ έχει χαρακτηριστικό πολυώνυμο $p(\lambda)=-(\lambda-2)^{2}(\lambda+1)$.</p>
+<p>(α) Ποιες τιμές μπορεί να πάρει η γεωμετρική πολλαπλότητα της ιδιοτιμής $\lambda=2$;</p>
+<p>(β) Ποια ακριβώς συνθήκη πρέπει να ικανοποιείται ώστε ο $A$ να είναι διαγωνιοποιήσιμος;</p>
+<p>(γ) Υπολογίστε το ίχνος και την ορίζουσα του $A$ χωρίς να γνωρίζετε τα στοιχεία του.</p></div>
+
+<div class="ex"><div class="num">6E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι ο πίνακας $A=\begin{bmatrix}4&amp;1&amp;0\\0&amp;4&amp;0\\0&amp;0&amp;c\end{bmatrix}$ δεν είναι διαγωνιοποιήσιμος για καμία τιμή του $c\in\mathbb{R}$.</p>
+<p class="ypod">Υπόδειξη: διακρίνετε τις περιπτώσεις $c=4$ και $c\neq4$ και υπολογίστε σε καθεμία τη διάσταση του ιδιόχωρου της $\lambda=4$.</p></div>
+
+<div class="grp"><h2>Β. Υπολογισμός των $P$ και $D$</h2>
+<p class="lead">Η αποσύνθεση $A=PDP^{-1}$ βήμα προς βήμα· η σειρά των στηλών του $P$ πρέπει να αντιστοιχεί στη σειρά των ιδιοτιμών στον $D$.</p></div>
+
+<div class="ex"><div class="num">6E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Διαγωνιοποιήστε τον $A=\begin{bmatrix}5&amp;-2\\0&amp;3\end{bmatrix}$: βρείτε τους $P$ και $D$ και επαληθεύστε το αποτέλεσμά σας μέσω της σχέσης $AP=PD$.</p></div>
+
+<div class="ex"><div class="num">6E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για τον $A=\begin{bmatrix}4&amp;2\\1&amp;3\end{bmatrix}$ βρείτε τις ιδιοτιμές, μια βάση κάθε ιδιόχωρου και τους πίνακες $P$, $D$ με $A=PDP^{-1}$. Επαληθεύστε ότι $\mathrm{tr}(A)=\lambda_1+\lambda_2$ και $\det(A)=\lambda_1\lambda_2$.</p></div>
+
+<div class="ex"><div class="num">6E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Διαγωνιοποιήστε τον $A=\begin{bmatrix}2&amp;0&amp;0\\1&amp;3&amp;0\\-1&amp;1&amp;1\end{bmatrix}$, προσδιορίζοντας τις ιδιοτιμές, μια βάση κάθε ιδιόχωρου και τους $P$, $D$.</p>
+<p class="ypod">Υπόδειξη: ο πίνακας είναι κάτω τριγωνικός· οι ιδιοτιμές διαβάζονται απευθείας από τη διαγώνιο.</p></div>
+
+<div class="grp"><h2>Γ. Συμμετρικοί πίνακες και ορθογώνια διαγωνιοποίηση</h2>
+<p class="lead">Το φασματικό θεώρημα εξασφαλίζει ορθοκανονική βάση ιδιοδιανυσμάτων: ο $P$ γίνεται ορθογώνιος $Q$ και ο $P^{-1}$ γίνεται $Q^{\top}$.</p></div>
+
+<div class="ex"><div class="num">6E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για τον $A=\begin{bmatrix}5&amp;-1\\-1&amp;5\end{bmatrix}$ γράψτε την ορθογώνια διαγωνιοποίηση $A=QDQ^{\top}$ με κανονικοποιημένα ιδιοδιανύσματα και επαληθεύστε ότι $Q^{\top}Q=I_2$.</p></div>
+
+<div class="ex"><div class="num">6E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο συμμετρικός πίνακας $A=\begin{bmatrix}1&amp;0&amp;2\\0&amp;3&amp;0\\2&amp;0&amp;1\end{bmatrix}$. Βρείτε τις ιδιοτιμές του, μια ορθοκανονική βάση ιδιοδιανυσμάτων και γράψτε τον στη μορφή $A=QDQ^{\top}$.</p>
+<p class="ypod">Υπόδειξη: η μία ιδιοτιμή είναι διπλή· μέσα στον διδιάστατο ιδιόχωρό της οφείλετε να επιλέξετε δύο <em>ορθογώνια</em> μεταξύ τους διανύσματα.</p></div>
+
+<div class="ex"><div class="num">6E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Πραγματικός συμμετρικός πίνακας $A$ διάστασης $3\times3$ έχει ιδιοτιμές $2$, $2$ και $-3$, ενώ το $\mathbf{v}=(1,1,0)^{\top}$ είναι ιδιοδιάνυσμα της $\lambda=-3$.</p>
+<p>(α) Εξηγήστε γιατί ο ιδιόχωρος της $\lambda=2$ είναι το ορθογώνιο συμπλήρωμα του $\mathrm{span}\{\mathbf{v}\}$ και βρείτε μια ορθοκανονική βάση του.</p>
+<p>(β) Σχηματίστε τους $Q$ και $D$ και υπολογίστε τα στοιχεία του $A=QDQ^{\top}$.</p></div>
+
+<div class="grp"><h2>Δ. Δυνάμεις και εκθετικό πίνακα</h2>
+<p class="lead">Η διαγωνιοποίηση μεταθέτει κάθε δύναμη και κάθε εκθετικό στη διαγώνιο: $A^{k}=PD^{k}P^{-1}$ και $e^{At}=Pe^{Dt}P^{-1}$.</p></div>
+
+<div class="ex"><div class="num">6E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε τον $A^{6}$ για $A=\begin{bmatrix}1&amp;3\\0&amp;-2\end{bmatrix}$ αξιοποιώντας τη διαγωνιοποίηση.</p></div>
+
+<div class="ex"><div class="num">6E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο $A=\begin{bmatrix}2&amp;1\\0&amp;1\end{bmatrix}$.</p>
+<p>(α) Διαγωνιοποιήστε τον. &nbsp; (β) Βρείτε κλειστό τύπο για τον $A^{n}$, $n\ge1$, και επαληθεύστε τον για $n=2$.</p>
+<p>(γ) Υπολογίστε το όριο $\displaystyle\lim_{n\to\infty}\frac{1}{2^{n}}A^{n}$ και ερμηνεύστε το ως προς την κυρίαρχη ιδιοτιμή.</p></div>
+
+<div class="ex"><div class="num">6E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τον $A=\begin{bmatrix}-2&amp;1\\1&amp;-2\end{bmatrix}$ υπολογίστε τον $e^{At}$ και λύστε το σύστημα $\dot{\mathbf{x}}=A\mathbf{x}$ με $\mathbf{x}(0)=(1,3)^{\top}$. Περιγράψτε τη συμπεριφορά της λύσης καθώς $t\to+\infty$ και εξηγήστε ποια ιδιοτιμή την καθορίζει.</p></div>
+
+<div class="ex"><div class="num">6E.13 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A=PDP^{-1}$ με $P$ αντιστρέψιμο και $D=\mathrm{diag}\!\left(1,\tfrac{1}{2},-\tfrac{1}{3}\right)$.</p>
+<p>(α) Δείξτε ότι το όριο $L=\displaystyle\lim_{k\to\infty}A^{k}$ υπάρχει και εκφράστε το συναρτήσει των $P$ και $P^{-1}$.</p>
+<p>(β) Δείξτε ότι $L^{2}=L$ και ότι $AL=L$.</p>
+<p>(γ) Ερμηνεύστε γεωμετρικά τον $L$ ως προβολή και προσδιορίστε πάνω σε ποιον υπόχωρο προβάλλει.</p></div>
+
+<div class="grp"><h2>Ε. Τετραγωνικές μορφές</h2>
+<p class="lead">Κάθε τετραγωνική μορφή γράφεται ως $\mathbf{x}^{\top}A\mathbf{x}$ με $A$ συμμετρικό· τα πρόσημα των ιδιοτιμών (ή οι ηγούσες κύριες ελάσσονες) κρίνουν τα πάντα.</p></div>
+
+<div class="ex"><div class="num">6E.14 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Γράψτε την τετραγωνική μορφή $Q(x,y,z)=3x^{2}+3y^{2}+3z^{2}+2xy+2yz$ στη μορφή $\mathbf{x}^{\top}A\mathbf{x}$ με $A$ συμμετρικό και εξετάστε με το κριτήριο Sylvester αν είναι θετικά ορισμένη.</p></div>
+
+<div class="ex"><div class="num">6E.15 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνεται η καμπύλη $x^{2}+6xy+y^{2}=4$.</p>
+<p>(α) Γράψτε τη στη μορφή $\mathbf{x}^{\top}A\mathbf{x}=4$ με $A$ συμμετρικό. &nbsp; (β) Βρείτε τις ιδιοτιμές του $A$ και αναγνωρίστε το είδος της κωνικής τομής.</p>
+<p>(γ) Προσδιορίστε τις διευθύνσεις των αξόνων της και τις εξισώσεις των ασυμπτώτων της στο σύστημα των κύριων αξόνων.</p></div>
+
+<div class="ex"><div class="num">6E.16 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για ποιες τιμές του $k\in\mathbb{R}$ είναι η τετραγωνική μορφή $Q(x,y,z)=x^{2}+y^{2}+kz^{2}+2xz$ θετικά ορισμένη; Για ποιες τιμές γίνεται αόριστη;</p>
+<p class="ypod">Υπόδειξη: σχηματίστε τον συμμετρικό πίνακα και εφαρμόστε το κριτήριο Sylvester και στις τρεις ηγούσες κύριες ελάσσονες.</p></div>
+
+<div class="grp"><h2>ΣΤ. Αποσύνθεση ιδιαζουσών τιμών</h2>
+<p class="lead">Όταν ο πίνακας δεν είναι καν τετραγωνικός, η μελέτη μεταφέρεται στον συμμετρικό $A^{\top}A$.</p></div>
+
+<div class="ex"><div class="num">6E.17 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε τις ιδιάζουσες τιμές του $A=\begin{bmatrix}1&amp;2\\0&amp;0\end{bmatrix}$ μέσω των ιδιοτιμών του $A^{\top}A$ και συσχετίστε το πλήθος των μη μηδενικών ιδιαζουσών τιμών με την τάξη του $A$.</p></div>
+
+<div class="ex"><div class="num">6E.18 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο $A=\begin{bmatrix}2&amp;2\\-1&amp;1\end{bmatrix}$.</p>
+<p>(α) Υπολογίστε τον $A^{\top}A$, τις ιδιάζουσες τιμές και τα δεξιά ιδιάζοντα διανύσματα.</p>
+<p>(β) Γράψτε την πλήρη αποσύνθεση $A=U\Sigma V^{\top}$ και επαληθεύστε ότι $U^{\top}U=V^{\top}V=I_2$.</p>
+<p>(γ) Βρείτε τα μήκη των ημιαξόνων της έλλειψης στην οποία απεικονίζεται ο μοναδιαίος κύκλος.</p>
+<p class="ypod">Υπόδειξη: τα αριστερά ιδιάζοντα διανύσματα προκύπτουν από τη σχέση $\mathbf{u}_i=\dfrac{1}{\sigma_i}A\mathbf{v}_i$.</p></div>
+
+<div class="grp"><h2>Ζ. Εφαρμογές: ανάλυση κύριων συνιστωσών και τάσεις</h2>
+<p class="lead">Δύο κλασικές εμφανίσεις του φασματικού θεωρήματος εκτός μαθηματικών: ο πίνακας συνδιακύμανσης και ο τανυστής τάσεων.</p></div>
+
+<div class="ex"><div class="num">6E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δεδομένα δύο μεταβλητών έχουν πίνακα συνδιακύμανσης $C=\begin{bmatrix}5&amp;2\\2&amp;2\end{bmatrix}$.</p>
+<p>(α) Βρείτε τις κύριες συνιστώσες. &nbsp; (β) Υπολογίστε το ποσοστό της συνολικής διακύμανσης που εξηγεί η καθεμία.</p>
+<p>(γ) Εξηγήστε γιατί η προβολή των δεδομένων στην πρώτη κύρια συνιστώσα διατηρεί το μεγαλύτερο μέρος της πληροφορίας.</p></div>
+
+<div class="ex"><div class="num">6E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Σε κατάσταση επίπεδης έντασης, ο τανυστής τάσεων ενός σημείου είναι $\boldsymbol{\sigma}=\begin{bmatrix}50&amp;20\\20&amp;80\end{bmatrix}$ (σε MPa).</p>
+<p>(α) Βρείτε τις κύριες τάσεις και τις διευθύνσεις των κύριων αξόνων.</p>
+<p>(β) Εξηγήστε γιατί στο σύστημα των κύριων αξόνων ο τανυστής γίνεται διαγώνιος.</p>
+<p>(γ) Δείξτε ότι η ποσότητα $\tfrac{1}{2}(\lambda_1-\lambda_2)$ δεν αλλάζει αν ο τανυστής εκφραστεί σε άλλο ορθοκανονικό σύστημα συντεταγμένων.</p>
+<p class="ypod">Υπόδειξη: για το (γ) θυμηθείτε τι συμβαίνει στο χαρακτηριστικό πολυώνυμο κατά την αλλαγή βάσης.</p></div>
+
+<div class="ex"><div class="num">6E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται ο πίνακας δεδομένων $X=\begin{bmatrix}2&amp;0\\0&amp;2\\-2&amp;0\\0&amp;-2\end{bmatrix}$ (τέσσερις παρατηρήσεις, δύο μεταβλητές).</p>
+<p>(α) Επαληθεύστε ότι τα δεδομένα είναι κεντρικοποιημένα και υπολογίστε τον $C=\dfrac{1}{n-1}X^{\top}X$.</p>
+<p>(β) Δείξτε ότι κάθε μη μηδενικό διάνυσμα του $\mathbb{R}^{2}$ είναι ιδιοδιάνυσμα του $C$ και εξηγήστε γιατί εδώ η ανάλυση κύριων συνιστωσών δεν ξεχωρίζει κάποια κύρια διεύθυνση.</p>
+<p>(γ) Πολλαπλασιάστε τη δεύτερη μεταβλητή επί $3$ και επαναλάβετε: ποια είναι τώρα η πρώτη κύρια συνιστώσα και τι συμπεραίνετε για την ευαισθησία της μεθόδου στην κλίμακα των μεταβλητών;</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Εδώ δεν δίνεται η μέθοδος: αναγνωρίστε πρώτα ποιο εργαλείο του κεφαλαίου ταιριάζει και μετά υπολογίστε.</p></div>
+
+<div class="ex"><div class="num">6E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο $A=\begin{bmatrix}5&amp;4\\4&amp;5\end{bmatrix}$.</p>
+<p>(α) Διαγωνιοποιήστε τον και κατασκευάστε πίνακα $B$ με $B^{2}=A$.</p>
+<p>(β) Πόσοι διαφορετικοί πίνακες $B$ προκύπτουν με τον ίδιο τρόπο και γιατί;</p>
+<p class="ypod">Υπόδειξη: εργαστείτε στη διαγώνια μορφή και σκεφτείτε τι επιλογές έχετε για την τετραγωνική ρίζα κάθε ιδιοτιμής.</p></div>
+
+<div class="ex"><div class="num">6E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A$ πίνακας $n\times n$ με $A^{2}=A$ (ταυτοδύναμος).</p>
+<p>(α) Δείξτε ότι κάθε ιδιοτιμή του $A$ ανήκει στο σύνολο $\{0,1\}$.</p>
+<p>(β) Αποδείξτε ότι ο $A$ είναι διαγωνιοποιήσιμος.</p>
+<p>(γ) Συμπεράνετε ότι $\mathrm{tr}(A)=\mathrm{rank}(A)$.</p>
+<p class="ypod">Υπόδειξη: για το (β) γράψτε $\mathbf{x}=A\mathbf{x}+(\mathbf{x}-A\mathbf{x})$ και εξετάστε σε ποιον ιδιόχωρο ανήκει καθένας από τους δύο προσθετέους.</p></div>
+
+<div class="ex"><div class="num">6E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Πραγματικός πίνακας $A$ διάστασης $2\times2$ ικανοποιεί $\mathrm{tr}(A)=6$ και $\det(A)=5$.</p>
+<p>(α) Βρείτε τις ιδιοτιμές του και αιτιολογήστε αν είναι διαγωνιοποιήσιμος.</p>
+<p>(β) Αξιοποιώντας το θεώρημα Cayley&ndash;Hamilton, δείξτε ότι $A^{-1}=\tfrac{1}{5}\left(6I-A\right)$.</p>
+<p>(γ) Εκφράστε τον $A^{3}$ ως γραμμικό συνδυασμό των $A$ και $I$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">6E.25</div>
+<p>Διαγωνιοποιήστε τον $A=\begin{bmatrix}1&amp;2\\2&amp;1\end{bmatrix}$ και επαληθεύστε με πράξεις ότι $PDP^{-1}=A$.</p></div>
+<div class="ex from-book"><div class="num">6E.26</div>
+<p>Διαγωνιοποιήστε τον $A$ και, μέσω της $A=PDP^{-1}$, υπολογίστε τον $A^4$ για $A=\begin{bmatrix}1&amp;2\\0&amp;3\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">6E.27</div>
+<p>Δείξτε ότι κάθε πίνακας με $n$ διακριτές ιδιοτιμές είναι διαγωνιοποιήσιμος και εφαρμόστε το στον τριγωνικό $A=\begin{bmatrix}1&amp;2&amp;3\\0&amp;2&amp;4\\0&amp;0&amp;5\end{bmatrix}$, γράφοντας τους $P$ και $D$ χωρίς πλήρη υπολογισμό του $P^{-1}$.</p></div>
+<div class="ex from-book"><div class="num">6E.28</div>
+<p>Εξετάστε αν διαγωνιοποιείται ο $A=\begin{bmatrix}2&amp;1&amp;0\\0&amp;2&amp;0\\0&amp;0&amp;3\end{bmatrix}$. Αν όχι, εξηγήστε γιατί με βάση τη σχέση αλγεβρικής και γεωμετρικής πολλαπλότητας.</p></div>
+<div class="ex from-book"><div class="num">6E.29</div>
+<p>Διαγωνιοποιήστε τον $A=\begin{bmatrix}0&amp;2\\1&amp;1\end{bmatrix}$ (ιδιοτιμές $2$ και $-1$) και βρείτε κλειστό τύπο για τον $A^n$. Επαληθεύστε για $n=3$.</p></div>
+<div class="ex from-book"><div class="num">6E.30</div>
+<p>Διαγωνιοποιήστε τον $A=\begin{bmatrix}3&amp;1\\0&amp;2\end{bmatrix}$ και χρησιμοποιήστε τη διαγωνιοποίηση για να υπολογίσετε τον $A^4$.</p></div>
+<div class="ex from-book"><div class="num">6E.31</div>
+<p>Ο $A=\begin{bmatrix}4&amp;1\\0&amp;4\end{bmatrix}$ δεν διαγωνιοποιείται. Βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματά του και εξηγήστε γιατί, με βάση το κριτήριο διαγωνιοποιησιμότητας.</p></div>
+<div class="ex from-book"><div class="num">6E.32</div>
+<p>Για τον συμμετρικό πίνακα $A=\begin{bmatrix}3&amp;1\\1&amp;3\end{bmatrix}$ βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματα και επαληθεύστε ότι τα ιδιοδιανύσματα είναι ορθογώνια.</p></div>
+<div class="ex from-book"><div class="num">6E.33</div>
+<p>Γράψτε την ορθογώνια αποσύνθεση $A=QDQ^\top$ για τον πίνακα του προηγούμενου θέματος (κανονικοποιήστε τα ιδιοδιανύσματα) και επαληθεύστε ότι $Q^\top Q=I$.</p></div>
+<div class="ex from-book"><div class="num">6E.34</div>
+<p><strong>Απόδειξη:</strong> Αν $A=Q\Lambda Q^\top$ είναι συμμετρικός με όλες τις ιδιοτιμές θετικές, αποδείξτε ότι $\mathbf{x}^\top A\mathbf{x}&gt;0$ για κάθε $\mathbf{x}\neq\mathbf{0}$.</p></div>
+<div class="ex from-book"><div class="num">6E.35</div>
+<p>Υπολογίστε την SVD του $A=\begin{bmatrix}3&amp;0\\0&amp;2\end{bmatrix}$. Ποιες είναι οι ιδιάζουσες τιμές του και τι σχέση έχουν με τις ιδιοτιμές του;</p></div>
+<div class="ex from-book"><div class="num">6E.36</div>
+<p>Βρείτε τις ιδιάζουσες τιμές του $A=\begin{bmatrix}1&amp;1\\0&amp;1\end{bmatrix}$ υπολογίζοντας τις ιδιοτιμές του $A^\top A$.</p></div>
+<div class="ex from-book"><div class="num">6E.37</div>
+<p>Για τον $A=\begin{bmatrix}1&amp;0\\0&amp;-1\end{bmatrix}$ γράψτε την SVD. Ποιον γεωμετρικό μετασχηματισμό εκφράζει;</p></div>
+<div class="ex from-book"><div class="num">6E.38</div>
+<p>Περιγράψτε γεωμετρικά τον μετασχηματισμό $A=\frac{1}{\sqrt{2}}\begin{bmatrix}1&amp;-1\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;0\\0&amp;1\end{bmatrix}\frac{1}{\sqrt{2}}\begin{bmatrix}1&amp;1\\-1&amp;1\end{bmatrix}$ ως ακολουθία στροφή (κλιμάκωση) στροφή.</p></div>
+<div class="ex from-book"><div class="num">6E.39</div>
+<p><strong>Απόδειξη:</strong> Αν ο $A$ είναι τετραγωνικός και αντιστρέψιμος, αποδείξτε ότι $A^{+}=A^{-1}$.</p></div>
+<div class="ex from-book"><div class="num">6E.40</div>
+<p>Υπολογίστε τον $A^5$ για $A=\begin{bmatrix}3&amp;0\\0&amp;-2\end{bmatrix}$ και εξηγήστε γιατί η ύψωση διαγώνιου πίνακα σε δύναμη είναι άμεση.</p></div>
+<div class="ex from-book"><div class="num">6E.41</div>
+<p>Αν $A=PDP^{-1}$ με $D=\mathrm{diag}(1,-1,2)$, υπολογίστε συνοπτικά τον $A^{100}$. Εξηγήστε γιατί η διαγωνιοποίηση κάνει εύκολο τον υπολογισμό δυνάμεων.</p></div>
+<div class="ex from-book"><div class="num">6E.42</div>
+<p>Με το Θεώρημα Cayley–Hamilton εκφράστε τον $A^3$ ως γραμμικό συνδυασμό των $A$ και $I$ για τον $A=\begin{bmatrix}1&amp;2\\3&amp;2\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">6E.43</div>
+<p>Υπολογίστε τον $e^{At}$ για τον διαγωνιοποιήσιμο $A=\begin{bmatrix}2&amp;1\\0&amp;3\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">6E.44</div>
+<p>Λύστε το σύστημα $\dot{\mathbf{x}}=A\mathbf{x}$ με $A=\begin{bmatrix}1&amp;2\\2&amp;1\end{bmatrix}$ και $\mathbf{x}(0)=(1,0)^\top$, μέσω του $e^{At}$.</p></div>
+<div class="ex from-book"><div class="num">6E.45</div>
+<p><strong>Απόδειξη:</strong> Δείξτε ότι $\det(e^{A})=e^{\mathrm{tr}(A)}$ για διαγωνιοποιήσιμο $A$, χρησιμοποιώντας τον τύπο $e^{A}=P\,\mathrm{diag}(e^{\lambda_i})\,P^{-1}$.</p></div>
+<div class="ex from-book"><div class="num">6E.46</div>
+<p>Δίνεται πίνακας συνδιακύμανσης $C=\begin{bmatrix}4&amp;2\\2&amp;3\end{bmatrix}$. Βρείτε τις κύριες συνιστώσες και το ποσοστό διακύμανσης που εξηγεί η καθεμία.</p></div>
+<div class="ex from-book"><div class="num">6E.47</div>
+<p>Για έναν πίνακα συνδιακύμανσης $3\times3$ με ιδιοτιμές $[6,\,3,\,1]$: (α) υπολογίστε το ποσοστό διακύμανσης κάθε συνιστώσας, (β) πόσες συνιστώσες πρέπει να κρατήσετε για να εξηγηθεί τουλάχιστον το $90\%$ της διακύμανσης;</p></div>
+<div class="ex from-book"><div class="num">6E.48</div>
+<p>Εξηγήστε γιατί το φασματικό θεώρημα εγγυάται ότι ο πίνακας συνδιακύμανσης έχει πάντα ορθοκανονική βάση ιδιοδιανυσμάτων με πραγματικές, μη αρνητικές ιδιοτιμές.</p></div>
+<div class="ex from-book"><div class="num">6E.49</div>
+<p>Η τετραγωνική μορφή $Q(x,y)=x^2-2xy+2y^2$: είναι θετικά ορισμένη;</p></div>
+<div class="ex from-book"><div class="num">6E.50</div>
+<p>Γράψτε την $Q(x,y)=5x^2-4xy+2y^2$ στη μορφή $\mathbf{x}^TA\mathbf{x}$ με $A$ συμμετρικό και χαρακτηρίστε την οριστικότητά της με το κριτήριο Sylvester.</p></div>
+<div class="ex from-book"><div class="num">6E.51</div>
+<p>Για ποιες τιμές του $k\in\mathbb{R}$ είναι η $Q(x,y)=x^2+2kxy+4y^2$ θετικά ορισμένη;</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">6E.52</div>
+<p><strong>Απόδειξη:</strong> Δείξτε ότι οι $A$ και $A^\top$ έχουν τις ίδιες ιδιοτιμές. <em>Υπόδειξη:</em> συγκρίνετε τα χαρακτηριστικά πολυώνυμα $\det(A-\lambda I)$ και $\det(A^\top-\lambda I)$.</p></div>
+<div class="ex from-book"><div class="num">6E.53</div>
+<p><strong>Απόδειξη:</strong> Αν οι $A$ και $B$ είναι όμοιοι ($B=P^{-1}AP$), αποδείξτε ότι έχουν το ίδιο χαρακτηριστικό πολυώνυμο, το ίδιο ίχνος και την ίδια ορίζουσα.</p></div>
+<div class="ex from-book"><div class="num">6E.54</div>
+<p>Δείξτε ότι ένας $2\times2$ πραγματικός πίνακας με μιγαδικές ιδιοτιμές δεν διαγωνιοποιείται στους πραγματικούς, διαγωνιοποιείται όμως στους μιγαδικούς. Εφαρμόστε στον $A=\begin{bmatrix}1&amp;-1\\1&amp;1\end{bmatrix}$.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

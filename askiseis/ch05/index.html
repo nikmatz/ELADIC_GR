@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Ιδιοτιμές και Ιδιοδιανύσματα</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">&#8853; Επιπλέον Ασκήσεις</div>
+  <h1>Ιδιοτιμές και Ιδιοδιανύσματα</h1>
+  <p class="chapter-label">Κεφάλαιο 5 &middot; Ιδιοτιμές και Ιδιοδιανύσματα</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Κάθε αποτέλεσμα ελέγχεται από εσάς: αν βρήκατε ζεύγος $(\lambda,\mathbf{v})$ με
+  $\mathbf{v}\neq\mathbf{0}$, αρκεί να υπολογίσετε το γινόμενο $A\mathbf{v}$ και να το συγκρίνετε με
+  το $\lambda\mathbf{v}$. Δεύτερος έλεγχος για κάθε πίνακα: το άθροισμα των ιδιοτιμών οφείλει να
+  ισούται με το ίχνος και το γινόμενό τους με την ορίζουσα. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Ορισμός και έλεγχος ιδιοδιανύσματος</h2>
+<p class="lead">Ένα διάνυσμα είναι ιδιοδιάνυσμα όταν ο πίνακας δεν αλλάζει τη διεύθυνσή του, παρά μόνο το μήκος και ενδεχομένως τη φορά του.</p></div>
+
+<div class="ex"><div class="num">5E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνεται ο πίνακας $A=\begin{bmatrix}1&amp;6\\5&amp;2\end{bmatrix}$. Εξετάστε ποια από τα διανύσματα
+$\mathbf{v}_1=\begin{bmatrix}1\\1\end{bmatrix}$, $\mathbf{v}_2=\begin{bmatrix}6\\-5\end{bmatrix}$,
+$\mathbf{v}_3=\begin{bmatrix}1\\-1\end{bmatrix}$ είναι ιδιοδιανύσματα του $A$ και, για όσα είναι,
+προσδιορίστε την αντίστοιχη ιδιοτιμή.</p>
+<p class="ypod">Υπόδειξη: αρκεί να ελέγξετε αν το $A\mathbf{v}$ είναι πολλαπλάσιο του $\mathbf{v}$&middot; δεν χρειάζεται ορίζουσα.</p></div>
+
+<div class="ex"><div class="num">5E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Με το κριτήριο $\det(A-\lambda I)=0$ εξετάστε ποιοι από τους αριθμούς $\lambda=1$, $\lambda=5$,
+$\lambda=-2$ είναι ιδιοτιμές του $A=\begin{bmatrix}4&amp;3\\1&amp;2\end{bmatrix}$. Για όσους είναι,
+βρείτε ένα αντίστοιχο ιδιοδιάνυσμα.</p></div>
+
+<div class="ex"><div class="num">5E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $A$ πίνακας $n\times n$ στον οποίο το άθροισμα των στοιχείων κάθε γραμμής είναι το ίδιο,
+ίσο με $s$. Αποδείξτε ότι ο αριθμός $s$ είναι ιδιοτιμή του $A$ και βρείτε ένα αντίστοιχο
+ιδιοδιάνυσμα. Εφαρμόστε το συμπέρασμα στον πίνακα
+$A=\begin{bmatrix}2&amp;1&amp;1\\0&amp;3&amp;1\\1&amp;1&amp;2\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: δοκιμάστε το διάνυσμα με όλες τις συντεταγμένες ίσες με $1$ και εκτελέστε τον πολλαπλασιασμό κατά γραμμές.</p></div>
+
+<div class="grp"><h2>Β. Χαρακτηριστικό πολυώνυμο</h2>
+<p class="lead">Οι ιδιοτιμές είναι οι ρίζες του $p(\lambda)=\det(A-\lambda I)$&middot; για πίνακες $2\times2$ το ίχνος και η ορίζουσα αρκούν για να τον γράψετε.</p></div>
+
+<div class="ex"><div class="num">5E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για τον πίνακα $A=\begin{bmatrix}6&amp;-2\\-2&amp;9\end{bmatrix}$ βρείτε το χαρακτηριστικό πολυώνυμο και
+τις ιδιοτιμές του. Επαληθεύστε το αποτέλεσμά σας ελέγχοντας ότι το άθροισμα των ιδιοτιμών ισούται
+με το $\mathrm{tr}(A)$ και το γινόμενό τους με την $\det(A)$.</p></div>
+
+<div class="ex"><div class="num">5E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε το χαρακτηριστικό πολυώνυμο και όλες τις ιδιοτιμές του
+$A=\begin{bmatrix}2&amp;0&amp;1\\0&amp;3&amp;0\\1&amp;0&amp;2\end{bmatrix}$, σημειώνοντας ποια ιδιοτιμή
+εμφανίζεται ως πολλαπλή ρίζα. Επαληθεύστε με το ίχνος και την ορίζουσα.</p>
+<p class="ypod">Υπόδειξη: η δεύτερη στήλη έχει δύο μηδενικά&middot; αναπτύξτε την ορίζουσα ως προς αυτήν.</p></div>
+
+<div class="ex"><div class="num">5E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ένας αντιστρέψιμος πίνακας $A$ διάστασης $2\times2$ έχει χαρακτηριστικό πολυώνυμο
+$p(\lambda)=\lambda^{2}-6\lambda+8$. Χωρίς να προσδιορίσετε τον $A$, υπολογίστε το ίχνος και την
+ορίζουσα καθενός από τους πίνακες $A$, $A^{2}$ και $A^{-1}$.</p>
+<p class="ypod">Υπόδειξη: βρείτε πρώτα τις ιδιοτιμές του $A$ και θυμηθείτε πώς μεταβάλλονται όταν υψώνουμε τον πίνακα σε δύναμη ή τον αντιστρέφουμε.</p></div>
+
+<div class="grp"><h2>Γ. Υπολογισμός ιδιοδιανυσμάτων</h2>
+<p class="lead">Για κάθε ιδιοτιμή $\lambda$, ο ιδιόχωρος $E_\lambda$ είναι ο πυρήνας του $A-\lambda I$: λύνετε ένα ομογενές σύστημα.</p></div>
+
+<div class="ex"><div class="num">5E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τις ιδιοτιμές του $A=\begin{bmatrix}7&amp;-4\\6&amp;-3\end{bmatrix}$ και μια βάση κάθε ιδιόχωρου.
+Επαληθεύστε τη σχέση $A\mathbf{v}=\lambda\mathbf{v}$ για κάθε ιδιοζεύγος που βρήκατε.</p></div>
+
+<div class="ex"><div class="num">5E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τον πίνακα $A=\begin{bmatrix}3&amp;-1&amp;0\\-1&amp;3&amp;0\\0&amp;0&amp;2\end{bmatrix}$ βρείτε το χαρακτηριστικό
+πολυώνυμο, τις ιδιοτιμές, μια βάση κάθε ιδιόχωρου και τη διάσταση καθενός.</p>
+<p class="ypod">Υπόδειξη: τα μηδενικά της τρίτης γραμμής και της τρίτης στήλης επιτρέπουν ανάπτυγμα της ορίζουσας ως προς την τελευταία στήλη.</p></div>
+
+<div class="ex"><div class="num">5E.9 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται ο πίνακας $A=\begin{bmatrix}4&amp;1\\2&amp;3\end{bmatrix}$ και το διάνυσμα
+$\mathbf{x}=\begin{bmatrix}5\\-1\end{bmatrix}$. Βρείτε τα ιδιοζεύγη του $A$, γράψτε το $\mathbf{x}$
+ως γραμμικό συνδυασμό ιδιοδιανυσμάτων και υπολογίστε το $A^{5}\mathbf{x}$ <em>χωρίς</em> να
+υψώσετε τον πίνακα στην πέμπτη δύναμη.</p>
+<p class="ypod">Υπόδειξη: πάνω σε ένα ιδιοδιάνυσμα η δράση του $A^{k}$ ανάγεται σε πολλαπλασιασμό με αριθμό.</p></div>
+
+<div class="grp"><h2>Δ. Γεωμετρική ερμηνεία</h2>
+<p class="lead">Ιδιοδιάνυσμα σημαίνει αναλλοίωτη διεύθυνση: πρώτα σκεφτείτε τη γεωμετρία, μετά επαληθεύστε με πράξεις.</p></div>
+
+<div class="ex"><div class="num">5E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Ο μετασχηματισμός του χώρου που ανακλά κάθε σημείο ως προς το επίπεδο $xy$ έχει πίνακα
+$A=\begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;0\\0&amp;0&amp;-1\end{bmatrix}$. Βρείτε γεωμετρικά, χωρίς υπολογισμό
+ορίζουσας, τις ιδιοτιμές του, περιγράψτε τους αντίστοιχους ιδιόχωρους και δώστε τη διάστασή τους.
+Στη συνέχεια επαληθεύστε τα συμπεράσματά σας αλγεβρικά.</p></div>
+
+<div class="ex"><div class="num">5E.11 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνεται ο πίνακας $R=\dfrac{1}{5}\begin{bmatrix}-3&amp;4\\4&amp;3\end{bmatrix}$. Υπολογίστε τα
+$\mathrm{tr}(R)$ και $\det(R)$, βρείτε τις ιδιοτιμές και τις ιδιοδιευθύνσεις του και εξηγήστε
+γιατί ο $R$ παριστάνει ανάκλαση ως προς ευθεία που διέρχεται από την αρχή. Προσδιορίστε την
+ευθεία αυτή.</p>
+<p class="ypod">Υπόδειξη: σε μια ανάκλαση, ποια διεύθυνση μένει ακίνητη και ποια αντιστρέφεται;</p></div>
+
+<div class="ex"><div class="num">5E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Η στροφή του χώρου κατά γωνία $\theta$ γύρω από τον άξονα $z$ έχει πίνακα
+$R=\begin{bmatrix}\cos\theta&amp;-\sin\theta&amp;0\\\sin\theta&amp;\cos\theta&amp;0\\0&amp;0&amp;1\end{bmatrix}$.
+Αποδείξτε ότι ο αριθμός $1$ είναι πάντοτε ιδιοτιμή του $R$ και ερμηνεύστε γεωμετρικά τον
+αντίστοιχο ιδιόχωρο. Για ποιες τιμές του $\theta$ έχει ο $R$ και άλλες πραγματικές ιδιοτιμές;</p>
+<p class="ypod">Υπόδειξη: ποια σημεία του χώρου παραμένουν ακίνητα κατά τη στροφή;</p></div>
+
+<div class="grp"><h2>Ε. Αλγεβρική και γεωμετρική πολλαπλότητα</h2>
+<p class="lead">Η $m_a$ μετριέται στο χαρακτηριστικό πολυώνυμο, η $m_g$ στη διάσταση του ιδιόχωρου&middot; πάντοτε $1\le m_g\le m_a$.</p></div>
+
+<div class="ex"><div class="num">5E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Πίνακας $A$ διάστασης $4\times4$ έχει χαρακτηριστικό πολυώνυμο
+$p(\lambda)=(\lambda-2)^{3}(\lambda+1)$. Καταγράψτε τις ιδιοτιμές με τις αλγεβρικές πολλαπλότητές
+τους και προσδιορίστε ποιες τιμές μπορεί να πάρει η γεωμετρική πολλαπλότητα καθεμιάς.
+Αιτιολογήστε την απάντησή σας.</p></div>
+
+<div class="ex"><div class="num">5E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τον πίνακα $A=\begin{bmatrix}4&amp;0&amp;1\\2&amp;3&amp;2\\1&amp;0&amp;4\end{bmatrix}$ βρείτε το χαρακτηριστικό
+πολυώνυμο, όλες τις ιδιοτιμές και, για καθεμιά, τα $m_a$ και $m_g$. Δώστε βάση κάθε ιδιόχωρου.</p>
+<p class="ypod">Υπόδειξη: η δεύτερη στήλη έχει δύο μηδενικά&middot; αναπτύξτε ως προς αυτήν.</p></div>
+
+<div class="ex"><div class="num">5E.15 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Αποδείξτε ότι για κάθε ιδιοτιμή $\lambda$ ενός πίνακα $A$ διάστασης $n\times n$ ισχύει
+$m_g(\lambda)=n-\mathrm{rank}(A-\lambda I)$. Χρησιμοποιώντας τη σχέση αυτή, βρείτε τα $m_a$ και
+$m_g$ της ιδιοτιμής $\lambda=2$ του $A=\begin{bmatrix}2&amp;1&amp;1\\0&amp;2&amp;0\\0&amp;0&amp;2\end{bmatrix}$ χωρίς να
+λύσετε το ομογενές σύστημα.</p>
+<p class="ypod">Υπόδειξη: εφαρμόστε το θεώρημα διάστασης (τάξη &ndash; μηδενικότητα) στον πίνακα $A-\lambda I$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Μιγαδικές ιδιοτιμές</h2>
+<p class="lead">Όταν η διακρίνουσα είναι αρνητική, οι ιδιοτιμές εμφανίζονται σε συζυγή ζεύγη και κρύβουν πάντοτε μια στροφή.</p></div>
+
+<div class="ex"><div class="num">5E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για τον πίνακα $A=\begin{bmatrix}3&amp;-2\\2&amp;3\end{bmatrix}$ βρείτε το χαρακτηριστικό πολυώνυμο και
+τις ιδιοτιμές του. Εξηγήστε γιατί δεν υπάρχει καμία πραγματική ιδιοκατεύθυνση και περιγράψτε τη
+δράση του $A$ στο επίπεδο ως συνδυασμό στροφής και κλιμάκωσης, δίνοντας τον συντελεστή
+κλιμάκωσης και τη γωνία στροφής.</p></div>
+
+<div class="ex"><div class="num">5E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $A$ πραγματικός πίνακας $2\times2$ με μιγαδικές ιδιοτιμές $\lambda=a\pm bi$, όπου
+$b\neq0$. Αποδείξτε ότι $\mathrm{tr}(A)=2a$ και $\det(A)=a^{2}+b^{2}>0$, και συμπεράνετε ότι ένας
+τέτοιος πίνακας είναι πάντοτε αντιστρέψιμος. Επαληθεύστε τα παραπάνω για τον
+$A=\begin{bmatrix}1&amp;-5\\2&amp;3\end{bmatrix}$, αφού υπολογίσετε τις ιδιοτιμές του.</p></div>
+
+<div class="ex"><div class="num">5E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A$ πραγματικός πίνακας $2\times2$ με $\mathrm{tr}(A)=t$ και $\det(A)=d$. Αποδείξτε ότι ο
+$A$ έχει μη πραγματικές ιδιοτιμές αν και μόνο αν $t^{2}&lt;4d$. Στη συνέχεια προσδιορίστε για ποιες
+τιμές της παραμέτρου $k$ ο πίνακας $A=\begin{bmatrix}1&amp;k\\-1&amp;3\end{bmatrix}$ έχει μη πραγματικές
+ιδιοτιμές, για ποιες έχει διπλή πραγματική ιδιοτιμή και για ποιες δύο διακριτές πραγματικές.</p>
+<p class="ypod">Υπόδειξη: γράψτε το χαρακτηριστικό πολυώνυμο με τη βοήθεια των $t$, $d$ και μελετήστε τη διακρίνουσά του.</p></div>
+
+<div class="grp"><h2>Ζ. Εφαρμογές: ταλαντώσεις και τάσεις</h2>
+<p class="lead">Οι συμμετρικοί πίνακες της μηχανικής &mdash; αδράνειας, τάσεων, δυσκαμψίας &mdash; έχουν πραγματικές ιδιοτιμές και ορθογώνιες ιδιοδιευθύνσεις.</p></div>
+
+<div class="ex"><div class="num">5E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Ο τανυστής αδράνειας επίπεδου σώματος ως προς τους άξονες $x$, $y$ είναι
+$J=\begin{bmatrix}5&amp;-2\\-2&amp;8\end{bmatrix}$ (σε $\mathrm{kg\cdot m^{2}}$). Βρείτε τις κύριες ροπές
+αδράνειας και τους κύριους άξονες, και επαληθεύστε ότι οι δύο κύριες διευθύνσεις είναι
+ορθογώνιες.</p>
+<p class="ypod">Υπόδειξη: κύριες ροπές είναι οι ιδιοτιμές, κύριοι άξονες οι αντίστοιχες ιδιοδιευθύνσεις.</p></div>
+
+<div class="ex"><div class="num">5E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ο τανυστής τάσεων σε ένα σημείο δομικού στοιχείου είναι
+$\boldsymbol{\sigma}=\begin{bmatrix}8&amp;3\\3&amp;0\end{bmatrix}$ (σε MPa). Υπολογίστε τις κύριες τάσεις
+και τους κύριους άξονες. Ποια κύρια τάση αντιστοιχεί σε εφελκυσμό και ποια σε θλίψη, και πώς το
+συμπεραίνετε από το πρόσημό τους;</p></div>
+
+<div class="ex"><div class="num">5E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Η μελέτη των μικρών ταλαντώσεων συστήματος δύο ίσων μαζών, συνδεδεμένων με τρία όμοια
+ελατήρια, οδηγεί στον πίνακα $A=\begin{bmatrix}-2&amp;1\\1&amp;-2\end{bmatrix}$ (σε κατάλληλες μονάδες),
+όπου οι ιδιοσυχνότητες δίνονται από τη σχέση $\omega=\sqrt{-\lambda}$. Βρείτε τις ιδιοτιμές και τα
+ιδιοδιανύσματα του $A$, υπολογίστε τις δύο ιδιοσυχνότητες και περιγράψτε τον τρόπο ταλάντωσης που
+αντιστοιχεί σε κάθε ιδιοδιάνυσμα.</p>
+<p class="ypod">Υπόδειξη: εξετάστε αν οι δύο μάζες κινούνται ομόρροπα ή αντίρροπα σε κάθε ιδιοδιεύθυνση.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά &ndash; σύνθετα θέματα</h2>
+<p class="lead">Εδώ συνδυάζονται ο ορισμός, το χαρακτηριστικό πολυώνυμο και η άλγεβρα των πινάκων&middot; δεν δίνεται η μέθοδος.</p></div>
+
+<div class="ex"><div class="num">5E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο πίνακας $A=\begin{bmatrix}2&amp;k\\1&amp;3\end{bmatrix}$ με $k\in\mathbb{R}$. Προσδιορίστε
+για ποιες τιμές του $k$ ο $A$ έχει (α) δύο διακριτές πραγματικές ιδιοτιμές, (β) μία διπλή
+πραγματική ιδιοτιμή, (γ) μη πραγματικές ιδιοτιμές και (δ) το $0$ ως ιδιοτιμή. Στην περίπτωση (δ)
+τι συμπεραίνετε για την αντιστρεψιμότητα του $A$;</p></div>
+
+<div class="ex"><div class="num">5E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Αποδείξτε, εκτελώντας απευθείας τις πράξεις, ότι κάθε πίνακας $A=\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}$
+ικανοποιεί το ίδιο του το χαρακτηριστικό πολυώνυμο, δηλαδή
+$\displaystyle A^{2}-\mathrm{tr}(A)\,A+\det(A)\,I=O.$
+Στη συνέχεια, υποθέτοντας $\det(A)\neq0$, εκφράστε τον $A^{-1}$ ως γραμμικό συνδυασμό των $A$ και
+$I$, και εφαρμόστε τον τύπο που βρήκατε στον $A=\begin{bmatrix}3&amp;1\\2&amp;4\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: για το δεύτερο σκέλος πολλαπλασιάστε την ταυτότητα με $A^{-1}$.</p></div>
+
+<div class="ex"><div class="num">5E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A$ πίνακας $n\times n$ με $A^{2}=I$. (α) Αποδείξτε ότι κάθε ιδιοτιμή του $A$ ισούται με
+$1$ ή με $-1$. (β) Αποδείξτε ότι κάθε $\mathbf{x}\in\mathbb{R}^{n}$ γράφεται ως
+$\mathbf{x}=\mathbf{u}+\mathbf{w}$ με $A\mathbf{u}=\mathbf{u}$ και $A\mathbf{w}=-\mathbf{w}$.
+(γ) Επαληθεύστε τα (α) και (β) για τον $A=\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}$ και το
+$\mathbf{x}=\begin{bmatrix}5\\1\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: για το (β) δοκιμάστε $\mathbf{u}=\tfrac12(\mathbf{x}+A\mathbf{x})$ και υπολογίστε το $A\mathbf{u}$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">5E.25</div>
+<p>Δίνεται ότι τα $\mathbf{u}_1=\begin{bmatrix}1\\1\end{bmatrix}$ και $\mathbf{u}_2=\begin{bmatrix}2\\1\end{bmatrix}$ είναι ιδιοδιανύσματα του $B=\begin{bmatrix}3&amp;-2\\1&amp;0\end{bmatrix}$. Υπολογίστε τα $B\mathbf{u}_1$, $B\mathbf{u}_2$ και βρείτε τις αντίστοιχες ιδιοτιμές.</p></div>
+<div class="ex from-book"><div class="num">5E.26</div>
+<p>Εξετάστε αν τα $\mathbf{v}_1=\begin{bmatrix}1\\1\end{bmatrix}$ και $\mathbf{v}_2=\begin{bmatrix}2\\-1\end{bmatrix}$ είναι ιδιοδιανύσματα του $A=\begin{bmatrix}1&amp;4\\2&amp;3\end{bmatrix}$ και βρείτε τις αντίστοιχες ιδιοτιμές.</p></div>
+<div class="ex from-book"><div class="num">5E.27</div>
+<p>Με το κριτήριο $\det(A-\lambda I)=0$ εξετάστε ποιοι από τους αριθμούς $\lambda=2$, $\lambda=4$, $\lambda=-1$ είναι ιδιοτιμές του $A=\begin{bmatrix}1&amp;2\\3&amp;2\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">5E.28</div>
+<p>Αν $\lambda_1=2$, $\lambda_2=-1$ είναι οι ιδιοτιμές ενός $2\times2$ πίνακα $A$, υπολογίστε τα $\mathrm{tr}(A)$ και $\det(A)$. Ποια είναι η γεωμετρική σημασία του γινομένου των ιδιοτιμών;</p></div>
+<div class="ex from-book"><div class="num">5E.29</div>
+<p>Ένας πίνακας $3\times3$ έχει ίχνος $8$ και ορίζουσα $12$, με ιδιοτιμές $\lambda_1=1$ και $\lambda_2=3$. Βρείτε την $\lambda_3$.</p></div>
+<div class="ex from-book"><div class="num">5E.30</div>
+<p>Για ποιες τιμές του $k$ ο πίνακας $A=\begin{bmatrix}k&amp;1\\1&amp;k\end{bmatrix}$ έχει το $0$ ως ιδιοτιμή; Τι σημαίνει αυτό για την αντιστρεψιμότητά του;</p></div>
+<div class="ex from-book"><div class="num">5E.31</div>
+<p><strong>Απόδειξη:</strong> Δείξτε ότι αν $\lambda$ είναι ιδιοτιμή του $A$, τότε το $\lambda^2$ είναι ιδιοτιμή του $A^2$. Γενικεύστε το αποτέλεσμα για τον $A^n$.</p></div>
+<div class="ex from-book"><div class="num">5E.32</div>
+<p>Βρείτε τις ιδιοτιμές του $A=\begin{bmatrix}1&amp;-2\\2&amp;1\end{bmatrix}$. Είναι πραγματικές; Ποια ιδιότητα του πίνακα εγγυάται πραγματικές ιδιοτιμές;</p></div>
+<div class="ex from-book"><div class="num">5E.33</div>
+<p>Βρείτε τις ιδιοτιμές του πίνακα στροφής $R=\begin{bmatrix}\cos\theta&amp;-\sin\theta\\\sin\theta&amp;\cos\theta\end{bmatrix}$. Για ποιες τιμές του $\theta$ είναι πραγματικές;</p></div>
+<div class="ex from-book"><div class="num">5E.34</div>
+<p>Βρείτε τις ιδιοτιμές του άνω τριγωνικού πίνακα $D=\begin{bmatrix}2&amp;1&amp;0\\0&amp;3&amp;0\\0&amp;0&amp;-1\end{bmatrix}$. Τι ισχύει γενικά για τις ιδιοτιμές τριγωνικών πινάκων;</p></div>
+<div class="ex from-book"><div class="num">5E.35</div>
+<p>Βρείτε βάση του ιδιόχωρου $E_2$ του $A=\begin{bmatrix}2&amp;0&amp;0\\0&amp;2&amp;0\\1&amp;1&amp;3\end{bmatrix}$ και τη διάστασή του.</p></div>
+<div class="ex from-book"><div class="num">5E.36</div>
+<p>Είναι αντιστρέψιμος ο $A=\begin{bmatrix}2&amp;-1\\4&amp;-2\end{bmatrix}$; Αιτιολογήστε την απάντησή σας με βάση τις ιδιοτιμές του.</p></div>
+<div class="ex from-book"><div class="num">5E.37</div>
+<p><strong>Γεωμετρική ερμηνεία:</strong> Εξηγήστε γεωμετρικά γιατί η στροφή κατά $90^\circ$, $R=\begin{bmatrix}0&amp;-1\\1&amp;0\end{bmatrix}$, δεν έχει πραγματικές ιδιοκατευθύνσεις και επιβεβαιώστε ότι η εξίσωση $\det(R-\lambda I)=0$ δεν έχει πραγματικές ρίζες.</p></div>
+<div class="ex from-book"><div class="num">5E.38</div>
+<p>Για την προβολή στην ευθεία $y=x$, $P=\tfrac{1}{2}\begin{bmatrix}1&amp;1\\1&amp;1\end{bmatrix}$, βρείτε γεωμετρικά τις ιδιοτιμές και τις ιδιοκατευθύνσεις και επαληθεύστε τις με υπολογισμό.</p></div>
+<div class="ex from-book"><div class="num">5E.39</div>
+<p>Για την ανάκλαση ως προς τον άξονα $x$, $R=\begin{bmatrix}1&amp;0\\0&amp;-1\end{bmatrix}$, εξηγήστε γεωμετρικά γιατί οι ιδιοτιμές είναι $1$ και $-1$ και ποιες κατευθύνσεις μένουν αναλλοίωτες.</p></div>
+<div class="ex from-book"><div class="num">5E.40</div>
+<p>Για τον $A=\begin{bmatrix}2&amp;0\\0&amp;3\end{bmatrix}$ σχεδιάστε την εικόνα του μοναδιαίου κύκλου. Πώς σχετίζονται οι ημιάξονες της έλλειψης που προκύπτει με τις ιδιοτιμές του $A$;</p></div>
+<div class="ex from-book"><div class="num">5E.41</div>
+<p>Ο ταυτοτικός πίνακας $I_2$ έχει ιδιοτιμή $\lambda=1$. Δείξτε ότι κάθε μη μηδενικό διάνυσμα του $\mathbb{R}^2$ είναι ιδιοδιάνυσμά του και ερμηνεύστε γεωμετρικά. Το ίδιο για τον $cI_2$.</p></div>
+<div class="ex from-book"><div class="num">5E.42</div>
+<p>Για τον πίνακα $C=\begin{bmatrix}2&amp;1&amp;0\\0&amp;2&amp;0\\0&amp;0&amp;3\end{bmatrix}$ βρείτε όλες τις ιδιοτιμές με τις πολλαπλότητές τους $m_a$, $m_g$ και επαληθεύστε ότι $1\le m_g\le m_a$.</p></div>
+<div class="ex from-book"><div class="num">5E.43</div>
+<p>Για τη διάτμηση $S=\begin{bmatrix}1&amp;k\\0&amp;1\end{bmatrix}$, $k\neq0$, βρείτε τα $m_a$ και $m_g$ της μοναδικής ιδιοτιμής της.</p></div>
+<div class="ex from-book"><div class="num">5E.44</div>
+<p>Για τον $A=\begin{bmatrix}3&amp;1&amp;0\\0&amp;3&amp;1\\0&amp;0&amp;3\end{bmatrix}$ βρείτε τα $m_a$ και $m_g$ της ιδιοτιμής $\lambda=3$.</p></div>
+<div class="ex from-book"><div class="num">5E.45</div>
+<p>Δείξτε ότι ο νιλποτεντής πίνακας $N=\begin{bmatrix}0&amp;1\\0&amp;0\end{bmatrix}$ έχει μοναδική ιδιοτιμή $\lambda=0$ με $m_a=2$ και $m_g=1$.</p></div>
+<div class="ex from-book"><div class="num">5E.46</div>
+<p><strong>Απόδειξη:</strong> Δείξτε ότι αν ένας $n\times n$ πίνακας έχει $n$ διακριτές ιδιοτιμές, τότε για κάθε ιδιοτιμή ισχύει $m_a=m_g=1$. <em>Υπόδειξη:</em> χρησιμοποιήστε τη σχέση $1\le m_g\le m_a$.</p></div>
+<div class="ex from-book"><div class="num">5E.47</div>
+<p>Εξετάστε αν ο συμμετρικός πίνακας $A=\begin{bmatrix}2&amp;-1\\-1&amp;2\end{bmatrix}$ είναι θετικά ορισμένος. Ποιο είδος κωνικής τομής αντιστοιχεί στην τετραγωνική μορφή $Q(x,y)=\mathbf{x}^\top A\mathbf{x}=1$;</p></div>
+<div class="ex from-book"><div class="num">5E.48</div>
+<p>Χαρακτηρίστε τη μορφή $Q(x,y)=3x^2-4xy+3y^2$: είναι θετικά ορισμένη; Βρείτε τους κύριους άξονές της.</p></div>
+<div class="ex from-book"><div class="num">5E.49</div>
+<p>Αποσυνθέστε τον $A=\begin{bmatrix}4&amp;2\\2&amp;1\end{bmatrix}$ στη μορφή $A=Q\Lambda Q^\top$ με $Q$ ορθογώνιο. Ποια είναι η γεωμετρική σημασία της μηδενικής ιδιοτιμής;</p></div>
+<div class="ex from-book"><div class="num">5E.50</div>
+<p>Αν ο $A$ είναι συμμετρικός $3\times3$ με ιδιοτιμές $\lambda_1=1$, $\lambda_2=2$, $\lambda_3=3$, βρείτε τα $\det(A)$, $\mathrm{tr}(A)$ και $\det(A-I)$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">5E.51</div>
+<p>Αποδείξτε ότι αν $A^2=A$ (ιδεμποτής πίνακας), τότε οι ιδιοτιμές του είναι $0$ ή $1$. Δώστε παράδειγμα $2\times2$ ιδεμποτούς πίνακα με ιδιοτιμές και $0$ και $1$.</p></div>
+<div class="ex from-book"><div class="num">5E.52</div>
+<p>Βρείτε τις ιδιοτιμές και τα ιδιοδιανύσματα του <em>μη συμμετρικού</em> πίνακα $A=\begin{bmatrix}5&amp;-1\\3&amp;1\end{bmatrix}$ και ελέγξτε αν είναι ορθογώνια. Στη συνέχεια επαναλάβετε για τον <em>συμμετρικό</em> $B=\begin{bmatrix}6&amp;2\\2&amp;3\end{bmatrix}$. Τι συμπεραίνετε για τη σχέση συμμετρίας και ορθογωνιότητας ιδιοδιανυσμάτων;</p></div>
+<div class="ex from-book"><div class="num">5E.53</div>
+<p>Έστω $A=\begin{bmatrix}a&amp;b\\b&amp;a\end{bmatrix}$ με $b\neq0$. Δείξτε ότι οι ιδιοτιμές του είναι $a+b$ και $a-b$, με ιδιοδιανύσματα $(1,1)^\top$ και $(1,-1)^\top$ ανεξάρτητα από τις τιμές των $a$, $b$.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

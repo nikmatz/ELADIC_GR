@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Συναρτήσεις μιας Πραγματικής Μεταβλητής</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">&#8853; Επιπλέον Ασκήσεις</div>
+  <h1>Συναρτήσεις μιας Πραγματικής Μεταβλητής</h1>
+  <p class="chapter-label">Κεφάλαιο 8 &middot; Συναρτήσεις μιας Πραγματικής Μεταβλητής</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά θέμα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Όλα τα ζητούμενα αντιμετωπίζονται αποκλειστικά με αλγεβρικά μέσα και με τους ορισμούς
+  του κεφαλαίου: η μονοτονία αποδεικνύεται πάντοτε συγκρίνοντας τις τιμές $f(x_1)$ και $f(x_2)$ για
+  $x_1\lt x_2$, ποτέ με παράγωγο. Κάθε αποτέλεσμα ελέγχεται ανεξάρτητα: το πεδίο ορισμού με
+  δοκιμή τιμών στα άκρα των περιορισμών, το σύνολο τιμών λύνοντας την $y=f(x)$ ως προς $x$,
+  η αντίστροφη με την επαλήθευση $f^{-1}(f(x))=x$. Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Πεδίο ορισμού και σύνολο τιμών</h2>
+<p class="lead">Κάθε περιορισμός γεννά το πεδίο ορισμού· η επίλυση ως προς $x$ αποκαλύπτει το σύνολο τιμών.</p></div>
+
+<div class="ex"><div class="num">8E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε το φυσικό (μέγιστο) πεδίο ορισμού, δικαιολογώντας κάθε περιορισμό:
+(α) $\displaystyle f(x)=\frac{\sqrt{x+3}}{x-2}$,&nbsp;&nbsp; (β) $\displaystyle g(x)=\ln(4-x)+\frac{1}{\sqrt{x}}$,&nbsp;&nbsp;
+(γ) $h(x)=\arcsin(2x-1)$.</p></div>
+
+<div class="ex"><div class="num">8E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε το σύνολο τιμών, δικαιολογώντας αναλυτικά:
+(α) $\displaystyle f(x)=\frac{1}{x^{2}+1}$,&nbsp;&nbsp; (β) $g(x)=3-2\cos x$,&nbsp;&nbsp; (γ) $h(x)=\sqrt{x-1}+2$.</p>
+<p class="ypod">Υπόδειξη: σε κάθε περίπτωση εντοπίστε πρώτα το σύνολο τιμών της εσωτερικής παράστασης ($x^{2}+1$, $\cos x$, $\sqrt{x-1}$).</p></div>
+
+<div class="ex"><div class="num">8E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $\displaystyle f(x)=\frac{x^{2}}{x^{2}+4}$. (α) Βρείτε το πεδίο ορισμού.
+(β) Λύνοντας την εξίσωση $y=f(x)$ ως προς $x^{2}$, προσδιορίστε για ποια $y$ υπάρχει πραγματική λύση.
+(γ) Συμπεράνετε το σύνολο τιμών της $f$ και εξηγήστε γιατί η τιμή $1$ δεν επιτυγχάνεται.</p></div>
+
+<div class="grp"><h2>Β. Μονοτονία και συναρτήσεις 1&ndash;1</h2>
+<p class="lead">Η μονοτονία αποδεικνύεται με σύγκριση τιμών· από αυτήν προκύπτει άμεσα η αμφιμονοσήμαντη ιδιότητα.</p></div>
+
+<div class="ex"><div class="num">8E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Με τον ορισμό της μονοτονίας δείξτε ότι η $f(x)=\sqrt{x}$ είναι γνησίως αύξουσα στο $[0,+\infty)$
+και συμπεράνετε ότι είναι αμφιμονοσήμαντη.</p>
+<p class="ypod">Υπόδειξη: $\displaystyle \sqrt{x_2}-\sqrt{x_1}=\frac{x_2-x_1}{\sqrt{x_2}+\sqrt{x_1}}$ για $x_1,x_2\ge 0$ όχι και τα δύο μηδέν.</p></div>
+
+<div class="ex"><div class="num">8E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $f(x)=x^{3}-3x$. (α) Βρείτε δύο διαφορετικά σημεία του $\mathbb{R}$ στα οποία η $f$ παίρνει
+την ίδια τιμή και συμπεράνετε ότι δεν είναι αμφιμονοσήμαντη στο $\mathbb{R}$.
+(β) Αποδείξτε ότι η $f$ είναι γνησίως αύξουσα στο $[1,+\infty)$.</p>
+<p class="ypod">Υπόδειξη για το (β): $f(x_2)-f(x_1)=(x_2-x_1)\bigl(x_2^{2}+x_1x_2+x_1^{2}-3\bigr)$· εκτιμήστε την παρένθεση για $x_1,x_2\ge 1$.</p></div>
+
+<div class="ex"><div class="num">8E.6 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $f$ γνησίως αύξουσα και $g$ γνησίως φθίνουσα, και οι δύο ορισμένες στο $\mathbb{R}$.
+(α) Αποδείξτε ότι η $f-g$ είναι γνησίως αύξουσα. (β) Αποδείξτε ότι η σύνθεση $f\circ g$ είναι γνησίως φθίνουσα.
+(γ) Δώστε συγκεκριμένο ζεύγος $f,g$ για το οποίο η $f+g$ <em>δεν</em> είναι μονότονη στο $\mathbb{R}$.</p></div>
+
+<div class="grp"><h2>Γ. Αντίστροφη συνάρτηση</h2>
+<p class="lead">Λύστε την $y=f(x)$ ως προς $x$· το σύνολο τιμών της $f$ γίνεται πεδίο ορισμού της $f^{-1}$.</p></div>
+
+<div class="ex"><div class="num">8E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τον τύπο και το πεδίο ορισμού της αντίστροφης:
+(α) $\displaystyle f(x)=\frac{1}{x}+2$ με $x\gt 0$,&nbsp;&nbsp; (β) $g(x)=(x-3)^{3}+1$ με $x\in\mathbb{R}$.</p></div>
+
+<div class="ex"><div class="num">8E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $f(x)=x+\sqrt{x}$ με πεδίο ορισμού $[0,+\infty)$. (α) Δείξτε ότι είναι γνησίως αύξουσα,
+ως άθροισμα δύο γνησίως αυξουσών συναρτήσεων, άρα αμφιμονοσήμαντη. (β) Βρείτε το σύνολο τιμών της.
+(γ) Θέτοντας $t=\sqrt{x}\ge 0$, λύστε την $y=t^{2}+t$ ως προς $t$ και γράψτε κλειστό τύπο για την $f^{-1}$.</p></div>
+
+<div class="ex"><div class="num">8E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $f,g:\mathbb{R}\to\mathbb{R}$ αμφιμονοσήμαντες και επί. (α) Αποδείξτε ότι η $f\circ g$ είναι
+αμφιμονοσήμαντη και επί. (β) Αποδείξτε ότι $(f\circ g)^{-1}=g^{-1}\circ f^{-1}$.
+(γ) Επαληθεύστε τον τύπο για $f(x)=2x+1$ και $g(x)=x^{3}$.</p>
+<p class="ypod">Υπόδειξη: για το (β) αρκεί να δείξετε ότι η $g^{-1}\circ f^{-1}$ αναιρεί την $f\circ g$ και από τις δύο πλευρές.</p></div>
+
+<div class="grp"><h2>Δ. Σύνθεση συναρτήσεων</h2>
+<p class="lead">Πρώτα ο τύπος, ύστερα το πεδίο ορισμού: η εσωτερική συνάρτηση οφείλει να δίνει τιμές αποδεκτές από την εξωτερική.</p></div>
+
+<div class="ex"><div class="num">8E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Αν $\displaystyle f(x)=\frac{1}{x-1}$ και $g(x)=x^{2}+1$, υπολογίστε τους τύπους και τα πεδία
+ορισμού των $(f\circ g)(x)$ και $(g\circ f)(x)$. Συμπίπτουν οι δύο συνθέσεις;</p></div>
+
+<div class="ex"><div class="num">8E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $\displaystyle h(x)=\frac{1}{\sqrt{\ln x-1}}$. (α) Γράψτε την $h$ ως σύνθεση τριών
+συναρτήσεων $h=f\circ g\circ k$, προσδιορίζοντας ρητά τις $f$, $g$, $k$.
+(β) Βρείτε το πεδίο ορισμού της $h$, εξηγώντας ποιοι δύο διαφορετικοί περιορισμοί υπεισέρχονται.</p></div>
+
+<div class="ex"><div class="num">8E.12 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $\displaystyle f(x)=\frac{x}{x-1}$ με $x\ne 1$. (α) Δείξτε ότι για κάθε $x\ne 1$ ισχύει
+$f(x)\ne 1$, ώστε η σύνθεση $f\circ f$ να ορίζεται. (β) Υπολογίστε και απλοποιήστε την $(f\circ f)(x)$.
+(γ) Συμπεράνετε ότι η $f$ είναι αμφιμονοσήμαντη και ότι $f^{-1}=f$. (δ) Βρείτε την $(f\circ f\circ f)(x)$.</p></div>
+
+<div class="grp"><h2>Ε. Εκθετική και λογαριθμική συνάρτηση</h2>
+<p class="lead">Οι ιδιότητες των δυνάμεων και των λογαρίθμων μετατρέπουν τις εξισώσεις αυτές σε αλγεβρικές.</p></div>
+
+<div class="ex"><div class="num">8E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Λύστε, ελέγχοντας κάθε φορά τους περιορισμούς:
+(α) $2^{2x}-5\cdot 2^{x}+4=0$,&nbsp;&nbsp; (β) $\ln x+\ln(x-3)=\ln 4$,&nbsp;&nbsp; (γ) $3^{\,x+1}=27^{\,x-1}$.</p>
+<p class="ypod">Υπόδειξη: στο (α) θέστε $t=2^{x}$ με $t\gt 0$.</p></div>
+
+<div class="ex"><div class="num">8E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Λύστε την εξίσωση $x^{\log_{10}x}=100\,x$. (α) Ποιο είναι το πεδίο ορισμού της εξίσωσης;
+(β) Πάρτε λογάριθμο με βάση $10$ και στα δύο μέλη και θέστε $t=\log_{10}x$.
+(γ) Επιστρέψτε στη μεταβλητή $x$ και επαληθεύστε κάθε ρίζα.</p></div>
+
+<div class="ex"><div class="num">8E.15 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται $f(x)=\ln\!\bigl(x+\sqrt{x^{2}+1}\bigr)$. (α) Δείξτε ότι ορίζεται για κάθε $x\in\mathbb{R}$.
+(β) Αποδείξτε ότι είναι περιττή. (γ) Αποδείξτε ότι είναι γνησίως αύξουσα.
+(δ) Βρείτε την αντίστροφή της και αναγνωρίστε ποια γνωστή υπερβολική συνάρτηση προκύπτει.</p>
+<p class="ypod">Υπόδειξη: είναι χρήσιμη η ταυτότητα $\bigl(\sqrt{x^{2}+1}-x\bigr)\bigl(\sqrt{x^{2}+1}+x\bigr)=1$· για το (δ) θέστε $y=f(x)$ και υπολογίστε τη διαφορά $e^{y}-e^{-y}$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Μετασχηματισμοί γραφικών παραστάσεων</h2>
+<p class="lead">Κάθε αλλαγή στον τύπο αντιστοιχεί σε μία συγκεκριμένη γεωμετρική κίνηση της καμπύλης.</p></div>
+
+<div class="ex"><div class="num">8E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Έστω γνωστή η γραφική παράσταση μιας συνάρτησης $y=f(x)$. Περιγράψτε με ακρίβεια πώς προκύπτουν
+από αυτήν οι γραφικές παραστάσεις των: $y=f(x-3)$, $y=f(x)+2$, $y=-f(x)$, $y=f(-x)$, $y=2f(x)$, $y=f(2x)$.</p></div>
+
+<div class="ex"><div class="num">8E.17 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Ξεκινώντας από τη βασική $\displaystyle y=\frac{1}{x}$, περιγράψτε τους διαδοχικούς μετασχηματισμούς
+που οδηγούν στην $\displaystyle y=\frac{1}{x-2}+3$, σχεδιάστε τη γραφική της παράσταση και βρείτε το
+πεδίο ορισμού και το σύνολο τιμών της.</p></div>
+
+<div class="ex"><div class="num">8E.18 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ξεκινώντας από την $y=\sin x$, περιγράψτε τους μετασχηματισμούς που δίνουν
+$\displaystyle y=3\sin\!\left(2x-\frac{\pi}{3}\right)+1$ και προσδιορίστε πλάτος, περίοδο,
+οριζόντια μετατόπιση και σύνολο τιμών.</p>
+<p class="ypod">Υπόδειξη: γράψτε πρώτα το όρισμα στη μορφή $2\bigl(x-c\bigr)$· η σειρά των μετασχηματισμών έχει σημασία.</p></div>
+
+<div class="grp"><h2>Ζ. Παραμετρικές και πολικές καμπύλες</h2>
+<p class="lead">Απαλοιφή παραμέτρου και οι σχέσεις $x=r\cos\theta$, $y=r\sin\theta$: δύο γλώσσες για την ίδια καμπύλη.</p></div>
+
+<div class="ex"><div class="num">8E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Απαλείψτε την παράμετρο, αναγνωρίστε την καμπύλη και προσδιορίστε ποιο ακριβώς τμήμα της διαγράφεται:
+(α) $x=1+2t$, $y=3-t$, $t\in\mathbb{R}$; (β) $x=3\cos t$, $y=3\sin t$, $t\in[0,\pi]$;
+(γ) $\displaystyle x=\frac{1}{\cos t}$, $y=\tan t$, $\displaystyle t\in\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$.</p></div>
+
+<div class="ex"><div class="num">8E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Θεωρήστε την παραμετρική καμπύλη $x=t^{2}-1$, $y=t^{3}-t$, $t\in\mathbb{R}$.
+(α) Δείξτε ότι οι τιμές $t=1$ και $t=-1$ δίνουν το ίδιο σημείο του επιπέδου.
+(β) Παρατηρώντας ότι $y=t\,x$, αποδείξτε ότι κάθε σημείο της καμπύλης ικανοποιεί τη σχέση $y^{2}=x^{2}(x+1)$.
+(γ) Συμπληρώστε πίνακα τιμών για $t=-2,-1,0,1,2$ και σχεδιάστε ποιοτικά την καμπύλη.</p></div>
+
+<div class="ex"><div class="num">8E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται η πολική εξίσωση $r^{2}=4\cos(2\theta)$. (α) Για ποιες τιμές του $\theta\in[0,2\pi)$
+ορίζεται η καμπύλη; (β) Πολλαπλασιάζοντας και τα δύο μέλη με $r^{2}$, αποδείξτε ότι σε καρτεσιανές
+συντεταγμένες γράφεται $\bigl(x^{2}+y^{2}\bigr)^{2}=4\bigl(x^{2}-y^{2}\bigr)$.
+(γ) Βρείτε τη μέγιστη τιμή του $r$ και τις διευθύνσεις στις οποίες επιτυγχάνεται, και σχεδιάστε ποιοτικά.</p>
+<p class="ypod">Υπόδειξη: χρησιμοποιήστε $\cos(2\theta)=\cos^{2}\theta-\sin^{2}\theta$ και $r^{2}=x^{2}+y^{2}$.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Ασκήσεις που συνδυάζουν περισσότερες από μία έννοιες του κεφαλαίου.</p></div>
+
+<div class="ex"><div class="num">8E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται $\displaystyle f(x)=\frac{x^{2}-1}{x^{2}+1}$. (α) Δείξτε ότι είναι άρτια.
+(β) Γράψτε την στη μορφή $\displaystyle f(x)=1-\frac{2}{x^{2}+1}$ και βρείτε το σύνολο τιμών της.
+(γ) Δείξτε ότι είναι γνησίως αύξουσα στο $[0,+\infty)$. (δ) Είναι αμφιμονοσήμαντη στο $\mathbb{R}$; Δικαιολογήστε.</p></div>
+
+<div class="ex"><div class="num">8E.23 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Μια συνάρτηση $f:\mathbb{R}\to\mathbb{R}$ είναι άρτια και περιοδική με περίοδο $T=2$, ενώ για
+$x\in[0,1]$ ισχύει $f(x)=x^{2}$. (α) Βρείτε τον τύπο της στο $[-1,0]$. (β) Υπολογίστε $f(3{,}5)$,
+$f(-2{,}25)$ και $f(7)$. (γ) Σχεδιάστε ποιοτικά τη γραφική της παράσταση στο $[-3,3]$.
+(δ) Βρείτε το σύνολο τιμών της.</p>
+<p class="ypod">Υπόδειξη: αξιοποιήστε πρώτα την αρτιότητα για να καλύψετε το $[-1,1]$ και έπειτα την περιοδικότητα.</p></div>
+
+<div class="ex"><div class="num">8E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $f:\mathbb{R}\to\mathbb{R}$ συνάρτηση που ικανοποιεί τη σχέση $f(x)+2f(1-x)=3x$ για κάθε
+$x\in\mathbb{R}$. (α) Αντικαθιστώντας το $x$ με το $1-x$, γράψτε μια δεύτερη σχέση.
+(β) Θεωρώντας τα $f(x)$ και $f(1-x)$ ως δύο αγνώστους, βρείτε τον τύπο της $f$.
+(γ) Επαληθεύστε ότι η συνάρτηση που βρήκατε ικανοποιεί όντως την αρχική σχέση.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">8E.25</div>
+<p>Βρείτε το πεδίο ορισμού κάθε συνάρτησης: (α) $f(x)=\sqrt{9-x^2}+\dfrac{1}{x+2}$, (β) $g(x)=\ln(x^2-x-6)$, (γ) $h(x)=\arccos\left(\dfrac{x}{3}\right)$.</p></div>
+<div class="ex from-book"><div class="num">8E.26</div>
+<p>Βρείτε το σύνολο τιμών (εμβέλεια), δικαιολογώντας αναλυτικά: (α) $g(x)=2\sin x+1$, (β) $h(x)=3-|x-1|$.</p></div>
+<div class="ex from-book"><div class="num">8E.27</div>
+<p>Κατασκευή συνάρτησης: Δίνεται $f(x+1)=x^2-1$. (α) Χρησιμοποιήστε αντικατάσταση (έστω $u=x+1$) για να βρείτε έναν τύπο για $f(u)$. (β) Γράψτε τον τύπο $f(x)$. (γ) Βρείτε το πεδίο ορισμού της $f$.</p></div>
+<div class="ex from-book"><div class="num">8E.28</div>
+<p>Να σχεδιαστεί η $f(x)=|x^2-4|$ και να βρεθεί το σύνολο τιμών.</p></div>
+<div class="ex from-book"><div class="num">8E.29</div>
+<p>Βρείτε την αντίστροφη συνάρτηση $f^{-1}(x)$ για καθεμία από τις παρακάτω, αφού ελέγξετε ότι είναι αμφιμονοσήμαντη στο φυσικό της πεδίο: (α) $f(x)=3x-5$, (β) $f(x)=x^3+1$, (γ) $f(x)=\sqrt{x+2}$.</p></div>
+<div class="ex from-book"><div class="num">8E.30</div>
+<p>Αν $f(x)=\dfrac{2x+1}{x-3}$, βρείτε την $f^{-1}(x)$, το πεδίο ορισμού της και επαληθεύστε ότι $f(f^{-1}(x))=x$.</p></div>
+<div class="ex from-book"><div class="num">8E.31</div>
+<p>Να βρεθεί η αντίστροφη συνάρτηση (αν υπάρχει), αφού ελεγχθεί η αμφιμονοσήμαντη ιδιότητα, μαζί με το πεδίο ορισμού της: (α) $f(x)=2x^2-1$, $x\geq 0$, (β) $g(x)=e^{x-1}+2$.</p></div>
+<div class="ex from-book"><div class="num">8E.32</div>
+<p>Δίνεται $f(x)=e^{2x}-3$. Βρείτε την $f^{-1}(x)$, καθώς και το πεδίο ορισμού και το σύνολο τιμών της $f^{-1}$.</p></div>
+<div class="ex from-book"><div class="num">8E.33</div>
+<p>Αποδείξτε ότι: (α) το γινόμενο δύο περιττών συναρτήσεων είναι άρτια, (β) το γινόμενο άρτιας επί περιττή είναι περιττή, (γ) το άθροισμα δύο άρτιων είναι άρτια.</p></div>
+<div class="ex from-book"><div class="num">8E.34</div>
+<p>Αν η $f$ είναι περιττή και ορίζεται στο $0$, αποδείξτε ότι $f(0)=0$. Υπάρχει συνάρτηση που είναι ταυτόχρονα άρτια και περιττή; Ποια;</p></div>
+<div class="ex from-book"><div class="num">8E.35</div>
+<p>Η $f(x)=\sin x + \cos x$ είναι περιοδική; Αν ναι, βρείτε την περίοδό της.</p></div>
+<div class="ex from-book"><div class="num">8E.36</div>
+<p>Μια συνάρτηση $f$ είναι περιοδική με περίοδο $T=4$ και ορίζεται στο $[0,4)$ με $f(x)=x(4-x)$. Υπολογίστε $f(5)$, $f(-1)$ και $f(10{,}5)$.</p></div>
+<div class="ex from-book"><div class="num">8E.37</div>
+<p>Αν $f(x)=x^2+1$ και $g(x)=\sqrt{x-1}$, υπολογίστε και βρείτε το πεδίο ορισμού των: (α) $(f\circ g)(x)$, (β) $(g\circ f)(x)$.</p></div>
+<div class="ex from-book"><div class="num">8E.38</div>
+<p>Αν $f(x)=2x-3$ και $g(x)=\dfrac{x+3}{2}$, ελέγξτε αν $f\circ g = g\circ f = \mathrm{id}$. Τι συμπεραίνετε;</p></div>
+<div class="ex from-book"><div class="num">8E.39</div>
+<p>Δίνεται $h(x)=\sin(x^2)$. Βρείτε $f$, $g$ ώστε $h=f\circ g$ και υπολογίστε το πεδίο ορισμού.</p></div>
+<div class="ex from-book"><div class="num">8E.40</div>
+<p>Αν $f(x)=2x+1$ και $g(x)=x^2-3$, υπολογίστε: (α) $(f\circ g)(x)$, (β) $(g\circ f)(x)$, (γ) $(f\circ g)(2)$, (δ) $(f\circ f)(x)$.</p></div>
+<div class="ex from-book"><div class="num">8E.41</div>
+<p>Δίνονται $f(x)=\dfrac1x$, $g(x)=x+1$, $h(x)=x^2$. Υπολογίστε την $(f\circ g\circ h)(x)$ και βρείτε το πεδίο ορισμού της.</p></div>
+<div class="ex from-book"><div class="num">8E.42</div>
+<p>Με τον ορισμό της μονοτονίας, δείξτε ότι η $f(x)=x^3$ είναι γνησίως αύξουσα στο $\mathbb{R}$.</p></div>
+<div class="ex from-book"><div class="num">8E.43</div>
+<p>Με συμπλήρωση τετραγώνου, γράψτε την $f(x)=x^2-6x+5$ στη μορφή $(x-a)^2+b$. Βρείτε το ελάχιστό της και τα διαστήματα μονοτονίας <em>χωρίς</em> παράγωγο.</p></div>
+<div class="ex from-book"><div class="num">8E.44</div>
+<p>Δείξτε ότι $|\sin x+\cos x|\leq\sqrt2$ για κάθε $x$, γράφοντας $\sin x+\cos x=\sqrt2\,\sin\!\left(x+\tfrac{\pi}{4}\right)$. Ποιο το μέγιστο και ποιο το ελάχιστο της συνάρτησης;</p></div>
+<div class="ex from-book"><div class="num">8E.45</div>
+<p>Μια δύναμη $F(t)=5\bigl[H(t-1)-H(t-3)\bigr]$ kN εφαρμόζεται σε κατασκευή. Περιγράψτε λεκτικά πότε και πόσο χρόνο δρα η δύναμη.</p></div>
+<div class="ex from-book"><div class="num">8E.46</div>
+<p>Σχεδιάστε το γράφημα της $g(t)=2H(t)-H(t-1)-H(t-3)$ για $t\in[-1,5]$.</p></div>
+<div class="ex from-book"><div class="num">8E.47</div>
+<p>Αν $h(t)=t\cdot H(t-2)$, βρείτε τιμές $h(0)$, $h(1)$, $h(2)$, $h(3)$ και σχεδιάστε την για $t\in[0,4]$.</p></div>
+<div class="ex from-book"><div class="num">8E.48</div>
+<p>Υπολογίστε τις ακριβείς τιμές $\cosh(\ln 2)$, $\tanh(\ln 2)$ και $\sinh(\ln 3)$.</p></div>
+<div class="ex from-book"><div class="num">8E.49</div>
+<p>Χρησιμοποιώντας μόνο τους ορισμούς, δείξτε ότι η $\sinh$ είναι περιττή, η $\cosh$ άρτια και η $\tanh$ περιττή.</p></div>
+<div class="ex from-book"><div class="num">8E.50</div>
+<p>Αποδείξτε την ταυτότητα $\sinh(2x)=2\sinh x\cosh x$ ξεκινώντας από τους εκθετικούς ορισμούς.</p></div>
+<div class="ex from-book"><div class="num">8E.51</div>
+<p>Σημεία τομής δύο εκθετικών συναρτήσεων: $f(x)=e^x$ και $g(x)=e^{2-x}$. (α) Θέστε $e^x = e^{2-x}$ και λύστε. (β) Βρείτε τις συντεταγμένες των σημείων τομής.</p></div>
+<div class="ex from-book"><div class="num">8E.52</div>
+<p>Περιγράψτε τη μετατόπιση της γραφικής παράστασης $y=|x-2|+1$ σε σχέση με $y=|x|$. Βρείτε κορυφή, μηδενικά και σχεδιάστε.</p></div>
+<div class="ex from-book"><div class="num">8E.53</div>
+<p>Παραμετρικοποιήστε το ευθύγραμμο τμήμα από το $A(1,2)$ στο $B(5,-2)$ με $t\in[0,1]$ και γράψτε τις παραμετρικές εξισώσεις της ευθείας που το περιέχει.</p></div>
+<div class="ex from-book"><div class="num">8E.54</div>
+<p>Μετατρέψτε σε πολικές: (α) $x^{2}+y^{2}=9$· (β) $y=x$· (γ) $x^{2}+y^{2}=2x$ (Υπόδειξη: το αποτέλεσμα είναι κύκλος <em>μετατοπισμένος</em>, ποιος;).</p></div>
+<div class="ex from-book"><div class="num">8E.55</div>
+<p>Σχεδιάστε ποιοτικά την καρδιοειδή $r=1+\cos\theta$ συμπληρώνοντας πίνακα τιμών για $\theta=0,\tfrac{\pi}{3},\tfrac{\pi}{2},\pi,\tfrac{3\pi}{2}$. Πού μηδενίζεται η ακτίνα;</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">8E.56</div>
+<p>Για $f(x)=\dfrac{x-1}{x+1}$: (α) Βρείτε το πεδίο ορισμού. (β) Γράψτε την στη μορφή $f(x)=1-\dfrac{2}{x+1}$ και εξετάστε τη μονοτονία ξεχωριστά στο $(-\infty,-1)$ και στο $(-1,+\infty)$. (γ) Είναι αμφιμονοσήμαντη; Αν ναι, βρείτε την αντίστροφη και το πεδίο ορισμού της.</p></div>
+<div class="ex from-book"><div class="num">8E.57</div>
+<p>Για $x&gt;0$ θεωρήστε την $f(x)=x+\dfrac1x$. (α) Αποδείξτε ότι $f(x)\geq 2$ για κάθε $x&gt;0$ <em>χωρίς</em> παράγωγο (υπόδειξη: $(\sqrt{x}-\tfrac{1}{\sqrt{x}})^2\geq0$). (β) Πότε ισχύει η ισότητα; (γ) Δείξτε ότι η $f$ είναι γνησίως φθίνουσα στο $(0,1)$ και γνησίως αύξουσα στο $(1,+\infty)$.</p></div>
+<div class="ex from-book"><div class="num">8E.58</div>
+<p>Δίνεται $f(x)=|x|+|x-2|$. (α) Γράψτε την κατά κλάδους. (β) Σχεδιάστε τη γραφική παράσταση. (γ) Βρείτε το ελάχιστο και το σύνολο τιμών. (δ) Είναι άρτια ως προς κάποιον κατακόρυφο άξονα;</p></div>
+<div class="ex from-book"><div class="num">8E.59</div>
+<p>Δείξτε ότι η $f(x)=\dfrac{x}{1+|x|}$ είναι αμφιμονοσήμαντη από το $\mathbb{R}$ στο $(-1,1)$ και βρείτε την αντίστροφή της. Σχεδιάστε ποιοτικά τη γραφική παράσταση.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

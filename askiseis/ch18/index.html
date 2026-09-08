@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Γενικευμένα Ολοκληρώματα</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Γενικευμένα Ολοκληρώματα</h1>
+  <p class="chapter-label">Κεφάλαιο 18 · Γενικευμένα Ολοκληρώματα</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά είδος ιδιομορφίας
+  και ανά κριτήριο σύγκλισης</em> και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Πριν από κάθε υπολογισμό εντοπίστε πού ακριβώς βρίσκεται η ιδιομορφία: άπειρο άκρο
+  ολοκλήρωσης, μη φραγμένη ολοκληρωτέα συνάρτηση ή και τα δύο. Γράψτε στη συνέχεια το γενικευμένο
+  ολοκλήρωμα ως όριο ορισμένων ολοκληρωμάτων σε φραγμένα διαστήματα, όπου η συνάρτηση είναι συνεχής,
+  και απαντήστε πρώτα στο ερώτημα της σύγκλισης· η αριθμητική τιμή έχει νόημα μόνο αν το όριο υπάρχει.</p>
+</div>
+
+<div class="grp"><h2>Α. Άπειρα άκρα ολοκλήρωσης</h2>
+<p class="lead">Αντικαταστήστε το άπειρο άκρο με πεπερασμένο $b$ και εξετάστε αν υπάρχει το όριο καθώς $b\to+\infty$.</p></div>
+
+<div class="ex"><div class="num">18E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{+\infty}e^{-3x}\,dx$.</p></div>
+
+<div class="ex"><div class="num">18E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{+\infty}\frac{dx}{(x+1)^2}$.</p></div>
+
+<div class="ex"><div class="num">18E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_{-\infty}^{+\infty}\frac{dx}{x^2+2x+2}$.</p>
+<p class="ypod">Υπόδειξη: συμπληρώστε πρώτα το τετράγωνο στον παρονομαστή και διασπάστε το ολοκλήρωμα σε δύο γενικευμένα ολοκληρώματα με ένα μόνο άπειρο άκρο το καθένα.</p></div>
+
+<div class="ex"><div class="num">18E.4 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι το $\displaystyle\int_0^{+\infty}\cos x\,dx$ αποκλίνει, παρότι η ολοκληρωτέα συνάρτηση είναι φραγμένη σε ολόκληρο το $[0,+\infty)$.</p>
+<p class="ypod">Υπόδειξη: υπολογίστε το $\displaystyle\int_0^{b}\cos x\,dx$ ως συνάρτηση του $b$ και εξετάστε τη συμπεριφορά της για $b\to+\infty$. Ποια ιδιότητα του ορίου παραβιάζεται;</p></div>
+
+<div class="grp"><h2>Β. Μη φραγμένες ολοκληρωτέες συναρτήσεις</h2>
+<p class="lead">Εντοπίστε το σημείο στο οποίο η συνάρτηση απειρίζεται και προσεγγίστε το με όριο από το εσωτερικό του διαστήματος.</p></div>
+
+<div class="ex"><div class="num">18E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{4}\frac{dx}{\sqrt{4-x}}$.</p>
+<p class="ypod">Υπόδειξη: η ιδιομορφία βρίσκεται στο άνω άκρο.</p></div>
+
+<div class="ex"><div class="num">18E.6 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{1}\frac{x}{\sqrt{1-x^2}}\,dx$.</p></div>
+
+<div class="ex"><div class="num">18E.7 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{1}\ln x\,dx$.</p>
+<p class="ypod">Υπόδειξη: βρείτε αντιπαράγωγο με ολοκλήρωση κατά παράγοντες και εξετάστε χωριστά το όριο του συνοριακού όρου καθώς το κάτω άκρο τείνει στο $0^{+}$.</p></div>
+
+<div class="ex"><div class="num">18E.8 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και, εφόσον συγκλίνει, υπολογίστε την τιμή του $\displaystyle\int_{-1}^{8}\frac{dx}{\sqrt[3]{x^2}}$.</p>
+<p class="ypod">Υπόδειξη: η ιδιομορφία είναι εσωτερική. Διασπάστε στο $0$ και απαιτήστε να συγκλίνουν <em>και τα δύο</em> γενικευμένα ολοκληρώματα χωριστά· η ολοκληρωτέα συνάρτηση ορίζεται και για αρνητικά $x$.</p></div>
+
+<div class="grp"><h2>Γ. Ολοκληρώματα τύπου $p$</h2>
+<p class="lead">Το κριτήριο των ολοκληρωμάτων τύπου $p$ απαντά στο ερώτημα της σύγκλισης χωρίς υπολογισμό — αρκεί να δείτε ποιο άκρο δημιουργεί το πρόβλημα.</p></div>
+
+<div class="ex"><div class="num">18E.9 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Χαρακτηρίστε ως συγκλίνον ή αποκλίνον, χωρίς να υπολογίσετε καμία τιμή: (α) $\displaystyle\int_1^{+\infty}\frac{dx}{x^{5/4}}$, (β) $\displaystyle\int_0^{1}\frac{dx}{x^{5/4}}$, (γ) $\displaystyle\int_0^{1}\frac{dx}{x^{4/5}}$.</p>
+<p class="ypod">Υπόδειξη: για κάθε περίπτωση αναγνωρίστε πρώτα αν πρόκειται για ολοκλήρωμα 1ου ή 2ου είδους· η συνθήκη για το $p$ αντιστρέφεται.</p></div>
+
+<div class="ex"><div class="num">18E.10 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι το $\displaystyle\int_0^{+\infty}\frac{dx}{x^{p}}$ αποκλίνει για <em>κάθε</em> τιμή του $p$.</p>
+<p class="ypod">Υπόδειξη: διασπάστε στο $1$ και γράψτε τη συνθήκη σύγκλισης που επιβάλλει χωριστά καθένα από τα δύο κομμάτια. Οι δύο συνθήκες μπορούν να ισχύουν ταυτόχρονα;</p></div>
+
+<div class="ex"><div class="num">18E.11 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{1/2}\frac{dx}{x\,(\ln x)^2}$.</p>
+<p class="ypod">Υπόδειξη: η ιδιομορφία είναι στο $0^{+}$ και βρίσκεται στην οριακή περίπτωση $p=1$, όπου η δύναμη του $x$ δεν κρίνει μόνη της. Δοκιμάστε την αντικατάσταση $u=\ln x$ και προσέξτε πού μεταφέρονται τα άκρα.</p></div>
+
+<div class="grp"><h2>Δ. Κριτήριο σύγκρισης</h2>
+<p class="lead">Βρείτε απλούστερη συνάρτηση που φράσσει την ολοκληρωτέα από πάνω (για σύγκλιση) ή από κάτω (για απόκλιση) σε ολόκληρο το διάστημα.</p></div>
+
+<div class="ex"><div class="num">18E.12 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δείξτε ότι το $\displaystyle\int_1^{+\infty}\frac{dx}{x^3+x}$ συγκλίνει, χωρίς να το υπολογίσετε.</p>
+<p class="ypod">Υπόδειξη: για $x\ge 1$ ισχύει $x^3+x&gt;x^3$.</p></div>
+
+<div class="ex"><div class="num">18E.13 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι το $\displaystyle\int_1^{+\infty}\frac{2+\sin x}{x^2}\,dx$ συγκλίνει.</p>
+<p class="ypod">Υπόδειξη: φράξτε τον αριθμητή και επιβεβαιώστε ότι η ολοκληρωτέα συνάρτηση είναι μη αρνητική, ώστε το κριτήριο σύγκρισης να εφαρμόζεται.</p></div>
+
+<div class="ex"><div class="num">18E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι το $\displaystyle\int_1^{+\infty}\frac{dx}{x+\ln x}$ αποκλίνει.</p>
+<p class="ypod">Υπόδειξη: για $x\ge 1$ ισχύει $0\le\ln x\le x$· φράξτε τον παρονομαστή από πάνω και συγκρίνετε με ολοκλήρωμα τύπου $p$ με $p=1$.</p></div>
+
+<div class="grp"><h2>Ε. Κριτήριο οριακής σύγκρισης</h2>
+<p class="lead">Αναγνωρίστε την κυρίαρχη συμπεριφορά της ολοκληρωτέας κοντά στην ιδιομορφία και συγκρίνετέ την οριακά με κατάλληλη δύναμη.</p></div>
+
+<div class="ex"><div class="num">18E.15 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε τη σύγκλιση του $\displaystyle\int_1^{+\infty}\frac{x+1}{x^3+2}\,dx$ με το κριτήριο οριακής σύγκρισης.</p>
+<p class="ypod">Υπόδειξη: κρατήστε τους μεγιστοβάθμιους όρους αριθμητή και παρονομαστή για να μαντέψετε τη συνάρτηση σύγκρισης.</p></div>
+
+<div class="ex"><div class="num">18E.16 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Εξετάστε τη σύγκλιση του $\displaystyle\int_1^{+\infty}\frac{x^2+3}{x^3+x+1}\,dx$ και αιτιολογήστε πλήρως την επιλογή της συνάρτησης σύγκρισης.</p>
+<p class="ypod">Υπόδειξη: επιβεβαιώστε πρώτα ότι ο παρονομαστής δεν μηδενίζεται για $x\ge 1$, ώστε το ολοκλήρωμα να είναι γενικευμένο μόνο λόγω του άπειρου άκρου.</p></div>
+
+<div class="ex"><div class="num">18E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Εξετάστε τη σύγκλιση του $\displaystyle\int_0^{1}\frac{dx}{e^{x}-1}$.</p>
+<p class="ypod">Υπόδειξη: η ιδιομορφία είναι στο $0^{+}$. Υπολογίστε το $\displaystyle\lim_{x\to 0^{+}}\frac{e^{x}-1}{x}$ και συγκρίνετε οριακά με ολοκλήρωμα τύπου $p$ στο $(0,1]$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Απόλυτη σύγκλιση</h2>
+<p class="lead">Αν συγκλίνει το ολοκλήρωμα της απόλυτης τιμής, τότε συγκλίνει και το αρχικό — και μάλιστα απολύτως.</p></div>
+
+<div class="ex"><div class="num">18E.18 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δείξτε ότι το $\displaystyle\int_0^{+\infty}e^{-x}\cos(2x)\,dx$ συγκλίνει απολύτως, χωρίς να υπολογίσετε την τιμή του.</p>
+<p class="ypod">Υπόδειξη: φράξτε το $|\cos(2x)|$ και συγκρίνετε με εκθετικό ολοκλήρωμα.</p></div>
+
+<div class="ex"><div class="num">18E.19 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι το $\displaystyle\int_1^{+\infty}\frac{\sin x}{x^{3/2}}\,dx$ συγκλίνει απολύτως και εξηγήστε γιατί το κριτήριο σύγκρισης <em>δεν</em> μπορεί να εφαρμοστεί απευθείας στην ίδια την ολοκληρωτέα συνάρτηση.</p>
+<p class="ypod">Υπόδειξη: το κριτήριο σύγκρισης απαιτεί μη αρνητικές συναρτήσεις· ποιο πρόσημο έχει η $\sin x$ στο $[1,+\infty)$;</p></div>
+
+<div class="grp"><h2>Ζ. Συνάρτηση Γάμμα και μετασχηματισμός Laplace</h2>
+<p class="lead">Η $\Gamma$ και ο μετασχηματισμός Laplace είναι γενικευμένα ολοκληρώματα που εξαρτώνται από παράμετρο· η σύγκλιση πρέπει να δηλώνεται μαζί με το αποτέλεσμα.</p></div>
+
+<div class="ex"><div class="num">18E.20 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εκφράστε μέσω της συνάρτησης $\Gamma$ και υπολογίστε το $\displaystyle\int_0^{+\infty}x^{4}e^{-x}\,dx$.</p>
+<p class="ypod">Υπόδειξη: ταυτοποιήστε τον εκθέτη με τη μορφή $t^{x-1}$ του ορισμού και χρησιμοποιήστε τη σχέση $\Gamma(n+1)=n!$.</p></div>
+
+<div class="ex"><div class="num">18E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Με την αντικατάσταση $t=x^2$, εκφράστε το $\displaystyle\int_0^{+\infty}e^{-x^2}\,dx$ μέσω της συνάρτησης $\Gamma$ και, δεχόμενοι ότι $\Gamma(1/2)=\sqrt{\pi}$, βρείτε την τιμή του.</p>
+<p class="ypod">Υπόδειξη: από την $t=x^2$ προκύπτει $x=\sqrt{t}$ και $dx=\frac{1}{2}t^{-1/2}\,dt$· το νέο ολοκλήρωμα είναι γενικευμένο και στα δύο άκρα, οπότε δικαιολογήστε τη σύγκλισή του.</p></div>
+
+<div class="ex"><div class="num">18E.22 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Υπολογίστε από τον ορισμό τον μετασχηματισμό Laplace $\displaystyle\mathcal{L}\{\cos(\omega t)\}=\int_0^{+\infty}e^{-st}\cos(\omega t)\,dt$, όπου $\omega\in\mathbb{R}$ σταθερά, προσδιορίζοντας για ποιες τιμές του $s$ συγκλίνει το ολοκλήρωμα.</p>
+<p class="ypod">Υπόδειξη: δύο διαδοχικές ολοκληρώσεις κατά παράγοντες επαναφέρουν το αρχικό ολοκλήρωμα· αντιμετωπίστε το ως εξίσωση. Αιτιολογήστε χωριστά τον μηδενισμό των συνοριακών όρων.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά — σύνθετες ιδιομορφίες</h2>
+<p class="lead">Εδώ οι ιδιομορφίες είναι περισσότερες από μία: διασπάστε σωστά πριν από κάθε υπολογισμό.</p></div>
+
+<div class="ex"><div class="num">18E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_1^{+\infty}\frac{dx}{x\sqrt{x^2-1}}$.</p>
+<p class="ypod">Υπόδειξη: το ολοκλήρωμα είναι γενικευμένο <em>και στα δύο</em> άκρα· διασπάστε το σε ένα εσωτερικό σημείο, π.χ. στο $x=2$. Για την αντιπαράγωγο δοκιμάστε την τριγωνομετρική αντικατάσταση $x=\sec\theta$ και προσέξτε τα νέα άκρα.</p></div>
+
+<div class="ex"><div class="num">18E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{+\infty}\frac{dx}{\sqrt{x}\,(1+x)}$.</p>
+<p class="ypod">Υπόδειξη: πριν από κάθε αντικατάσταση, εξετάστε χωριστά τη συμπεριφορά της ολοκληρωτέας κοντά στο $0^{+}$ και για $x\to+\infty$ με ολοκληρώματα τύπου $p$. Στη συνέχεια δοκιμάστε $u=\sqrt{x}$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">18E.25</div>
+<p>Εξετάστε αν συγκλίνει το $\displaystyle\int_1^{+\infty}\frac{dx}{x^3}$ και, αν ναι, υπολογίστε την τιμή του.</p></div>
+<div class="ex from-book"><div class="num">18E.26</div>
+<p>Εξετάστε τη σύγκλιση και υπολογίστε την τιμή του $\displaystyle\int_0^{+\infty}\frac{dx}{x^2+9}$.</p></div>
+<div class="ex from-book"><div class="num">18E.27</div>
+<p>Εξετάστε αν συγκλίνει το $\displaystyle\int_0^{8}\frac{dx}{\sqrt[3]{x}}$ και, αν ναι, υπολογίστε την τιμή του.</p></div>
+<div class="ex from-book"><div class="num">18E.28</div>
+<p>Εφαρμόστε το κριτήριο των $p$-ολοκληρωμάτων: (α) $\displaystyle\int_1^{+\infty}\frac{dx}{x\sqrt{x}}$, (β) $\displaystyle\int_1^{+\infty}\frac{dx}{\sqrt{x}}$.</p></div>
+<div class="ex from-book"><div class="num">18E.29</div>
+<p>Δείξτε ότι το $\displaystyle\int_1^{+\infty}\frac{\sin x}{x^2}\,dx$ συγκλίνει (απολύτως) και βρείτε ένα φράγμα για την τιμή του.</p></div>
+<div class="ex from-book"><div class="num">18E.30</div>
+<p>Εξετάστε τη σύγκλιση του $\displaystyle\int_1^{+\infty}\frac{dx}{x+e^{x}}$.</p></div>
+<div class="ex from-book"><div class="num">18E.31</div>
+<p>Υπολογίστε το $\displaystyle\int_0^{+\infty}x^2e^{-2x}\,dx$ με κατάλληλη αλλαγή μεταβλητής και τη συνάρτηση $\Gamma$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">18E.32</div>
+<p>Υπολογίστε με ολοκλήρωση κατά παράγοντες το $\displaystyle\int_0^{+\infty}e^{-x}\cos x\,dx$ (επαναφορά του αρχικού ολοκληρώματος) και εξηγήστε γιατί μηδενίζονται οι συνοριακοί όροι.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

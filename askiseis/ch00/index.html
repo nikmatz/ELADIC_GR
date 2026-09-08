@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Μαθηματικό Υπόβαθρο</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Μαθηματικό Υπόβαθρο</h1>
+  <p class="chapter-label">Κεφάλαιο 0 · Μαθηματικό Υπόβαθρο</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα</em>
+  του κεφαλαίου και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Πρόκειται για ύλη επανάληψης: κάθε άσκηση λύνεται αποκλειστικά με τα εργαλεία
+  αυτού του κεφαλαίου, χωρίς παραγώγους και χωρίς ολοκληρώματα. Πριν ξεκινήσετε τις πράξεις,
+  αναγνωρίστε τη δομή της παράστασης· οι περισσότερες λύσεις είναι σύντομες όταν επιλεγεί
+  ο κατάλληλος τύπος. Κάθε αποτέλεσμα ελέγχεται με αντικατάσταση στα δεδομένα.</p>
+</div>
+
+<div class="grp"><h2>Α. Αριθμητικά σύνολα, ανισότητες και απόλυτες τιμές</h2>
+<p class="lead">Πρώτα ο περιορισμός του πεδίου ορισμού, έπειτα η μελέτη προσήμου· το σύνολο λύσεων γράφεται πάντα ως διάστημα ή ένωση διαστημάτων.</p></div>
+
+<div class="ex"><div class="num">0E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Λύστε τη διπλή ανισότητα $-3\le 2x+1<7$ και γράψτε το σύνολο λύσεων ως διάστημα.</p></div>
+
+<div class="ex"><div class="num">0E.2 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Λύστε τις ανισότητες:</p>
+<p>(α) $|2x-1|<|x+3|$,&nbsp;&nbsp;&nbsp; (β) $\displaystyle \frac{x^2-4}{x+1}\le 0$.</p>
+<p class="ypod">Υπόδειξη: στο (α) και τα δύο μέλη είναι μη αρνητικά, οπότε η ανισότητα διατηρείται αν υψώσετε στο τετράγωνο. Στο (β) παραγοντοποιήστε τον αριθμητή και κατασκευάστε πίνακα προσήμων· προσέξτε ποιο σημείο εξαιρείται.</p></div>
+
+<div class="ex"><div class="num">0E.3 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Αποδείξτε ότι για κάθε $a,b,c\in\mathbb{R}$ ισχύει $a^2+b^2+c^2\ge ab+bc+ca$ και προσδιορίστε πότε ισχύει η ισότητα.</p>
+<p class="ypod">Υπόδειξη: εξετάστε το άθροισμα $(a-b)^2+(b-c)^2+(c-a)^2$.</p></div>
+
+<div class="grp"><h2>Β. Επίπεδο συντεταγμένων και ευθεία</h2>
+<p class="lead">Απόσταση, μέσο σημείο και κλίση αρκούν για να περιγραφεί πλήρως κάθε ευθεία του επιπέδου.</p></div>
+
+<div class="ex"><div class="num">0E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνονται τα σημεία $A(-3,5)$ και $B(5,-1)$. Υπολογίστε το μήκος $|AB|$ και τις συντεταγμένες του μέσου $M$ του τμήματος $AB$.</p></div>
+
+<div class="ex"><div class="num">0E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Γράψτε την εξίσωση της ευθείας που διέρχεται από το σημείο $(0,4)$ και είναι παράλληλη στην ευθεία $3x-y+2=0$.</p></div>
+
+<div class="ex"><div class="num">0E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνονται τα σημεία $A(1,1)$, $B(5,3)$ και $\Gamma(3,7)$. Δείξτε ότι το τρίγωνο $AB\Gamma$ είναι ορθογώνιο και υπολογίστε το εμβαδόν του.</p>
+<p class="ypod">Υπόδειξη: συγκρίνετε τις κλίσεις των πλευρών ή τα μήκη τους. Σε ποια κορυφή αναζητάτε την ορθή γωνία;</p></div>
+
+<div class="grp"><h2>Γ. Διανύσματα στο επίπεδο και τον χώρο</h2>
+<p class="lead">Το εσωτερικό γινόμενο μετρά ταυτόχρονα μήκη και γωνίες· σχεδόν κάθε ερώτημα ανάγεται σε αυτό.</p></div>
+
+<div class="ex"><div class="num">0E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνονται τα διανύσματα $\vec{u}=(3,-4)$ και $\vec{v}=(-1,2)$ του επιπέδου και το διάνυσμα $\vec{w}=(2,-3,6)$ του χώρου. Υπολογίστε:</p>
+<p>(α) το διάνυσμα $2\vec{u}-3\vec{v}$,&nbsp;&nbsp;&nbsp; (β) τα μέτρα $\|\vec{u}\|$ και $\|\vec{w}\|$,&nbsp;&nbsp;&nbsp; (γ) τα αντίστοιχα μοναδιαία διανύσματα κατεύθυνσης.</p></div>
+
+<div class="ex"><div class="num">0E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε όλα τα μοναδιαία διανύσματα του επιπέδου που είναι κάθετα στο $\vec{v}=(3,4)$.</p>
+<p class="ypod">Υπόδειξη: γράψτε το ζητούμενο ως $(a,b)$ και συνδυάστε τη συνθήκη καθετότητας με τη συνθήκη $\|(a,b)\|=1$. Πόσες λύσεις περιμένετε γεωμετρικά;</p></div>
+
+<div class="ex"><div class="num">0E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Αποδείξτε τον κανόνα του παραλληλογράμμου: για κάθε $\vec{u},\vec{v}$ του επιπέδου ή του χώρου ισχύει
+$\|\vec{u}+\vec{v}\|^2+\|\vec{u}-\vec{v}\|^2=2\|\vec{u}\|^2+2\|\vec{v}\|^2$.</p>
+<p class="ypod">Υπόδειξη: αξιοποιήστε τη σχέση $\|\vec{w}\|^2=\vec{w}\cdot\vec{w}$ και την επιμεριστικότητα του εσωτερικού γινομένου.</p></div>
+
+<div class="grp"><h2>Δ. Αλγεβρικοί τύποι και παραγοντοποίηση</h2>
+<p class="lead">Αναγνωρίστε το πρότυπο (διαφορά τετραγώνων, άθροισμα κύβων, τέλειο τετράγωνο) πριν κάνετε οποιαδήποτε πράξη.</p></div>
+
+<div class="ex"><div class="num">0E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Παραγοντοποιήστε πλήρως στο $\mathbb{R}$: (α) $x^3+27$,&nbsp;&nbsp;&nbsp; (β) $4x^2-12x+9$,&nbsp;&nbsp;&nbsp; (γ) $x^4-16$.</p></div>
+
+<div class="ex"><div class="num">0E.11 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Απλοποιήστε την παράσταση $\displaystyle \frac{1}{x-1}-\frac{2}{x^2-1}$ για $x\neq\pm 1$.</p></div>
+
+<div class="ex"><div class="num">0E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε τον σταθερό όρο, δηλαδή τον όρο που δεν περιέχει το $x$, στο ανάπτυγμα $\displaystyle \left(x+\frac{1}{x}\right)^{6}$ (για $x\neq 0$).</p>
+<p class="ypod">Υπόδειξη: γράψτε τον γενικό όρο του Διωνυμικού Θεωρήματος και απαιτήστε ο εκθέτης του $x$ να μηδενίζεται.</p></div>
+
+<div class="grp"><h2>Ε. Πολυωνυμικές εξισώσεις</h2>
+<p class="lead">Θεώρημα Ρητής Ρίζας για την ανίχνευση, σχήμα Horner για τον υποβιβασμό του βαθμού.</p></div>
+
+<div class="ex"><div class="num">0E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Με το σχήμα Horner βρείτε το πηλίκο και το υπόλοιπο της διαίρεσης του $p(x)=x^4-3x^3+2x-5$ με το $x+1$.</p>
+<p class="ypod">Υπόδειξη: μη λησμονήσετε τον μηδενικό συντελεστή του $x^2$.</p></div>
+
+<div class="ex"><div class="num">0E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Λύστε στο $\mathbb{R}$ την εξίσωση $2x^3-x^2-8x+4=0$.</p>
+<p class="ypod">Υπόδειξη: εναλλακτικά της αναζήτησης ρητών ριζών, δοκιμάστε ομαδοποίηση των όρων ανά δύο.</p></div>
+
+<div class="ex"><div class="num">0E.15 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Το πολυώνυμο $p(x)=x^3+ax^2+bx-6$ έχει ρίζες τους αριθμούς $1$ και $-2$. Προσδιορίστε τα $a,b\in\mathbb{R}$ και βρείτε την τρίτη ρίζα του.</p>
+<p class="ypod">Υπόδειξη: δύο ανεξάρτητες συνθήκες προκύπτουν από τις σχέσεις $p(1)=0$ και $p(-2)=0$· η τρίτη ρίζα βρίσκεται στη συνέχεια με παραγοντοποίηση.</p></div>
+
+<div class="grp"><h2>ΣΤ. Τριγωνομετρία</h2>
+<p class="lead">Πυθαγόρεια ταυτότητα, τεταρτημόριο και τύποι μετασχηματισμού: αυτά τα τρία καλύπτουν όλη την ομάδα.</p></div>
+
+<div class="ex"><div class="num">0E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Αν $\cos\theta=-\dfrac{4}{5}$ και $\theta\in\left(\dfrac{\pi}{2},\pi\right)$, υπολογίστε τα $\sin\theta$, $\tan\theta$ και $\cos 2\theta$.</p>
+<p class="ypod">Υπόδειξη: το τεταρτημόριο καθορίζει το πρόσημο της ρίζας.</p></div>
+
+<div class="ex"><div class="num">0E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Λύστε στο διάστημα $[0,2\pi)$ την εξίσωση $2\sin^2 x+\sin x-1=0$.</p>
+<p class="ypod">Υπόδειξη: με την αντικατάσταση $t=\sin x$ προκύπτει δευτεροβάθμια εξίσωση· παραγοντοποιήστε την και επιστρέψτε στη μεταβλητή $x$.</p></div>
+
+<div class="ex"><div class="num">0E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Αποδείξτε την ταυτότητα $\displaystyle \frac{\cos x-\cos 3x}{\sin 3x-\sin x}=\tan 2x$, για κάθε $x$ με $\sin x\neq 0$ και $\cos 2x\neq 0$.</p>
+<p class="ypod">Υπόδειξη: μετατρέψτε αριθμητή και παρονομαστή σε γινόμενα με τους τύπους αθροίσματος προς γινόμενο.</p></div>
+
+<div class="grp"><h2>Ζ. Μιγαδικοί αριθμοί</h2>
+<p class="lead">Αλγεβρική μορφή για τις πράξεις, εκθετική μορφή για δυνάμεις και ρίζες, μιγαδικό επίπεδο για τη γεωμετρία.</p></div>
+
+<div class="ex"><div class="num">0E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Γράψτε στη μορφή $a+bi$ τους αριθμούς $\displaystyle \frac{3-i}{1+2i}$ και $i^{2027}$.</p>
+<p class="ypod">Υπόδειξη: για το πηλίκο πολλαπλασιάστε αριθμητή και παρονομαστή με τον συζυγή του παρονομαστή· για τη δύναμη αξιοποιήστε την περιοδικότητα των δυνάμεων του $i$.</p></div>
+
+<div class="ex"><div class="num">0E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε όλες τις τέταρτες ρίζες του $z=-16$ σε εκθετική και σε αλγεβρική μορφή και απεικονίστε τις στο μιγαδικό επίπεδο.</p>
+<p class="ypod">Υπόδειξη: γράψτε πρώτα τον $-16$ σε τριγωνομετρική μορφή. Πώς κατανέμονται οι ρίζες πάνω στον κύκλο;</p></div>
+
+<div class="ex"><div class="num">0E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δείξτε ότι το σύνολο των $z\in\mathbb{C}$ που ικανοποιούν τη συνθήκη $|z-1|=2\,|z+1|$ είναι κύκλος και προσδιορίστε το κέντρο και την ακτίνα του.</p>
+<p class="ypod">Υπόδειξη: θέστε $z=x+iy$, υψώστε και τα δύο μέλη στο τετράγωνο και συμπληρώστε τετράγωνο ως προς $x$.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά θέματα</h2>
+<p class="lead">Ασκήσεις που συνδυάζουν περισσότερες ενότητες· εδώ δεν δίνεται η μέθοδος, την επιλέγετε εσείς.</p></div>
+
+<div class="ex"><div class="num">0E.22 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Υπολογίστε την τιμή της παράστασης $\displaystyle \log_2 32-\log_2\sqrt{2}+\log_3\frac{1}{9}$.</p></div>
+
+<div class="ex"><div class="num">0E.23 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Με βάση τη σχέση του Euler $e^{i\theta}=\cos\theta+i\sin\theta$ και την ιδιότητα $e^{i(\alpha+\beta)}=e^{i\alpha}\,e^{i\beta}$, αποδείξτε τους τύπους
+$\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta$ και $\sin(\alpha+\beta)=\sin\alpha\cos\beta+\cos\alpha\sin\beta$.</p>
+<p class="ypod">Υπόδειξη: εκτελέστε τον πολλαπλασιασμό και εξισώστε χωριστά πραγματικά και φανταστικά μέρη.</p></div>
+
+<div class="ex"><div class="num">0E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται το πολυώνυμο $p(x)=x^4+1$.</p>
+<p>(α) Δείξτε ότι το $p$ δεν έχει πραγματικές ρίζες.</p>
+<p>(β) Βρείτε τις τέσσερις μιγαδικές ρίζες του σε εκθετική μορφή.</p>
+<p>(γ) Συνδυάζοντας ανά δύο τις συζυγείς ρίζες, γράψτε το $p(x)$ ως γινόμενο δύο τριωνύμων με πραγματικούς συντελεστές.</p>
+<p class="ypod">Υπόδειξη: στο (γ) το γινόμενο $(x-z)(x-\bar{z})$ εκφράζεται μέσω του $z+\bar{z}$ και του $|z|^2$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">0E.25</div>
+<p>Λύστε την ανισότητα $|3x+2|\ge 4$ και γράψτε τη λύση ως ένωση διαστημάτων.</p></div>
+<div class="ex from-book"><div class="num">0E.26</div>
+<p>Βρείτε τα $x$ για τα οποία $\dfrac{x-1}{x+2}\ge 0$.</p></div>
+<div class="ex from-book"><div class="num">0E.27</div>
+<p>Αποδείξτε ότι $\bigl|\,|a|-|b|\,\bigr|\le |a-b|$ για κάθε $a,b\in\mathbb{R}$.</p></div>
+<div class="ex from-book"><div class="num">0E.28</div>
+<p>Γράψτε την εξίσωση της ευθείας που διέρχεται από το $(2,3)$ και είναι κάθετη στην $y=2x-1$.</p></div>
+<div class="ex from-book"><div class="num">0E.29</div>
+<p>Βρείτε το σημείο τομής των ευθειών $x+y=3$ και $2x-y=0$.</p></div>
+<div class="ex from-book"><div class="num">0E.30</div>
+<p>Βρείτε την κλίση και τα σημεία τομής με τους άξονες της ευθείας $2x+3y=6$.</p></div>
+<div class="ex from-book"><div class="num">0E.31</div>
+<p>Βρείτε την τιμή του $\lambda$ ώστε τα $\vec{u}=(\lambda,2)$ και $\vec{v}=(4,-2)$ να είναι κάθετα.</p></div>
+<div class="ex from-book"><div class="num">0E.32</div>
+<p>Υπολογίστε τη γωνία μεταξύ των $\vec{u}=(1,1,0)$ και $\vec{v}=(1,0,1)$.</p></div>
+<div class="ex from-book"><div class="num">0E.33</div>
+<p>Για $\vec{F}_1=(2,1)\,$N και $\vec{F}_2=(1,3)\,$N, βρείτε τη συνισταμένη $\vec{F}_1+\vec{F}_2$ και το μέτρο της.</p></div>
+<div class="ex from-book"><div class="num">0E.34</div>
+<p>Αναπτύξτε το $(2x-3)^3$.</p></div>
+<div class="ex from-book"><div class="num">0E.35</div>
+<p>Παραγοντοποιήστε το $x^3-8$.</p></div>
+<div class="ex from-book"><div class="num">0E.36</div>
+<p>Βρείτε τον συντελεστή του $x^2$ στο ανάπτυγμα $(1+x)^6$.</p></div>
+<div class="ex from-book"><div class="num">0E.37</div>
+<p>Με το σχήμα Horner διαιρέστε το πολυώνυμο $x^3-2x+1$ με το $x-1$.</p></div>
+<div class="ex from-book"><div class="num">0E.38</div>
+<p>Βρείτε όλες τις ρητές ρίζες του πολυωνύμου $2x^3-3x^2-3x+2$.</p></div>
+<div class="ex from-book"><div class="num">0E.39</div>
+<p>Αν το $x=2$ είναι ρίζα του πολυωνύμου $x^3-3x^2+kx-2$, βρείτε το $k$.</p></div>
+<div class="ex from-book"><div class="num">0E.40</div>
+<p>Λύστε την εξίσωση $x^4-1=0$ στους πραγματικούς.</p></div>
+<div class="ex from-book"><div class="num">0E.41</div>
+<p>Λύστε με αντικατάσταση το σύστημα $\begin{cases}3x-2y=8\\ x+y=1\end{cases}$.</p></div>
+<div class="ex from-book"><div class="num">0E.42</div>
+<p>Για ποια $\lambda$ το σύστημα $\begin{cases}x+y=1\\ x+\lambda y=2\end{cases}$ έχει μοναδική λύση;</p></div>
+<div class="ex from-book"><div class="num">0E.43</div>
+<p>Λύστε με τον κανόνα Cramer το σύστημα $\begin{cases}x+2y+z=4\\ 2x-y+3z=-3\\ 3x+y-z=6\end{cases}$.</p></div>
+<div class="ex from-book"><div class="num">0E.44</div>
+<p>Σε τρίγωνο με $a=7$, $b=5$, $C=60^\circ$ βρείτε την πλευρά $c$ (νόμος συνημιτόνων).</p></div>
+<div class="ex from-book"><div class="num">0E.45</div>
+<p>Λύστε την εξίσωση $2\cos^2 x-1=0$ στο $[0,2\pi)$.</p></div>
+<div class="ex from-book"><div class="num">0E.46</div>
+<p>Υπολογίστε το $\sin 2\theta$ αν $\sin\theta=\tfrac{3}{5}$ και $\theta$ οξεία.</p></div>
+<div class="ex from-book"><div class="num">0E.47</div>
+<p>Αν $z=2e^{i\pi/4}$, υπολογίστε τα $z^4$ και $\dfrac{1}{z}$ σε αλγεβρική μορφή $a+bi$.</p></div>
+<div class="ex from-book"><div class="num">0E.48</div>
+<p>Γράψτε σε πολική μορφή τον $z=1-i$ και υπολογίστε το $z^{6}$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">0E.49</div>
+<p>Να επαληθευτούν οι ταυτότητες: <ol class="sub"><li>$\dfrac{\sin 2x}{1+\cos 2x}=\tan x$ </li><li>$\dfrac{\sin 3x-\sin x}{\cos 3x+\cos x}=\tan x$ \ (για $\cos x\cdot\cos 2x\neq0$) </li><li>$\cos x+\cos 3x+\cos 5x=\cos 3x\,(1+2\cos 2x)$ </li></ol></p></div>
+<div class="ex from-book"><div class="num">0E.50</div>
+<p>Δίνεται $z_1=3+4i$ και $z_2=1-2i$. Να υπολογιστούν: (α) $z_1+z_2$, (β) $z_1\cdot z_2$, (γ) $z_1/z_2$, (δ) $|z_1|$, (ε) $\bar{z}_2$, (ζ) $z_1^2$.</p></div>
+<div class="ex from-book"><div class="num">0E.51</div>
+<p>Να βρεθούν οι κυβικές ρίζες της μονάδας και να απεικονιστούν στο μιγαδικό επίπεδο.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

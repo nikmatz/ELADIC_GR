@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Γραμμικοί Διανυσματικοί Χώροι</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Γραμμικοί Διανυσματικοί Χώροι</h1>
+  <p class="chapter-label">Κεφάλαιο 1 · Γραμμικοί Διανυσματικοί Χώροι</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα</em>
+  του κεφαλαίου και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Όλες επιλύονται αποκλειστικά με τα εργαλεία του Κεφαλαίου 1 και του Κεφαλαίου 0:
+  ορισμοί, γραμμικοί συνδυασμοί και εσωτερικό γινόμενο. Σε κάθε ερώτημα δομής η απάντηση δεν είναι ποτέ
+  ένα απλό «ναι» ή «όχι»: αν το σύνολο έχει τη ζητούμενη ιδιότητα, χρειάζεται πλήρης επαλήθευση των
+  αντίστοιχων συνθηκών· αν δεν την έχει, αρκεί ένα ρητό αντιπαράδειγμα. Κάθε υπολογιστικό αποτέλεσμα
+  ελέγχεται και μόνοι σας: οι συντεταγμένες με αντικατάσταση στον γραμμικό συνδυασμό, η ορθοκανονικότητα
+  με τα εσωτερικά γινόμενα, η προβολή με τον έλεγχο ότι το κατάλοιπο είναι ορθογώνιο στον υπόχωρο.
+  Δεν χρειάζεστε λυσάρι.</p>
+</div>
+
+<div class="grp"><h2>Α. Αξιώματα διανυσματικού χώρου</h2>
+<p class="lead">Ελέγχετε ένα προς ένα τα αξιώματα· ένα και μόνο αντιπαράδειγμα αρκεί για να καταρρεύσει η δομή.</p></div>
+
+<div class="ex"><div class="num">1E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Στο σύνολο $\mathbb{R}^2$ ορίζουμε τις πράξεις
+$(x_1,x_2)\oplus(y_1,y_2)=(x_1+y_1,\;x_2+y_2+1)$ και $\lambda\odot(x_1,x_2)=(\lambda x_1,\;\lambda x_2)$.
+(α) Δείξτε ότι η $\oplus$ είναι μεταθετική και προσεταιριστική και προσδιορίστε το ουδέτερο στοιχείο
+καθώς και το αντίθετο κάθε διανύσματος. (β) Εξετάστε αν το $(\mathbb{R}^2,\oplus,\odot)$ είναι γραμμικός
+χώρος και, αν όχι, εντοπίστε ρητά ένα αξίωμα που παραβιάζεται.</p>
+<p class="ypod">Υπόδειξη: μη θεωρήσετε δεδομένο ότι το ουδέτερο στοιχείο είναι το $(0,0)$· βρείτε το από τον ορισμό του.</p></div>
+
+<div class="ex"><div class="num">1E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Στο σύνολο $V=(0,+\infty)$ ορίζουμε $x\oplus y=xy$ και $\lambda\odot x=x^{\lambda}$, για $\lambda\in\mathbb{R}$.
+Δείξτε ότι το $(V,\oplus,\odot)$ είναι γραμμικός χώρος πάνω στο $\mathbb{R}$, προσδιορίζοντας το ουδέτερο
+στοιχείο και το αντίθετο ενός $x\in V$. Στη συνέχεια βρείτε μία βάση και τη διάστασή του.</p>
+<p class="ypod">Υπόδειξη: κάθε αξίωμα ανάγεται σε μια γνωστή ιδιότητα των δυνάμεων.</p></div>
+
+<div class="ex"><div class="num">1E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $V$ γραμμικός χώρος πάνω στο $\mathbb{R}$. Αποδείξτε, χρησιμοποιώντας μόνο τα αξιώματα, ότι
+(α) $\lambda\mathbf{0}=\mathbf{0}$ για κάθε $\lambda\in\mathbb{R}$ και
+(β) αν $\lambda\mathbf{v}=\mathbf{0}$, τότε $\lambda=0$ ή $\mathbf{v}=\mathbf{0}$.</p>
+<p class="ypod">Υπόδειξη: στο (β) διακρίνετε τις περιπτώσεις $\lambda=0$ και $\lambda\neq0$· στη δεύτερη έχετε στη διάθεσή σας το $\lambda^{-1}$.</p></div>
+
+<div class="grp"><h2>Β. Υπόχωροι</h2>
+<p class="lead">Τρεις έλεγχοι: το μηδενικό διάνυσμα ανήκει, κλειστότητα στην πρόσθεση, κλειστότητα στον βαθμωτό πολλαπλασιασμό.</p></div>
+
+<div class="ex"><div class="num">1E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε, αιτιολογώντας πλήρως, ποια από τα παρακάτω υποσύνολα του $\mathbb{R}^3$ είναι υπόχωροι:
+(α) $U_1=\{(x,y,z):x-2y+3z=0\}$· (β) $U_2=\{(x,y,z):x\geq 0\}$· (γ) $U_3=\{(x,y,z):x=2z\ \text{και}\ y=-z\}$.
+Για όσα είναι υπόχωροι, δώστε μία βάση και τη διάστασή τους.</p></div>
+
+<div class="ex"><div class="num">1E.5 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Στον χώρο $\mathcal{C}[0,1]$ των συνεχών συναρτήσεων εξετάστε ποια από τα παρακάτω σύνολα είναι υπόχωροι:
+(α) $A=\{f:\,f(0)=f(1)\}$· (β) $B=\{f:\,f(0)=1\}$· (γ) $\Gamma=\{f:\,f(x)\geq 0\ \text{για κάθε}\ x\in[0,1]\}$·
+(δ) $\Delta=\{f:\,f(\tfrac12)=0\}$.</p></div>
+
+<div class="ex"><div class="num">1E.6 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $V$ γραμμικός χώρος και $S$ μη κενό υποσύνολο του $V$. Αποδείξτε ότι το
+$\operatorname{span}(S)$ είναι υπόχωρος του $V$ και ότι περιέχεται σε κάθε υπόχωρο $W$ με $S\subseteq W$·
+δηλαδή ότι είναι ο μικρότερος υπόχωρος που περιέχει το $S$.</p>
+<p class="ypod">Υπόδειξη: για το δεύτερο σκέλος ξεκινήστε από έναν τυχαίο γραμμικό συνδυασμό στοιχείων του $S$ και αξιοποιήστε την κλειστότητα του $W$.</p></div>
+
+<div class="grp"><h2>Γ. Γραμμική ανεξαρτησία</h2>
+<p class="lead">Ξεκινάτε πάντα από τη σχέση $c_1\mathbf{v}_1+\cdots+c_k\mathbf{v}_k=\mathbf{0}$ και ρωτάτε αν αυτή επιβάλλει $c_1=\cdots=c_k=0$.</p></div>
+
+<div class="ex"><div class="num">1E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε αν τα $\mathbf{v}_1=(1,-1,2)$, $\mathbf{v}_2=(2,0,1)$, $\mathbf{v}_3=(0,-2,3)$ του $\mathbb{R}^3$
+είναι γραμμικά ανεξάρτητα και, αν δεν είναι, γράψτε ρητά μια σχέση εξάρτησης μεταξύ τους.</p></div>
+
+<div class="ex"><div class="num">1E.8 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Αποδείξτε ότι δύο διανύσματα $\mathbf{u},\mathbf{v}$ ενός γραμμικού χώρου είναι γραμμικά εξαρτημένα
+αν και μόνον αν τουλάχιστον το ένα από αυτά είναι βαθμωτό πολλαπλάσιο του άλλου. Εφαρμόστε το κριτήριο
+στα $(2,-4,6)$ και $(-3,6,-9)$ του $\mathbb{R}^3$.</p>
+<p class="ypod">Υπόδειξη: προσοχή στην περίπτωση όπου κάποιο από τα δύο διανύσματα είναι το μηδενικό.</p></div>
+
+<div class="ex"><div class="num">1E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Εξετάστε αν οι συναρτήσεις $f_1(t)=e^{t}$, $f_2(t)=e^{2t}$, $f_3(t)=e^{3t}$ είναι γραμμικά ανεξάρτητες
+ως στοιχεία του χώρου $\mathcal{C}(\mathbb{R})$ των συνεχών συναρτήσεων.</p>
+<p class="ypod">Υπόδειξη: με την αντικατάσταση $x=e^{t}$ η σχέση $c_1f_1+c_2f_2+c_3f_3=0$ γίνεται πολυωνυμική ταυτότητα ως προς $x>0$· πότε μηδενίζεται ταυτοτικά ένα πολυώνυμο;</p></div>
+
+<div class="grp"><h2>Δ. Βάση και διάσταση</h2>
+<p class="lead">Βάση σημαίνει ταυτόχρονα γραμμική ανεξαρτησία και παραγωγή· η διάσταση είναι το πλήθος των στοιχείων της.</p></div>
+
+<div class="ex"><div class="num">1E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Έστω $W=\{p\in\mathcal{P}_3:\ p(-t)=p(t)\ \text{για κάθε}\ t\in\mathbb{R}\}$. Δείξτε ότι το $W$ είναι
+υπόχωρος του $\mathcal{P}_3$ και βρείτε μία βάση και τη διάστασή του.</p>
+<p class="ypod">Υπόδειξη: γράψτε $p(t)=a_0+a_1t+a_2t^2+a_3t^3$ και δείτε τι επιβάλλει η συνθήκη στους συντελεστές.</p></div>
+
+<div class="ex"><div class="num">1E.11 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δείξτε ότι το σύνολο $\mathcal{B}=\{1,\;1+t,\;1+t+t^2\}$ είναι βάση του $\mathcal{P}_2$ και βρείτε τις
+συντεταγμένες ως προς τη $\mathcal{B}$ (α) του $p(t)=t^2$ και (β) του γενικού πολυωνύμου
+$p(t)=a_0+a_1t+a_2t^2$.</p></div>
+
+<div class="ex"><div class="num">1E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Στον $\mathbb{R}^4$ δίνονται $\mathbf{v}_1=(1,1,0,1)$, $\mathbf{v}_2=(2,1,1,0)$, $\mathbf{v}_3=(0,1,-1,2)$
+και $W=\operatorname{span}\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}$. Βρείτε μία βάση και τη διάσταση του $W$
+και στη συνέχεια επεκτείνετε τη βάση αυτή σε βάση ολόκληρου του $\mathbb{R}^4$.</p>
+<p class="ypod">Υπόδειξη: ελέγξτε πρώτα αν κάποιο από τα τρία διανύσματα γράφεται ως γραμμικός συνδυασμός των υπολοίπων δύο.</p></div>
+
+<div class="grp"><h2>Ε. Άθροισμα υποχώρων</h2>
+<p class="lead">Η σχέση Grassmann $\dim(U+W)=\dim U+\dim W-\dim(U\cap W)$ είναι το κεντρικό εργαλείο· το άθροισμα είναι ευθύ ακριβώς όταν η τομή είναι μηδενική.</p></div>
+
+<div class="ex"><div class="num">1E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Στον $\mathbb{R}^4$ δίνονται $U=\operatorname{span}\{(1,0,0,0),(0,1,0,0)\}$ και
+$W=\operatorname{span}\{(1,1,0,0),(0,0,1,0)\}$. Βρείτε τους $U+W$ και $U\cap W$, επαληθεύστε τη σχέση
+Grassmann και εξετάστε αν το άθροισμα είναι ευθύ.</p></div>
+
+<div class="ex"><div class="num">1E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Στον $\mathcal{M}_{2\times2}(\mathbb{R})$ θεωρήστε το σύνολο $\mathcal{S}$ των συμμετρικών πινάκων,
+δηλαδή εκείνων με $a_{12}=a_{21}$, και το σύνολο $\mathcal{A}$ των αντισυμμετρικών, δηλαδή εκείνων με
+$a_{11}=a_{22}=0$ και $a_{12}=-a_{21}$. (α) Δείξτε ότι τα $\mathcal{S}$ και $\mathcal{A}$ είναι υπόχωροι
+και βρείτε βάση και διάσταση καθενός. (β) Αποδείξτε ότι
+$\mathcal{M}_{2\times2}(\mathbb{R})=\mathcal{S}\oplus\mathcal{A}$ και αναλύστε στις δύο συνιστώσες του τον
+πίνακα $A=\begin{bmatrix}1&5\\-1&2\end{bmatrix}$.</p>
+<p class="ypod">Υπόδειξη: για την τομή, αναρωτηθείτε ποιος πίνακας είναι ταυτόχρονα συμμετρικός και αντισυμμετρικός.</p></div>
+
+<div class="ex"><div class="num">1E.15 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $V$ γραμμικός χώρος με $\dim V=7$ και $U,W$ υπόχωροί του με $\dim U=4$ και $\dim W=5$.
+Αποδείξτε ότι $\dim(U\cap W)\geq 2$. Γενικεύστε: αν $\dim V=n$, $\dim U=p$ και $\dim W=q$, ποιο είναι το
+ελάχιστο δυνατό $\dim(U\cap W)$;</p>
+<p class="ypod">Υπόδειξη: συνδυάστε τη σχέση Grassmann με τον περιορισμό $\dim(U+W)\leq\dim V$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Εσωτερικό γινόμενο και ορθογωνιότητα</h2>
+<p class="lead">Το εσωτερικό γινόμενο μετρά μήκη και γωνίες· η ορθογωνιότητα απλοποιεί δραστικά κάθε υπολογισμό συντεταγμένων.</p></div>
+
+<div class="ex"><div class="num">1E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνονται $\mathbf{u}=(1,2,-2)$ και $\mathbf{v}=(3,0,4)$ στον $\mathbb{R}^3$. Υπολογίστε το
+$\langle\mathbf{u},\mathbf{v}\rangle$, τα μήκη $\|\mathbf{u}\|$, $\|\mathbf{v}\|$ και το συνημίτονο της
+γωνίας τους. Στη συνέχεια αναλύστε το $\mathbf{u}$ σε συνιστώσα παράλληλη και σε συνιστώσα κάθετη
+στο $\mathbf{v}$ και επαληθεύστε ότι οι δύο συνιστώσες είναι πράγματι ορθογώνιες.</p></div>
+
+<div class="ex"><div class="num">1E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι τα $\mathbf{w}_1=(1,2,1)$, $\mathbf{w}_2=(1,-1,1)$, $\mathbf{w}_3=(1,0,-1)$ αποτελούν
+ορθογώνια βάση του $\mathbb{R}^3$, ορθοκανονικοποιήστε τα και γράψτε το $\mathbf{b}=(3,1,2)$ ως γραμμικό
+συνδυασμό τους αξιοποιώντας τον τύπο των συντεταγμένων ως προς ορθογώνια βάση.</p>
+<p class="ypod">Υπόδειξη: σε ορθογώνια βάση ο συντελεστής του $\mathbf{w}_i$ προκύπτει από ένα μόνο εσωτερικό γινόμενο, χωρίς επίλυση συστήματος.</p></div>
+
+<div class="ex"><div class="num">1E.18 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Εξετάστε αν η απεικόνιση
+$\langle\mathbf{x},\mathbf{y}\rangle=2x_1y_1+x_1y_2+x_2y_1+x_2y_2$,
+όπου $\mathbf{x}=(x_1,x_2)$ και $\mathbf{y}=(y_1,y_2)$, ορίζει εσωτερικό γινόμενο στον $\mathbb{R}^2$.
+Αν ναι, υπολογίστε με αυτό τη νόρμα του $(1,-1)$ και εξετάστε αν τα $(1,0)$ και $(0,1)$ είναι ορθογώνια.</p>
+<p class="ypod">Υπόδειξη: το κρίσιμο αξίωμα είναι η θετική οριστικότητα· συμπληρώστε τετράγωνο στην έκφραση $\langle\mathbf{x},\mathbf{x}\rangle$.</p></div>
+
+<div class="grp"><h2>Ζ. Μέθοδος Gram–Schmidt και ορθογώνιο συμπλήρωμα</h2>
+<p class="lead">Ορθοκανονικοποίηση, ορθογώνια προβολή και ανάλυση ως προς ορθογώνιο συμπλήρωμα είναι τρεις όψεις της ίδιας ιδέας.</p></div>
+
+<div class="ex"><div class="num">1E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εφαρμόστε τη μέθοδο Gram–Schmidt στα $\mathbf{v}_1=(1,1,1)$ και $\mathbf{v}_2=(1,1,0)$ του
+$\mathbb{R}^3$ και βρείτε ορθοκανονική βάση $\{\mathbf{q}_1,\mathbf{q}_2\}$ του επιπέδου
+$W=\operatorname{span}\{\mathbf{v}_1,\mathbf{v}_2\}$. Επαληθεύστε ότι
+$\langle\mathbf{q}_1,\mathbf{q}_2\rangle=0$ και $\|\mathbf{q}_1\|=\|\mathbf{q}_2\|=1$.</p></div>
+
+<div class="ex"><div class="num">1E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Με τη βάση $\{\mathbf{q}_1,\mathbf{q}_2\}$ της προηγούμενης άσκησης, βρείτε την ορθογώνια προβολή του
+$\mathbf{b}=(2,1,3)$ στον υπόχωρο $W$, το κατάλοιπο $\mathbf{b}-P_W(\mathbf{b})$ και την απόσταση του
+$\mathbf{b}$ από τον $W$. Επαληθεύστε ότι το κατάλοιπο είναι ορθογώνιο και στα δύο διανύσματα που
+παράγουν τον $W$.</p></div>
+
+<div class="ex"><div class="num">1E.21 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Στον $\mathbb{R}^4$ δίνεται $W=\{(x,y,z,w):\ x+y+z+w=0\ \text{και}\ x-y+z-w=0\}$.
+(α) Βρείτε μία βάση και τη διάσταση του $W$. (β) Προσδιορίστε το ορθογώνιο συμπλήρωμα $W^{\perp}$ και
+επαληθεύστε ότι $\dim W+\dim W^{\perp}=4$. (γ) Αναλύστε το $\mathbf{b}=(4,1,2,3)$ στη μορφή
+$\mathbf{b}=\mathbf{w}+\mathbf{w}^{\perp}$ με $\mathbf{w}\in W$ και $\mathbf{w}^{\perp}\in W^{\perp}$.</p>
+<p class="ypod">Υπόδειξη: η βάση που θα βρείτε για τον $W$ στο (α) είναι ήδη ορθογώνια· αξιοποιήστε το στο (γ).</p></div>
+
+<div class="ex"><div class="num">1E.22 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $\{\mathbf{q}_1,\ldots,\mathbf{q}_k\}$ ορθοκανονική βάση υποχώρου $W$ του $\mathbb{R}^n$.
+Αποδείξτε ότι για κάθε $\mathbf{v}\in\mathbb{R}^n$ ισχύει
+$\displaystyle\sum_{i=1}^{k}\langle\mathbf{v},\mathbf{q}_i\rangle^{2}\leq\|\mathbf{v}\|^{2}$
+και ότι η ισότητα ισχύει αν και μόνον αν $\mathbf{v}\in W$.</p>
+<p class="ypod">Υπόδειξη: εφαρμόστε το Πυθαγόρειο θεώρημα στην ανάλυση $\mathbf{v}=P_W(\mathbf{v})+\bigl(\mathbf{v}-P_W(\mathbf{v})\bigr)$.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Εδώ συνδυάζονται περισσότερες έννοιες του κεφαλαίου: αναγνωρίστε πρώτα τη δομή και μετά επιλέξτε εργαλείο.</p></div>
+
+<div class="ex"><div class="num">1E.23 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Στον $\mathbb{R}^3$ θεωρήστε το σύνολο $\mathcal{B}=\{(1,1,0),\,(0,1,1),\,(1,0,1)\}$.
+(α) Δείξτε ότι αποτελεί βάση. (β) Βρείτε τις συντεταγμένες του $\mathbf{v}=(4,5,3)$ ως προς τη
+$\mathcal{B}$ και επαληθεύστε το αποτέλεσμα με αντικατάσταση. (γ) Εξετάστε αν η $\mathcal{B}$ είναι
+ορθογώνια βάση και εξηγήστε γιατί ο τύπος των συντεταγμένων μέσω εσωτερικών γινομένων δεν εφαρμόζεται εδώ.</p></div>
+
+<div class="ex"><div class="num">1E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Στον $\mathcal{P}_2$ ορίζουμε $\langle p,q\rangle=p(-1)q(-1)+p(0)q(0)+p(1)q(1)$.
+(α) Αποδείξτε ότι πρόκειται για εσωτερικό γινόμενο. (β) Δείξτε ότι τα $r_0(t)=1$, $r_1(t)=t$ και
+$r_2(t)=t^2-\tfrac{2}{3}$ αποτελούν ορθογώνια βάση του $\mathcal{P}_2$ ως προς αυτό.
+(γ) Γράψτε το $p(t)=t^2+t+1$ ως γραμμικό συνδυασμό των $r_0,r_1,r_2$.</p>
+<p class="ypod">Υπόδειξη: για τη θετική οριστικότητα στο (α), σκεφτείτε πόσες ρίζες μπορεί να έχει ένα μη μηδενικό πολυώνυμο βαθμού το πολύ $2$.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">1E.25</div>
+<p>Εξετάστε αν το $V=\{(x,y)\in\R^2 : x+y=1\}$ με τις συνήθεις πράξεις είναι γραμμικός χώρος. Αιτιολογήστε πλήρως.</p></div>
+<div class="ex from-book"><div class="num">1E.26</div>
+<p>Εξετάστε αν το $V = \R^2$ με $\vecv \oplus \vecw = \vecv - \vecw$ και $\lambda \odot \vecv = \lambda\vecv$ αποτελεί γραμμικό χώρο.</p></div>
+<div class="ex from-book"><div class="num">1E.27</div>
+<p>Ποιο από τα παρακάτω σύνολα είναι γραμμικός χώρος; (α) $\{p \in \mathcal{P}_2 : p(0)=1\}$, (β) $\{p \in \mathcal{P}_2 : p(0)=0\}$.</p></div>
+<div class="ex from-book"><div class="num">1E.28</div>
+<p>Αποδείξτε ότι $(-1)\vecv = -\vecv$ για κάθε $\vecv$ σε γραμμικό χώρο.</p></div>
+<div class="ex from-book"><div class="num">1E.29</div>
+<p>Ποιοι από τους παρακάτω είναι υπόχωροι του $\R^3$; (α) $W_1=\{(t,2t,3t):t\in\R\}$, (β) $W_2=\{(x,y,z):x^2+y^2=z\}$, (γ) $W_3=\{(x,y,z):x+y=0,\,y+z=0\}$.</p></div>
+<div class="ex from-book"><div class="num">1E.30</div>
+<p>Εξετάστε αν $W=\{(x,y)\in\R^2 : xy=0\}$ είναι υπόχωρος. Αιτιολογήστε.</p></div>
+<div class="ex from-book"><div class="num">1E.31</div>
+<p>Εξετάστε αν $\{(1,2,3),(0,1,2),(1,0,-1)\}$ είναι γραμμικά ανεξάρτητα.</p></div>
+<div class="ex from-book"><div class="num">1E.32</div>
+<p>Βρείτε τιμές του $\lambda$ για τις οποίες τα $\{(1,0,0),(0,1,\lambda),(\lambda,1,0)\}$ είναι γραμμικά εξαρτημένα.</p></div>
+<div class="ex from-book"><div class="num">1E.33</div>
+<p>Αποδείξτε ότι αν $\{\vecu,\vecv\}$ είναι γραμμικά ανεξάρτητα, τότε $\{\vecu+\vecv,\vecu-\vecv\}$ είναι επίσης γραμμικά ανεξάρτητα.</p></div>
+<div class="ex from-book"><div class="num">1E.34</div>
+<p>Εξετάστε αν $\{t+1,\ t^2-1,\ t^2+t\}$ είναι γραμμικά ανεξάρτητα στο $\mathcal{P}_2$.</p></div>
+<div class="ex from-book"><div class="num">1E.35</div>
+<p>Βρείτε βάση και διάσταση του $W=\{(x,y,z,w)\in\R^4:x+y=0,\;z-w=0\}$.</p></div>
+<div class="ex from-book"><div class="num">1E.36</div>
+<p>Ποια η διάσταση του $\mathcal{M}_{2\times3}(\R)$; Δώστε βάση.</p></div>
+<div class="ex from-book"><div class="num">1E.37</div>
+<p>Βρείτε βάση και τη διάσταση $\dim W$ του $W=\{(x,y,z):x-y+2z=0,\;2x+y-z=0\}$.</p></div>
+<div class="ex from-book"><div class="num">1E.38</div>
+<p><strong>(Γενικό –μηχανική)</strong> Δείξτε ότι δύο μη παράλληλες δυνάμεις του επιπέδου αποτελούν βάση του $\R^2$. Αναλύστε τη δύναμη $\vecF=(5,3)$ ως προς τη βάση $\{(2,1),(1,1)\}$ και επιβεβαιώστε ότι οι συνιστώσες είναι μοναδικές.</p></div>
+<div class="ex from-book"><div class="num">1E.39</div>
+<p>Αν $V=W_1\oplus W_2$ με $\dim V=n$ και $\dim W_1=k$, βρείτε τη $\dim W_2$. Αιτιολογήστε με το θεώρημα ευθέος αθροίσματος.</p></div>
+<div class="ex from-book"><div class="num">1E.40</div>
+<p>Έστω $V = \R^2$ με $\vecx \cdot \vecy = (x_1 y_1,\, 0)$ για $\vecx=(x_1,x_2)$, $\vecy=(y_1,y_2)$. Εξετάστε αν αυτό ορίζει άλγεβρα.</p></div>
+<div class="ex from-book"><div class="num">1E.41</div>
+<p>Υπολογίστε $\langle \vecu,\vecv\rangle$, $\|\vecu\|$, $\|\vecv\|$ και τη γωνία των $\vecu=(2,-1,3)$ και $\vecv=(1,2,1)$.</p></div>
+<div class="grp2"><h3>Εξωτερικό και Μικτό Γινόμενο</h3></div>
+<div class="ex from-book"><div class="num">1E.42</div>
+<p>Υπολογίστε $\vecu\times\vecv$ για $\vecu=(1,2,3)$, $\vecv=(4,-1,2)$ και επαληθεύστε ότι $(\vecu\times\vecv)\perp\vecu$ και $(\vecu\times\vecv)\perp\vecv$.</p></div>
+<div class="ex from-book"><div class="num">1E.43</div>
+<p>Εξετάστε αν τα $\vecu=(1,2,3)$, $\vecv=(2,4,6)$, $\vecw=(1,0,-1)$ είναι συνεπίπεδα. Αιτιολογήστε με το μικτό γινόμενο.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">1E.44</div>
+<p>Δίνεται το επίπεδο $\Pi: x-2y+2z=5$. (α) Βρείτε την απόσταση του $P(1,1,1)$ από αυτό. (β) Βρείτε το <em>ίχνος</em> της καθέτου, δηλαδή την προβολή του $P$ στο $\Pi$.</p></div>
+<div class="ex from-book"><div class="num">1E.45</div>
+<p>Βρείτε την παραμετρική εξίσωση της ευθείας τομής των επιπέδων $x+y+z=1$ και $2x-y+3z=4$. (Υπόδειξη: $\mathbf{d}=\mathbf{n}_1\times\mathbf{n}_2$.)</p></div>
+<div class="ex from-book"><div class="num">1E.46</div>
+<p>Υπολογίστε την απόσταση του σημείου $P(1,2,3)$ από την ευθεία $\mathbf{p}(t)=(1,0,0)+t(0,1,1)$, με δύο τρόπους: (α) με προβολή, (β) με τον τύπο του εξωτερικού γινομένου. Επαληθεύστε ότι συμφωνούν.</p></div>
+<div class="ex from-book"><div class="num">1E.47</div>
+<p>Βρείτε τη γωνία των επιπέδων $2x+y-z=3$ και $x-y+2z=1$ και ελέγξτε αν κάποια από τις ευθείες $\mathbf{d}=(1,1,1)$ ή $\mathbf{d}=(1,-3,-1)$ είναι παράλληλη στο πρώτο.</p></div>
+<div class="grp2"><h3>Ορθογωνιότητα και Gram–Schmidt</h3></div>
+<div class="ex from-book"><div class="num">1E.48</div>
+<p>Ελέγξτε αν τα $\{(1,1,0),(1,-1,0),(0,0,2)\}$ αποτελούν ορθογώνιο σύνολο και ορθοκανονικοποιήστε το.</p></div>
+<div class="ex from-book"><div class="num">1E.49</div>
+<p>Εφαρμόστε Gram–Schmidt στα $\{1,t,t^2\}\subset\mathcal{C}[-1,1]$ με $\langle f,g\rangle=\int_{-1}^{1}f(t)g(t)\,dt$.</p></div>
+<div class="ex from-book"><div class="num">1E.50</div>
+<p>Αποδείξτε ότι στην $QR$ ο πίνακας $R$ είναι <em>υποχρεωτικά</em> άνω τριγωνικός. (Υπόδειξη: κάθε $\veca_j$ γράφεται μόνο μέσω των $\vecq_1,\ldots,\vecq_j$.)</p></div>
+<div class="grp2"><h3>Ορθογώνιο Συμπλήρωμα και Ελάχιστα Τετράγωνα</h3></div>
+<div class="ex from-book"><div class="num">1E.51</div>
+<p>Βρείτε το ορθογώνιο συμπλήρωμα $W^\perp$ του $W=\{(x,y,z):x+y+z=0\}$ στο $\R^3$.</p></div>
+<div class="ex from-book"><div class="num">1E.52</div>
+<p>Βρείτε την ορθογώνια προβολή του $\mathbf{b}=(1,2,3,4)^\top$ στον υπόχωρο $W=\Span\{(1,1,0,0),(0,0,1,1)\}$ του $\R^4$ και επαληθεύστε ότι το κατάλοιπο $\mathbf{b}-\hat{\mathbf{b}}$ είναι ορθογώνιο στον $W$.</p></div>
+<div class="ex from-book"><div class="num">1E.53</div>
+<p>Έστω $W$ υπόχωρος του $\R^n$ και $P=A(A^\top A)^{-1}A^\top$ ο πίνακας ορθογώνιας προβολής στον $W$ (οι στήλες του $A$ αποτελούν βάση του $W$). Αποδείξτε ότι ο $I-P$ είναι ο πίνακας ορθογώνιας προβολής στον $W^\perp$ και ότι $P(I-P)=O$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">1E.54</div>
+<p>Δείξτε ότι τα $\vecu_1=(1,1,1,1)$, $\vecu_2=(1,1,-1,-1)$, $\vecu_3=(1,-1,1,-1)$ είναι ανά δύο ορθογώνια, ορθοκανονικοποιήστε τα και συμπληρώστε τα σε ορθοκανονική βάση του $\R^4$.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

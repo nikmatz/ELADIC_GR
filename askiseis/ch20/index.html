@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Δυναμοσειρές και Σειρές Taylor</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">⊕ Επιπλέον Ασκήσεις</div>
+  <h1>Δυναμοσειρές και Σειρές Taylor</h1>
+  <p class="chapter-label">Κεφάλαιο 20 · Δυναμοσειρές και Σειρές Taylor</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά θεματική ενότητα</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Σε κάθε δυναμοσειρά να διευκρινίζετε πάντα τρία πράγματα: το κέντρο, την ακτίνα σύγκλισης και
+  τη συμπεριφορά στα δύο άκρα, τα οποία εξετάζονται χωριστά. Κάθε ανάπτυγμα που βρίσκετε
+  μπορείτε να το ελέγξετε αριθμητικά, αντικαθιστώντας μια μικρή τιμή του $x$ και συγκρίνοντας
+  το μερικό άθροισμα με την τιμή της συνάρτησης.</p>
+</div>
+
+<div class="grp"><h2>Α. Ακτίνα και διάστημα σύγκλισης</h2>
+<p class="lead">Το κριτήριο λόγου δίνει την ακτίνα· τα άκρα απαιτούν πάντα ξεχωριστό έλεγχο.</p></div>
+
+<div class="ex"><div class="num">20E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε την ακτίνα και το διάστημα σύγκλισης της $\displaystyle\sum_{n=1}^{\infty}\frac{x^{n}}{3^{n}\sqrt{n}}$, εξετάζοντας ξεχωριστά και τα δύο άκρα.</p>
+<p class="ypod">Υπόδειξη: στα άκρα προκύπτουν μια σειρά $p$ και μια εναλλάσσουσα σειρά.</p></div>
+
+<div class="ex"><div class="num">20E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε την ακτίνα και το διάστημα σύγκλισης της $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n}\,2^{n}x^{n}}{n}$ και διευκρινίστε σε ποιο άκρο η σύγκλιση είναι απλή και όχι απόλυτη.</p></div>
+
+<div class="ex"><div class="num">20E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τη σειρά $\displaystyle\sum_{n=1}^{\infty}\frac{(3x-1)^{n}}{n^{2}}$ προσδιορίστε το κέντρο, την ακτίνα και το σύνολο σύγκλισης ως προς $x$.</p>
+<p class="ypod">Υπόδειξη: γράψτε πρώτα $3x-1=3\left(x-\tfrac13\right)$· η ακτίνα ως προς $x$ δεν ταυτίζεται με την ακτίνα ως προς την ποσότητα $3x-1$.</p></div>
+
+<div class="grp"><h2>Β. Αναπτύγματα Taylor και Maclaurin</h2>
+<p class="lead">Αντί για διαδοχικές παραγωγίσεις, ξεκινήστε όπου μπορείτε από μια γνωστή σειρά.</p></div>
+
+<div class="ex"><div class="num">20E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τη σειρά Maclaurin της $f(x)=x^{2}\sin x$ σε μορφή γενικού όρου, γράψτε τους τρεις πρώτους μη μηδενικούς όρους και δώστε την ακτίνα σύγκλισης.</p></div>
+
+<div class="ex"><div class="num">20E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε τους τέσσερις πρώτους μη μηδενικούς όρους της σειράς Maclaurin της $f(x)=\ln(1+2x)$, καθώς και την ακτίνα σύγκλισης και τη συμπεριφορά στα άκρα.</p>
+<p class="ypod">Υπόδειξη: αντικαταστήστε $u=2x$ στην ήδη γνωστή σειρά του $\ln(1+u)$.</p></div>
+
+<div class="ex"><div class="num">20E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε το ανάπτυγμα Taylor της $f(x)=e^{-x}$ γύρω από το $a=2$ σε μορφή γενικού όρου και αιτιολογήστε γιατί η ακτίνα σύγκλισής του είναι άπειρη.</p></div>
+
+<div class="grp"><h2>Γ. Πράξεις με δυναμοσειρές</h2>
+<p class="lead">Αντικατάσταση και πολλαπλασιασμός σειρών γλιτώνουν από τον υπολογισμό ατέλειωτων παραγώγων.</p></div>
+
+<div class="ex"><div class="num">20E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Με κατάλληλη αντικατάσταση σε γνωστή σειρά, βρείτε τη σειρά Maclaurin της $f(x)=\cos\!\left(x^{2}\right)$ και την ακτίνα σύγκλισής της.</p></div>
+
+<div class="ex"><div class="num">20E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Πολλαπλασιάζοντας τις σειρές Maclaurin των $e^{x}$ και $\cos x$, βρείτε όλους τους όρους μέχρι και τον $x^{3}$ του αναπτύγματος της $g(x)=e^{x}\cos x$.</p>
+<p class="ypod">Υπόδειξη: ο συντελεστής του $x^{k}$ στο γινόμενο προκύπτει αθροίζοντας όλα τα γινόμενα συντελεστών με αθροιστικό δείκτη $k$.</p></div>
+
+<div class="ex"><div class="num">20E.9 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Βρείτε τους όρους μέχρι και τον $x^{3}$ της σειράς Maclaurin της $\displaystyle h(x)=\frac{\sin x}{1-x}$ και αιτιολογήστε γιατί η ακτίνα σύγκλισης είναι $R=1$.</p>
+<p class="ypod">Υπόδειξη: γράψτε τον παράγοντα $\frac{1}{1-x}$ ως γεωμετρική σειρά και πολλαπλασιάστε κατά Cauchy.</p></div>
+
+<div class="grp"><h2>Δ. Παραγώγιση και ολοκλήρωση δυναμοσειρών</h2>
+<p class="lead">Μέσα στο ανοικτό διάστημα σύγκλισης η παραγώγιση και η ολοκλήρωση όρο προς όρο επιτρέπονται και διατηρούν την ακτίνα.</p></div>
+
+<div class="ex"><div class="num">20E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Αναπτύσσοντας την $\dfrac{1}{1+t^{3}}$ σε γεωμετρική σειρά και ολοκληρώνοντας όρο προς όρο, εκφράστε το $\displaystyle\int_{0}^{x}\frac{dt}{1+t^{3}}$ ως δυναμοσειρά και δώστε την ακτίνα σύγκλισής της.</p>
+<p class="ypod">Υπόδειξη: προσέξτε το πρόσημο — ο παρονομαστής είναι $1+t^{3}$, οπότε το ανάπτυγμα είναι εναλλάσσον.</p></div>
+
+<div class="ex"><div class="num">20E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Αναγνωρίστε το άθροισμα $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{n\,3^{n}}$ ως τιμή γνωστής δυναμοσειράς σε κατάλληλο σημείο και υπολογίστε το σε κλειστή μορφή. Ελέγξτε πρώτα ότι το σημείο ανήκει στο διάστημα σύγκλισης.</p></div>
+
+<div class="ex"><div class="num">20E.12 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Θεωρήστε τη συνάρτηση $\displaystyle f(x)=\sum_{n=0}^{\infty}\frac{x^{2n+1}}{2n+1}$ για $|x|&lt;1$.
+(α) Δείξτε, παραγωγίζοντας όρο προς όρο, ότι $f'(x)=\dfrac{1}{1-x^{2}}$.
+(β) Με ολοκλήρωση και τη συνθήκη $f(0)=0$, βρείτε κλειστή μορφή για την $f$.
+(γ) Εξετάστε τη συμπεριφορά της σειράς στα άκρα $x=\pm1$.</p>
+<p class="ypod">Υπόδειξη: στο (β) χρησιμοποιήστε ανάλυση σε μερικά κλάσματα — προσέξτε ότι εδώ ο παρονομαστής είναι $1-x^{2}$ και όχι $1+x^{2}$.</p></div>
+
+<div class="grp"><h2>Ε. Υπόλοιπο Lagrange και εκτίμηση σφάλματος</h2>
+<p class="lead">Μια προσέγγιση χωρίς φράγμα σφάλματος δεν αποτελεί μηχανικό αποτέλεσμα.</p></div>
+
+<div class="ex"><div class="num">20E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Φράξτε με το υπόλοιπο Lagrange το σφάλμα της προσέγγισης $e^{x}\approx 1+x+\dfrac{x^{2}}{2}$ για $0\le x\le \tfrac12$.</p>
+<p class="ypod">Υπόδειξη: η εκθετική είναι αύξουσα, οπότε το $e^{\xi}$ φράσσεται από την τιμή στο δεξιό άκρο.</p></div>
+
+<div class="ex"><div class="num">20E.14 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δείξτε ότι για κάθε $x\in[0,1]$ ισχύει
+$\displaystyle\left|\cos x-\left(1-\frac{x^{2}}{2}+\frac{x^{4}}{24}\right)\right|\le\frac{1}{720}$,
+χρησιμοποιώντας το υπόλοιπο Lagrange.</p>
+<p class="ypod">Υπόδειξη: όλες οι παράγωγοι του συνημιτόνου φράσσονται κατά απόλυτη τιμή από τη μονάδα.</p></div>
+
+<div class="ex"><div class="num">20E.15 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $f(x)=\ln(1+x)$.
+(α) Γράψτε το υπόλοιπο Lagrange $R_n(x)$ του αναπτύγματος γύρω από το $0$, εκφράζοντας πρώτα την $f^{(n+1)}$.
+(β) Δείξτε ότι για $0\le x\le1$ ισχύει $|R_n(x)|\le\dfrac{1}{n+1}$.
+(γ) Συμπεράνετε ότι η σειρά Maclaurin συγκλίνει στην $\ln(1+x)$ σε όλο το $[0,1]$.</p>
+<p class="ypod">Υπόδειξη: στο (β) αξιοποιήστε ότι $\xi$ βρίσκεται ανάμεσα στο $0$ και στο $x$, οπότε $1+\xi\ge1$.</p></div>
+
+<div class="grp"><h2>ΣΤ. Γραμμικοποίηση στη μηχανική</h2>
+<p class="lead">Κάθε «τύπος μικρών μεγεθών» της μηχανικής είναι οι πρώτοι όροι ενός αναπτύγματος Taylor.</p></div>
+
+<div class="ex"><div class="num">20E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Η θερμική διαστολή ράβδου περιγράφεται ακριβώς από $L(T)=L_{0}e^{\alpha(T-T_{0})}$. Αναπτύξτε σε σειρά ως προς $u=\alpha(T-T_{0})$ και δείξτε ότι η γραμμικοποίηση δίνει τον συνήθη τύπο $L\approx L_{0}\left[1+\alpha(T-T_{0})\right]$. Εκτιμήστε το σχετικό σφάλμα της γραμμικοποίησης όταν $u=10^{-2}$.</p></div>
+
+<div class="ex"><div class="num">20E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Η ακριβής περίοδος απλού εκκρεμούς με πλάτος $\theta_{0}$ δίνεται από
+$T=T_{0}\left[1+\tfrac14\sin^{2}\tfrac{\theta_{0}}{2}+\cdots\right]$, όπου $T_{0}=2\pi\sqrt{L/g}$.
+Αντικαθιστώντας το ημίτονο με το ανάπτυγμά του, δείξτε ότι για μικρά πλάτη ισχύει $T\approx T_{0}\left(1+\tfrac{\theta_{0}^{2}}{16}\right)$ και υπολογίστε τη σχετική αύξηση της περιόδου για $\theta_{0}=20^{\circ}$.</p>
+<p class="ypod">Υπόδειξη: μετατρέψτε πρώτα τη γωνία σε ακτίνια.</p></div>
+
+<div class="ex"><div class="num">20E.18 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Η καμπυλότητα της ελαστικής γραμμής μιας δοκού είναι
+$\displaystyle\kappa=\frac{y''}{\left(1+(y')^{2}\right)^{3/2}}$.
+Με τη διωνυμική σειρά δείξτε ότι για μικρές κλίσεις ισχύει
+$\kappa\approx y''\left(1-\tfrac{3}{2}(y')^{2}\right)$ και εξηγήστε γιατί η γραμμική θεωρία δοκών υιοθετεί την περαιτέρω απλοποίηση $\kappa\approx y''$.</p>
+<p class="ypod">Υπόδειξη: θέστε $u=(y')^{2}$ και αναπτύξτε την $(1+u)^{-3/2}$.</p></div>
+
+<div class="grp"><h2>Ζ. Σειρές Fourier</h2>
+<p class="lead">Η συμμετρία της συνάρτησης μηδενίζει εκ των προτέρων τον μισό των συντελεστών.</p></div>
+
+<div class="ex"><div class="num">20E.19 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για την $2\pi$-περιοδική συνάρτηση με $f(x)=x$ για $-\pi&lt;x&lt;\pi$, αιτιολογήστε από τη συμμετρία ότι $a_{n}=0$ για κάθε $n$ και υπολογίστε τους συντελεστές $b_{n}$.</p>
+<p class="ypod">Υπόδειξη: το ολοκλήρωμα $\int_{0}^{\pi}x\sin(nx)\,dx$ υπολογίζεται κατά παράγοντες.</p></div>
+
+<div class="ex"><div class="num">20E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Θεωρήστε την $2\pi$-περιοδική επέκταση της $f(x)=|x|$, $-\pi\le x\le\pi$.
+(α) Εξηγήστε γιατί $b_{n}=0$ για κάθε $n$ και υπολογίστε τα $a_{0}$ και $a_{n}$.
+(β) Θέτοντας $x=0$ στο ανάπτυγμα, βρείτε το άθροισμα της $\displaystyle\sum_{k=0}^{\infty}\frac{1}{(2k+1)^{2}}$.</p>
+<p class="ypod">Υπόδειξη: στο (β) το $x=0$ είναι σημείο συνέχειας, οπότε οι συνθήκες Dirichlet εξασφαλίζουν ισότητα.</p></div>
+
+<div class="ex"><div class="num">20E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Ένας περιοδικός ορθογώνιος παλμός περιόδου $2L$ ορίζεται από $f(x)=1$ για $|x|&lt;c$ και $f(x)=0$ για $c&lt;|x|&lt;L$, με $0&lt;c&lt;L$.
+(α) Εξηγήστε γιατί $b_{n}=0$.
+(β) Υπολογίστε τα $a_{0}$ και $a_{n}$ ως συναρτήσεις των $c$ και $L$.
+(γ) Σε ποια τιμή συγκλίνει η σειρά Fourier στο σημείο $x=c$;</p>
+<p class="ypod">Υπόδειξη: στο (γ) ανατρέξτε στη διατύπωση των συνθηκών Dirichlet για σημείο ασυνέχειας.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά / σύνθετα</h2>
+<p class="lead">Εδώ δεν δίνεται η μέθοδος: αναγνωρίστε πρώτα ποια γνωστή σειρά κρύβεται πίσω από την έκφραση.</p></div>
+
+<div class="ex"><div class="num">20E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Υπολογίστε το όριο $\displaystyle\lim_{x\to0}\frac{\tan x-\sin x}{x^{3}}$ αντικαθιστώντας καθεμιά συνάρτηση με το ανάπτυγμα Maclaurin της.</p>
+<p class="ypod">Υπόδειξη: ισχύει $\tan u=u+\tfrac{u^{3}}{3}+\cdots$· αρκούν οι όροι μέχρι και τον $x^{3}$.</p></div>
+
+<div class="ex"><div class="num">20E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Βρείτε τους τρεις πρώτους μη μηδενικούς όρους της σειράς Maclaurin της $f(x)=\ln(\cos x)$ και χρησιμοποιήστε τους για να υπολογίσετε το όριο $\displaystyle\lim_{x\to0}\frac{\ln(\cos x)}{x^{2}}$.</p>
+<p class="ypod">Υπόδειξη: γράψτε $\cos x=1-u$ με $u=\tfrac{x^{2}}{2}-\tfrac{x^{4}}{24}+\cdots$ και αναπτύξτε το $\ln(1-u)$, κρατώντας όλους τους όρους που συνεισφέρουν μέχρι την τάξη που χρειάζεστε.</p></div>
+
+<div class="ex"><div class="num">20E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Θεωρήστε τη συνάρτηση $\displaystyle y(x)=\sum_{n=0}^{\infty}\frac{(-1)^{n}x^{2n}}{4^{n}\,(n!)^{2}}$.
+(α) Δείξτε με το κριτήριο λόγου ότι η ακτίνα σύγκλισης είναι άπειρη.
+(β) Παραγωγίζοντας όρο προς όρο και με κατάλληλη ολίσθηση δείκτη, επαληθεύστε ότι η $y$ ικανοποιεί την εξίσωση $x\,y''+y'+x\,y=0$.</p>
+<p class="ypod">Υπόδειξη: στο (β) συγκεντρώστε όλους τους όρους στην ίδια δύναμη του $x$ και απαιτήστε να μηδενίζεται κάθε συντελεστής.</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">20E.25</div>
+<p>Βρείτε την ακτίνα και το διάστημα σύγκλισης της $\displaystyle\sum_{n=1}^{\infty}\frac{x^{n}}{n^{2}+1}$, εξετάζοντας και τα δύο άκρα.</p></div>
+<div class="ex from-book"><div class="num">20E.26</div>
+<p>Βρείτε την ακτίνα σύγκλισης της $\displaystyle\sum_{n=1}^{\infty}\frac{n!\,x^{n}}{n^{n}}$ (υπόδειξη: $\left(1+\tfrac1n\right)^{n}\to e$).</p></div>
+<div class="ex from-book"><div class="num">20E.27</div>
+<p>Με τον τύπο Cauchy–Hadamard ($R=1/\limsup\sqrt[n]{|c_n|}$) βρείτε την ακτίνα σύγκλισης της $\displaystyle\sum_{n=1}^{\infty}\frac{x^{n}}{n^{n}}$.</p></div>
+<div class="ex from-book"><div class="num">20E.28</div>
+<p>Βρείτε το ανάπτυγμα Maclaurin της $f(x)=\dfrac{x}{1+x^{2}}$ και την ακτίνα σύγκλισής του.</p></div>
+<div class="ex from-book"><div class="num">20E.29</div>
+<p>Βρείτε τους πρώτους τρεις μη μηδενικούς όρους της σειράς Maclaurin της $f(x)=\sin x\cdot\cos x$ (υπόδειξη: $\sin x\cos x=\tfrac12\sin 2x$).</p></div>
+<div class="ex from-book"><div class="num">20E.30</div>
+<p>Βρείτε τους πρώτους τέσσερις όρους του αναπτύγματος Taylor της $f(x)=e^{x}$ γύρω από το $a=1$.</p></div>
+<div class="ex from-book"><div class="num">20E.31</div>
+<p>Με ανάπτυγμα Taylor 2ης τάξης της $\sqrt{1+x}$ γύρω από το $0$, προσεγγίστε το $\sqrt{1{,}1}$ και εκτιμήστε το σφάλμα με το υπόλοιπο Lagrange.</p></div>
+<div class="ex from-book"><div class="num">20E.32</div>
+<p>Βρείτε το ανάπτυγμα Taylor 2ης τάξης της $f(x)=\sqrt{x}$ γύρω από το $a=4$ και χρησιμοποιήστε το για να προσεγγίσετε το $\sqrt{4{,}2}$.</p></div>
+<div class="ex from-book"><div class="num">20E.33</div>
+<p>Υπολογίστε το όριο $\displaystyle\lim_{x\to0}\frac{e^{x^{2}}-1-x^{2}}{x^{4}}$ με ανάπτυγμα σε σειρά Maclaurin.</p></div>
+<div class="ex from-book"><div class="num">20E.34</div>
+<p>Βρείτε το ανάπτυγμα Taylor 3ης τάξης της $f(x)=\sin x$ γύρω από το $a=\pi/4$.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">20E.35</div>
+<p>Το $e$ υπολογίζεται από τη σειρά $\displaystyle\sum_{n=0}^{\infty}\frac{1}{n!}$. Πόσους όρους πρέπει να κρατήσετε ώστε το σφάλμα να είναι μικρότερο από $10^{-5}$;</p></div>
+<div class="ex from-book"><div class="num">20E.36</div>
+<p>$\sum_{n=0}^\infty\frac{(x-1)^n}{2^n}$, ακτίνα, διάστημα, σύνολο σύγκλισης.</p></div>
+<div class="ex from-book"><div class="num">20E.37</div>
+<p>Βρείτε τη σειρά Maclaurin της $f(x)=\dfrac{1}{(1-x)^2}$ παραγωγίζοντας τη γεωμετρική σειρά και χρησιμοποιήστε την για να υπολογίσετε το άθροισμα $\displaystyle\sum_{n=1}^{\infty}\frac{n}{2^n}$.</p></div>
+<div class="ex from-book"><div class="num">20E.38</div>
+<p>Προσέγγιση Taylor της $\sin(x)$ με τρεις μη-μηδενικούς όρους και εκτίμηση σφάλματος για $x=0{,}2$.</p></div>
+<div class="ex from-book"><div class="num">20E.39</div>
+<p>Βρείτε το ανάπτυγμα Taylor της $f(x)=\dfrac{1}{x}$ γύρω από το $a=2$ και την ακτίνα σύγκλισής του.</p></div>
+<div class="ex from-book"><div class="num">20E.40</div>
+<p>Υπολογίστε $\displaystyle\int_0^{0{,}1} e^{-x^2}\,dx$ με σειρές με ακρίβεια τουλάχιστον τεσσάρων δεκαδικών ψηφίων.</p></div>
+<div class="ex from-book"><div class="num">20E.41</div>
+<p>Βρείτε τους πρώτους τέσσερις μη μηδενικούς όρους του αναπτύγματος Maclaurin των: (α) $e^{2x}$, \ (β) $\sin(2x)$.</p></div>
+<div class="ex from-book"><div class="num">20E.42</div>
+<p>Υπολογίστε το όριο $\displaystyle\lim_{x\to0}\frac{\ln(1+x)-x+x^{2}/2}{x^{3}}$ με χρήση της σειράς Maclaurin του $\ln(1+x)$.</p></div>
+<div class="ex from-book"><div class="num">20E.43</div>
+<p>Η αλυσοειδής δίνεται από $y=a\cosh(x/a)$. Για $a=3$ υπολογίστε το $y(0)$ και το $y(3)$ και βρείτε τη βύθιση (<em>sag</em>) $y(3)-y(0)$ του καλωδίου.</p></div>
+<div class="ex from-book"><div class="num">20E.44</div>
+<p>Υπολογίστε το μήκος τόξου της αλυσοειδούς $y=2\cosh(x/2)$ από $x=-2$ ως $x=2$ χρησιμοποιώντας $s=\int\sqrt{1+y'^{\,2}}\,dx$.</p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>

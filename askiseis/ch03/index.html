@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Επιπλέον Ασκήσεις: Γραμμικά Συστήματα</title>
+<link rel="stylesheet" href="../../_shared/book.css">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],macros:{R:'{\\mathbb{R}}',Span:'{\\operatorname{span}}',tr:'{\\operatorname{tr}}',rank:'{\\operatorname{rank}}',Ker:'{\\operatorname{Ker}}',Image:'{\\operatorname{Im}}',Det:'{\\operatorname{det}}',sgn:'{\\operatorname{sgn}}',vecu:'{\\mathbf{u}}',vecv:'{\\mathbf{v}}',vecw:'{\\mathbf{w}}',veca:'{\\mathbf{a}}',vecb:'{\\mathbf{b}}',vecc:'{\\mathbf{c}}',vecx:'{\\mathbf{x}}',vecy:'{\\mathbf{y}}',vecz:'{\\mathbf{z}}',vece:'{\\mathbf{e}}',vecr:'{\\mathbf{r}}',vecp:'{\\mathbf{p}}',vecq:'{\\mathbf{q}}',vecA:'{\\mathbf{A}}',vecB:'{\\mathbf{B}}',vecF:'{\\mathbf{F}}',vecM:'{\\mathbf{M}}',veczero:'{\\mathbf{0}}'}}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+ .info-card{background:#fff;border-left:4px solid #003888;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+ .grp{margin:2rem 0 1rem}
+ .grp h2{color:#003888;font-size:1.25rem;border-bottom:2px solid #dde3ea;padding-bottom:.35rem}
+ .grp .lead{font-size:.92rem;color:#555;margin-top:.4rem}
+ .ex{background:#fff;border:1.5px solid #dde3ea;border-radius:10px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+ .ex .num{font-size:.75rem;font-family:sans-serif;font-weight:700;color:#003888;letter-spacing:.05em;margin-bottom:.35rem}
+ .lvl{float:right;font-size:.68rem;font-weight:700;padding:.12rem .5rem;border-radius:10px;color:#fff}
+ .l1{background:#0a8a4a}.l2{background:#c07000}.l3{background:#a5203c}
+ .ex p{margin:.2rem 0}
+
+ .grp2{margin:1.3rem 0 .6rem}
+ .grp2 h3{color:#00265e;font-size:1.02rem;font-weight:600;border-left:3px solid #003888;padding-left:.6rem}
+ ol.sub{margin:.35rem 0 .1rem 1.4rem;list-style-type:lower-greek}
+ ol.sub li{margin:.15rem 0}
+ .from-book{background:#f2f6fb;border:1.5px dashed #a9bcd4}
+ .ypod{font-size:.88rem;color:#666;font-style:italic;margin-top:.35rem}
+</style>
+</head>
+<body>
+<header class="page-header" style="background:linear-gradient(135deg,#003888 60%,#00265e)">
+  <div class="type-badge badge-extra">&#8853; Επιπλέον Ασκήσεις</div>
+  <h1>Γραμμικά Συστήματα</h1>
+  <p class="chapter-label">Κεφάλαιο 3 &middot; Γραμμικά Συστήματα</p>
+</header>
+<main>
+
+<div class="info-card">
+  <p><strong>Πώς να τις χρησιμοποιήσετε.</strong> Οι ασκήσεις είναι ταξινομημένες <em>ανά ενότητα του κεφαλαίου</em>
+  και μέσα σε κάθε ομάδα με αύξουσα δυσκολία:
+  <span class="lvl l1">ΒΑΣΙΚΗ</span> <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span> <span class="lvl l3">ΣΥΝΘΕΤΗ</span>.</p>
+  <p class="ypod">Κάθε αποτέλεσμα ελέγχεται από εσάς: αντικαταστήστε τη λύση που βρήκατε σε <em>όλες</em> τις
+  αρχικές εξισώσεις. Όταν η λύση είναι παραμετρική, η επαλήθευση πρέπει να ισχύει για κάθε τιμή της
+  παραμέτρου. Η παραγοντοποίηση $A=LU$ ελέγχεται με έναν πολλαπλασιασμό πινάκων, ο βαθμός με το πλήθος
+  των οδηγών στοιχείων και η συμβιβαστότητα με το κριτήριο Rouch&eacute;&ndash;Capelli, δηλαδή με τη
+  σύγκριση των $\mathrm{rank}(A)$ και $\mathrm{rank}(\tilde{A})$. Δεν χρειάζεστε λυσάρι.
+  Παντού $\tilde{A}=[A\,|\,\mathbf{b}]$ συμβολίζει τον επαυξημένο πίνακα του συστήματος.</p>
+</div>
+
+<div class="grp"><h2>Α. Απαλοιφή Gauss και κλιμακωτή μορφή</h2>
+<p class="lead">Ο αλγόριθμος είναι πάντοτε ο ίδιος: κλιμάκωση, αναγνώριση των οδηγών στοιχείων, οπισθοδρόμηση.</p></div>
+
+<div class="ex"><div class="num">3E.1 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Λύστε με απαλοιφή Gauss και οπισθοδρόμηση το σύστημα
+$\begin{cases}x+y+2z=9\\ 2x+4y-3z=1\\ 3x+6y-5z=0\end{cases}$
+και επαληθεύστε τη λύση σας και στις τρεις αρχικές εξισώσεις.</p></div>
+
+<div class="ex"><div class="num">3E.2 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Φέρτε τον πίνακα $A=\begin{bmatrix}1&amp;2&amp;-1&amp;3\\2&amp;4&amp;1&amp;0\\3&amp;6&amp;0&amp;3\end{bmatrix}$
+σε ανηγμένη κλιμακωτή μορφή με στοιχειώδεις μετασχηματισμούς γραμμών. Προσδιορίστε τα οδηγά στοιχεία,
+τις στήλες στις οποίες βρίσκονται και τον βαθμό $\mathrm{rank}(A)$.</p></div>
+
+<div class="ex"><div class="num">3E.3 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται το σύστημα
+$\begin{cases}x_1+2x_2+x_3-x_4=2\\ 2x_1+4x_2+3x_3+x_4=7\\ -x_1-2x_2+x_3+5x_4=2\end{cases}$
+(α) Ανάγετε τον επαυξημένο πίνακα σε ανηγμένη κλιμακωτή μορφή. (β) Προσδιορίστε τις δέσμιες και τις
+ελεύθερες μεταβλητές. (γ) Γράψτε τη γενική λύση στη μορφή $\mathbf{x}=\mathbf{x}_p+c\,\mathbf{v}$.</p>
+<p class="ypod">Υπόδειξη: το πλήθος των ελεύθερων μεταβλητών προκύπτει από τη διαφορά «πλήθος αγνώστων μείον βαθμός» πριν καν γράψετε τη λύση.</p></div>
+
+<div class="grp"><h2>Β. Γεωμετρική ερμηνεία</h2>
+<p class="lead">Κάθε εξίσωση είναι ευθεία στο $\mathbb{R}^2$ ή επίπεδο στον $\mathbb{R}^3$: το σύνολο λύσεων είναι η τομή τους.</p></div>
+
+<div class="ex"><div class="num">3E.4 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Εξετάστε τη σχετική θέση των επιπέδων $x+2y-z=1$ και $2x+4y-2z=5$ στον $\mathbb{R}^3$. Έχει λύση το
+αντίστοιχο σύστημα; Δικαιολογήστε την απάντησή σας τόσο γεωμετρικά όσο και με σύγκριση των
+$\mathrm{rank}(A)$ και $\mathrm{rank}(\tilde{A})$.</p></div>
+
+<div class="ex"><div class="num">3E.5 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Δίνονται οι τρεις ευθείες $x+y=3$, $\;x-y=1$ και $\;2x+y=5$ του επιπέδου. Θεωρώντας τις ως σύστημα
+$3\times 2$, δείξτε ότι έχουν ένα κοινό σημείο και προσδιορίστε το. Πόσο είναι τότε το
+$\mathrm{rank}(\tilde{A})$ και γιατί δεν μπορεί να είναι μεγαλύτερο;</p></div>
+
+<div class="ex"><div class="num">3E.6 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνονται τα επίπεδα $x+y+z=1$, $\;x+2y+3z=2$ και $\;2x+3y+4z=3$. Δείξτε ότι τα τρία επίπεδα έχουν
+άπειρα κοινά σημεία, περιγράψτε γεωμετρικά την τομή τους και δώστε παραμετρική περιγραφή της στη μορφή
+$\mathbf{x}=\mathbf{x}_0+t\,\mathbf{v}$.</p>
+<p class="ypod">Υπόδειξη: παρατηρήστε τη σχέση της τρίτης εξίσωσης με τις δύο πρώτες.</p></div>
+
+<div class="grp"><h2>Γ. Συμβιβαστότητα και παράμετροι</h2>
+<p class="lead">Πριν λύσετε, αποφασίστε <em>αν</em> και <em>πόσες</em> λύσεις υπάρχουν, συγκρίνοντας τους δύο βαθμούς με το πλήθος των αγνώστων.</p></div>
+
+<div class="ex"><div class="num">3E.7 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για το σύστημα $\begin{cases}x+y+z=2\\ x+2y+3z=5\\ 2x+3y+4z=7\end{cases}$ υπολογίστε τα
+$\mathrm{rank}(A)$ και $\mathrm{rank}(\tilde{A})$, αποφανθείτε με το κριτήριο Rouch&eacute;&ndash;Capelli
+για το πλήθος των λύσεων και γράψτε τη γενική λύση.</p></div>
+
+<div class="ex"><div class="num">3E.8 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται το σύστημα $\begin{cases}x+y+z=1\\ x+2y+4z=k\\ x+4y+10z=k^{2}\end{cases}$ με $k\in\mathbb{R}$.
+(α) Δείξτε ότι ο πίνακας των συντελεστών έχει βαθμό $2$, ανεξάρτητα από την τιμή του $k$. (β) Βρείτε όλες τις τιμές του $k$
+για τις οποίες το σύστημα είναι συμβιβαστό. (γ) Για καθεμία από τις τιμές αυτές γράψτε τη γενική λύση
+σε διανυσματική μορφή.</p>
+<p class="ypod">Υπόδειξη: μετά την απαλοιφή, η τελευταία γραμμή δίνει μια δευτεροβάθμια συνθήκη ως προς $k$ που παραγοντοποιείται.</p></div>
+
+<div class="ex"><div class="num">3E.9 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Συζητήστε πλήρως, ως προς την παράμετρο $\lambda\in\mathbb{R}$, το σύστημα
+$\begin{cases}\lambda x+y+z=1\\ x+\lambda y+z=\lambda\\ x+y+\lambda z=\lambda^{2}\end{cases}$
+(α) Υπολογίστε την ορίζουσα του πίνακα συντελεστών και παραγοντοποιήστε την. (β) Προσδιορίστε τις τιμές
+του $\lambda$ για τις οποίες υπάρχει μοναδική λύση. (γ) Για κάθε κρίσιμη τιμή του $\lambda$ εξετάστε με
+το κριτήριο Rouch&eacute;&ndash;Capelli αν το σύστημα έχει άπειρες λύσεις ή είναι ασυμβίβαστο και, όπου
+υπάρχουν λύσεις, γράψτε τη γενική λύση.</p>
+<p class="ypod">Υπόδειξη: προσθέτοντας κατά μέλη τις τρεις εξισώσεις προκύπτει μια σχέση που περιέχει τον παράγοντα $\lambda+2$.</p></div>
+
+<div class="grp"><h2>Δ. Ομογενή συστήματα</h2>
+<p class="lead">Το ομογενές σύστημα έχει πάντοτε τη μηδενική λύση: το μόνο ερώτημα είναι αν έχει και άλλες.</p></div>
+
+<div class="ex"><div class="num">3E.10 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Λύστε το ομογενές σύστημα $\begin{cases}x+2y-3z=0\\ 2x+5y-4z=0\\ 3x+7y-7z=0\end{cases}$, γράψτε τη
+γενική λύση ως πολλαπλάσιο ενός διανύσματος του $\mathbb{R}^3$ και προσδιορίστε τη διάσταση του
+$\ker(A)$.</p></div>
+
+<div class="ex"><div class="num">3E.11 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται ο πίνακας $A=\begin{bmatrix}1&amp;2&amp;1&amp;3\\2&amp;4&amp;3&amp;8\\1&amp;2&amp;2&amp;5\end{bmatrix}$.
+(α) Βρείτε την ανηγμένη κλιμακωτή μορφή του και το $\mathrm{rank}(A)$. (β) Βρείτε μια βάση του χώρου
+λύσεων του $A\mathbf{x}=\mathbf{0}$. (γ) Επαληθεύστε το θεώρημα βαθμού&ndash;μηδενικότητας
+$\dim\ker(A)+\mathrm{rank}(A)=4$.</p></div>
+
+<div class="ex"><div class="num">3E.12 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Έστω $A\in\mathcal{M}_{3\times 3}(\mathbb{R})$ με στήλες $\mathbf{c}_1,\mathbf{c}_2,\mathbf{c}_3$ για
+τις οποίες ισχύει $\mathbf{c}_3=2\mathbf{c}_1-\mathbf{c}_2$. (α) Βρείτε ρητά ένα μη μηδενικό διάνυσμα
+$\mathbf{x}$ με $A\mathbf{x}=\mathbf{0}$. (β) Συμπεράνετε ότι $\det A=0$ και ότι $\mathrm{rank}(A)\le 2$.
+(γ) Κατασκευάστε ένα συγκεκριμένο αριθμητικό παράδειγμα τέτοιου πίνακα και επαληθεύστε τα παραπάνω.</p>
+<p class="ypod">Υπόδειξη: το γινόμενο $A\mathbf{x}$ είναι γραμμικός συνδυασμός των στηλών του $A$ με συντελεστές τις συντεταγμένες του $\mathbf{x}$.</p></div>
+
+<div class="grp"><h2>Ε. Κανόνας Cramer</h2>
+<p class="lead">Εφαρμόζεται μόνο σε τετραγωνικά συστήματα με $\det A\neq 0$ και δίνει κάθε άγνωστο χωριστά.</p></div>
+
+<div class="ex"><div class="num">3E.13 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Λύστε με τον κανόνα Cramer το σύστημα $\begin{cases}3x+2y=16\\ x-4y=-4\end{cases}$, αφού πρώτα
+ελέγξετε ότι ο κανόνας εφαρμόζεται.</p></div>
+
+<div class="ex"><div class="num">3E.14 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Για το σύστημα $\begin{cases}x+y+z=6\\ 2x-y+3z=9\\ x+2y-z=2\end{cases}$ υπολογίστε <em>μόνο</em> τον
+άγνωστο $z$ με τον κανόνα Cramer, χωρίς να λύσετε ολόκληρο το σύστημα.</p></div>
+
+<div class="ex"><div class="num">3E.15 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνεται το σύστημα $\begin{cases}x+y=1\\ x+ay=a\end{cases}$ με $a\in\mathbb{R}$.
+(α) Για ποιες τιμές του $a$ εφαρμόζεται ο κανόνας Cramer; (β) Εφαρμόστε τον και δείξτε ότι η λύση δεν
+εξαρτάται καθόλου από το $a$. (γ) Εξετάστε χωριστά την τιμή του $a$ που εξαιρείται και περιγράψτε
+γεωμετρικά τι συμβαίνει τότε με τις δύο ευθείες.</p></div>
+
+<div class="grp"><h2>ΣΤ. Παραγοντοποίηση $LU$</h2>
+<p class="lead">Οι πολλαπλασιαστές της απαλοιφής Gauss δεν πετιούνται: συνθέτουν τον $L$, ενώ ο κλιμακωμένος πίνακας είναι ο $U$.</p></div>
+
+<div class="ex"><div class="num">3E.16 <span class="lvl l1">ΒΑΣΙΚΗ</span></div>
+<p>Βρείτε την παραγοντοποίηση $A=LU$ (χωρίς εναλλαγές γραμμών) του πίνακα
+$A=\begin{bmatrix}2&amp;1&amp;-1\\4&amp;5&amp;-3\\-2&amp;5&amp;-2\end{bmatrix}$
+και επαληθεύστε το αποτέλεσμα εκτελώντας τον πολλαπλασιασμό $LU$.</p></div>
+
+<div class="ex"><div class="num">3E.17 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Για τον πίνακα $A=\begin{bmatrix}1&amp;2&amp;1\\3&amp;8&amp;1\\0&amp;4&amp;1\end{bmatrix}$ βρείτε τους
+παράγοντες $L$ και $U$ και, χρησιμοποιώντας <em>την ίδια</em> παραγοντοποίηση, λύστε με εμπρόσθια και
+οπίσθια αντικατάσταση τα συστήματα $A\mathbf{x}=\mathbf{b}_1$ και $A\mathbf{x}=\mathbf{b}_2$ με
+$\mathbf{b}_1=(4,12,5)^{\top}$ και $\mathbf{b}_2=(3,7,1)^{\top}$. Πόσες φορές εκτελέσατε την απαλοιφή
+και πόσες θα την εκτελούσατε με σκέτη απαλοιφή Gauss;</p></div>
+
+<div class="ex"><div class="num">3E.18 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δείξτε ότι ο πίνακας $A=\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}$ δεν δέχεται παραγοντοποίηση
+$A=LU$ με $L$ κάτω τριγωνικό μοναδιαίας διαγωνίου και $U$ άνω τριγωνικό. Στη συνέχεια βρείτε πίνακα
+μετάθεσης $P$ ώστε ο $PA$ να δέχεται τέτοια παραγοντοποίηση και γράψτε την. Τέλος, διατυπώστε γενικά
+ποια συνθήκη επί των οδηγών στοιχείων εξασφαλίζει την ύπαρξη της $LU$ χωρίς εναλλαγές γραμμών.</p>
+<p class="ypod">Υπόδειξη: γράψτε τα $L$ και $U$ με άγνωστα στοιχεία, εκτελέστε το γινόμενο και συγκρίνετε θέση προς θέση, ξεκινώντας από το στοιχείο της θέσης $(1,1)$.</p></div>
+
+<div class="grp"><h2>Ζ. Εφαρμογές: δίκτυα, δικτυώματα, παρεμβολή</h2>
+<p class="lead">Οι νόμοι διατήρησης και οι συνθήκες παρεμβολής παράγουν πάντοτε γραμμικά συστήματα.</p></div>
+
+<div class="ex"><div class="num">3E.19 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Σε τετράγωνο μονόδρομων οδών, οι διασταυρώσεις $A,B,\Gamma,\Delta$ συνδέονται κυκλικά με ροές
+(οχήματα ανά ώρα) $x_1$ από την $A$ στη $B$, $x_2$ από τη $B$ στη $\Gamma$, $x_3$ από τη $\Gamma$ στη
+$\Delta$ και $x_4$ από τη $\Delta$ στην $A$. Από πλευρικούς δρόμους εισέρχονται και εξέρχονται:
+στην $A$ εισέρχονται $100$ και εξέρχονται $50$· στη $B$ εισέρχονται $80$ και εξέρχονται $30$· στη
+$\Gamma$ εισέρχονται $20$ και εξέρχονται $90$· στη $\Delta$ εισέρχονται $40$ και εξέρχονται $70$.
+(α) Γράψτε την αρχή διατήρησης (εισροή $=$ εκροή) σε κάθε διασταύρωση και σχηματίστε το σύστημα
+$A\mathbf{x}=\mathbf{b}$. (β) Υπολογίστε τα $\mathrm{rank}(A)$ και $\mathrm{rank}(\tilde{A})$ και
+εξηγήστε γιατί το σύστημα έχει άπειρες λύσεις. (γ) Εκφράστε τη γενική λύση με παράμετρο τη ροή $x_4$.
+(δ) Αν όλες οι ροές οφείλουν να είναι μη αρνητικές, ποια είναι η μικρότερη επιτρεπτή τιμή του $x_4$;</p></div>
+
+<div class="ex"><div class="num">3E.20 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Ζητείται το επίπεδο με εξίσωση $z=a+bx+cy$ που διέρχεται από τα σημεία $(1,1,3)$, $(2,0,4)$ και
+$(0,3,2)$. (α) Σχηματίστε το γραμμικό σύστημα $3\times 3$ με αγνώστους τα $a,b,c$. (β) Υπολογίστε την
+ορίζουσα του πίνακα συντελεστών και εξηγήστε γιατί το επίπεδο είναι μοναδικό. (γ) Λύστε με απαλοιφή
+Gauss και επαληθεύστε ότι και τα τρία σημεία ικανοποιούν την εξίσωση που βρήκατε.</p>
+<p class="ypod">Υπόδειξη: κάθε σημείο δίνει μία εξίσωση, γραμμική ως προς τους <em>αγνώστους συντελεστές</em> $a,b,c$ και όχι ως προς τις συντεταγμένες.</p></div>
+
+<div class="ex"><div class="num">3E.21 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Σε επίπεδο δικτύωμα τρία μέλη φέρουν δυνάμεις $F_1,F_2,F_3$ (σε kN). Οι εξισώσεις ισορροπίας των
+κόμβων, με τη γεωμετρία του μέλους $1$ να αντιστοιχεί σε ορθογώνιο τρίγωνο πλευρών $3,4,5$, είναι
+$\begin{cases}\tfrac{3}{5}F_1+F_2=10\\ \tfrac{4}{5}F_1+F_3=12\\ F_2-F_3=-4\end{cases}$
+(α) Πολλαπλασιάστε κατάλληλα ώστε οι συντελεστές να γίνουν ακέραιοι και λύστε με απαλοιφή Gauss.
+(β) Δείξτε ότι η ορίζουσα του πίνακα συντελεστών είναι μη μηδενική και εξηγήστε τι σημαίνει αυτό για
+το αν το δικτύωμα είναι στατικά ορισμένο. (γ) Ερμηνεύστε φυσικά το πρόσημο κάθε δύναμης, δεδομένου ότι
+θετική τιμή αντιστοιχεί σε εφελκυσμό και αρνητική σε θλίψη.</p></div>
+
+<div class="grp"><h2>Η. Μεικτά και σύνθετα θέματα</h2>
+<p class="lead">Εδώ συνδυάζονται περισσότερα εργαλεία του κεφαλαίου: βαθμός, ορίζουσα, συμβιβαστότητα, ομογενές σύστημα.</p></div>
+
+<div class="ex"><div class="num">3E.22 <span class="lvl l2">ΕΝΔΙΑΜΕΣΗ</span></div>
+<p>Δίνονται $A=\begin{bmatrix}1&amp;2&amp;3\\2&amp;5&amp;7\\3&amp;7&amp;11\end{bmatrix}$ και
+$\mathbf{b}=(6,14,21)^{\top}$. (α) Κλιμακώστε τον $A$ και υπολογίστε την $\det A$ ως γινόμενο των
+οδηγών στοιχείων. (β) Λύστε το $A\mathbf{x}=\mathbf{b}$ αξιοποιώντας την ίδια κλιμάκωση.
+(γ) Εξηγήστε γιατί η απάντηση στο (α) εγγυάται εκ των προτέρων ότι η λύση του (β) είναι μοναδική.</p></div>
+
+<div class="ex"><div class="num">3E.23 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Έστω $A\in\mathcal{M}_{m\times n}(\mathbb{R})$ και $\mathbf{b}\in\mathbb{R}^m$. Υποθέστε ότι το
+σύστημα $A\mathbf{x}=\mathbf{b}$ έχει δύο διαφορετικές λύσεις $\mathbf{x}_1\neq\mathbf{x}_2$.
+(α) Δείξτε ότι για κάθε $t\in\mathbb{R}$ το διάνυσμα
+$\mathbf{x}_1+t(\mathbf{x}_2-\mathbf{x}_1)$ είναι επίσης λύση. (β) Συμπεράνετε ότι το σύστημα έχει
+άπειρες λύσεις και ότι, επομένως, ένα γραμμικό σύστημα δεν μπορεί ποτέ να έχει ακριβώς δύο λύσεις.
+(γ) Διατυπώστε το συμπέρασμα αυτό με όρους των $\mathrm{rank}(A)$ και του πλήθους $n$ των αγνώστων.</p>
+<p class="ypod">Υπόδειξη: στο (α) υπολογίστε το $A\big(\mathbf{x}_1+t(\mathbf{x}_2-\mathbf{x}_1)\big)$ αξιοποιώντας τη γραμμικότητα του πολλαπλασιασμού πινάκων.</p></div>
+
+<div class="ex"><div class="num">3E.24 <span class="lvl l3">ΣΥΝΘΕΤΗ</span></div>
+<p>Δίνεται, για $a\in\mathbb{R}$, το σύστημα $A_a\mathbf{x}=\mathbf{b}$ με
+$A_a=\begin{bmatrix}1&amp;1&amp;-1\\2&amp;3&amp;a\\1&amp;a&amp;3\end{bmatrix}$ και
+$\mathbf{b}=(1,2,1)^{\top}$.
+(α) Υπολογίστε την $\det A_a$, παραγοντοποιήστε την και βρείτε τις τιμές του $a$ για τις οποίες
+μηδενίζεται. (β) Για ποιες τιμές του $a$ το σύστημα έχει μοναδική λύση; (γ) Για καθεμία από τις
+κρίσιμες τιμές του $a$ εφαρμόστε το κριτήριο Rouch&eacute;&ndash;Capelli και, όπου το σύστημα είναι
+συμβιβαστό, γράψτε τη γενική λύση σε διανυσματική μορφή. (δ) Παρατηρήστε ότι το ομογενές σύστημα
+$A_a\mathbf{x}=\mathbf{0}$ έχει μη μηδενικές λύσεις ακριβώς για τις κρίσιμες τιμές και εξηγήστε τη
+σχέση των λύσεων αυτών με τη γενική λύση του ερωτήματος (γ).</p></div>
+
+
+<div class="grp"><h2>Από τον έντυπο κατάλογο του κεφαλαίου</h2><p class="lead">Ασκήσεις που μεταφέρθηκαν εδώ από τον έντυπο κατάλογο, ώστε το κεφάλαιο να κρατήσει έναν πυρήνα αντιπροσωπευτικών θεμάτων. Καλύπτουν όλο το φάσμα δυσκολίας και είναι ταξινομημένες με τη σειρά των ενοτήτων.</p></div>
+<div class="grp2"><h3>Ασκήσεις της ενότητας</h3></div>
+<div class="ex from-book"><div class="num">3E.25</div>
+<p>Λύστε $\begin{cases}x+y+z=6\\2x-y+z=3\\x+2y-z=2\end{cases}$ με απαλοιφή Gauss.</p></div>
+<div class="ex from-book"><div class="num">3E.26</div>
+<p>Λύστε $\begin{cases}x+2y-z=4\\2x-y+3z=1\\x-3y+4z=-3\end{cases}$.</p></div>
+<div class="ex from-book"><div class="num">3E.27</div>
+<p>Λύστε το σύστημα $\begin{cases}2x-y+3z=1\\x+y-z=2\\3x-2y+4z=0\end{cases}$.</p></div>
+<div class="ex from-book"><div class="num">3E.28</div>
+<p>Για ποιες τιμές της παραμέτρου $\lambda$ το σύστημα $x+2y=3$, $\;\lambda x+4y=\lambda+3$ έχει (α) μοναδική λύση, (β) άπειρες λύσεις, (γ) καμία λύση;</p></div>
+<div class="ex from-book"><div class="num">3E.29</div>
+<p>Βρείτε την τομή των επιπέδων $x+y+z=1$ και $x-y+z=2$ και περιγράψτε την γεωμετρικά.</p></div>
+<div class="ex from-book"><div class="num">3E.30</div>
+<p>Ερμηνεύστε γεωμετρικά το $\begin{cases}x+y+z=3\\x-y+z=1\\2x+2y+2z=6\end{cases}$: έχει άπειρες ή μοναδική λύση;</p></div>
+<div class="ex from-book"><div class="num">3E.31</div>
+<p>Δώστε παράδειγμα τριών επιπέδων που τέμνονται σε ένα μόνο σημείο και επαληθεύστε αλγεβρικά.</p></div>
+<div class="ex from-book"><div class="num">3E.32</div>
+<p>Λύστε με τη μέθοδο Gauss–Jordan: $x+2y-z=4$, $\;2x+y+z=5$, $\;x-y+3z=2$.</p></div>
+<div class="ex from-book"><div class="num">3E.33</div>
+<p>Λύστε $\begin{cases}x_1+2x_2-x_3+x_4=3\\2x_1+4x_2+x_3-x_4=5\\x_1+2x_2+2x_3-2x_4=2\end{cases}$ προσδιορίζοντας τις ελεύθερες μεταβλητές.</p></div>
+<div class="ex from-book"><div class="num">3E.34</div>
+<p>Χρησιμοποιήστε Gauss–Jordan για να βρείτε τον $A^{-1}$, όπου $A=\begin{bmatrix}2&amp;5\\1&amp;3\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">3E.35</div>
+<p>Βρείτε τη γενική λύση του $A\vecx=\mathbf{b}$ για $A=\begin{bmatrix}1&amp;2&amp;3\\4&amp;5&amp;6\\7&amp;8&amp;10\end{bmatrix}$, $\mathbf{b}=\begin{bmatrix}1\\2\\3\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">3E.36</div>
+<p>Βρείτε την τάξη του $B=\begin{bmatrix}1&amp;0&amp;2&amp;-1\\0&amp;1&amp;-1&amp;3\\2&amp;-1&amp;5&amp;-5\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">3E.37</div>
+<p>Εξετάστε, με βάση τις τάξεις $\mathrm{rank}(A)$ και $\mathrm{rank}([A|\mathbf{b}])$, αν το $\begin{cases}x+2y=3\\2x+4y=7\end{cases}$ έχει λύση.</p></div>
+<div class="ex from-book"><div class="num">3E.38</div>
+<p>Για ποιες τιμές των $a,b$ έχει λύση το $\begin{cases}x+y=a\\2x+2y=b\end{cases}$;</p></div>
+<div class="ex from-book"><div class="num">3E.39</div>
+<p>Για ποιο $k$ έχει λύση το $\begin{bmatrix}1&amp;2&amp;1\\2&amp;1&amp;3\\3&amp;3&amp;4\end{bmatrix}\begin{bmatrix}x\\y\\z\end{bmatrix}=\begin{bmatrix}1\\2\\k\end{bmatrix}$; Για την τιμή αυτή, γράψτε τη γενική λύση.</p></div>
+<div class="ex from-book"><div class="num">3E.40</div>
+<p>Λύστε το ομογενές σύστημα $2x_1+x_2-x_3=0$, $\;x_1-x_2+2x_3=0$ και γράψτε τη γενική λύση.</p></div>
+<div class="ex from-book"><div class="num">3E.41</div>
+<p>Βρείτε όλες τις λύσεις του $A\vecx=\mathbf{0}$ για $A=\begin{bmatrix}1&amp;2&amp;3&amp;4\\2&amp;4&amp;6&amp;8\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">3E.42</div>
+<p>Αν $A\in\mathcal{M}_{3\times4}$ με $\mathrm{rank}(A)=2$, ποια είναι η διάσταση του πυρήνα $\mathcal{N}(A)$;</p></div>
+<div class="ex from-book"><div class="num">3E.43</div>
+<p><strong>Βαθμός και διάσταση πυρήνα.</strong> Για τον πίνακα $A\in\mathcal{M}_{3\times 5}(\R)$ με \[ A = \begin{bmatrix} 1 &amp; 2 &amp; 0 &amp; -1 &amp; 3 \\ 2 &amp; 4 &amp; 1 &amp; 0 &amp; 5 \\ 0 &amp; 0 &amp; 1 &amp; 2 &amp; -1 \end{bmatrix} \] <ol class="sub"><li>Βρείτε το $\mathrm{rank}(A)$ με αναγωγή σε RREF. </li><li>Χρησιμοποιήστε το θεώρημα βαθμού–μηδενικότητας, $\dim\ker(A) + \mathrm{rank}(A) = 5$, για να βρείτε το $\dim\ker(A)$. </li><li>Βρείτε βάση του $\ker(A)$. </li></ol></p></div>
+<div class="ex from-book"><div class="num">3E.44</div>
+<p>Λύστε με Cramer: $\begin{cases}2x-3y=7\\5x+y=3\end{cases}$.</p></div>
+<div class="ex from-book"><div class="num">3E.45</div>
+<p>Λύστε με Cramer: $\begin{cases}x+y-z=2\\2x-y+z=3\\x+2y+2z=11\end{cases}$.</p></div>
+<div class="ex from-book"><div class="num">3E.46</div>
+<p>Χρησιμοποιήστε Cramer για να λύσετε το $A\vecx=\mathbf{b}$ με $A=\begin{bmatrix}2&amp;-1\\1&amp;3\end{bmatrix}$, $\mathbf{b}=\begin{bmatrix}5\\4\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">3E.47</div>
+<p>Βρείτε την $LU$ παραγοντοποίηση (μέθοδος Doolittle) του $A=\begin{bmatrix}1&amp;3&amp;5\\2&amp;4&amp;8\\3&amp;7&amp;14\end{bmatrix}$.</p></div>
+<div class="ex from-book"><div class="num">3E.48</div>
+<p>Χρησιμοποιήστε την $LU$ για να λύσετε δύο συστήματα με τον ίδιο $A=\begin{bmatrix}1&amp;1\\3&amp;4\end{bmatrix}$ και $\mathbf{b}_1=(2,9)^T$, $\mathbf{b}_2=(3,11)^T$.</p></div>
+<div class="ex from-book"><div class="num">3E.49</div>
+<p>Κύκλωμα με τρεις βρόχους υπακούει στο σύστημα $4I_1-I_2=12$, $\;-I_1+5I_2-2I_3=0$, $\;-2I_2+3I_3=6$. Βρείτε τα ρεύματα $I_1, I_2, I_3$.</p></div>
+<div class="ex from-book"><div class="num">3E.50</div>
+<p>Σε κύκλωμα τριών βρόχων ο πίνακας αντιστάσεων είναι $R=\begin{bmatrix}2&amp;-1&amp;0\\-1&amp;3&amp;-1\\0&amp;-1&amp;2\end{bmatrix}$ και το διάνυσμα τάσεων $\mathbf{V}=(5,0,3)^T$. Λύστε το $R\mathbf{I}=\mathbf{V}$ για τα ρεύματα.</p></div>
+<div class="ex from-book"><div class="num">3E.51</div>
+<p>Βρείτε τους συντελεστές του πολυωνύμου $p(x)=ax^2+bx+c$ που διέρχεται από τα σημεία $(1,2)$, $(2,3)$, $(3,6)$. Διατυπώστε το πρόβλημα ως γραμμικό σύστημα $3\times3$ και λύστε το.</p></div>
+<div class="grp2"><h3>Σύνθετα Θέματα</h3></div>
+<div class="ex from-book"><div class="num">3E.52</div>
+<p><strong>Σύστημα με παραμέτρους.</strong> Εξετάστε το σύστημα \[ \begin{cases} x + 2y + z = 1 \\ 2x + 5y + 2z = 2 \\ x + 4y + \lambda z = \mu \end{cases} \] <ol class="sub"><li>Βρείτε τις τιμές του $\lambda$ για τις οποίες το σύστημα έχει πάντα λύση, ανεξαρτήτως του $\mu$. </li><li>Δείξτε ότι $\det A=\lambda-1$ και ότι η <em>κρίσιμη</em> τιμή είναι $\lambda=1$. Για $\lambda=1$, βρείτε τις τιμές του $\mu$ για τις οποίες το σύστημα (i) έχει άπειρες λύσεις, (ii) είναι ασύμβατο. </li><li>Για $\lambda=1$ και την τιμή του $\mu$ που δίνει άπειρες λύσεις, γράψτε τη γενική λύση. </li></ol></p></div>
+
+</main>
+<footer style="text-align:center;padding:1.2rem;margin-top:2rem;border-top:3px solid #003888;font-size:.82rem;color:#555"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small></footer>
+</body>
+</html>
