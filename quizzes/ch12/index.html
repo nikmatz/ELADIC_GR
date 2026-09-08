@@ -67,7 +67,7 @@
 <main>
   <div class="info-card">
     <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
-    <p>10 ερωτήσεις για L'Hôpital, μέθοδο Newton, ασύμπτωτες και γραφικές παραστάσεις.</p>
+    <p>10 ερωτήσεις για τον κανόνα L’Hôpital, τη μέθοδο Newton, τις ασύμπτωτες και γραφικές παραστάσεις.</p>
   </div>
   <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
   <div id="best-score" style="text-align:center;font-weight:600;color:#004080;margin:.3rem 0 .8rem"></div>
@@ -122,7 +122,7 @@
 
 <div class="quiz-question" id="q6">
   <div class="q-num">Ερώτηση 6 / 10</div>
-  <p>$\lim_{x\to0}x\ln x = 0$.</p>
+  <p>$\lim_{x\to0^+}x\ln x = 0$.</p>
   <label><input type="radio" name="q6" value="1"> Σωστό</label>
   <label><input type="radio" name="q6" value="0"> Λάθος</label>
   <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> Σωστό<br><em>$\lim_{x\to0^+}x\ln x=\lim\frac{\ln x}{1/x}\overset{L'H}{=}\lim\frac{1/x}{-1/x^2}=\lim(-x)=0$.</em></div>

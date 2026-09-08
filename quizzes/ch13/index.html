@@ -104,15 +104,15 @@
   <div class="q-num">Ερώτηση 4 / 10</div>
   <p>Αν $F'(x)=f(x)$, τότε $F$ λέγεται:</p>
   <label><input type="radio" name="q4" value="0"> α) παράγωγος</label>
-  <label><input type="radio" name="q4" value="1"> β) πρωτεύουσα (αντιπαράγωγος)</label>
+  <label><input type="radio" name="q4" value="1"> β) αντιπαράγωγος (παράγουσα)</label>
   <label><input type="radio" name="q4" value="2"> γ) ρίζα</label>
   <label><input type="radio" name="q4" value="3"> δ) παράγοντας</label>
-  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) πρωτεύουσα (αντιπαράγωγος)<br><em>Πρωτεύουσα (antiderivative): $F'(x)=f(x)$. Το αόριστο ολοκλήρωμα $\int f = F+C$.</em></div>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) αντιπαράγωγος (παράγουσα)<br><em>Πρωτεύουσα (antiderivative): $F'(x)=f(x)$. Το αόριστο ολοκλήρωμα $\int f = F+C$.</em></div>
 </div>
 
 <div class="quiz-question" id="q5">
   <div class="q-num">Ερώτηση 5 / 10</div>
-  <p>Δύο πρωτεύουσες της ίδιας $f$ διαφέρουν κατά σταθερά.</p>
+  <p>Δύο αντιπαράγωγοι της ίδιας $f$ διαφέρουν κατά σταθερά.</p>
   <label><input type="radio" name="q5" value="1"> Σωστό</label>
   <label><input type="radio" name="q5" value="0"> Λάθος</label>
   <div class="explanation hidden" id="exp5"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Αν $F'=G'=f$, τότε $(F-G)'=0$, άρα $F-G=C$ (σταθερή).</em></div>
@@ -246,7 +246,7 @@ function _qShuffleQuiz(){
 document.addEventListener('DOMContentLoaded',function(){_qShuffleQuiz();_qRenderBest();if(typeof MathJax!=='undefined'&&MathJax.typesetPromise)MathJax.typesetPromise();});
 
 /* ── Topic feedback + hints + retry-wrong (προστέθηκε) ── */
-const QTOPICS = ["Δύναμη x", "Ολοκλήρωμα 1/x", "Εκθετική e^{ax}", "Ορισμός πρωτεύουσας", "Διαφορά πρωτευουσών", "Συνημίτονο cos(ax)", "Αντικατάσταση", "Γραμμικότητα", "Ολοκλήρωμα ημιτόνου", "Λογαριθμική αντικατάσταση"];
+const QTOPICS = ["Δύναμη x", "Ολοκλήρωμα 1/x", "Εκθετική e^{ax}", "Ορισμός αντιπαραγώγου", "Διαφορά πρωτευουσών", "Συνημίτονο cos(ax)", "Αντικατάσταση", "Γραμμικότητα", "Ολοκλήρωμα ημιτόνου", "Λογαριθμική αντικατάσταση"];
 const QHINTS = ["Αύξησε τον εκθέτη κατά 1 και διαίρεσε.", "Θυμήσου το απόλυτο μέτρο στον λογάριθμο.", "Διαίρεσε με τον συντελεστή του x.", "Ποια συνάρτηση έχει παράγωγο την f;", "Σκέψου την παράγωγο της διαφοράς τους.", "Αντιπαράγωγος του cos είναι sin, διαίρεσε με a.", "Θέσε u=g(x) και du=g'(x)dx.", "Ολοκλήρωσε όρο προς όρο.", "Παράγωγος του -cos x ποια είναι;", "Ο αριθμητής είναι η παράγωγος του παρονομαστή."];
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.quiz-question').forEach(function(q){

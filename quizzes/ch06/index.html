@@ -67,27 +67,27 @@
 <main>
   <div class="info-card">
     <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
-    <p>10 ερωτήσεις για διαγωνοποίηση, συμμετρικούς πίνακες, SVD και εφαρμογές.</p>
+    <p>10 ερωτήσεις για διαγωνιοποίηση, συμμετρικούς πίνακες, SVD και εφαρμογές.</p>
   </div>
   <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
   <div id="best-score" style="text-align:center;font-weight:600;color:#004080;margin:.3rem 0 .8rem"></div>
   <form id="quiz-form">
 <div class="quiz-question" id="q1">
   <div class="q-num">Ερώτηση 1 / 10</div>
-  <p>Ένας $n\times n$ πίνακας $A$ είναι διαγωνοποιήσιμος αν:</p>
+  <p>Ένας $n\times n$ πίνακας $A$ είναι διαγωνιοποιήσιμος αν:</p>
   <label><input type="radio" name="q1" value="0"> α) $\det A\neq 0$</label>
   <label><input type="radio" name="q1" value="1"> β) έχει $n$ γραμμικά ανεξάρτητα ιδιοδιανύσματα</label>
   <label><input type="radio" name="q1" value="2"> γ) έχει $n$ διαφορετικές ιδιοτιμές στο ℂ</label>
   <label><input type="radio" name="q1" value="3"> δ) είναι συμμετρικός</label>
-  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> β) έχει $n$ γραμμικά ανεξάρτητα ιδιοδιανύσματα<br><em>$A$ διαγωνοποιήσιμος $\Leftrightarrow$ υπάρχουν $n$ γ.α. ιδιοδιανύσματα (ισοδύναμα: $P$ αντιστρέψιμος με $P^{-1}AP=D$).</em></div>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> β) έχει $n$ γραμμικά ανεξάρτητα ιδιοδιανύσματα<br><em>$A$ διαγωνιοποιήσιμος $\Leftrightarrow$ υπάρχουν $n$ γ.α. ιδιοδιανύσματα (ισοδύναμα: $P$ αντιστρέψιμος με $P^{-1}AP=D$).</em></div>
 </div>
 
 <div class="quiz-question" id="q2">
   <div class="q-num">Ερώτηση 2 / 10</div>
-  <p>Κάθε πραγματικός συμμετρικός πίνακας είναι ορθογωνικά διαγωνοποιήσιμος.</p>
+  <p>Κάθε πραγματικός συμμετρικός πίνακας είναι ορθογωνικά διαγωνιοποιήσιμος.</p>
   <label><input type="radio" name="q2" value="1"> Σωστό</label>
   <label><input type="radio" name="q2" value="0"> Λάθος</label>
-  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Φασματικό θεώρημα: κάθε πραγματικός συμμετρικός πίνακας ορθογωνικά διαγωνοποιείται (ιδιοδιανύσματα ορθογώνια).</em></div>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Φασματικό θεώρημα: κάθε πραγματικός συμμετρικός πίνακας ορθογωνικά διαγωνιοποιείται (ιδιοδιανύσματα ορθογώνια).</em></div>
 </div>
 
 <div class="quiz-question" id="q3">
@@ -102,15 +102,15 @@
 
 <div class="quiz-question" id="q4">
   <div class="q-num">Ερώτηση 4 / 10</div>
-  <p>Κάθε πίνακας με ιδιοτιμές 0 και 1 (χωρίς επαναλήψεις) είναι διαγωνοποιήσιμος.</p>
+  <p>Κάθε πίνακας με ιδιοτιμές 0 και 1 (χωρίς επαναλήψεις) είναι διαγωνιοποιήσιμος.</p>
   <label><input type="radio" name="q4" value="1"> Σωστό</label>
   <label><input type="radio" name="q4" value="0"> Λάθος</label>
-  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Αν έχει $n$ διακεκριμένες ιδιοτιμές, τότε έχει $n$ γ.α. ιδιοδιανύσματα, άρα είναι διαγωνοποιήσιμος.</em></div>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Αν έχει $n$ διακεκριμένες ιδιοτιμές, τότε έχει $n$ γ.α. ιδιοδιανύσματα, άρα είναι διαγωνιοποιήσιμος.</em></div>
 </div>
 
 <div class="quiz-question" id="q5">
   <div class="q-num">Ερώτηση 5 / 10</div>
-  <p>Στη SVD $A=U\Sigma V^T$, τα ιδιάζουσα τιμές (singular values) είναι:</p>
+  <p>Στη SVD $A=U\Sigma V^T$, οι ιδιάζουσες τιμές (singular values) είναι:</p>
   <label><input type="radio" name="q5" value="0"> α) οι ιδιοτιμές του $A$</label>
   <label><input type="radio" name="q5" value="1"> β) οι τετραγωνικές ρίζες των ιδιοτιμών του $A^TA$</label>
   <label><input type="radio" name="q5" value="2"> γ) τα διαγώνια στοιχεία του $U$</label>
@@ -120,12 +120,12 @@
 
 <div class="quiz-question" id="q6">
   <div class="q-num">Ερώτηση 6 / 10</div>
-  <p>Ένας $2\times2$ πίνακας με ίδια ιδιοτιμή $\lambda$ (διπλή) είναι διαγωνοποιήσιμος αν:</p>
+  <p>Ένας $2\times2$ πίνακας με ίδια ιδιοτιμή $\lambda$ (διπλή) είναι διαγωνιοποιήσιμος αν:</p>
   <label><input type="radio" name="q6" value="0"> α) πάντοτε</label>
   <label><input type="radio" name="q6" value="1"> β) ποτέ</label>
   <label><input type="radio" name="q6" value="2"> γ) μόνο αν είναι $\lambda I$</label>
   <label><input type="radio" name="q6" value="3"> δ) αν και μόνο αν rank$(A-\lambda I)=0$</label>
-  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> δ) αν και μόνο αν rank$(A-\lambda I)=0$<br><em>Η ιδιοτιμή $\lambda$ διπλής αλγεβρικής πολλαπλότητας είναι γ.α. (διαγωνοποιήσιμη) αν η γεωμετρική πολλαπλότητα = 2, δηλ. $\ker(A-\lambda I)=2$, δηλ. $A=\lambda I$.</em></div>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> δ) αν και μόνο αν rank$(A-\lambda I)=0$<br><em>Η ιδιοτιμή $\lambda$ διπλής αλγεβρικής πολλαπλότητας είναι γ.α. (διαγωνιοποιήσιμη) αν η γεωμετρική πολλαπλότητα = 2, δηλ. $\ker(A-\lambda I)=2$, δηλ. $A=\lambda I$.</em></div>
 </div>
 
 <div class="quiz-question" id="q7">
@@ -141,14 +141,14 @@
   <p>Για συμμετρικό $A$, ποια ισχύει;</p>
   <label><input type="radio" name="q8" value="0"> α) Ιδιοδιανύσματα για διαφ. ιδιοτιμές είναι ορθογώνια</label>
   <label><input type="radio" name="q8" value="1"> β) Ιδιοτιμές μπορεί να είναι μιγαδικές</label>
-  <label><input type="radio" name="q8" value="2"> γ) Δεν είναι διαγωνοποιήσιμος</label>
+  <label><input type="radio" name="q8" value="2"> γ) Δεν είναι διαγωνιοποιήσιμος</label>
   <label><input type="radio" name="q8" value="3"> δ) Τα ιδιοδιανύσματα είναι παράλληλα</label>
   <div class="explanation hidden" id="exp8"><strong>✓ Απάντηση:</strong> α) Ιδιοδιανύσματα για διαφ. ιδιοτιμές είναι ορθογώνια<br><em>Φασματικό θεώρημα: για πραγματικό συμμετρικό, ιδιοδιανύσματα σε διαφ. ιδιοτιμές είναι ορθογώνια.</em></div>
 </div>
 
 <div class="quiz-question" id="q9">
   <div class="q-num">Ερώτηση 9 / 10</div>
-  <p>Αν $A$ διαγωνοποιήσιμος με ιδιοτιμές $\lambda_1,\ldots,\lambda_n$, τότε $\det A=$</p>
+  <p>Αν $A$ διαγωνιοποιήσιμος με ιδιοτιμές $\lambda_1,\ldots,\lambda_n$, τότε $\det A=$</p>
   <label><input type="radio" name="q9" value="0"> α) $\sum_i\lambda_i$</label>
   <label><input type="radio" name="q9" value="1"> β) $\prod_i\lambda_i$</label>
   <label><input type="radio" name="q9" value="2"> γ) $\max_i\lambda_i$</label>

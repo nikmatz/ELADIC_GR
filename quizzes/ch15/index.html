@@ -67,34 +67,34 @@
 <main>
   <div class="info-card">
     <h2 style="margin-bottom:.4rem;color:#c85000">Αυτοαξιολόγηση</h2>
-    <p>10 ερωτήσεις για το ΘΘΛ, τη σχέση παραγώγου-ολοκληρώματος και εφαρμογές.</p>
+    <p>10 ερωτήσεις για το ΘΘΟΛ, τη σχέση παραγώγου-ολοκληρώματος και εφαρμογές.</p>
   </div>
   <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
   <div id="best-score" style="text-align:center;font-weight:600;color:#004080;margin:.3rem 0 .8rem"></div>
   <form id="quiz-form">
 <div class="quiz-question" id="q1">
   <div class="q-num">Ερώτηση 1 / 10</div>
-  <p>ΘΘΛ (1ο μέρος): αν $F(x)=\int_a^x f(t)dt$, τότε $F'(x)=$</p>
+  <p>ΘΘΟΛ (1ο μέρος): αν $F(x)=\int_a^x f(t)dt$, τότε $F'(x)=$</p>
   <label><input type="radio" name="q1" value="0"> α) $f(a)$</label>
   <label><input type="radio" name="q1" value="1"> β) $f(x)$</label>
   <label><input type="radio" name="q1" value="2"> γ) $f(x)-f(a)$</label>
   <label><input type="radio" name="q1" value="3"> δ) $\int_a^xf'(t)dt$</label>
-  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> β) $f(x)$<br><em>1ο μέρος ΘΘΛ: $\dfrac{d}{dx}\int_a^xf(t)dt=f(x)$ (αν $f$ συνεχής).</em></div>
+  <div class="explanation hidden" id="exp1"><strong>✓ Απάντηση:</strong> β) $f(x)$<br><em>1ο μέρος ΘΘΟΛ: $\dfrac{d}{dx}\int_a^xf(t)dt=f(x)$ (αν $f$ συνεχής).</em></div>
 </div>
 
 <div class="quiz-question" id="q2">
   <div class="q-num">Ερώτηση 2 / 10</div>
-  <p>ΘΘΛ (2ο μέρος): $\int_a^b f(x)dx=$</p>
+  <p>ΘΘΟΛ (2ο μέρος): $\int_a^b f(x)dx=$</p>
   <label><input type="radio" name="q2" value="0"> α) $F(a)-F(b)$</label>
   <label><input type="radio" name="q2" value="1"> β) $F(b)-F(a)$</label>
   <label><input type="radio" name="q2" value="2"> γ) $F'(b)-F'(a)$</label>
   <label><input type="radio" name="q2" value="3"> δ) $F(b)\cdot F(a)$</label>
-  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> β) $F(b)-F(a)$<br><em>2ο μέρος ΘΘΛ: $\int_a^bf(x)dx=F(b)-F(a)$ όπου $F'=f$.</em></div>
+  <div class="explanation hidden" id="exp2"><strong>✓ Απάντηση:</strong> β) $F(b)-F(a)$<br><em>2ο μέρος ΘΘΟΛ: $\int_a^bf(x)dx=F(b)-F(a)$ όπου $F'=f$.</em></div>
 </div>
 
 <div class="quiz-question" id="q3">
   <div class="q-num">Ερώτηση 3 / 10</div>
-  <p>Το ΘΘΛ συνδέει τη διαφόριση με την ολοκλήρωση.</p>
+  <p>Το ΘΘΟΛ συνδέει τη διαφόριση με την ολοκλήρωση.</p>
   <label><input type="radio" name="q3" value="1"> Σωστό</label>
   <label><input type="radio" name="q3" value="0"> Λάθος</label>
   <div class="explanation hidden" id="exp3"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Θεμελιώδης σύνδεση: ολοκλήρωση και παραγώγιση είναι αντίστροφες πράξεις.</em></div>
@@ -107,7 +107,7 @@
   <label><input type="radio" name="q4" value="1"> β) $2x\cos(x^2)$</label>
   <label><input type="radio" name="q4" value="2"> γ) $\sin(x^2)$</label>
   <label><input type="radio" name="q4" value="3"> δ) $2x\sin(x^2)$</label>
-  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) $2x\cos(x^2)$<br><em>Κανόνας αλυσίδας + ΘΘΛ: $\dfrac{d}{dx}\int_0^{g(x)}f(t)dt=f(g(x))\cdot g'(x)=\cos(x^2)\cdot2x$.</em></div>
+  <div class="explanation hidden" id="exp4"><strong>✓ Απάντηση:</strong> β) $2x\cos(x^2)$<br><em>Κανόνας αλυσίδας + ΘΘΟΛ: $\dfrac{d}{dx}\int_0^{g(x)}f(t)dt=f(g(x))\cdot g'(x)=\cos(x^2)\cdot2x$.</em></div>
 </div>
 
 <div class="quiz-question" id="q5">
@@ -122,10 +122,10 @@
 
 <div class="quiz-question" id="q6">
   <div class="q-num">Ερώτηση 6 / 10</div>
-  <p>Η $F(x)=\int_a^xf(t)dt$ είναι πρωτεύουσα της $f$.</p>
+  <p>Η $F(x)=\int_a^xf(t)dt$ είναι αντιπαράγωγος της $f$.</p>
   <label><input type="radio" name="q6" value="1"> Σωστό</label>
   <label><input type="radio" name="q6" value="0"> Λάθος</label>
-  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Εκ του ΘΘΛ (1ο μέρος): $F'(x)=f(x)$, άρα $F$ πρωτεύουσα.</em></div>
+  <div class="explanation hidden" id="exp6"><strong>✓ Απάντηση:</strong> Σωστό<br><em>Εκ του ΘΘΟΛ (1ο μέρος): $F'(x)=f(x)$, άρα $F$ αντιπαράγωγος.</em></div>
 </div>
 
 <div class="quiz-question" id="q7">
@@ -246,8 +246,8 @@ function _qShuffleQuiz(){
 document.addEventListener('DOMContentLoaded',function(){_qShuffleQuiz();_qRenderBest();if(typeof MathJax!=='undefined'&&MathJax.typesetPromise)MathJax.typesetPromise();});
 
 /* ── Topic feedback + hints + retry-wrong (προστέθηκε) ── */
-const QTOPICS = ["ΘΘΛ 1ο μέρος", "ΘΘΛ 2ο μέρος", "Σύνδεση ΘΘΛ", "ΘΘΛ + αλυσίδα", "Ορισμένο ολοκλήρωμα", "Συνάρτηση ολοκλήρωσης", "Ολοκλήρωμα e^x", "Προσθετικότητα ορίων", "Βουβή μεταβλητή", "ΘΘΛ με κάτω μεταβλητό όριο"];
-const QHINTS = ["Η παράγωγος του ολοκληρώματος επιστρέφει την f.", "Διαφορά τιμών της αντιπαραγώγου στα άκρα.", "Ολοκλήρωση και παραγώγιση είναι αντίστροφες.", "Πολλαπλασίασε με την παράγωγο του άνω ορίου.", "Αντιπαράγωγος x^2+x, μετά αφαίρεσε τιμές στα όρια.", "Εφάρμοσε το 1ο μέρος του ΘΘΛ.", "Αντιπαράγωγος του e^x είναι ο εαυτός του.", "Σπάσε το διάστημα και αφαίρεσε.", "Το όνομα της μεταβλητής ολοκλήρωσης δεν μετράει.", "Άλλαξε τα όρια ώστε το x να είναι άνω όριο (πρόσημο)."];
+const QTOPICS = ["ΘΘΟΛ 1ο μέρος", "ΘΘΟΛ 2ο μέρος", "Σύνδεση ΘΘΟΛ", "ΘΘΟΛ + αλυσίδα", "Ορισμένο ολοκλήρωμα", "Συνάρτηση ολοκλήρωσης", "Ολοκλήρωμα e^x", "Προσθετικότητα ορίων", "Βουβή μεταβλητή", "ΘΘΟΛ με κάτω μεταβλητό όριο"];
+const QHINTS = ["Η παράγωγος του ολοκληρώματος επιστρέφει την f.", "Διαφορά τιμών της αντιπαραγώγου στα άκρα.", "Ολοκλήρωση και παραγώγιση είναι αντίστροφες.", "Πολλαπλασίασε με την παράγωγο του άνω ορίου.", "Αντιπαράγωγος x^2+x, μετά αφαίρεσε τιμές στα όρια.", "Εφάρμοσε το 1ο μέρος του ΘΘΟΛ.", "Αντιπαράγωγος του e^x είναι ο εαυτός του.", "Σπάσε το διάστημα και αφαίρεσε.", "Το όνομα της μεταβλητής ολοκλήρωσης δεν μετράει.", "Άλλαξε τα όρια ώστε το x να είναι άνω όριο (πρόσημο)."];
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.quiz-question').forEach(function(q){
     const n=parseInt(q.id.replace('q',''));
