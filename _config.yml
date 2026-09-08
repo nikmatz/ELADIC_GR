@@ -1,0 +1,12 @@
+# GitHub Pages config
+title: "Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού"
+description: "Ψηφιακό συνοδευτικό υλικό: διαδραστικά κουίζ, δραστηριότητες CAS και animations"
+url: "https://nikmatz.github.io"
+baseurl: "/ELADIC_GR"
+theme: null
+plugins: []
+
+# Το GitHub Pages (Jekyll) αγνοεί από προεπιλογή φακέλους που ξεκινούν με «_».
+# Χωρίς την επόμενη γραμμή το _shared/book.css δεν δημοσιεύεται (404) και
+# 46 σελίδες (quiz, ασκήσεις, animations) εμφανίζονται χωρίς στυλ.
+include: ["_shared"]

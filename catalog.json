@@ -1,0 +1,958 @@
+{
+  "version": "2.0",
+  "updated": "2026-07-15",
+  "base_url": "https://nikmatz.github.io/ELADIC_GR",
+  "repo": "https://github.com/nikmatz/ELADIC_GR",
+  "note": "Η αρίθμηση chXX ακολουθεί την αρίθμηση κεφαλαίων του βιβλίου (0–19). Το υλικό των Διαφορικών Εξισώσεων (vol2_diaf_ex) αφορά τον 2ο τόμο.",
+  "chapters": {
+    "0": "Μαθηματικό Υπόβαθρο",
+    "1": "Γραμμικοί Διανυσματικοί Χώροι",
+    "2": "Άλγεβρα Πινάκων",
+    "3": "Γραμμικά Συστήματα",
+    "4": "Γραμμικοί Μετασχηματισμοί",
+    "5": "Ιδιοτιμές και Ιδιοδιανύσματα",
+    "6": "Διαγωνοποίηση Πινάκων",
+    "7": "Δυναμικά Συστήματα και Αλυσίδες Markov",
+    "8": "Συναρτήσεις Πραγματικής Μεταβλητής",
+    "9": "Όρια και Συνέχεια",
+    "10": "Παράγωγος Συνάρτησης",
+    "11": "Μονοτονία, Κυρτότητα και Ακρότατα",
+    "12": "Εφαρμογές Παραγώγου",
+    "13": "Αόριστο Ολοκλήρωμα",
+    "14": "Ορισμένο Ολοκλήρωμα",
+    "15": "Θεμελιώδες Θεώρημα Λογισμού",
+    "16": "Τεχνικές Ολοκλήρωσης",
+    "17": "Εφαρμογές Ολοκληρωτικού Λογισμού",
+    "18": "Γενικευμένα Ολοκληρώματα",
+    "19": "Ακολουθίες και Σειρές",
+    "20": "Δυναμοσειρές και Σειρές Taylor"
+  },
+  "entries": [
+    {
+      "id": "quiz_ch00",
+      "type": "quiz",
+      "chapter": 0,
+      "title": "Κουίζ: Μαθηματικό Υπόβαθρο",
+      "path": "quizzes/ch00/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch00/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch01",
+      "type": "quiz",
+      "chapter": 1,
+      "title": "Κουίζ: Γραμμικοί Διανυσματικοί Χώροι",
+      "path": "quizzes/ch01/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch01/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch02",
+      "type": "quiz",
+      "chapter": 2,
+      "title": "Κουίζ: Άλγεβρα Πινάκων",
+      "path": "quizzes/ch02/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch02/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch03",
+      "type": "quiz",
+      "chapter": 3,
+      "title": "Κουίζ: Γραμμικά Συστήματα",
+      "path": "quizzes/ch03/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch03/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch04",
+      "type": "quiz",
+      "chapter": 4,
+      "title": "Κουίζ: Γραμμικοί Μετασχηματισμοί",
+      "path": "quizzes/ch04/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch04/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch05",
+      "type": "quiz",
+      "chapter": 5,
+      "title": "Κουίζ: Ιδιοτιμές και Ιδιοδιανύσματα",
+      "path": "quizzes/ch05/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch05/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch06",
+      "type": "quiz",
+      "chapter": 6,
+      "title": "Κουίζ: Διαγωνοποίηση Πινάκων",
+      "path": "quizzes/ch06/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch06/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch07",
+      "type": "quiz",
+      "chapter": 7,
+      "title": "Κουίζ: Δυναμικά Συστήματα και Αλυσίδες Markov",
+      "path": "quizzes/ch07/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch07/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch08",
+      "type": "quiz",
+      "chapter": 8,
+      "title": "Κουίζ: Συναρτήσεις Πραγματικής Μεταβλητής",
+      "path": "quizzes/ch08/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch08/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch09",
+      "type": "quiz",
+      "chapter": 9,
+      "title": "Κουίζ: Όρια και Συνέχεια",
+      "path": "quizzes/ch09/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch09/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch10",
+      "type": "quiz",
+      "chapter": 10,
+      "title": "Κουίζ: Παράγωγος Συνάρτησης",
+      "path": "quizzes/ch10/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch10/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch11",
+      "type": "quiz",
+      "chapter": 11,
+      "title": "Κουίζ: Μονοτονία, Κυρτότητα και Ακρότατα",
+      "path": "quizzes/ch11/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch11/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch12",
+      "type": "quiz",
+      "chapter": 12,
+      "title": "Κουίζ: Εφαρμογές Παραγώγου",
+      "path": "quizzes/ch12/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch12/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch13",
+      "type": "quiz",
+      "chapter": 13,
+      "title": "Κουίζ: Αόριστο Ολοκλήρωμα",
+      "path": "quizzes/ch13/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch13/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch14",
+      "type": "quiz",
+      "chapter": 14,
+      "title": "Κουίζ: Ορισμένο Ολοκλήρωμα",
+      "path": "quizzes/ch14/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch14/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch15",
+      "type": "quiz",
+      "chapter": 15,
+      "title": "Κουίζ: Θεμελιώδες Θεώρημα Λογισμού",
+      "path": "quizzes/ch15/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch15/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch16",
+      "type": "quiz",
+      "chapter": 16,
+      "title": "Κουίζ: Τεχνικές Ολοκλήρωσης",
+      "path": "quizzes/ch16/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch16/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch17",
+      "type": "quiz",
+      "chapter": 17,
+      "title": "Κουίζ: Εφαρμογές Ολοκληρωτικού Λογισμού",
+      "path": "quizzes/ch17/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch17/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch18",
+      "type": "quiz",
+      "chapter": 18,
+      "title": "Κουίζ: Γενικευμένα Ολοκληρώματα",
+      "path": "quizzes/ch18/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch18/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch19",
+      "type": "quiz",
+      "chapter": 19,
+      "title": "Κουίζ: Ακολουθίες και Σειρές",
+      "path": "quizzes/ch19/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch19/",
+      "status": "active"
+    },
+    {
+      "id": "code_ch00",
+      "type": "code",
+      "chapter": 0,
+      "title": "Δραστηριότητες CAS: Μαθηματικό Υπόβαθρο",
+      "path": "code/ch00/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch00/",
+      "status": "active",
+      "files": [
+        "maxima_complex.mac",
+        "maxima_complex.wxmx",
+        "python_complex.py"
+      ]
+    },
+    {
+      "id": "code_ch01",
+      "type": "code",
+      "chapter": 1,
+      "title": "Δραστηριότητες CAS: Γραμμικοί Διανυσματικοί Χώροι",
+      "path": "code/ch01/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch01/",
+      "status": "active",
+      "files": [
+        "maxima_vectors.mac",
+        "maxima_vectors.wxmx",
+        "python_vectors.py"
+      ]
+    },
+    {
+      "id": "code_ch02",
+      "type": "code",
+      "chapter": 2,
+      "title": "Δραστηριότητες CAS: Άλγεβρα Πινάκων",
+      "path": "code/ch02/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch02/",
+      "status": "active",
+      "files": [
+        "maxima_matrices.mac",
+        "maxima_matrices.wxmx",
+        "python_matrices.py"
+      ]
+    },
+    {
+      "id": "code_ch03",
+      "type": "code",
+      "chapter": 3,
+      "title": "Δραστηριότητες CAS: Γραμμικά Συστήματα",
+      "path": "code/ch03/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch03/",
+      "status": "active",
+      "files": [
+        "maxima_linsys.mac",
+        "maxima_linsys.wxmx",
+        "python_linsys.py"
+      ]
+    },
+    {
+      "id": "code_ch04",
+      "type": "code",
+      "chapter": 4,
+      "title": "Δραστηριότητες CAS: Γραμμικοί Μετασχηματισμοί",
+      "path": "code/ch04/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch04/",
+      "status": "active",
+      "files": [
+        "maxima_lintrans.mac",
+        "maxima_lintrans.wxmx",
+        "python_lintrans.py"
+      ]
+    },
+    {
+      "id": "code_ch05",
+      "type": "code",
+      "chapter": 5,
+      "title": "Δραστηριότητες CAS: Ιδιοτιμές και Ιδιοδιανύσματα",
+      "path": "code/ch05/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch05/",
+      "status": "active",
+      "files": [
+        "maxima_eigen.mac",
+        "maxima_eigen.wxmx",
+        "python_eigen.py"
+      ]
+    },
+    {
+      "id": "code_ch06",
+      "type": "code",
+      "chapter": 6,
+      "title": "Δραστηριότητες CAS: Διαγωνοποίηση Πινάκων",
+      "path": "code/ch06/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch06/",
+      "status": "active",
+      "files": [
+        "maxima_diag.mac",
+        "maxima_diag.wxmx",
+        "python_diag.py"
+      ]
+    },
+    {
+      "id": "code_ch07",
+      "type": "code",
+      "chapter": 7,
+      "title": "Δραστηριότητες CAS: Δυναμικά Συστήματα και Αλυσίδες Markov",
+      "path": "code/ch07/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch07/",
+      "status": "active",
+      "files": [
+        "maxima_dynamics.mac",
+        "python_dynamics.py"
+      ]
+    },
+    {
+      "id": "code_ch08",
+      "type": "code",
+      "chapter": 8,
+      "title": "Δραστηριότητες CAS: Συναρτήσεις Πραγματικής Μεταβλητής",
+      "path": "code/ch08/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch08/",
+      "status": "active",
+      "files": [
+        "maxima_synartiseis.mac",
+        "python_synartiseis.py"
+      ]
+    },
+    {
+      "id": "code_ch09",
+      "type": "code",
+      "chapter": 9,
+      "title": "Δραστηριότητες CAS: Όρια και Συνέχεια",
+      "path": "code/ch09/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch09/",
+      "status": "active",
+      "files": [
+        "maxima_oria.mac",
+        "python_oria.py"
+      ]
+    },
+    {
+      "id": "code_ch10",
+      "type": "code",
+      "chapter": 10,
+      "title": "Δραστηριότητες CAS: Παράγωγος Συνάρτησης",
+      "path": "code/ch10/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch10/",
+      "status": "active",
+      "files": [
+        "maxima_paragogos.mac",
+        "python_paragogos.py"
+      ]
+    },
+    {
+      "id": "code_ch11",
+      "type": "code",
+      "chapter": 11,
+      "title": "Δραστηριότητες CAS: Μονοτονία, Κυρτότητα και Ακρότατα",
+      "path": "code/ch11/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch11/",
+      "status": "active",
+      "files": [
+        "maxima_akrotata.mac",
+        "python_akrotata.py"
+      ]
+    },
+    {
+      "id": "code_ch12",
+      "type": "code",
+      "chapter": 12,
+      "title": "Δραστηριότητες CAS: Εφαρμογές Παραγώγου",
+      "path": "code/ch12/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch12/",
+      "status": "active",
+      "files": [
+        "maxima_efarm_par.mac",
+        "python_efarm_par.py"
+      ]
+    },
+    {
+      "id": "code_ch13",
+      "type": "code",
+      "chapter": 13,
+      "title": "Δραστηριότητες CAS: Αόριστο Ολοκλήρωμα",
+      "path": "code/ch13/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch13/",
+      "status": "active",
+      "files": [
+        "maxima_aoristo.mac",
+        "python_aoristo.py"
+      ]
+    },
+    {
+      "id": "code_ch14",
+      "type": "code",
+      "chapter": 14,
+      "title": "Δραστηριότητες CAS: Ορισμένο Ολοκλήρωμα",
+      "path": "code/ch14/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch14/",
+      "status": "active",
+      "files": [
+        "maxima_orismeno.mac",
+        "python_orismeno.py"
+      ]
+    },
+    {
+      "id": "code_ch15",
+      "type": "code",
+      "chapter": 15,
+      "title": "Δραστηριότητες CAS: Θεμελιώδες Θεώρημα Λογισμού",
+      "path": "code/ch15/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch15/",
+      "status": "active",
+      "files": [
+        "maxima_ttl.mac",
+        "python_ttl.py"
+      ]
+    },
+    {
+      "id": "code_ch16",
+      "type": "code",
+      "chapter": 16,
+      "title": "Δραστηριότητες CAS: Τεχνικές Ολοκλήρωσης",
+      "path": "code/ch16/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch16/",
+      "status": "active",
+      "files": [
+        "maxima_texnikes.mac",
+        "python_texnikes.py"
+      ]
+    },
+    {
+      "id": "code_ch17",
+      "type": "code",
+      "chapter": 17,
+      "title": "Δραστηριότητες CAS: Εφαρμογές Ολοκληρωτικού Λογισμού",
+      "path": "code/ch17/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch17/",
+      "status": "active",
+      "files": [
+        "maxima_efarm_ol.mac",
+        "python_efarm_ol.py"
+      ]
+    },
+    {
+      "id": "code_ch18",
+      "type": "code",
+      "chapter": 18,
+      "title": "Δραστηριότητες CAS: Γενικευμένα Ολοκληρώματα",
+      "path": "code/ch18/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch18/",
+      "status": "active",
+      "files": [
+        "maxima_genikeum.mac",
+        "python_genikeum.py"
+      ]
+    },
+    {
+      "id": "code_ch19",
+      "type": "code",
+      "chapter": 19,
+      "title": "Δραστηριότητες CAS: Ακολουθίες και Σειρές",
+      "path": "code/ch19/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch19/",
+      "status": "active",
+      "files": [
+        "maxima_seires.mac",
+        "python_seires.py"
+      ]
+    },
+    {
+      "id": "anim_ch00_ypovathro_01_unit_circle",
+      "type": "animation",
+      "chapter": 0,
+      "title": "Μοναδιαίος Κύκλος",
+      "path": "animations/ch00_ypovathro/01_unit_circle/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch00_ypovathro/01_unit_circle/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch00_ypovathro_02_complex_numbers",
+      "type": "animation",
+      "chapter": 0,
+      "title": "Μιγαδικοί Αριθμοί",
+      "path": "animations/ch00_ypovathro/02_complex_numbers/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch00_ypovathro/02_complex_numbers/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch00_ypovathro_03_trig_identities",
+      "type": "animation",
+      "chapter": 0,
+      "title": "Τριγωνομετρικές Ταυτότητες",
+      "path": "animations/ch00_ypovathro/03_trig_identities/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch00_ypovathro/03_trig_identities/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch01_grammikoi_01_vector_add",
+      "type": "animation",
+      "chapter": 1,
+      "title": "Πρόσθεση Διανυσμάτων",
+      "path": "animations/ch01_grammikoi/01_vector_add/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch01_grammikoi/01_vector_add/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch01_grammikoi_02_linear_independence",
+      "type": "animation",
+      "chapter": 1,
+      "title": "Γραμμική Ανεξαρτησία Διανυσμάτων",
+      "path": "animations/ch01_grammikoi/02_linear_independence/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch01_grammikoi/02_linear_independence/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch01_grammikoi_03_basis_span",
+      "type": "animation",
+      "chapter": 1,
+      "title": "Βάση και Γεννημένος Χώρος",
+      "path": "animations/ch01_grammikoi/03_basis_span/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch01_grammikoi/03_basis_span/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch01_grammikoi_04_gram_schmidt",
+      "type": "animation",
+      "chapter": 1,
+      "title": "Διαδικασία Gram–Schmidt",
+      "path": "animations/ch01_grammikoi/04_gram_schmidt/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch01_grammikoi/04_gram_schmidt/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch02_pinakas_01_matrix_vector",
+      "type": "animation",
+      "chapter": 2,
+      "title": "Μητρώο × Διάνυσμα",
+      "path": "animations/ch02_pinakas/01_matrix_vector/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch02_pinakas/01_matrix_vector/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch02_pinakas_02_matrix_mult",
+      "type": "animation",
+      "chapter": 2,
+      "title": "Πολλαπλασιασμός Πινάκων",
+      "path": "animations/ch02_pinakas/02_matrix_mult/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch02_pinakas/02_matrix_mult/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch02_pinakas_03_determinant",
+      "type": "animation",
+      "chapter": 2,
+      "title": "Ορίζουσα 2×2 - Γεωμετρική Ερμηνεία",
+      "path": "animations/ch02_pinakas/03_determinant/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch02_pinakas/03_determinant/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch03_systimata_01_gauss",
+      "type": "animation",
+      "chapter": 3,
+      "title": "Απαλοιφή Gauss",
+      "path": "animations/ch03_systimata/01_gauss/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch03_systimata/01_gauss/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch03_systimata_02_solutions",
+      "type": "animation",
+      "chapter": 3,
+      "title": "Τύποι Λύσεων 2×2 Συστήματος",
+      "path": "animations/ch03_systimata/02_solutions/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch03_systimata/02_solutions/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch04_metaschim_01_linear_transform",
+      "type": "animation",
+      "chapter": 4,
+      "title": "Γραμμικοί Μετασχηματισμοί",
+      "path": "animations/ch04_metaschim/01_linear_transform/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch04_metaschim/01_linear_transform/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch04_metaschim_02_rotation",
+      "type": "animation",
+      "chapter": 4,
+      "title": "Μήτρα Στροφής",
+      "path": "animations/ch04_metaschim/02_rotation/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch04_metaschim/02_rotation/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch05_idiotimes_01_eigenvalues",
+      "type": "animation",
+      "chapter": 5,
+      "title": "Ιδιοτιμές και Ιδιοδιανύσματα",
+      "path": "animations/ch05_idiotimes/01_eigenvalues/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch05_idiotimes/01_eigenvalues/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch05_idiotimes_02_eigenvectors",
+      "type": "animation",
+      "chapter": 5,
+      "title": "Γεωμετρική Ερμηνεία Ιδιοδιανυσμάτων",
+      "path": "animations/ch05_idiotimes/02_eigenvectors/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch05_idiotimes/02_eigenvectors/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch06_diagonop_01_diagonalization",
+      "type": "animation",
+      "chapter": 6,
+      "title": "Διαγωνιοποίηση Πίνακα",
+      "path": "animations/ch06_diagonop/01_diagonalization/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch06_diagonop/01_diagonalization/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch06_diagonop_02_pca",
+      "type": "animation",
+      "chapter": 6,
+      "title": "Ανάλυση Κύριων Συνιστωσών (PCA)",
+      "path": "animations/ch06_diagonop/02_pca/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch06_diagonop/02_pca/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch07_markov_01_markov_chain",
+      "type": "animation",
+      "chapter": 7,
+      "title": "Αλυσίδες Markov",
+      "path": "animations/ch07_markov/01_markov_chain/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch07_markov/01_markov_chain/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch07_markov_02_phase_portraits",
+      "type": "animation",
+      "chapter": 7,
+      "title": "Φασικά Πορτρέτα",
+      "path": "animations/ch07_markov/02_phase_portraits/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch07_markov/02_phase_portraits/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch08_synart_01_function_graph",
+      "type": "animation",
+      "chapter": 8,
+      "title": "Γράφημα Συνάρτησης",
+      "path": "animations/ch08_synart/01_function_graph/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch08_synart/01_function_graph/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch08_synart_02_composition",
+      "type": "animation",
+      "chapter": 8,
+      "title": "Σύνθεση Συναρτήσεων",
+      "path": "animations/ch08_synart/02_composition/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch08_synart/02_composition/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch09_oria_01_limit",
+      "type": "animation",
+      "chapter": 9,
+      "title": "Όριο Συνάρτησης",
+      "path": "animations/ch09_oria/01_limit/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch09_oria/01_limit/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch09_oria_02_continuity",
+      "type": "animation",
+      "chapter": 9,
+      "title": "Συνέχεια Συνάρτησης",
+      "path": "animations/ch09_oria/02_continuity/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch09_oria/02_continuity/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch10_paragogos_01_tangent",
+      "type": "animation",
+      "chapter": 10,
+      "title": "Παράγωγος ως Εφαπτομένη",
+      "path": "animations/ch10_paragogos/01_tangent/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch10_paragogos/01_tangent/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch10_paragogos_02_derivative_rules",
+      "type": "animation",
+      "chapter": 10,
+      "title": "Κανόνες Παραγώγισης",
+      "path": "animations/ch10_paragogos/02_derivative_rules/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch10_paragogos/02_derivative_rules/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch11_akrotata_01_monotonicity",
+      "type": "animation",
+      "chapter": 11,
+      "title": "Μονοτονία",
+      "path": "animations/ch11_akrotata/01_monotonicity/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch11_akrotata/01_monotonicity/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch11_akrotata_02_critical_points",
+      "type": "animation",
+      "chapter": 11,
+      "title": "Τοπικά Ακρότατα",
+      "path": "animations/ch11_akrotata/02_critical_points/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch11_akrotata/02_critical_points/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch12_efarm_par_01_taylor",
+      "type": "animation",
+      "chapter": 12,
+      "title": "Ανάπτυγμα Taylor",
+      "path": "animations/ch12_efarm_par/01_taylor/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch12_efarm_par/01_taylor/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch12_efarm_par_02_lhopital",
+      "type": "animation",
+      "chapter": 12,
+      "title": "Κανόνας L'Hôpital",
+      "path": "animations/ch12_efarm_par/02_lhopital/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch12_efarm_par/02_lhopital/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch13_aoristo_01_antiderivative",
+      "type": "animation",
+      "chapter": 13,
+      "title": "Αντιπαράγωγος",
+      "path": "animations/ch13_aoristo/01_antiderivative/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch13_aoristo/01_antiderivative/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch13_aoristo_02_substitution",
+      "type": "animation",
+      "chapter": 13,
+      "title": "Ολοκλήρωση με Αντικατάσταση",
+      "path": "animations/ch13_aoristo/02_substitution/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch13_aoristo/02_substitution/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch14_orismeno_01_riemann",
+      "type": "animation",
+      "chapter": 14,
+      "title": "Άθροισμα Riemann",
+      "path": "animations/ch14_orismeno/01_riemann/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch14_orismeno/01_riemann/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch14_orismeno_02_area",
+      "type": "animation",
+      "chapter": 14,
+      "title": "Εμβαδόν υπό Καμπύλη",
+      "path": "animations/ch14_orismeno/02_area/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch14_orismeno/02_area/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch15_ttl_01_ftc",
+      "type": "animation",
+      "chapter": 15,
+      "title": "Θεμελιώδες Θεώρημα Λογισμού",
+      "path": "animations/ch15_ttl/01_ftc/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch15_ttl/01_ftc/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch15_ttl_02_newton_leibniz",
+      "type": "animation",
+      "chapter": 15,
+      "title": "Newton–Leibniz",
+      "path": "animations/ch15_ttl/02_newton_leibniz/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch15_ttl/02_newton_leibniz/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch16_texniques_01_by_parts",
+      "type": "animation",
+      "chapter": 16,
+      "title": "Ολοκλήρωση κατά Μέρη",
+      "path": "animations/ch16_texniques/01_by_parts/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch16_texniques/01_by_parts/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch16_texniques_02_partial_fractions",
+      "type": "animation",
+      "chapter": 16,
+      "title": "Ανάλυση σε Μερικά Κλάσματα",
+      "path": "animations/ch16_texniques/02_partial_fractions/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch16_texniques/02_partial_fractions/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch17_efarm_ol_01_area_curves",
+      "type": "animation",
+      "chapter": 17,
+      "title": "Εμβαδόν μεταξύ Καμπυλών",
+      "path": "animations/ch17_efarm_ol/01_area_curves/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch17_efarm_ol/01_area_curves/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch17_efarm_ol_02_volume",
+      "type": "animation",
+      "chapter": 17,
+      "title": "Όγκος εκ Περιστροφής (Δίσκοι)",
+      "path": "animations/ch17_efarm_ol/02_volume/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch17_efarm_ol/02_volume/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch18_genikeum_01_improper",
+      "type": "animation",
+      "chapter": 18,
+      "title": "Γενικευμένα Ολοκληρώματα",
+      "path": "animations/ch18_genikeum/01_improper/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch18_genikeum/01_improper/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch18_genikeum_02_ptest",
+      "type": "animation",
+      "chapter": 18,
+      "title": "Γενικευμένα",
+      "path": "animations/ch18_genikeum/02_ptest/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch18_genikeum/02_ptest/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch19_seires_01_sequence",
+      "type": "animation",
+      "chapter": 19,
+      "title": "Σύγκλιση Ακολουθίας",
+      "path": "animations/ch19_seires/01_sequence/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch19_seires/01_sequence/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch19_seires_02_series",
+      "type": "animation",
+      "chapter": 19,
+      "title": "Μερικά Αθροίσματα Σειράς",
+      "path": "animations/ch19_seires/02_series/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch19_seires/02_series/",
+      "status": "active"
+    },
+    {
+      "id": "anim_ch19_seires_03_convergence",
+      "type": "animation",
+      "chapter": 19,
+      "title": "Σειρές & Σύγκλιση",
+      "path": "animations/ch19_seires/03_convergence/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch19_seires/03_convergence/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_ch20",
+      "type": "quiz",
+      "chapter": 20,
+      "title": "Κουίζ: Δυναμοσειρές και Σειρές Taylor",
+      "path": "quizzes/ch20/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch20/",
+      "status": "active"
+    },
+    {
+      "id": "code_ch20",
+      "type": "code",
+      "chapter": 20,
+      "title": "Κώδικας: Δυναμοσειρές (Maxima & Python)",
+      "path": "code/ch20/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch20/",
+      "status": "active"
+    },
+    {
+      "id": "anim_vol2_diaf_ex_01_slope_field",
+      "type": "animation",
+      "chapter": null,
+      "title": "Πεδίο Κλίσεων Διαφορικής Εξίσωσης",
+      "path": "animations/vol2_diaf_ex/01_slope_field/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/vol2_diaf_ex/01_slope_field/",
+      "status": "active"
+    },
+    {
+      "id": "anim_vol2_diaf_ex_02_euler",
+      "type": "animation",
+      "chapter": null,
+      "title": "Μέθοδος Euler",
+      "path": "animations/vol2_diaf_ex/02_euler/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/vol2_diaf_ex/02_euler/",
+      "status": "active"
+    },
+    {
+      "id": "appendix_maxima",
+      "type": "appendix",
+      "chapter": null,
+      "title": "Παράρτημα Α — Οδηγός Maxima CAS",
+      "path": "appendices/maxima/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/appendices/maxima/",
+      "status": "active"
+    },
+    {
+      "id": "appendix_python",
+      "type": "appendix",
+      "chapter": null,
+      "title": "Παράρτημα Β — Οδηγός Python",
+      "path": "appendices/python/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/appendices/python/",
+      "status": "active"
+    },
+    {
+      "id": "quiz_vol2_diaf_ex",
+      "type": "quiz",
+      "chapter": null,
+      "volume": 2,
+      "title": "Κουίζ: Διαφορικές Εξισώσεις (Τόμος 2)",
+      "path": "quizzes/vol2_diaf_ex/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/vol2_diaf_ex/",
+      "status": "vol2"
+    },
+    {
+      "id": "code_vol2_diaf_ex",
+      "type": "code",
+      "chapter": null,
+      "volume": 2,
+      "title": "Δραστηριότητες CAS: Διαφορικές Εξισώσεις (Τόμος 2)",
+      "path": "code/vol2_diaf_ex/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/vol2_diaf_ex/",
+      "status": "vol2"
+    }
+  ]
+}
