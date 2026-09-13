@@ -1,9 +1,9 @@
 {
-  "version": "2.0",
-  "updated": "2026-07-15",
+  "version": "3.0",
+  "updated": "2026-09-13",
   "base_url": "https://nikmatz.github.io/ELADIC_GR",
   "repo": "https://github.com/nikmatz/ELADIC_GR",
-  "note": "Η αρίθμηση chXX ακολουθεί την αρίθμηση κεφαλαίων του βιβλίου (0–19). Το υλικό των Διαφορικών Εξισώσεων (vol2_diaf_ex) αφορά τον 2ο τόμο.",
+  "note": "Η αρίθμηση chXX ακολουθεί την αρίθμηση κεφαλαίων του βιβλίου (0–20). Οι σελίδες proof_prompt και hist_prompt είναι προορισμοί QR και δεν εμφανίζονται στην αρχική σελίδα.",
   "chapters": {
     "0": "Μαθηματικό Υπόβαθρο",
     "1": "Γραμμικοί Διανυσματικοί Χώροι",
@@ -11,7 +11,7 @@
     "3": "Γραμμικά Συστήματα",
     "4": "Γραμμικοί Μετασχηματισμοί",
     "5": "Ιδιοτιμές και Ιδιοδιανύσματα",
-    "6": "Διαγωνοποίηση Πινάκων",
+    "6": "Διαγωνιοποίηση Πινάκων",
     "7": "Δυναμικά Συστήματα και Αλυσίδες Markov",
     "8": "Συναρτήσεις Πραγματικής Μεταβλητής",
     "9": "Όρια και Συνέχεια",
@@ -28,6 +28,313 @@
     "20": "Δυναμοσειρές και Σειρές Taylor"
   },
   "entries": [
+    {
+      "id": "code_ch00",
+      "type": "code",
+      "chapter": 0,
+      "title": "Δραστηριότητες CAS: Μαθηματικό Υπόβαθρο",
+      "path": "code/ch00/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch00/",
+      "status": "active",
+      "files": [
+        "maxima_complex.mac",
+        "maxima_complex.wxmx",
+        "python_complex.py"
+      ]
+    },
+    {
+      "id": "code_ch01",
+      "type": "code",
+      "chapter": 1,
+      "title": "Δραστηριότητες CAS: Γραμμικοί Διανυσματικοί Χώροι",
+      "path": "code/ch01/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch01/",
+      "status": "active",
+      "files": [
+        "maxima_vectors.mac",
+        "maxima_vectors.wxmx",
+        "python_vectors.py"
+      ]
+    },
+    {
+      "id": "code_ch02",
+      "type": "code",
+      "chapter": 2,
+      "title": "Δραστηριότητες CAS: Άλγεβρα Πινάκων",
+      "path": "code/ch02/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch02/",
+      "status": "active",
+      "files": [
+        "maxima_matrices.mac",
+        "maxima_matrices.wxmx",
+        "python_matrices.py"
+      ]
+    },
+    {
+      "id": "code_ch03",
+      "type": "code",
+      "chapter": 3,
+      "title": "Δραστηριότητες CAS: Γραμμικά Συστήματα",
+      "path": "code/ch03/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch03/",
+      "status": "active",
+      "files": [
+        "maxima_linsys.mac",
+        "maxima_linsys.wxmx",
+        "python_linsys.py"
+      ]
+    },
+    {
+      "id": "code_ch04",
+      "type": "code",
+      "chapter": 4,
+      "title": "Δραστηριότητες CAS: Γραμμικοί Μετασχηματισμοί",
+      "path": "code/ch04/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch04/",
+      "status": "active",
+      "files": [
+        "maxima_lintrans.mac",
+        "maxima_lintrans.wxmx",
+        "python_lintrans.py"
+      ]
+    },
+    {
+      "id": "code_ch05",
+      "type": "code",
+      "chapter": 5,
+      "title": "Δραστηριότητες CAS: Ιδιοτιμές και Ιδιοδιανύσματα",
+      "path": "code/ch05/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch05/",
+      "status": "active",
+      "files": [
+        "maxima_eigen.mac",
+        "maxima_eigen.wxmx",
+        "python_eigen.py"
+      ]
+    },
+    {
+      "id": "code_ch06",
+      "type": "code",
+      "chapter": 6,
+      "title": "Δραστηριότητες CAS: Διαγωνιοποίηση Πινάκων",
+      "path": "code/ch06/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch06/",
+      "status": "active",
+      "files": [
+        "maxima_diag.mac",
+        "maxima_diag.wxmx",
+        "python_diag.py"
+      ]
+    },
+    {
+      "id": "code_ch07",
+      "type": "code",
+      "chapter": 7,
+      "title": "Δραστηριότητες CAS: Δυναμικά Συστήματα και Αλυσίδες Markov",
+      "path": "code/ch07/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch07/",
+      "status": "active",
+      "files": [
+        "maxima_dynamics.mac",
+        "python_dynamics.py"
+      ]
+    },
+    {
+      "id": "code_ch08",
+      "type": "code",
+      "chapter": 8,
+      "title": "Δραστηριότητες CAS: Συναρτήσεις Πραγματικής Μεταβλητής",
+      "path": "code/ch08/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch08/",
+      "status": "active",
+      "files": [
+        "maxima_limits.mac",
+        "maxima_limits.wxmx",
+        "maxima_synartiseis.mac",
+        "python_limits.py",
+        "python_synartiseis.py"
+      ]
+    },
+    {
+      "id": "code_ch09",
+      "type": "code",
+      "chapter": 9,
+      "title": "Δραστηριότητες CAS: Όρια και Συνέχεια",
+      "path": "code/ch09/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch09/",
+      "status": "active",
+      "files": [
+        "maxima_deriv.mac",
+        "maxima_deriv.wxmx",
+        "maxima_oria.mac",
+        "python_deriv.py",
+        "python_oria.py"
+      ]
+    },
+    {
+      "id": "code_ch10",
+      "type": "code",
+      "chapter": 10,
+      "title": "Δραστηριότητες CAS: Παράγωγος Συνάρτησης",
+      "path": "code/ch10/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch10/",
+      "status": "active",
+      "files": [
+        "maxima_deriv_apps.mac",
+        "maxima_deriv_apps.wxmx",
+        "maxima_paragogos.mac",
+        "python_deriv_apps.py",
+        "python_paragogos.py"
+      ]
+    },
+    {
+      "id": "code_ch11",
+      "type": "code",
+      "chapter": 11,
+      "title": "Δραστηριότητες CAS: Μονοτονία, Κυρτότητα και Ακρότατα",
+      "path": "code/ch11/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch11/",
+      "status": "active",
+      "files": [
+        "maxima_akrotata.mac",
+        "maxima_integral.mac",
+        "maxima_integral.wxmx",
+        "python_akrotata.py",
+        "python_integral.py"
+      ]
+    },
+    {
+      "id": "code_ch12",
+      "type": "code",
+      "chapter": 12,
+      "title": "Δραστηριότητες CAS: Εφαρμογές Παραγώγου",
+      "path": "code/ch12/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch12/",
+      "status": "active",
+      "files": [
+        "maxima_defintegral.mac",
+        "maxima_defintegral.wxmx",
+        "maxima_efarm_par.mac",
+        "python_defintegral.py",
+        "python_efarm_par.py"
+      ]
+    },
+    {
+      "id": "code_ch13",
+      "type": "code",
+      "chapter": 13,
+      "title": "Δραστηριότητες CAS: Αόριστο Ολοκλήρωμα",
+      "path": "code/ch13/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch13/",
+      "status": "active",
+      "files": [
+        "maxima_aoristo.mac",
+        "maxima_integral_apps.mac",
+        "maxima_integral_apps.wxmx",
+        "python_aoristo.py",
+        "python_integral_apps.py"
+      ]
+    },
+    {
+      "id": "code_ch14",
+      "type": "code",
+      "chapter": 14,
+      "title": "Δραστηριότητες CAS: Ορισμένο Ολοκλήρωμα",
+      "path": "code/ch14/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch14/",
+      "status": "active",
+      "files": [
+        "maxima_orismeno.mac",
+        "maxima_sequences_series.mac",
+        "maxima_sequences_series.wxmx",
+        "python_orismeno.py",
+        "python_sequences_series.py"
+      ]
+    },
+    {
+      "id": "code_ch15",
+      "type": "code",
+      "chapter": 15,
+      "title": "Δραστηριότητες CAS: Θεμελιώδες Θεώρημα Λογισμού",
+      "path": "code/ch15/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch15/",
+      "status": "active",
+      "files": [
+        "maxima_power_series.mac",
+        "maxima_power_series.wxmx",
+        "maxima_ttl.mac",
+        "python_power_series.py",
+        "python_ttl.py"
+      ]
+    },
+    {
+      "id": "code_ch16",
+      "type": "code",
+      "chapter": 16,
+      "title": "Δραστηριότητες CAS: Τεχνικές Ολοκλήρωσης",
+      "path": "code/ch16/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch16/",
+      "status": "active",
+      "files": [
+        "maxima_ode.mac",
+        "maxima_ode.wxmx",
+        "maxima_texnikes.mac",
+        "python_ode.py",
+        "python_texnikes.py"
+      ]
+    },
+    {
+      "id": "code_ch17",
+      "type": "code",
+      "chapter": 17,
+      "title": "Δραστηριότητες CAS: Εφαρμογές Ολοκληρωτικού Λογισμού",
+      "path": "code/ch17/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch17/",
+      "status": "active",
+      "files": [
+        "maxima_efarm_ol.mac",
+        "python_efarm_ol.py"
+      ]
+    },
+    {
+      "id": "code_ch18",
+      "type": "code",
+      "chapter": 18,
+      "title": "Δραστηριότητες CAS: Γενικευμένα Ολοκληρώματα",
+      "path": "code/ch18/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch18/",
+      "status": "active",
+      "files": [
+        "maxima_genikeum.mac",
+        "python_genikeum.py"
+      ]
+    },
+    {
+      "id": "code_ch19",
+      "type": "code",
+      "chapter": 19,
+      "title": "Δραστηριότητες CAS: Ακολουθίες και Σειρές",
+      "path": "code/ch19/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch19/",
+      "status": "active",
+      "files": [
+        "maxima_seires.mac",
+        "python_seires.py"
+      ]
+    },
+    {
+      "id": "code_ch20",
+      "type": "code",
+      "chapter": 20,
+      "title": "Δραστηριότητες CAS: Δυναμοσειρές και Σειρές Taylor",
+      "path": "code/ch20/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch20/",
+      "status": "active",
+      "files": [
+        "maxima_dynamoseires.mac",
+        "python_dynamoseires.py"
+      ]
+    },
     {
       "id": "quiz_ch00",
       "type": "quiz",
@@ -86,7 +393,7 @@
       "id": "quiz_ch06",
       "type": "quiz",
       "chapter": 6,
-      "title": "Κουίζ: Διαγωνοποίηση Πινάκων",
+      "title": "Κουίζ: Διαγωνιοποίηση Πινάκων",
       "path": "quizzes/ch06/",
       "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch06/",
       "status": "active"
@@ -209,277 +516,208 @@
       "status": "active"
     },
     {
-      "id": "code_ch00",
-      "type": "code",
+      "id": "quiz_ch20",
+      "type": "quiz",
+      "chapter": 20,
+      "title": "Κουίζ: Δυναμοσειρές και Σειρές Taylor",
+      "path": "quizzes/ch20/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch20/",
+      "status": "active"
+    },
+    {
+      "id": "askiseis_ch00",
+      "type": "exercises",
       "chapter": 0,
-      "title": "Δραστηριότητες CAS: Μαθηματικό Υπόβαθρο",
-      "path": "code/ch00/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch00/",
-      "status": "active",
-      "files": [
-        "maxima_complex.mac",
-        "maxima_complex.wxmx",
-        "python_complex.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Μαθηματικό Υπόβαθρο",
+      "path": "askiseis/ch00/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch00/",
+      "status": "active"
     },
     {
-      "id": "code_ch01",
-      "type": "code",
+      "id": "askiseis_ch01",
+      "type": "exercises",
       "chapter": 1,
-      "title": "Δραστηριότητες CAS: Γραμμικοί Διανυσματικοί Χώροι",
-      "path": "code/ch01/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch01/",
-      "status": "active",
-      "files": [
-        "maxima_vectors.mac",
-        "maxima_vectors.wxmx",
-        "python_vectors.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Γραμμικοί Διανυσματικοί Χώροι",
+      "path": "askiseis/ch01/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch01/",
+      "status": "active"
     },
     {
-      "id": "code_ch02",
-      "type": "code",
+      "id": "askiseis_ch02",
+      "type": "exercises",
       "chapter": 2,
-      "title": "Δραστηριότητες CAS: Άλγεβρα Πινάκων",
-      "path": "code/ch02/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch02/",
-      "status": "active",
-      "files": [
-        "maxima_matrices.mac",
-        "maxima_matrices.wxmx",
-        "python_matrices.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Άλγεβρα Πινάκων",
+      "path": "askiseis/ch02/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch02/",
+      "status": "active"
     },
     {
-      "id": "code_ch03",
-      "type": "code",
+      "id": "askiseis_ch03",
+      "type": "exercises",
       "chapter": 3,
-      "title": "Δραστηριότητες CAS: Γραμμικά Συστήματα",
-      "path": "code/ch03/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch03/",
-      "status": "active",
-      "files": [
-        "maxima_linsys.mac",
-        "maxima_linsys.wxmx",
-        "python_linsys.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Γραμμικά Συστήματα",
+      "path": "askiseis/ch03/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch03/",
+      "status": "active"
     },
     {
-      "id": "code_ch04",
-      "type": "code",
+      "id": "askiseis_ch04",
+      "type": "exercises",
       "chapter": 4,
-      "title": "Δραστηριότητες CAS: Γραμμικοί Μετασχηματισμοί",
-      "path": "code/ch04/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch04/",
-      "status": "active",
-      "files": [
-        "maxima_lintrans.mac",
-        "maxima_lintrans.wxmx",
-        "python_lintrans.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Γραμμικοί Μετασχηματισμοί",
+      "path": "askiseis/ch04/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch04/",
+      "status": "active"
     },
     {
-      "id": "code_ch05",
-      "type": "code",
+      "id": "askiseis_ch05",
+      "type": "exercises",
       "chapter": 5,
-      "title": "Δραστηριότητες CAS: Ιδιοτιμές και Ιδιοδιανύσματα",
-      "path": "code/ch05/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch05/",
-      "status": "active",
-      "files": [
-        "maxima_eigen.mac",
-        "maxima_eigen.wxmx",
-        "python_eigen.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Ιδιοτιμές και Ιδιοδιανύσματα",
+      "path": "askiseis/ch05/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch05/",
+      "status": "active"
     },
     {
-      "id": "code_ch06",
-      "type": "code",
+      "id": "askiseis_ch06",
+      "type": "exercises",
       "chapter": 6,
-      "title": "Δραστηριότητες CAS: Διαγωνοποίηση Πινάκων",
-      "path": "code/ch06/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch06/",
-      "status": "active",
-      "files": [
-        "maxima_diag.mac",
-        "maxima_diag.wxmx",
-        "python_diag.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Διαγωνιοποίηση Πινάκων",
+      "path": "askiseis/ch06/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch06/",
+      "status": "active"
     },
     {
-      "id": "code_ch07",
-      "type": "code",
+      "id": "askiseis_ch07",
+      "type": "exercises",
       "chapter": 7,
-      "title": "Δραστηριότητες CAS: Δυναμικά Συστήματα και Αλυσίδες Markov",
-      "path": "code/ch07/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch07/",
-      "status": "active",
-      "files": [
-        "maxima_dynamics.mac",
-        "python_dynamics.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Εισαγωγή σε Δυναμικά Συστήματα",
+      "path": "askiseis/ch07/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch07/",
+      "status": "active"
     },
     {
-      "id": "code_ch08",
-      "type": "code",
+      "id": "askiseis_ch08",
+      "type": "exercises",
       "chapter": 8,
-      "title": "Δραστηριότητες CAS: Συναρτήσεις Πραγματικής Μεταβλητής",
-      "path": "code/ch08/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch08/",
-      "status": "active",
-      "files": [
-        "maxima_synartiseis.mac",
-        "python_synartiseis.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Συναρτήσεις μιας Πραγματικής Μεταβλητής",
+      "path": "askiseis/ch08/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch08/",
+      "status": "active"
     },
     {
-      "id": "code_ch09",
-      "type": "code",
+      "id": "askiseis_ch09",
+      "type": "exercises",
       "chapter": 9,
-      "title": "Δραστηριότητες CAS: Όρια και Συνέχεια",
-      "path": "code/ch09/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch09/",
-      "status": "active",
-      "files": [
-        "maxima_oria.mac",
-        "python_oria.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Όρια και Συνέχεια Συνάρτησης",
+      "path": "askiseis/ch09/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch09/",
+      "status": "active"
     },
     {
-      "id": "code_ch10",
-      "type": "code",
+      "id": "askiseis_ch10",
+      "type": "exercises",
       "chapter": 10,
-      "title": "Δραστηριότητες CAS: Παράγωγος Συνάρτησης",
-      "path": "code/ch10/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch10/",
-      "status": "active",
-      "files": [
-        "maxima_paragogos.mac",
-        "python_paragogos.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Παράγωγος Συνάρτησης",
+      "path": "askiseis/ch10/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch10/",
+      "status": "active"
     },
     {
-      "id": "code_ch11",
-      "type": "code",
+      "id": "askiseis_ch11",
+      "type": "exercises",
       "chapter": 11,
-      "title": "Δραστηριότητες CAS: Μονοτονία, Κυρτότητα και Ακρότατα",
-      "path": "code/ch11/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch11/",
-      "status": "active",
-      "files": [
-        "maxima_akrotata.mac",
-        "python_akrotata.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Μονοτονία, Ακρότατα και Κυρτότητα",
+      "path": "askiseis/ch11/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch11/",
+      "status": "active"
     },
     {
-      "id": "code_ch12",
-      "type": "code",
+      "id": "askiseis_ch12",
+      "type": "exercises",
       "chapter": 12,
-      "title": "Δραστηριότητες CAS: Εφαρμογές Παραγώγου",
-      "path": "code/ch12/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch12/",
-      "status": "active",
-      "files": [
-        "maxima_efarm_par.mac",
-        "python_efarm_par.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Εφαρμογές Παραγώγου και Μελέτη Συνάρτησης",
+      "path": "askiseis/ch12/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch12/",
+      "status": "active"
     },
     {
-      "id": "code_ch13",
-      "type": "code",
+      "id": "askiseis_ch13",
+      "type": "exercises",
       "chapter": 13,
-      "title": "Δραστηριότητες CAS: Αόριστο Ολοκλήρωμα",
-      "path": "code/ch13/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch13/",
-      "status": "active",
-      "files": [
-        "maxima_aoristo.mac",
-        "python_aoristo.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Αόριστο Ολοκλήρωμα",
+      "path": "askiseis/ch13/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch13/",
+      "status": "active"
     },
     {
-      "id": "code_ch14",
-      "type": "code",
+      "id": "askiseis_ch14",
+      "type": "exercises",
       "chapter": 14,
-      "title": "Δραστηριότητες CAS: Ορισμένο Ολοκλήρωμα",
-      "path": "code/ch14/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch14/",
-      "status": "active",
-      "files": [
-        "maxima_orismeno.mac",
-        "python_orismeno.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Ορισμένο Ολοκλήρωμα",
+      "path": "askiseis/ch14/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch14/",
+      "status": "active"
     },
     {
-      "id": "code_ch15",
-      "type": "code",
+      "id": "askiseis_ch15",
+      "type": "exercises",
       "chapter": 15,
-      "title": "Δραστηριότητες CAS: Θεμελιώδες Θεώρημα Λογισμού",
-      "path": "code/ch15/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch15/",
-      "status": "active",
-      "files": [
-        "maxima_ttl.mac",
-        "python_ttl.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Θεμελιώδες Θεώρημα του Ολοκληρωτικού Λογισμού",
+      "path": "askiseis/ch15/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch15/",
+      "status": "active"
     },
     {
-      "id": "code_ch16",
-      "type": "code",
+      "id": "askiseis_ch16",
+      "type": "exercises",
       "chapter": 16,
-      "title": "Δραστηριότητες CAS: Τεχνικές Ολοκλήρωσης",
-      "path": "code/ch16/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch16/",
-      "status": "active",
-      "files": [
-        "maxima_texnikes.mac",
-        "python_texnikes.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Τεχνικές Ολοκλήρωσης",
+      "path": "askiseis/ch16/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch16/",
+      "status": "active"
     },
     {
-      "id": "code_ch17",
-      "type": "code",
+      "id": "askiseis_ch17",
+      "type": "exercises",
       "chapter": 17,
-      "title": "Δραστηριότητες CAS: Εφαρμογές Ολοκληρωτικού Λογισμού",
-      "path": "code/ch17/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch17/",
-      "status": "active",
-      "files": [
-        "maxima_efarm_ol.mac",
-        "python_efarm_ol.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Εφαρμογές Ολοκληρωμάτων",
+      "path": "askiseis/ch17/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch17/",
+      "status": "active"
     },
     {
-      "id": "code_ch18",
-      "type": "code",
+      "id": "askiseis_ch18",
+      "type": "exercises",
       "chapter": 18,
-      "title": "Δραστηριότητες CAS: Γενικευμένα Ολοκληρώματα",
-      "path": "code/ch18/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch18/",
-      "status": "active",
-      "files": [
-        "maxima_genikeum.mac",
-        "python_genikeum.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Γενικευμένα Ολοκληρώματα",
+      "path": "askiseis/ch18/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch18/",
+      "status": "active"
     },
     {
-      "id": "code_ch19",
-      "type": "code",
+      "id": "askiseis_ch19",
+      "type": "exercises",
       "chapter": 19,
-      "title": "Δραστηριότητες CAS: Ακολουθίες και Σειρές",
-      "path": "code/ch19/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch19/",
-      "status": "active",
-      "files": [
-        "maxima_seires.mac",
-        "python_seires.py"
-      ]
+      "title": "Επιπλέον Ασκήσεις: Ακολουθίες και Άπειρες Σειρές",
+      "path": "askiseis/ch19/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch19/",
+      "status": "active"
+    },
+    {
+      "id": "askiseis_ch20",
+      "type": "exercises",
+      "chapter": 20,
+      "title": "Επιπλέον Ασκήσεις: Δυναμοσειρές και Σειρές Taylor",
+      "path": "askiseis/ch20/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/askiseis/ch20/",
+      "status": "active"
     },
     {
       "id": "anim_ch00_ypovathro_01_unit_circle",
       "type": "animation",
       "chapter": 0,
-      "title": "Μοναδιαίος Κύκλος",
+      "title": "Μοναδιαίος Κύκλος — Animation",
       "path": "animations/ch00_ypovathro/01_unit_circle/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch00_ypovathro/01_unit_circle/",
       "status": "active"
@@ -488,7 +726,7 @@
       "id": "anim_ch00_ypovathro_02_complex_numbers",
       "type": "animation",
       "chapter": 0,
-      "title": "Μιγαδικοί Αριθμοί",
+      "title": "Μιγαδικοί Αριθμοί — Διάγραμμα Argand",
       "path": "animations/ch00_ypovathro/02_complex_numbers/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch00_ypovathro/02_complex_numbers/",
       "status": "active"
@@ -497,7 +735,7 @@
       "id": "anim_ch00_ypovathro_03_trig_identities",
       "type": "animation",
       "chapter": 0,
-      "title": "Τριγωνομετρικές Ταυτότητες",
+      "title": "Τριγωνομετρικές Ταυτότητες — Μοναδιαίος Κύκλος",
       "path": "animations/ch00_ypovathro/03_trig_identities/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch00_ypovathro/03_trig_identities/",
       "status": "active"
@@ -506,7 +744,7 @@
       "id": "anim_ch01_grammikoi_01_vector_add",
       "type": "animation",
       "chapter": 1,
-      "title": "Πρόσθεση Διανυσμάτων",
+      "title": "Πρόσθεση Διανυσμάτων — Animation",
       "path": "animations/ch01_grammikoi/01_vector_add/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch01_grammikoi/01_vector_add/",
       "status": "active"
@@ -542,7 +780,7 @@
       "id": "anim_ch02_pinakas_01_matrix_vector",
       "type": "animation",
       "chapter": 2,
-      "title": "Μητρώο × Διάνυσμα",
+      "title": "Μητρώο × Διάνυσμα — Animation",
       "path": "animations/ch02_pinakas/01_matrix_vector/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch02_pinakas/01_matrix_vector/",
       "status": "active"
@@ -569,7 +807,7 @@
       "id": "anim_ch03_systimata_01_gauss",
       "type": "animation",
       "chapter": 3,
-      "title": "Απαλοιφή Gauss",
+      "title": "Απαλοιφή Gauss — Βήμα-βήμα",
       "path": "animations/ch03_systimata/01_gauss/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch03_systimata/01_gauss/",
       "status": "active"
@@ -650,7 +888,7 @@
       "id": "anim_ch07_markov_02_phase_portraits",
       "type": "animation",
       "chapter": 7,
-      "title": "Φασικά Πορτρέτα",
+      "title": "Φασικά Πορτρέτα — Ταξινόμηση Σημείων Ισορροπίας",
       "path": "animations/ch07_markov/02_phase_portraits/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch07_markov/02_phase_portraits/",
       "status": "active"
@@ -728,12 +966,12 @@
       "status": "active"
     },
     {
-      "id": "anim_ch12_efarm_par_01_taylor",
+      "id": "anim_ch11_akrotata_03_taylor",
       "type": "animation",
-      "chapter": 12,
+      "chapter": 11,
       "title": "Ανάπτυγμα Taylor",
-      "path": "animations/ch12_efarm_par/01_taylor/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch12_efarm_par/01_taylor/",
+      "path": "animations/ch11_akrotata/03_taylor/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch11_akrotata/03_taylor/",
       "status": "active"
     },
     {
@@ -749,7 +987,7 @@
       "id": "anim_ch13_aoristo_01_antiderivative",
       "type": "animation",
       "chapter": 13,
-      "title": "Αντιπαράγωγος",
+      "title": "Αντιπαράγωγος — Αόριστο Ολοκλήρωμα",
       "path": "animations/ch13_aoristo/01_antiderivative/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch13_aoristo/01_antiderivative/",
       "status": "active"
@@ -776,7 +1014,7 @@
       "id": "anim_ch14_orismeno_02_area",
       "type": "animation",
       "chapter": 14,
-      "title": "Εμβαδόν υπό Καμπύλη",
+      "title": "Εμβαδόν υπό Καμπύλη — Προσημασμένο Εμβαδόν",
       "path": "animations/ch14_orismeno/02_area/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch14_orismeno/02_area/",
       "status": "active"
@@ -794,7 +1032,7 @@
       "id": "anim_ch15_ttl_02_newton_leibniz",
       "type": "animation",
       "chapter": 15,
-      "title": "Newton–Leibniz",
+      "title": "Newton–Leibniz — Θεμελιώδες Θεώρημα (Μέρος Β)",
       "path": "animations/ch15_ttl/02_newton_leibniz/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch15_ttl/02_newton_leibniz/",
       "status": "active"
@@ -848,7 +1086,7 @@
       "id": "anim_ch18_genikeum_02_ptest",
       "type": "animation",
       "chapter": 18,
-      "title": "Γενικευμένα",
+      "title": "Γενικευμένα — p-test",
       "path": "animations/ch18_genikeum/02_ptest/",
       "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch18_genikeum/02_ptest/",
       "status": "active"
@@ -881,39 +1119,1965 @@
       "status": "active"
     },
     {
-      "id": "quiz_ch20",
-      "type": "quiz",
-      "chapter": 20,
-      "title": "Κουίζ: Δυναμοσειρές και Σειρές Taylor",
-      "path": "quizzes/ch20/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/ch20/",
-      "status": "active"
-    },
-    {
-      "id": "code_ch20",
-      "type": "code",
-      "chapter": 20,
-      "title": "Κώδικας: Δυναμοσειρές (Maxima & Python)",
-      "path": "code/ch20/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/ch20/",
-      "status": "active"
-    },
-    {
-      "id": "anim_vol2_diaf_ex_01_slope_field",
+      "id": "anim_ch20_dynamoseires_01_taylor",
       "type": "animation",
-      "chapter": null,
-      "title": "Πεδίο Κλίσεων Διαφορικής Εξίσωσης",
-      "path": "animations/vol2_diaf_ex/01_slope_field/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/animations/vol2_diaf_ex/01_slope_field/",
+      "chapter": 20,
+      "title": "Πολυώνυμα Taylor — Προσέγγιση Συνάρτησης",
+      "path": "animations/ch20_dynamoseires/01_taylor/",
+      "url": "https://nikmatz.github.io/ELADIC_GR/animations/ch20_dynamoseires/01_taylor/",
       "status": "active"
     },
     {
-      "id": "anim_vol2_diaf_ex_02_euler",
-      "type": "animation",
-      "chapter": null,
-      "title": "Μέθοδος Euler",
-      "path": "animations/vol2_diaf_ex/02_euler/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/animations/vol2_diaf_ex/02_euler/",
+      "id": "proof_ch00_proof-algebr-taut",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Βασικές Αλγεβρικές Ταυτότητες",
+      "path": "prompts/ch00/proof-algebr-taut.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-algebr-taut.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-anagogikoi",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Αναγωγικοί Τύποι",
+      "path": "prompts/ch00/proof-anagogikoi.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-anagogikoi.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-anisotites",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Ιδιότητες Ανισοτήτων",
+      "path": "prompts/ch00/proof-anisotites.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-anisotites.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-apoluti-timi",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Ιδιότητες Απόλυτης Τιμής",
+      "path": "prompts/ch00/proof-apoluti-timi.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-apoluti-timi.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-apostasi-simeiou-eftheia",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Απόσταση Σημείου από Ευθεία",
+      "path": "prompts/ch00/proof-apostasi-simeiou-eftheia.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-apostasi-simeiou-eftheia.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-de-moivre",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Θεώρημα De Moivre",
+      "path": "prompts/ch00/proof-de-moivre.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-de-moivre.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-dianysmatikos-C",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "ℂ ως Διανυσματικός Χώρος",
+      "path": "prompts/ch00/proof-dianysmatikos-C.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-dianysmatikos-C.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-dynameis-i",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Δυνάμεις του i",
+      "path": "prompts/ch00/proof-dynameis-i.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-dynameis-i.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-esot-ginomeno-Rn",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Ιδιότητες Εσωτερικού Γινομένου",
+      "path": "prompts/ch00/proof-esot-ginomeno-Rn.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-esot-ginomeno-Rn.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-factor-theorem",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Θεώρημα Παράγοντα",
+      "path": "prompts/ch00/proof-factor-theorem.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-factor-theorem.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-nomoi-trig",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Νόμος Ημιτόνων και Συνημιτόνων",
+      "path": "prompts/ch00/proof-nomoi-trig.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-nomoi-trig.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-nostes-rizes",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "n-στές Ρίζες Μιγαδικού",
+      "path": "prompts/ch00/proof-nostes-rizes.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-nostes-rizes.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-parallel-kathetes",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Παράλληλες και Κάθετες Ευθείες",
+      "path": "prompts/ch00/proof-parallel-kathetes.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-parallel-kathetes.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-polar-mult",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Πολλαπλασιασμός σε Πολική Μορφή",
+      "path": "prompts/ch00/proof-polar-mult.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-polar-mult.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-protovathmia-exisosi",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Λύση Εξίσωσης 1ου Βαθμού",
+      "path": "prompts/ch00/proof-protovathmia-exisosi.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-protovathmia-exisosi.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-soma-C",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Δομή Σώματος του ℂ",
+      "path": "prompts/ch00/proof-soma-C.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-soma-C.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-syzygis",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Ιδιότητες Συζυγούς",
+      "path": "prompts/ch00/proof-syzygis.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-syzygis.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-themeliodes-algebras",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Θεμελιώδες Θεώρημα της Άλγεβρας",
+      "path": "prompts/ch00/proof-themeliodes-algebras.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-themeliodes-algebras.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-trichotomy-systems",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Τρεις Περιπτώσεις — Γεωμετρική Ερμηνεία",
+      "path": "prompts/ch00/proof-trichotomy-systems.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-trichotomy-systems.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-trig-exis",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Γενική Λύση Βασικών Τριγωνομετρικών Εξισώσεων",
+      "path": "prompts/ch00/proof-trig-exis.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-trig-exis.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch00_proof-trig-taut",
+      "type": "proof_prompt",
+      "chapter": 0,
+      "title": "Θεμελιώδεις Τριγωνομετρικές Ταυτότητες",
+      "path": "prompts/ch00/proof-trig-taut.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch00/proof-trig-taut.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-apostaseis-R3",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Αποστάσεις στον χώρο",
+      "path": "prompts/ch01/proof-apostaseis-R3.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-apostaseis-R3.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-basi-monadikotita",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Θεώρημα Βάσης — Μοναδικότητα Πλήθους",
+      "path": "prompts/ch01/proof-basi-monadikotita.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-basi-monadikotita.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-basis-extension",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Επέκταση σε Βάση",
+      "path": "prompts/ch01/proof-basis-extension.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-basis-extension.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-cauchy-schwarz",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Ανισότητα Cauchy–Schwarz",
+      "path": "prompts/ch01/proof-cauchy-schwarz.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-cauchy-schwarz.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-esot-ginomeno",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Ιδιότητες Εσωτερικού Γινομένου",
+      "path": "prompts/ch01/proof-esot-ginomeno.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-esot-ginomeno.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-euthu-athroisma",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Ευθύ Άθροισμα και Διάσταση",
+      "path": "prompts/ch01/proof-euthu-athroisma.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-euthu-athroisma.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-exot-ginomeno",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Ιδιότητες Εξωτερικού Γινομένου",
+      "path": "prompts/ch01/proof-exot-ginomeno.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-exot-ginomeno.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-gram-schmidt",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Αλγόριθμος Gram–Schmidt",
+      "path": "prompts/ch01/proof-gram-schmidt.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-gram-schmidt.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-grammikos-idiotites",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Βασικές Ιδιότητες Γραμμικού Χώρου",
+      "path": "prompts/ch01/proof-grammikos-idiotites.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-grammikos-idiotites.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-grassmann-formula",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Τύπος του Grassmann",
+      "path": "prompts/ch01/proof-grassmann-formula.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-grassmann-formula.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-gwnies-theseis-R3",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Γωνίες και σχετικές θέσεις στον χώρο",
+      "path": "prompts/ch01/proof-gwnies-theseis-R3.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-gwnies-theseis-R3.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-kritiria-basis",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Κριτήρια Βάσης",
+      "path": "prompts/ch01/proof-kritiria-basis.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-kritiria-basis.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-kritirio-duo",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Κριτήριο Γραμμικής Εξάρτησης για Δύο Διανύσματα",
+      "path": "prompts/ch01/proof-kritirio-duo.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-kritirio-duo.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-kritirio-omogenes",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Κριτήριο Γραμμικής Εξάρτησης μέσω Γραμμικού Συστήματος",
+      "path": "prompts/ch01/proof-kritirio-omogenes.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-kritirio-omogenes.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-kritirio-orizousa-R3",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Κριτήριο Ορίζουσας για Τρία Διανύσματα στο ℝ³",
+      "path": "prompts/ch01/proof-kritirio-orizousa-R3.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-kritirio-orizousa-R3.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-kritirio-ypoxorou",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Κριτήριο Υποχώρου",
+      "path": "prompts/ch01/proof-kritirio-ypoxorou.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-kritirio-ypoxorou.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-mikto-ginomeno",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Ιδιότητες Μικτού Γινομένου",
+      "path": "prompts/ch01/proof-mikto-ginomeno.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-mikto-ginomeno.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-orthogonal-projection",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Θεώρημα Ορθογώνιας Προβολής",
+      "path": "prompts/ch01/proof-orthogonal-projection.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-orthogonal-projection.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-orthogonia-anexartita",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Ορθογώνια Σύνολα είναι Γραμμικώς Ανεξάρτητα",
+      "path": "prompts/ch01/proof-orthogonia-anexartita.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-orthogonia-anexartita.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-orthogonio-symplirwma",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Ιδιότητες Ορθογώνιου Συμπληρώματος",
+      "path": "prompts/ch01/proof-orthogonio-symplirwma.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-orthogonio-symplirwma.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-qr-factorization",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Παραγοντοποίηση QR",
+      "path": "prompts/ch01/proof-qr-factorization.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-qr-factorization.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-syntetagmenes-orthokanoniki",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Συντεταγμένες ως προς Ορθοκανονική Βάση",
+      "path": "prompts/ch01/proof-syntetagmenes-orthokanoniki.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-syntetagmenes-orthokanoniki.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch01_proof-ypoxoroi-R3",
+      "type": "proof_prompt",
+      "chapter": 1,
+      "title": "Γεωμετρικοί Υπόχωροι του ℝ³",
+      "path": "prompts/ch01/proof-ypoxoroi-R3.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch01/proof-ypoxoroi-R3.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-cayley-hamilton",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Θεώρημα Cayley–Hamilton",
+      "path": "prompts/ch06/proof-cayley-hamilton.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-cayley-hamilton.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-characteristic-polynomial",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Χαρακτηριστικό Πολυώνυμο",
+      "path": "prompts/ch02/proof-characteristic-polynomial.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-characteristic-polynomial.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-det-props",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Ιδιότητες Ορίζουσας",
+      "path": "prompts/ch02/proof-det-props.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-det-props.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-det-triangular",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Ορίζουσα Τριγωνικής Μήτρας",
+      "path": "prompts/ch02/proof-det-triangular.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-det-triangular.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch05_proof-eigenvalue-props",
+      "type": "proof_prompt",
+      "chapter": 5,
+      "title": "Ιδιότητες Ιδιοτιμών",
+      "path": "prompts/ch05/proof-eigenvalue-props.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch05/proof-eigenvalue-props.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-inverse-adjugate",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Τύπος Αντιστρόφου μέσω Adjugate",
+      "path": "prompts/ch02/proof-inverse-adjugate.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-inverse-adjugate.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-inverse-props",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Ιδιότητες Αντίστροφης Μήτρας",
+      "path": "prompts/ch02/proof-inverse-props.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-inverse-props.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-invertibility-criteria",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Κριτήρια Αντιστρεψιμότητας",
+      "path": "prompts/ch02/proof-invertibility-criteria.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-invertibility-criteria.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-matrix-add-props",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Ιδιότητες Πρόσθεσης και Βαθμωτού Πολλαπλασιασμού",
+      "path": "prompts/ch02/proof-matrix-add-props.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-matrix-add-props.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-matrix-mult-props",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Ιδιότητες Πολλαπλασιασμού Πινάκων",
+      "path": "prompts/ch02/proof-matrix-mult-props.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-matrix-mult-props.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-power-props",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Ιδιότητες Δυνάμεων Πίνακα",
+      "path": "prompts/ch02/proof-power-props.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-power-props.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch02_proof-rank-nullity-matrix",
+      "type": "proof_prompt",
+      "chapter": 2,
+      "title": "Θεώρημα Rank–Nullity για Πίνακες",
+      "path": "prompts/ch02/proof-rank-nullity-matrix.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch02/proof-rank-nullity-matrix.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-cramer-rule",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Κανόνας Cramer",
+      "path": "prompts/ch03/proof-cramer-rule.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-cramer-rule.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-domi-lyseon",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Δομή Λύσεων Μη Ομογενούς Συστήματος",
+      "path": "prompts/ch03/proof-domi-lyseon.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-domi-lyseon.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-elementary-row-ops",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Στοιχειώδεις Μετασχηματισμοί Γραμμών",
+      "path": "prompts/ch03/proof-elementary-row-ops.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-elementary-row-ops.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-homogeneous-nonzero",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Μη Μηδενικές Λύσεις Ομογενούς",
+      "path": "prompts/ch03/proof-homogeneous-nonzero.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-homogeneous-nonzero.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-kronecker-capelli",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Θεώρημα Kronecker–Capelli",
+      "path": "prompts/ch03/proof-kronecker-capelli.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-kronecker-capelli.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-lu-determinant",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Σύνδεση LU — Ορίζουσα",
+      "path": "prompts/ch03/proof-lu-determinant.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-lu-determinant.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-square-homogeneous-nonzero",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Μη Μηδενικές Λύσεις Τετραγωνικού Ομογενούς",
+      "path": "prompts/ch03/proof-square-homogeneous-nonzero.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-square-homogeneous-nonzero.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-square-system-inverse",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Τετραγωνικό Σύστημα — Λύση μέσω Αντιστρόφου",
+      "path": "prompts/ch03/proof-square-system-inverse.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-square-system-inverse.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch03_proof-vandermonde",
+      "type": "proof_prompt",
+      "chapter": 3,
+      "title": "Πίνακας Vandermonde και Παρεμβολή",
+      "path": "prompts/ch03/proof-vandermonde.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch03/proof-vandermonde.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-definiteness-eigenvalues",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Χαρακτηρισμός Οριστικότητας μέσω Ιδιοτιμών",
+      "path": "prompts/ch06/proof-definiteness-eigenvalues.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-definiteness-eigenvalues.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch04_proof-injective-kernel",
+      "type": "proof_prompt",
+      "chapter": 4,
+      "title": "Μετασχηματισμοί ένα-προς-ένα και Πυρήνας",
+      "path": "prompts/ch04/proof-injective-kernel.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch04/proof-injective-kernel.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch04_proof-isomorphism-dimension",
+      "type": "proof_prompt",
+      "chapter": 4,
+      "title": "Ισομορφισμός και Διάσταση",
+      "path": "prompts/ch04/proof-isomorphism-dimension.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch04/proof-isomorphism-dimension.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch04_proof-matrix-representation",
+      "type": "proof_prompt",
+      "chapter": 4,
+      "title": "Αναπαράσταση Γραμμικού Μετασχηματισμού ως Πίνακας",
+      "path": "prompts/ch04/proof-matrix-representation.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch04/proof-matrix-representation.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-quadratic-classification",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Ταξινόμηση Τετραγωνικών Μορφών",
+      "path": "prompts/ch06/proof-quadratic-classification.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-quadratic-classification.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch04_proof-rank-nullity-transform",
+      "type": "proof_prompt",
+      "chapter": 4,
+      "title": "Θεώρημα Βαθμού–Μηδενικότητας",
+      "path": "prompts/ch04/proof-rank-nullity-transform.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch04/proof-rank-nullity-transform.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-sylvester-criterion",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Κριτήριο Sylvester",
+      "path": "prompts/ch06/proof-sylvester-criterion.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-sylvester-criterion.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch04_proof-transform-basic-props",
+      "type": "proof_prompt",
+      "chapter": 4,
+      "title": "Βασικές Ιδιότητες Γραμμικού Μετασχηματισμού",
+      "path": "prompts/ch04/proof-transform-basic-props.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch04/proof-transform-basic-props.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch05_proof-conjugate-eigenpairs",
+      "type": "proof_prompt",
+      "chapter": 5,
+      "title": "Συζυγή Ζεύγη Ιδιοτιμών",
+      "path": "prompts/ch05/proof-conjugate-eigenpairs.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch05/proof-conjugate-eigenpairs.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch05_proof-eigenvalue-characterizations",
+      "type": "proof_prompt",
+      "chapter": 5,
+      "title": "Ισοδύναμοι Χαρακτηρισμοί Ιδιοτιμής",
+      "path": "prompts/ch05/proof-eigenvalue-characterizations.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch05/proof-eigenvalue-characterizations.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch05_proof-eigenvector-independence",
+      "type": "proof_prompt",
+      "chapter": 5,
+      "title": "Γραμμική Ανεξαρτησία Ιδιοδιανυσμάτων",
+      "path": "prompts/ch05/proof-eigenvector-independence.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch05/proof-eigenvector-independence.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch05_proof-multiplicity-relation",
+      "type": "proof_prompt",
+      "chapter": 5,
+      "title": "Σχέση Πολλαπλοτήτων",
+      "path": "prompts/ch05/proof-multiplicity-relation.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch05/proof-multiplicity-relation.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch05_proof-spectral-decomposition-symmetric",
+      "type": "proof_prompt",
+      "chapter": 5,
+      "title": "Φασματική Αποσύνθεση Συμμετρικού Πίνακα",
+      "path": "prompts/ch05/proof-spectral-decomposition-symmetric.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch05/proof-spectral-decomposition-symmetric.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-symmetric-always-diagonalizable",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Συμμετρικοί Πίνακες: πάντα ορθογώνια διαγωνιοποιήσιμοι",
+      "path": "prompts/ch06/proof-symmetric-always-diagonalizable.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-symmetric-always-diagonalizable.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch05_proof-trace-det-eigenvalues",
+      "type": "proof_prompt",
+      "chapter": 5,
+      "title": "Ίχνος, Ορίζουσα και Ιδιοτιμές",
+      "path": "prompts/ch05/proof-trace-det-eigenvalues.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch05/proof-trace-det-eigenvalues.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-diagonalizability-criterion",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Κριτήριο Διαγωνιοποιησιμότητας",
+      "path": "prompts/ch06/proof-diagonalizability-criterion.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-diagonalizability-criterion.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-eckart-young",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Θεώρημα Eckart–Young (Προσέγγιση Χαμηλής Τάξης)",
+      "path": "prompts/ch06/proof-eckart-young.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-eckart-young.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-matrix-power-diagonalization",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Υπολογισμός Δύναμης A^k μέσω Διαγωνιοποίησης",
+      "path": "prompts/ch06/proof-matrix-power-diagonalization.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-matrix-power-diagonalization.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-singular-values-eigenvalues",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Σχέση Ιδιαζουσών Τιμών με Ιδιοτιμές",
+      "path": "prompts/ch06/proof-singular-values-eigenvalues.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-singular-values-eigenvalues.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-spectral-theorem-symmetric",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Φασματικό Θεώρημα",
+      "path": "prompts/ch06/proof-spectral-theorem-symmetric.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-spectral-theorem-symmetric.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-svd",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Διάσπαση Ιδιαζουσών Τιμών (SVD)",
+      "path": "prompts/ch06/proof-svd.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-svd.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch06_proof-variance-explained",
+      "type": "proof_prompt",
+      "chapter": 6,
+      "title": "Ποσοστό Εξηγούμενης Διακύμανσης",
+      "path": "prompts/ch06/proof-variance-explained.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch06/proof-variance-explained.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch07_proof-defective-eigenvalue",
+      "type": "proof_prompt",
+      "chapter": 7,
+      "title": "Ελλιπής (Εκφυλισμένη) Ιδιοτιμή",
+      "path": "prompts/ch07/proof-defective-eigenvalue.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch07/proof-defective-eigenvalue.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch07_proof-discrete-stability-criterion",
+      "type": "proof_prompt",
+      "chapter": 7,
+      "title": "Κριτήριο Σταθερότητας Διακριτού Συστήματος",
+      "path": "prompts/ch07/proof-discrete-stability-criterion.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch07/proof-discrete-stability-criterion.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch07_proof-equilibrium-classification",
+      "type": "proof_prompt",
+      "chapter": 7,
+      "title": "Ταξινόμηση Σημείου Ισορροπίας ως προς Ιδιοτιμές",
+      "path": "prompts/ch07/proof-equilibrium-classification.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch07/proof-equilibrium-classification.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch07_proof-markov-convergence",
+      "type": "proof_prompt",
+      "chapter": 7,
+      "title": "Σύγκλιση Αλυσίδων Markov (Perron-Frobenius)",
+      "path": "prompts/ch07/proof-markov-convergence.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch07/proof-markov-convergence.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch08_proof-hyperbolic-properties",
+      "type": "proof_prompt",
+      "chapter": 8,
+      "title": "Ιδιότητες Υπερβολικών Συναρτήσεων",
+      "path": "prompts/ch08/proof-hyperbolic-properties.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch08/proof-hyperbolic-properties.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch09_proof-weierstrass",
+      "type": "proof_prompt",
+      "chapter": 9,
+      "title": "Θεώρημα Weierstrass",
+      "path": "prompts/ch09/proof-weierstrass.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch09/proof-weierstrass.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch09_proof-intermediate-value",
+      "type": "proof_prompt",
+      "chapter": 9,
+      "title": "Θεώρημα Ενδιάμεσης Τιμής (ΘΕΤ)",
+      "path": "prompts/ch09/proof-intermediate-value.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch09/proof-intermediate-value.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch09_proof-limit-laws",
+      "type": "proof_prompt",
+      "chapter": 9,
+      "title": "Νόμοι Ορίων",
+      "path": "prompts/ch09/proof-limit-laws.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch09/proof-limit-laws.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch09_proof-squeeze-theorem",
+      "type": "proof_prompt",
+      "chapter": 9,
+      "title": "Κριτήριο Παρεμβολής (Squeeze Theorem)",
+      "path": "prompts/ch09/proof-squeeze-theorem.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch09/proof-squeeze-theorem.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch09_proof-substitution-theorem",
+      "type": "proof_prompt",
+      "chapter": 9,
+      "title": "Θεώρημα Αντικατάστασης",
+      "path": "prompts/ch09/proof-substitution-theorem.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch09/proof-substitution-theorem.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-chain-rule",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Κανόνας Αλυσίδας",
+      "path": "prompts/ch10/proof-chain-rule.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-chain-rule.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-differentiability-continuity",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Παραγωγισιμότητα ⇒ Συνέχεια",
+      "path": "prompts/ch10/proof-differentiability-continuity.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-differentiability-continuity.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-differentiation-rules",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Κανόνες Παραγώγισης",
+      "path": "prompts/ch10/proof-differentiation-rules.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-differentiation-rules.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-fermat-theorem",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Θεώρημα Fermat",
+      "path": "prompts/ch10/proof-fermat-theorem.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-fermat-theorem.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-inverse-function-derivative",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Παράγωγος Αντίστροφης Συνάρτησης",
+      "path": "prompts/ch10/proof-inverse-function-derivative.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-inverse-function-derivative.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-mean-value",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Θεώρημα Μέσης Τιμής (Lagrange)",
+      "path": "prompts/ch10/proof-mean-value.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-mean-value.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-parametric-tangent",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Κλίση Εφαπτομένης Παραμετρικής Καμπύλης",
+      "path": "prompts/ch10/proof-parametric-tangent.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-parametric-tangent.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-polar-tangent",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Κλίση Εφαπτομένης Πολικής Καμπύλης",
+      "path": "prompts/ch10/proof-polar-tangent.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-polar-tangent.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-rolle",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Θεώρημα Rolle",
+      "path": "prompts/ch10/proof-rolle.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-rolle.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch10_proof-special-derivatives-table",
+      "type": "proof_prompt",
+      "chapter": 10,
+      "title": "Παράγωγοι Ειδικών Συναρτήσεων",
+      "path": "prompts/ch10/proof-special-derivatives-table.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch10/proof-special-derivatives-table.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-cauchy-mean-value",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Γενικευμένο Θεώρημα Μέσης Τιμής (Cauchy)",
+      "path": "prompts/ch11/proof-cauchy-mean-value.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-cauchy-mean-value.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-closed-interval-method",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Μέθοδος Κλειστού Διαστήματος",
+      "path": "prompts/ch11/proof-closed-interval-method.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-closed-interval-method.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-fermat",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Θεώρημα Fermat",
+      "path": "prompts/ch11/proof-fermat.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-fermat.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-mean-value",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Θεώρημα Μέσης Τιμής (ΘΜΤ)",
+      "path": "prompts/ch11/proof-mean-value.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-mean-value.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-monotonicity-extrema",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Μονοτονία και Ακρότατα",
+      "path": "prompts/ch11/proof-monotonicity-extrema.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-monotonicity-extrema.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-second-derivative-test",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Κριτήριο 2ης Παραγώγου για Ακρότατα",
+      "path": "prompts/ch11/proof-second-derivative-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-second-derivative-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-taylor-polynomial",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Πολυώνυμο Taylor",
+      "path": "prompts/ch11/proof-taylor-polynomial.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-taylor-polynomial.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch12_proof-asymptote-criteria",
+      "type": "proof_prompt",
+      "chapter": 12,
+      "title": "Κριτήρια Ασυμπτώτων",
+      "path": "prompts/ch12/proof-asymptote-criteria.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch12/proof-asymptote-criteria.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch11_proof-first-derivative-test",
+      "type": "proof_prompt",
+      "chapter": 11,
+      "title": "Κριτήριο Α΄ Παραγώγου για Ακρότατα",
+      "path": "prompts/ch11/proof-first-derivative-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch11/proof-first-derivative-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch12_proof-lhopital",
+      "type": "proof_prompt",
+      "chapter": 12,
+      "title": "Κανόνας L'Hôpital",
+      "path": "prompts/ch12/proof-lhopital.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch12/proof-lhopital.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch12_proof-tangent-normal-line",
+      "type": "proof_prompt",
+      "chapter": 12,
+      "title": "Εφαπτομένη και Κάθετη Ευθεία",
+      "path": "prompts/ch12/proof-tangent-normal-line.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch12/proof-tangent-normal-line.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch13_proof-antiderivatives-differ-constant",
+      "type": "proof_prompt",
+      "chapter": 13,
+      "title": "Οι Αντιπαράγωγοι Διαφέρουν κατά Σταθερά",
+      "path": "prompts/ch13/proof-antiderivatives-differ-constant.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch13/proof-antiderivatives-differ-constant.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch13_proof-basic-integrals-table",
+      "type": "proof_prompt",
+      "chapter": 13,
+      "title": "Πίνακας Βασικών Ολοκληρωμάτων",
+      "path": "prompts/ch13/proof-basic-integrals-table.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch13/proof-basic-integrals-table.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch13_proof-beam-deflection-general",
+      "type": "proof_prompt",
+      "chapter": 13,
+      "title": "Γενική Λύση: Αμφιέρειστη Δοκός με Ομοιόμορφο Φορτίο",
+      "path": "prompts/ch13/proof-beam-deflection-general.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch13/proof-beam-deflection-general.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch13_proof-integration-rules",
+      "type": "proof_prompt",
+      "chapter": 13,
+      "title": "Βασικοί Κανόνες Ολοκλήρωσης",
+      "path": "prompts/ch13/proof-integration-rules.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch13/proof-integration-rules.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch13_proof-linear-substitution",
+      "type": "proof_prompt",
+      "chapter": 13,
+      "title": "Κανόνας Γραμμικής Αντικατάστασης",
+      "path": "prompts/ch13/proof-linear-substitution.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch13/proof-linear-substitution.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch13_proof-logarithmic-rule",
+      "type": "proof_prompt",
+      "chapter": 13,
+      "title": "Λογαριθμικός Κανόνας Ολοκλήρωσης",
+      "path": "prompts/ch13/proof-logarithmic-rule.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch13/proof-logarithmic-rule.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch14_proof-definite-integral-properties",
+      "type": "proof_prompt",
+      "chapter": 14,
+      "title": "Ιδιότητες Ορισμένου Ολοκληρώματος",
+      "path": "prompts/ch14/proof-definite-integral-properties.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch14/proof-definite-integral-properties.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch14_proof-integral-mean-value",
+      "type": "proof_prompt",
+      "chapter": 14,
+      "title": "Θεώρημα Μέσης Τιμής Ολοκληρωτικού Λογισμού",
+      "path": "prompts/ch14/proof-integral-mean-value.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch14/proof-integral-mean-value.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch14_proof-riemann-integrability",
+      "type": "proof_prompt",
+      "chapter": 14,
+      "title": "Ολοκληρωσιμότητα κατά Riemann",
+      "path": "prompts/ch14/proof-riemann-integrability.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch14/proof-riemann-integrability.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch15_proof-area-between-curves",
+      "type": "proof_prompt",
+      "chapter": 15,
+      "title": "Εμβαδόν Χωρίου μεταξύ Δύο Καμπυλών",
+      "path": "prompts/ch15/proof-area-between-curves.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch15/proof-area-between-curves.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch15_proof-area-integrate-y",
+      "type": "proof_prompt",
+      "chapter": 15,
+      "title": "Εμβαδόν με Ολοκλήρωση ως προς $y$",
+      "path": "prompts/ch15/proof-area-integrate-y.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch15/proof-area-integrate-y.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch15_proof-fundamental-theorem-calculus",
+      "type": "proof_prompt",
+      "chapter": 15,
+      "title": "Θεμελιώδες Θεώρημα Λογισμού",
+      "path": "prompts/ch15/proof-fundamental-theorem-calculus.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch15/proof-fundamental-theorem-calculus.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch15_proof-integration-by-parts-definite",
+      "type": "proof_prompt",
+      "chapter": 15,
+      "title": "Ολοκλήρωση κατά Μέρη σε Ορισμένο Ολοκλήρωμα",
+      "path": "prompts/ch15/proof-integration-by-parts-definite.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch15/proof-integration-by-parts-definite.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch15_proof-leibniz-rule",
+      "type": "proof_prompt",
+      "chapter": 15,
+      "title": "Κανόνας Leibniz: Παραγώγιση με Μεταβλητά Άκρα",
+      "path": "prompts/ch15/proof-leibniz-rule.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch15/proof-leibniz-rule.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch15_proof-substitution-definite",
+      "type": "proof_prompt",
+      "chapter": 15,
+      "title": "Αντικατάσταση σε Ορισμένο Ολοκλήρωμα (Αλλαγή Ορίων)",
+      "path": "prompts/ch15/proof-substitution-definite.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch15/proof-substitution-definite.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-integration-by-parts",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Ολοκλήρωση κατά Παράγοντες",
+      "path": "prompts/ch16/proof-integration-by-parts.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-integration-by-parts.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-integration-substitution",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Ολοκλήρωση με Αντικατάσταση",
+      "path": "prompts/ch16/proof-integration-substitution.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-integration-substitution.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-irreducible-quadratic-factor",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Ανάγωγος Τετραγωνικός Παράγοντας (Συμπλήρωση Τετραγώνου)",
+      "path": "prompts/ch16/proof-irreducible-quadratic-factor.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-irreducible-quadratic-factor.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-partial-fractions",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Ολοκλήρωση με Μερικά Κλάσματα",
+      "path": "prompts/ch16/proof-partial-fractions.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-partial-fractions.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-repeated-linear-factor",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Επαναλαμβανόμενος Γραμμικός Παράγοντας",
+      "path": "prompts/ch16/proof-repeated-linear-factor.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-repeated-linear-factor.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-tan-sec-integrals",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Ολοκληρώματα με $\\tan$ και $\\sec$",
+      "path": "prompts/ch16/proof-tan-sec-integrals.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-tan-sec-integrals.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-trigonometric-integrals",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Τριγωνομετρικά Ολοκληρώματα",
+      "path": "prompts/ch16/proof-trigonometric-integrals.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-trigonometric-integrals.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch16_proof-trigonometric-substitution",
+      "type": "proof_prompt",
+      "chapter": 16,
+      "title": "Τριγωνομετρική Αντικατάσταση",
+      "path": "prompts/ch16/proof-trigonometric-substitution.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch16/proof-trigonometric-substitution.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-arc-length",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Μήκος Τόξου",
+      "path": "prompts/ch17/proof-arc-length.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-arc-length.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-area-plane-region",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Εμβαδόν Επίπεδου Χωρίου",
+      "path": "prompts/ch17/proof-area-plane-region.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-area-plane-region.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-center-of-mass",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Κέντρο Μάζας Επίπεδου Σώματος",
+      "path": "prompts/ch17/proof-center-of-mass.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-center-of-mass.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-moment-of-inertia",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Ροπή Αδράνειας Επίπεδου Χωρίου",
+      "path": "prompts/ch17/proof-moment-of-inertia.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-moment-of-inertia.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-numerical-integration",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Αριθμητική Ολοκλήρωση (Τραπεζίου & Simpson)",
+      "path": "prompts/ch17/proof-numerical-integration.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-numerical-integration.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-pappus-guldin",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Θεωρήματα Πάππου-Guldin",
+      "path": "prompts/ch17/proof-pappus-guldin.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-pappus-guldin.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-parametric-area",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Εμβαδόν από Παραμετρική Καμπύλη",
+      "path": "prompts/ch17/proof-parametric-area.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-parametric-area.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-poiseuille-mean-velocity",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Μέση Ταχύτητα Ροής Poiseuille",
+      "path": "prompts/ch17/proof-poiseuille-mean-velocity.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-poiseuille-mean-velocity.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-polar-arc-length",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Μήκος Τόξου σε Πολικές Συντεταγμένες",
+      "path": "prompts/ch17/proof-polar-arc-length.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-polar-arc-length.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-polar-area",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Εμβαδόν σε Πολικές Συντεταγμένες",
+      "path": "prompts/ch17/proof-polar-area.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-polar-area.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-pumping-work",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Γενικός Τύπος Αντλητικού Έργου",
+      "path": "prompts/ch17/proof-pumping-work.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-pumping-work.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-shell-method",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Μέθοδος Κελύφους (Shell Method)",
+      "path": "prompts/ch17/proof-shell-method.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-shell-method.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-surface-of-revolution",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Εμβαδόν Επιφάνειας εκ Περιστροφής",
+      "path": "prompts/ch17/proof-surface-of-revolution.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-surface-of-revolution.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-trapezoid-rule",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Κανόνας Τραπεζίου",
+      "path": "prompts/ch17/proof-trapezoid-rule.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-trapezoid-rule.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch17_proof-volume-revolution",
+      "type": "proof_prompt",
+      "chapter": 17,
+      "title": "Όγκος Στερεού Περιστροφής",
+      "path": "prompts/ch17/proof-volume-revolution.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch17/proof-volume-revolution.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch18_proof-comparison-test-improper",
+      "type": "proof_prompt",
+      "chapter": 18,
+      "title": "Κριτήριο Σύγκρισης για Γενικευμένα Ολοκληρώματα",
+      "path": "prompts/ch18/proof-comparison-test-improper.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch18/proof-comparison-test-improper.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch18_proof-gamma-function",
+      "type": "proof_prompt",
+      "chapter": 18,
+      "title": "Συνάρτηση Γάμμα (Euler)",
+      "path": "prompts/ch18/proof-gamma-function.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch18/proof-gamma-function.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch18_proof-limit-comparison-improper",
+      "type": "proof_prompt",
+      "chapter": 18,
+      "title": "Οριακό Κριτήριο Σύγκρισης (γενικευμένα ολοκληρώματα)",
+      "path": "prompts/ch18/proof-limit-comparison-improper.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch18/proof-limit-comparison-improper.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch18_proof-p-integral-test",
+      "type": "proof_prompt",
+      "chapter": 18,
+      "title": "Κριτήριο $p$-Ολοκληρώματος (1ου και 2ου Είδους)",
+      "path": "prompts/ch18/proof-p-integral-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch18/proof-p-integral-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-absolute-convergence",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Απόλυτη Σύγκλιση",
+      "path": "prompts/ch19/proof-absolute-convergence.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-absolute-convergence.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-alternating-series-test",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Κριτήριο Εναλλάσσουσας (Leibniz)",
+      "path": "prompts/ch19/proof-alternating-series-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-alternating-series-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-bolzano-weierstrass",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Θεώρημα Bolzano–Weierstrass",
+      "path": "prompts/ch19/proof-bolzano-weierstrass.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-bolzano-weierstrass.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-cauchy-criterion-sequences",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Κριτήριο Cauchy για Ακολουθίες",
+      "path": "prompts/ch19/proof-cauchy-criterion-sequences.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-cauchy-criterion-sequences.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-comparison-test",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Κριτήριο Σύγκρισης",
+      "path": "prompts/ch19/proof-comparison-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-comparison-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-geometric-series",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Γεωμετρική Σειρά — Σύγκλιση και Άθροισμα",
+      "path": "prompts/ch19/proof-geometric-series.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-geometric-series.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-integral-test",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Κριτήριο Ολοκληρώματος",
+      "path": "prompts/ch19/proof-integral-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-integral-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-limit-comparison-test",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Κριτήριο Σύγκρισης Ορίου",
+      "path": "prompts/ch19/proof-limit-comparison-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-limit-comparison-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-monotone-convergence",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Θεώρημα Μονότονης Σύγκλισης",
+      "path": "prompts/ch19/proof-monotone-convergence.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-monotone-convergence.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-necessary-condition",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Αναγκαία Συνθήκη Σύγκλισης",
+      "path": "prompts/ch19/proof-necessary-condition.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-necessary-condition.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-p-series",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "p-Σειρά",
+      "path": "prompts/ch19/proof-p-series.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-p-series.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-ratio-test",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Κριτήριο Λόγου (Ratio Test — d'Alembert)",
+      "path": "prompts/ch19/proof-ratio-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-ratio-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-root-test",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Κριτήριο Ρίζας (Root Test)",
+      "path": "prompts/ch19/proof-root-test.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-root-test.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch19_proof-sequence-limit-laws",
+      "type": "proof_prompt",
+      "chapter": 19,
+      "title": "Ιδιότητες Ορίων Ακολουθιών",
+      "path": "prompts/ch19/proof-sequence-limit-laws.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch19/proof-sequence-limit-laws.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch20_proof-alternating-series-error",
+      "type": "proof_prompt",
+      "chapter": 20,
+      "title": "Εκτίμηση Σφάλματος Εναλλάσσουσας Σειράς",
+      "path": "prompts/ch20/proof-alternating-series-error.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch20/proof-alternating-series-error.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch20_proof-cauchy-hadamard",
+      "type": "proof_prompt",
+      "chapter": 20,
+      "title": "Τύπος Cauchy–Hadamard (Ακτίνα Σύγκλισης)",
+      "path": "prompts/ch20/proof-cauchy-hadamard.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch20/proof-cauchy-hadamard.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch20_proof-taylor-maclaurin-series",
+      "type": "proof_prompt",
+      "chapter": 20,
+      "title": "Σειρά Taylor και Maclaurin",
+      "path": "prompts/ch20/proof-taylor-maclaurin-series.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch20/proof-taylor-maclaurin-series.html",
+      "status": "active"
+    },
+    {
+      "id": "proof_ch20_proof-term-by-term",
+      "type": "proof_prompt",
+      "chapter": 20,
+      "title": "Παραγώγιση και Ολοκλήρωση Σειρών Δυνάμεων",
+      "path": "prompts/ch20/proof-term-by-term.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/prompts/ch20/proof-term-by-term.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch00_hist-argand",
+      "type": "hist_prompt",
+      "chapter": 0,
+      "title": "Ιστορικό Σημείωμα — Jean-Robert Argand",
+      "path": "hist_prompts/ch00/hist-argand.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch00/hist-argand.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch00_hist-cardano",
+      "type": "hist_prompt",
+      "chapter": 0,
+      "title": "Ιστορικό Σημείωμα — Gerolamo Cardano",
+      "path": "hist_prompts/ch00/hist-cardano.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch00/hist-cardano.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch00_hist-de-moivre",
+      "type": "hist_prompt",
+      "chapter": 0,
+      "title": "Ιστορικό Σημείωμα — Abraham de Moivre",
+      "path": "hist_prompts/ch00/hist-de-moivre.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch00/hist-de-moivre.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch00_hist-euler",
+      "type": "hist_prompt",
+      "chapter": 0,
+      "title": "Ιστορικό Σημείωμα — Leonhard Euler",
+      "path": "hist_prompts/ch00/hist-euler.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch00/hist-euler.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch00_hist-horner",
+      "type": "hist_prompt",
+      "chapter": 0,
+      "title": "Ιστορικό Σημείωμα — William George Horner",
+      "path": "hist_prompts/ch00/hist-horner.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch00/hist-horner.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch01_hist-gram",
+      "type": "hist_prompt",
+      "chapter": 1,
+      "title": "Ιστορικό Σημείωμα — Jørgen Pedersen Gram",
+      "path": "hist_prompts/ch01/hist-gram.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch01/hist-gram.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch01_hist-grassmann",
+      "type": "hist_prompt",
+      "chapter": 1,
+      "title": "Ιστορικό Σημείωμα — Hermann Grassmann",
+      "path": "hist_prompts/ch01/hist-grassmann.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch01/hist-grassmann.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch02_hist-cayley",
+      "type": "hist_prompt",
+      "chapter": 2,
+      "title": "Ιστορικό Σημείωμα — Arthur Cayley",
+      "path": "hist_prompts/ch02/hist-cayley.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch02/hist-cayley.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch02_hist-jacobi",
+      "type": "hist_prompt",
+      "chapter": 2,
+      "title": "Ιστορικό Σημείωμα — Carl Gustav Jacob Jacobi",
+      "path": "hist_prompts/ch02/hist-jacobi.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch02/hist-jacobi.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch02_hist-leibniz",
+      "type": "hist_prompt",
+      "chapter": 2,
+      "title": "Ιστορικό Σημείωμα — Gottfried Wilhelm Leibniz",
+      "path": "hist_prompts/ch02/hist-leibniz.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch02/hist-leibniz.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch03_hist-cramer",
+      "type": "hist_prompt",
+      "chapter": 3,
+      "title": "Ιστορικό Σημείωμα — Gabriel Cramer",
+      "path": "hist_prompts/ch03/hist-cramer.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch03/hist-cramer.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch03_hist-gauss",
+      "type": "hist_prompt",
+      "chapter": 3,
+      "title": "Ιστορικό Σημείωμα — Carl Friedrich Gauss",
+      "path": "hist_prompts/ch03/hist-gauss.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch03/hist-gauss.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch03_hist-jordan",
+      "type": "hist_prompt",
+      "chapter": 3,
+      "title": "Ιστορικό Σημείωμα — Wilhelm Jordan",
+      "path": "hist_prompts/ch03/hist-jordan.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch03/hist-jordan.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch03_hist-kirchhoff",
+      "type": "hist_prompt",
+      "chapter": 3,
+      "title": "Ιστορικό Σημείωμα — Gustav Kirchhoff",
+      "path": "hist_prompts/ch03/hist-kirchhoff.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch03/hist-kirchhoff.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch04_hist-sylvester",
+      "type": "hist_prompt",
+      "chapter": 4,
+      "title": "Ιστορικό Σημείωμα — James Joseph Sylvester",
+      "path": "hist_prompts/ch04/hist-sylvester.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch04/hist-sylvester.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch05_hist-cauchy",
+      "type": "hist_prompt",
+      "chapter": 5,
+      "title": "Ιστορικό Σημείωμα — Augustin-Louis Cauchy",
+      "path": "hist_prompts/ch05/hist-cauchy.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch05/hist-cauchy.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch06_hist-hamilton",
+      "type": "hist_prompt",
+      "chapter": 6,
+      "title": "Ιστορικό Σημείωμα — William Rowan Hamilton",
+      "path": "hist_prompts/ch06/hist-hamilton.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch06/hist-hamilton.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch07_hist-markov",
+      "type": "hist_prompt",
+      "chapter": 7,
+      "title": "Ιστορικό Σημείωμα — Andrey Markov",
+      "path": "hist_prompts/ch07/hist-markov.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch07/hist-markov.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch07_hist-poincare",
+      "type": "hist_prompt",
+      "chapter": 7,
+      "title": "Ιστορικό Σημείωμα — Henri Poincaré",
+      "path": "hist_prompts/ch07/hist-poincare.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch07/hist-poincare.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch08_hist-euler",
+      "type": "hist_prompt",
+      "chapter": 8,
+      "title": "Ιστορικό Σημείωμα — Leonhard Euler",
+      "path": "hist_prompts/ch08/hist-euler.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch08/hist-euler.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch09_hist-weierstrass",
+      "type": "hist_prompt",
+      "chapter": 9,
+      "title": "Ιστορικό Σημείωμα — Karl Weierstrass",
+      "path": "hist_prompts/ch09/hist-weierstrass.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch09/hist-weierstrass.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch10_hist-cauchy",
+      "type": "hist_prompt",
+      "chapter": 10,
+      "title": "Ιστορικό Σημείωμα — Augustin-Louis Cauchy",
+      "path": "hist_prompts/ch10/hist-cauchy.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch10/hist-cauchy.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch10_hist-newton-leibniz",
+      "type": "hist_prompt",
+      "chapter": 10,
+      "title": "Ιστορικό Σημείωμα — Isaac Newton & Gottfried Wilhelm Leibniz",
+      "path": "hist_prompts/ch10/hist-newton-leibniz.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch10/hist-newton-leibniz.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch11_hist-fermat",
+      "type": "hist_prompt",
+      "chapter": 11,
+      "title": "Ιστορικό Σημείωμα — Pierre de Fermat",
+      "path": "hist_prompts/ch11/hist-fermat.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch11/hist-fermat.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch11_hist-taylor",
+      "type": "hist_prompt",
+      "chapter": 11,
+      "title": "Ιστορικό Σημείωμα — Brook Taylor",
+      "path": "hist_prompts/ch11/hist-taylor.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch11/hist-taylor.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch12_hist-lagrange",
+      "type": "hist_prompt",
+      "chapter": 12,
+      "title": "Ιστορικό Σημείωμα — Joseph-Louis Lagrange",
+      "path": "hist_prompts/ch12/hist-lagrange.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch12/hist-lagrange.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch12_hist-lhopital",
+      "type": "hist_prompt",
+      "chapter": 12,
+      "title": "Ιστορικό Σημείωμα — Guillaume de l'Hôpital & Johann Bernoulli",
+      "path": "hist_prompts/ch12/hist-lhopital.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch12/hist-lhopital.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch13_hist-archimedes",
+      "type": "hist_prompt",
+      "chapter": 13,
+      "title": "Ιστορικό Σημείωμα — Αρχιμήδης",
+      "path": "hist_prompts/ch13/hist-archimedes.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch13/hist-archimedes.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch14_hist-darboux",
+      "type": "hist_prompt",
+      "chapter": 14,
+      "title": "Ιστορικό Σημείωμα — Jean-Gaston Darboux",
+      "path": "hist_prompts/ch14/hist-darboux.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch14/hist-darboux.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch14_hist-riemann",
+      "type": "hist_prompt",
+      "chapter": 14,
+      "title": "Ιστορικό Σημείωμα — Georg Friedrich Bernhard Riemann",
+      "path": "hist_prompts/ch14/hist-riemann.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch14/hist-riemann.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch15_hist-barrow",
+      "type": "hist_prompt",
+      "chapter": 15,
+      "title": "Ιστορικό Σημείωμα — Isaac Barrow",
+      "path": "hist_prompts/ch15/hist-barrow.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch15/hist-barrow.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch16_hist-johann-bernoulli",
+      "type": "hist_prompt",
+      "chapter": 16,
+      "title": "Ιστορικό Σημείωμα — Johann Bernoulli",
+      "path": "hist_prompts/ch16/hist-johann-bernoulli.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch16/hist-johann-bernoulli.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch17_hist-pappus",
+      "type": "hist_prompt",
+      "chapter": 17,
+      "title": "Ιστορικό Σημείωμα — Πάππος ο Αλεξανδρεύς",
+      "path": "hist_prompts/ch17/hist-pappus.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch17/hist-pappus.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch18_hist-euler",
+      "type": "hist_prompt",
+      "chapter": 18,
+      "title": "Ιστορικό Σημείωμα — Leonhard Euler",
+      "path": "hist_prompts/ch18/hist-euler.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch18/hist-euler.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch19_hist-cauchy",
+      "type": "hist_prompt",
+      "chapter": 19,
+      "title": "Ιστορικό Σημείωμα — Augustin-Louis Cauchy",
+      "path": "hist_prompts/ch19/hist-cauchy.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch19/hist-cauchy.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch19_hist-weierstrass",
+      "type": "hist_prompt",
+      "chapter": 19,
+      "title": "Ιστορικό Σημείωμα — Karl Weierstrass",
+      "path": "hist_prompts/ch19/hist-weierstrass.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch19/hist-weierstrass.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch20_hist-euler",
+      "type": "hist_prompt",
+      "chapter": 20,
+      "title": "Ιστορικό Σημείωμα — Leonhard Euler",
+      "path": "hist_prompts/ch20/hist-euler.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch20/hist-euler.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch20_hist-fourier",
+      "type": "hist_prompt",
+      "chapter": 20,
+      "title": "Ιστορικό Σημείωμα — Jean-Baptiste Joseph Fourier",
+      "path": "hist_prompts/ch20/hist-fourier.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch20/hist-fourier.html",
+      "status": "active"
+    },
+    {
+      "id": "hist_ch20_hist-jakob-bernoulli",
+      "type": "hist_prompt",
+      "chapter": 20,
+      "title": "Ιστορικό Σημείωμα — Jakob Bernoulli",
+      "path": "hist_prompts/ch20/hist-jakob-bernoulli.html",
+      "url": "https://nikmatz.github.io/ELADIC_GR/hist_prompts/ch20/hist-jakob-bernoulli.html",
       "status": "active"
     },
     {
@@ -933,26 +3097,6 @@
       "path": "appendices/python/",
       "url": "https://nikmatz.github.io/ELADIC_GR/appendices/python/",
       "status": "active"
-    },
-    {
-      "id": "quiz_vol2_diaf_ex",
-      "type": "quiz",
-      "chapter": null,
-      "volume": 2,
-      "title": "Κουίζ: Διαφορικές Εξισώσεις (Τόμος 2)",
-      "path": "quizzes/vol2_diaf_ex/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/quizzes/vol2_diaf_ex/",
-      "status": "vol2"
-    },
-    {
-      "id": "code_vol2_diaf_ex",
-      "type": "code",
-      "chapter": null,
-      "volume": 2,
-      "title": "Δραστηριότητες CAS: Διαφορικές Εξισώσεις (Τόμος 2)",
-      "path": "code/vol2_diaf_ex/",
-      "url": "https://nikmatz.github.io/ELADIC_GR/code/vol2_diaf_ex/",
-      "status": "vol2"
     }
   ]
 }
