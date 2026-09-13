@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κώδικας Κεφ. 15 — Θεμελιώδες Θεώρημα Λογισμού · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222}
+  header{background:var(--blue);color:white;padding:18px 24px}
+  header h1{font-size:1.25rem;font-weight:700}
+  header p{font-size:.9rem;margin-top:4px;opacity:.85}
+  .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd}
+  .breadcrumb a{color:var(--blue);text-decoration:none}
+  .container{max-width:960px;margin:0 auto;padding:24px 16px}
+  .info-box{background:white;border-left:5px solid var(--blue);padding:14px 18px;margin-bottom:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .info-box h2{font-size:1rem;color:var(--blue);margin-bottom:8px}
+  .info-box p{font-size:.88rem;line-height:1.6}
+  .tabs{display:flex;gap:6px;margin-bottom:0}
+  .tab-btn{padding:10px 20px;border:none;border-radius:6px 6px 0 0;font-size:.9rem;font-weight:600;cursor:pointer}
+  .tab-btn.maxima{background:#d5f5e3;color:var(--teal)}
+  .tab-btn.python{background:#d6eaf8;color:var(--blue)}
+  .tab-btn.active.maxima{background:var(--teal);color:white}
+  .tab-btn.active.python{background:var(--blue);color:white}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  .code-card{background:white;border-radius:0 6px 6px 6px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+  .code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-size:.85rem;font-weight:600}
+  .code-header.maxima{background:var(--teal);color:white}
+  .code-header.python{background:var(--blue);color:white}
+  .download-btn{display:inline-block;padding:5px 12px;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.5);border-radius:4px;text-decoration:none;font-size:.8rem;font-weight:600}
+  .download-btn:hover{background:rgba(255,255,255,.35)}
+  pre[class*="language-"]{margin:0!important;border-radius:0!important;max-height:520px;overflow-y:auto;font-size:.83rem}
+  .commands-box{background:#fffde7;border:1px solid #f9a825;border-radius:4px;padding:12px 16px;margin:16px 0;font-size:.85rem}
+  .commands-box strong{color:var(--orange)}
+  .commands-box code{background:#fff3cd;padding:1px 5px;border-radius:3px;font-size:.82rem}
+  footer{text-align:center;padding:20px;font-size:.8rem;color:#888;margin-top:32px;border-top:1px solid #ddd}
+
+  /* ── In-browser Python runner ── */
+  .py-toolbar{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#1d2b36;}
+  .run-btn{background:#16a34a;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .run-btn:disabled{opacity:.55;cursor:default;}
+  .reset-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;}
+  .py-status{color:#9fb3c8;font-size:.8rem;margin-left:auto;text-align:right;}
+  textarea.py-editor{display:block;width:100%;min-height:360px;border:none;background:#272822;color:#f8f8f2;font-family:Consolas,Monaco,monospace;font-size:.83rem;line-height:1.5;padding:14px 16px;resize:vertical;outline:none;tab-size:4;}
+  .py-output{background:#0e1416;color:#e6edf3;font-family:Consolas,Monaco,monospace;font-size:.82rem;white-space:pre-wrap;padding:14px 16px;margin:0;max-height:380px;overflow:auto;border-top:1px solid #2a3942;}
+  .py-output:empty{display:none;}
+  .py-plots{padding:8px 16px 14px;background:#fff;text-align:center;}
+  .py-plots img{max-width:100%;border:1px solid #ddd;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 Κεφάλαιο 15 — Θεμελιώδες Θεώρημα Λογισμού</h1>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+</header>
+<div class="breadcrumb">
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 15
+</div>
+<div class="container">
+  <div class="info-box">
+    <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
+    <p><strong>Αντικείμενο:</strong> ΘΘΟΛ Μέρος Α και Β, τύπος Newton–Leibniz, κανόνας Leibniz με μεταβλητά άκρα, ΘΜΤ Ολοκληρωτικού Λογισμού<br><br>
+    Επιλέξτε γλώσσα από τις καρτέλες. Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.</p>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn maxima active" onclick="showTab('maxima')">⚙️ Maxima (.mac)</button>
+    <button class="tab-btn python"        onclick="showTab('python')">🐍 Python (.py)</button>
+  </div>
+  <div id="tab-maxima" class="tab-content active">
+    <div class="code-card">
+      <div class="code-header maxima">
+        <span>maxima_ttl.mac</span>
+        <a class="download-btn" href="maxima_ttl.mac" download>⬇ Λήψη .mac</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βασικές εντολές:</strong>
+        <code>integrate(f,t,0,x)</code> &nbsp;
+        <code>diff(F,x)</code> &nbsp;
+        <code>subst(b,x,F)</code> &nbsp;
+        <code>solve(eq,c)</code> &nbsp;
+        <code>plot2d()</code> &nbsp;
+        <code>float()</code>
+      </div>
+      <pre><code class="language-maxima" id="maxima-code">/* ============================================================
+   maxima_ttl.mac
+   Κεφάλαιο 15 — Θεμελιώδες Θεώρημα Ολοκληρωτικού Λογισμού (ΘΘΟΛ)
+                 Συνάρτηση εμβαδού και Κανόνας Leibniz
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     assume(x &gt; 0)             → υπόθεση προσήμου (ΠΡΩΤΑ ΑΠ' ΟΛΑ!)
+     integrate(f, t, 0, x)     → συνάρτηση εμβαδού F(x) = ∫₀ˣ f(t)dt
+     diff(F, x)                → F'(x) — το Α΄ μέρος του ΘΘΟΛ
+     subst(b, x, F)            → αντικατάσταση x := b (τύπος Newton–Leibniz)
+     'integrate(f, t, a, b)    → ΑΝΕΚΤΕΛΕΣΤΟ ολοκλήρωμα· η diff εφαρμόζει
+                                 πάνω του απευθείας τον κανόνα Leibniz
+     solve(eq, c)              → επίλυση για το c του ΘΜΤ
+     ratsimp, trigsimp, float  → απλοποίηση και δεκαδικές τιμές
+     plot2d([...], [x, a, b])  → γραφική παράσταση
+
+   ΠΡΟΣΟΧΗ: το assume(x &gt; 0) μπαίνει ΠΡΙΝ από κάθε integrate με άνω
+   όριο το x. Αλλιώς η Maxima ρωτά «Is x positive, negative or zero?»
+   και σε εκτέλεση δέσμης (batch) μπλοκάρει για πάντα.
+
+   Δραστηριότητα βιβλίου:
+     (α) F(x)=∫₀ˣf(t)dt για f=t², sin t, 1/(1+t²)· έλεγχος F'(x)=f(x)
+     (β) Newton–Leibniz: ∫₁³(2x+1), ∫₀^(π/2)cos x, ∫₁^e (ln x)/x
+         πρώτα ως F(b)-F(a) με subst, μετά απευθείας
+     (γ) κανόνας Leibniz με μεταβλητά άκρα
+     (δ) ΘΜΤ Ολοκληρωτικού Λογισμού για f(x)=x² στο [0,3]
+
+   Εκτελέστε με: wxMaxima (File → Batch File) ή
+                 maxima -b maxima_ttl.mac
+   ============================================================ */
+
+/* ΠΡΩΤΑ ΑΠ' ΟΛΑ: οι υποθέσεις προσήμου — καμία ερώτηση στη συνέχεια */
+assume(x &gt; 0)$
+print("Υποθέσεις σε ισχύ:", facts())$
+
+/* ── Α. (α) Μέρος Α του ΘΘΟΛ: η συνάρτηση εμβαδού ───────── */
+print("")$
+print("════ Α. (α) Συνάρτηση εμβαδού F(x) = ∫₀ˣ f(t)dt ════")$
+
+cases_a : [t^2, sin(t), 1/(1+t^2)]$
+
+for ft in cases_a do
+  block([F, dF, f_at_x],
+    F      : integrate(ft, t, 0, x),
+    dF     : trigsimp(ratsimp(diff(F, x))),
+    f_at_x : subst(x, t, ft),
+    print("  f(t) =", ft),
+    print("     F(x) = ∫₀ˣ f(t)dt =", F),
+    print("     F'(x) =", dF, "     F'(x) - f(x) =",
+          ratsimp(trigsimp(dF - f_at_x)), "  (πρέπει 0)"))$
+
+print("")$
+print("  [Αναμένεται: f=t² → F=x³/3 ; f=sin t → F=1-cos x ;")$
+print("               f=1/(1+t²) → F=atan(x)]")$
+
+/* Τιμές της συνάρτησης εμβαδού (δείχνουν τη «συσσώρευση») */
+print("")$
+F_sin : integrate(sin(t), t, 0, x)$
+print("Συσσώρευση για f(t)=sin t:")$
+for a in [%pi/4, %pi/2, %pi, 3*%pi/2, 2*%pi] do
+  print("   F(", a, ") =", ratsimp(subst(a, x, F_sin)),
+        "=", float(subst(a, x, F_sin)))$
+print("  [Μέγιστο στο x=π (εκεί f=sin x αλλάζει πρόσημο): F(π)=2]")$
+
+/* ── Β. (β) Τύπος Newton–Leibniz: ∫_a^b f = F(b) - F(a) ─── */
+print("")$
+print("════ Β. (β) Newton–Leibniz — διπλό πέρασμα ════")$
+print("Πρώτα ως F(b)-F(a) με subst, μετά απευθείας με integrate(f,x,a,b).")$
+
+/* Δεδομένα του βιβλίου: [f(x), a, b, αναμενόμενη τιμή] */
+nl_cases : [[2*x + 1,        1,     3,      10],
+            [cos(x),         0,     %pi/2,  1],
+            [log(x)/x,       1,     %e,     1/2]]$
+
+for cs in nl_cases do
+  block([fx, aa, bb, expect, G, val1, val2],
+    fx     : cs[1],
+    aa     : cs[2],
+    bb     : cs[3],
+    expect : cs[4],
+    G      : integrate(fx, x),                       /* αντιπαράγωγος */
+    val1   : ratsimp(subst(bb, x, G) - subst(aa, x, G)),   /* F(b)-F(a) */
+    val2   : integrate(fx, x, aa, bb),                     /* απευθείας */
+    print("  f(x) =", fx, "   στο [", aa, ",", bb, "]"),
+    print("     Αντιπαράγωγος F(x) =", G),
+    print("     (1) F(b) - F(a) =", val1, "=", float(val1)),
+    print("     (2) integrate(f,x,a,b) =", val2, "=", float(val2)),
+    print("     Ταυτίζονται; διαφορά =", ratsimp(val1 - val2),
+          "   Αναμενόμενο:", expect,
+          "   σωστό;", is(ratsimp(val1 - expect) = 0)))$
+
+/* ── Γ. (γ) Κανόνας Leibniz με μεταβλητά άκρα ───────────── */
+print("")$
+print("════ Γ. (γ) Κανόνας Leibniz: F'(x) = f(b(x))b'(x) - f(a(x))a'(x) ════")$
+
+/* 1. Ένα μεταβλητό άκρο: d/dx ∫₀^(x²) e^(-t²) dt                */
+print("")$
+print("(1)  d/dx ∫₀^(x²) e^(-t²) dt")$
+D1   : ratsimp(diff('integrate(exp(-t^2), t, 0, x^2), x))$
+rule1: subst(x^2, t, exp(-t^2))*diff(x^2, x) - subst(0, t, exp(-t^2))*diff(0, x)$
+print("     Maxima (diff πάνω σε 'integrate):", D1)$
+print("     Τύπος f(b(x))·b'(x) - f(a(x))·a'(x) :", ratsimp(rule1))$
+print("     Διαφορά (πρέπει 0):", ratsimp(D1 - rule1))$
+print("     [ΑΝΑΜΕΝΟΜΕΝΟ 2x·e^(-x⁴)]")$
+/* Το ίδιο και με πραγματικό υπολογισμό του ολοκληρώματος (erf) */
+print("     Με ρητό υπολογισμό του ολοκληρώματος:",
+      ratsimp(diff(integrate(exp(-t^2), t, 0, x^2), x)))$
+
+/* 2. ΔΥΟ μεταβλητά άκρα: d/dx ∫_x^(x²) sin(t²) dt              */
+/*    Εδώ φαίνεται καθαρά ο ΑΡΝΗΤΙΚΟΣ όρος -f(a(x))·a'(x).      */
+print("")$
+print("(2)  d/dx ∫ₓ^(x²) sin(t²) dt   — ΔΥΟ μεταβλητά άκρα")$
+D2   : ratsimp(diff('integrate(sin(t^2), t, x, x^2), x))$
+rule2: subst(x^2, t, sin(t^2))*diff(x^2, x) - subst(x, t, sin(t^2))*diff(x, x)$
+print("     Maxima (diff πάνω σε 'integrate):", D2)$
+print("     Τύπος f(b(x))·b'(x) - f(a(x))·a'(x) :", ratsimp(rule2))$
+print("     Διαφορά (πρέπει 0):", ratsimp(D2 - rule2))$
+print("     [ΑΝΑΜΕΝΟΜΕΝΟ 2x·sin(x⁴) - sin(x²)]")$
+print("     Ο όρος -sin(x²) προέρχεται από το ΚΑΤΩ άκρο a(x)=x")$
+print("     (a'(x)=1) — χωρίς αυτόν ο τύπος θα ήταν λάθος.")$
+
+/* Αριθμητικός έλεγχος με πεπερασμένες διαφορές στο x = 1.3 */
+print("")$
+print("Αριθμητικός έλεγχος στο x = 1.3 (κεντρική πεπερασμένη διαφορά):")$
+block([x0, h, Iplus, Iminus, num, sym],
+  x0 : 1.3,
+  h  : 1.0e-4,
+  Iplus  : quad_qags(sin(t^2), t, x0 + h, (x0 + h)^2)[1],
+  Iminus : quad_qags(sin(t^2), t, x0 - h, (x0 - h)^2)[1],
+  num : (Iplus - Iminus)/(2*h),
+  sym : float(subst(x0, x, D2)),
+  print("   πεπερασμένες διαφορές :", num),
+  print("   συμβολικός τύπος      :", sym),
+  print("   |διαφορά|             :", float(abs(num - sym))))$
+
+/* ── Δ. (δ) ΘΜΤ Ολοκληρωτικού Λογισμού ──────────────────── */
+print("")$
+print("════ Δ. (δ) ΘΜΤ Ολοκληρωτικού Λογισμού: f(x)=x² στο [0,3] ════")$
+
+kill(c)$
+a_mvt : 0$
+b_mvt : 3$
+I_mvt : integrate(x^2, x, a_mvt, b_mvt)$
+print("∫₀³ x² dx =", I_mvt, "   [ΑΝΑΜΕΝΟΜΕΝΟ 9]")$
+
+print("Ζητάμε c ώστε f(c)·(b-a) = ∫ₐᵇ f  ⇔  c²·3 = 9:")$
+sols : solve(c^2*(b_mvt - a_mvt) = I_mvt, c)$
+print("   solve →", sols)$
+c_val : rhs(second(sols))$
+print("   Δεκτή λύση στο [0,3]: c =", c_val, "=", float(c_val),
+      "   [ΑΝΑΜΕΝΟΜΕΝΟ √3 ≈ 1.7320508]")$
+print("   f(c) =", subst(c_val, c, c^2), "   ύψος του ορθογωνίου")$
+print("   Έλεγχος f(c)·(b-a) - ∫ₐᵇf =",
+      ratsimp(subst(c_val, c, c^2)*(b_mvt - a_mvt) - I_mvt), "  (πρέπει 0)")$
+print("   Εμβαδόν ορθογωνίου =", float(subst(c_val, c, c^2)*(b_mvt - a_mvt)),
+      "   Εμβαδόν κάτω από την f =", float(I_mvt))$
+
+/* Γραφικά: η f, η οριζόντια ευθεία ύψους f(c) = 3, και το c */
+h_rect : subst(c_val, c, c^2)$
+plot2d([x^2, h_rect], [x, 0, 3], [y, 0, 9.5],
+       [legend, "f(x) = x²", "y = f(c) = 3 (ύψος ορθογωνίου)"],
+       [xlabel, "x"], [ylabel, "y"],
+       [title, "ΘΜΤ Ολοκληρωτικού Λογισμού: ισότητα εμβαδών, c = sqrt(3)"])$
+
+print("")$
+print("Τέλος — Κεφάλαιο 15.")$
+</code></pre>
+    </div>
+  </div>
+  <div id="tab-python" class="tab-content">
+    <div class="code-card">
+      <div class="code-header python">
+        <span>python_ttl.py</span>
+        <a class="download-btn" href="python_ttl.py" download>⬇ Λήψη .py</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βιβλιοθήκες / εντολές:</strong>
+        <code>sympy.integrate()</code> &nbsp;
+        <code>sympy.diff()</code> &nbsp;
+        <code>sympy.Integral()</code> &nbsp;
+        <code>scipy.integrate.quad()</code> &nbsp;
+        <code>np.cumsum()</code> &nbsp;
+        <code>matplotlib.fill_between()</code>
+      </div>
+            <div class="py-toolbar">
+        <button class="run-btn" id="py-run">▶ Τρέξε</button>
+        <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
+        <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
+      </div>
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># ============================================================
+# python_ttl.py
+# Κεφάλαιο 15 — Θεμελιώδες Θεώρημα Ολοκληρωτικού Λογισμού (ΘΘΟΛ)
+# Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+# ============================================================
+#
+# ΒΙΒΛΙΟΘΗΚΕΣ:
+#   sympy       → συμβολική συνάρτηση εμβαδού και κανόνας Leibniz
+#   numpy       → σωρευτικό άθροισμα λωρίδων (np.cumsum)
+#   scipy       → αριθμητική ολοκλήρωση αναφοράς (quad)
+#   matplotlib  → κοινά διαγράμματα και fill_between
+#
+# ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:
+#   sympy.integrate(f, (t, 0, x)) → F(x) = ∫₀ˣ f(t)dt
+#   sympy.diff(F, x)              → F'(x) = f(x)          [ΘΘΟΛ-Α]
+#   sympy.Integral(f, (t, a(x), b(x))) → ανεκτέλεστο ολοκλήρωμα
+#   sympy.diff(Integral, x)       → κανόνας Leibniz
+#   scipy.integrate.quad(f, a, b) → αριθμητικό ολοκλήρωμα
+#   numpy.cumsum(y) * h           → σωρευτικό άθροισμα λωρίδων
+#   matplotlib.fill_between()     → σκίαση χωρίου
+#
+# Δραστηριότητα βιβλίου:
+#   (α) F(x)=∫₀ˣf(t)dt για τρεις f· έλεγχος F'=f· f και F σε ΚΟΙΝΟ διάγραμμα
+#   (β) np.cumsum για f(x)=sin x στο [0,2π] έναντι της ακριβούς 1-cos x
+#   (γ) κανόνας Leibniz για d/dx ∫ₓ^(x²) sin(t²)dt + πεπερασμένες διαφορές
+#   (δ) ΘΜΤ Ολοκληρωτικού Λογισμού για f(x)=x² στο [0,3]
+# ============================================================
+
+import numpy as np
+import sympy as sp
+import matplotlib.pyplot as plt
+from scipy.integrate import quad
+
+x, t = sp.symbols('x t', real=True)
+
+print("=" * 62)
+print(" Κεφάλαιο 15: Θεμελιώδες Θεώρημα Ολοκληρωτικού Λογισμού")
+print("=" * 62)
+
+# ── Α. (α) Η συνάρτηση εμβαδού F(x) = ∫₀ˣ f(t)dt ──────────
+print("\n──── Α. (α) Συνάρτηση εμβαδού και έλεγχος F'(x) = f(x) ────")
+
+cases = [("t²",        t**2,          (-2.0,  2.0)),
+         ("sin t",     sp.sin(t),     (0.0,   2*np.pi)),
+         ("1/(1+t²)",  1/(1 + t**2),  (-4.0,  4.0))]
+
+fig, axes = plt.subplots(1, 3, figsize=(14, 4.3))
+fig.suptitle("Μέρος Α του ΘΘΟΛ:  F(x) = ∫₀ˣ f(t)dt  και  F'(x) = f(x)",
+             fontsize=12, fontweight='bold')
+
+for ax, (name, ft, (lo, hi)) in zip(axes, cases):
+    F = sp.simplify(sp.integrate(ft, (t, 0, x)))
+    dF = sp.simplify(sp.diff(F, x))
+    ok = sp.simplify(dF - ft.subs(t, x)) == 0
+    print(f"  f(t) = {name:&lt;10s} → F(x) = {F}")
+    print(f"      F'(x) = {dF}     F'(x) - f(x) = 0 ; {ok}")
+
+    # f και F στο ΙΔΙΟ διάγραμμα
+    zz = np.linspace(lo, hi, 500)
+    fn = sp.lambdify(x, ft.subs(t, x), 'numpy')
+    Fn = sp.lambdify(x, F, 'numpy')
+    ax.plot(zz, fn(zz) * np.ones_like(zz), 'b-', lw=2, label=f"f(x) = {name}")
+    ax.plot(zz, Fn(zz) * np.ones_like(zz), 'r-', lw=2, label=f"F(x) = {F}")
+    ax.axhline(0, color='k', lw=.6); ax.axvline(0, color='k', lw=.6)
+    ax.set_xlabel("x"); ax.legend(fontsize=8); ax.grid(alpha=.3)
+
+plt.tight_layout()
+print("\n  [Αναμένεται: x**3/3 ,  1 - cos(x) ,  atan(x)]")
+
+# ── Β. (β) Αριθμητική συνάρτηση εμβαδού με np.cumsum ──────
+print("\n──── Β. (β) np.cumsum για f(x) = sin x στο [0, 2π] ────")
+
+N = 4001
+xs = np.linspace(0, 2*np.pi, N)          # ΟΛΟΚΛΗΡΟ το [0,2π]
+h = xs[1] - xs[0]
+y = np.sin(xs)
+
+# Σωρευτικό άθροισμα λωρίδων (αριστερά άκρα) — ο απλούστερος τρόπος
+F_left = np.concatenate(([0.0], np.cumsum(y[:-1]) * h))
+# Σωρευτικό άθροισμα τραπεζίων — πιο ακριβές, ίδια ιδέα (np.cumsum)
+F_trap = np.concatenate(([0.0], np.cumsum((y[:-1] + y[1:])/2) * h))
+F_exact = 1 - np.cos(xs)                 # η ακριβής συνάρτηση εμβαδού
+
+print(f"  Πλέγμα: {N} σημεία στο [0, 2π],  h = {h:.6f}")
+print(f"  max|F_cumsum(αριστερά) - (1-cos x)| = "
+      f"{np.max(np.abs(F_left - F_exact)):.3e}")
+print(f"  max|F_cumsum(τραπέζια)  - (1-cos x)| = "
+      f"{np.max(np.abs(F_trap - F_exact)):.3e}")
+
+for x0 in (np.pi/2, np.pi, 3*np.pi/2, 2*np.pi):
+    val = quad(np.sin, 0, x0)[0]
+    print(f"    quad ∫₀^{x0:.4f} sin t dt = {val: .10f}   "
+          f"ακριβές 1-cos = {1-np.cos(x0): .10f}")
+
+# Πού μηδενίζεται η F' και τι συμβαίνει εκεί στην f;
+dF = np.gradient(F_trap, xs)
+k_max = int(np.argmax(F_trap))
+print(f"\n  Μέγιστο της F: F({xs[k_max]:.6f}) = {F_trap[k_max]:.6f}"
+      f"   [x = π ≈ {np.pi:.6f}, F(π) = 2]")
+print(f"  Εκεί: F'(x) ≈ {dF[k_max]:.3e}  και  f(x) = sin(x) = "
+      f"{np.sin(xs[k_max]):.3e}")
+interior = slice(3, -3)
+print(f"  max|F'(x) - sin x| στο εσωτερικό = "
+      f"{np.max(np.abs(dF[interior] - y[interior])):.3e}")
+# Τα σημεία όπου η αριθμητική F' αλλάζει πρόσημο:
+# γνήσια αλλαγή προσήμου (γινόμενο &lt; 0) — αγνοεί τον θόρυβο γύρω από το 0
+sign_changes = xs[:-1][dF[:-1]*dF[1:] &lt; 0]
+print(f"  Αλλαγές προσήμου της F' (= μηδενικά της f) στο [0,2π]: "
+      f"{np.round(sign_changes, 5)}   [αναμενόμενο x ≈ π = {np.pi:.5f}]")
+print("  ⇒ Όπου F' = 0 η f μηδενίζεται· στο x = π η f αλλάζει από + σε -,")
+print("    οπότε η F σταματά να αυξάνεται και εκεί έχει το μέγιστό της.")
+
+fig, (axf, axF) = plt.subplots(2, 1, figsize=(8.5, 6.6), sharex=True)
+fig.suptitle("Μέρος Α αριθμητικά: η συσσώρευση των λωρίδων (np.cumsum)",
+             fontsize=12, fontweight='bold')
+axf.plot(xs, y, 'b-', lw=2, label="f(x) = sin x")
+axf.fill_between(xs, 0, y, where=(y &gt;= 0), color='green', alpha=.20,
+                 label="θετική συνεισφορά")
+axf.fill_between(xs, 0, y, where=(y &lt; 0), color='red', alpha=.20,
+                 label="αρνητική συνεισφορά")
+axf.axhline(0, color='k', lw=.6); axf.axvline(np.pi, color='gray', ls=':')
+axf.legend(fontsize=8); axf.grid(alpha=.3); axf.set_ylabel("f(x)")
+
+axF.plot(xs, F_trap, 'r-', lw=2.4, label="F(x) με np.cumsum")
+axF.plot(xs, F_exact, 'k--', lw=1.4, label="ακριβής F(x) = 1 - cos x")
+axF.axvline(np.pi, color='gray', ls=':')
+axF.plot([np.pi], [2], 'ko', ms=7)
+axF.annotate("μέγιστο F(π) = 2\n(εκεί f = 0)", (np.pi, 2),
+             textcoords="offset points", xytext=(12, -28), fontsize=9)
+axF.axhline(0, color='k', lw=.6)
+axF.set_xlabel("x"); axF.set_ylabel("F(x)")
+axF.legend(fontsize=8); axF.grid(alpha=.3)
+axF.set_xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi])
+axF.set_xticklabels(["0", "π/2", "π", "3π/2", "2π"])
+plt.tight_layout()
+
+# ── Γ. (γ) Κανόνας Leibniz με sympy.Integral ──────────────
+print("\n──── Γ. (γ) Κανόνας Leibniz: d/dx ∫ₓ^(x²) sin(t²) dt ────")
+
+I_unev = sp.Integral(sp.sin(t**2), (t, x, x**2))
+print(f"  Ανεκτέλεστο: {I_unev}")
+D = sp.simplify(sp.diff(I_unev, x))
+print(f"  sympy.diff → {D}")
+
+# Ο τύπος f(b(x))·b'(x) - f(a(x))·a'(x)
+bx, ax_ = x**2, x
+rule = (sp.sin(t**2).subs(t, bx)*sp.diff(bx, x)
+        - sp.sin(t**2).subs(t, ax_)*sp.diff(ax_, x))
+print(f"  Τύπος f(b)b' - f(a)a' → {sp.simplify(rule)}")
+print(f"  Διαφορά (πρέπει 0): {sp.simplify(D - rule)}")
+print("  [ΑΝΑΜΕΝΟΜΕΝΟ 2x·sin(x⁴) - sin(x²)]")
+
+# Αριθμητική επαλήθευση με κεντρικές πεπερασμένες διαφορές
+print("\n  Επαλήθευση με πεπερασμένες διαφορές:")
+D_num = sp.lambdify(x, D, 'numpy')
+g = lambda s: np.sin(s**2)
+print(f"  {'x₀':&gt;6} {'πεπ. διαφορές':&gt;18} {'συμβολικός τύπος':&gt;18} "
+      f"{'|διαφορά|':&gt;12}")
+for x0 in (0.7, 1.0, 1.3, 1.8):
+    hh = 1e-5
+    Ip = quad(g, x0 + hh, (x0 + hh)**2)[0]
+    Im = quad(g, x0 - hh, (x0 - hh)**2)[0]
+    num = (Ip - Im)/(2*hh)
+    sym = float(D_num(x0))
+    print(f"  {x0:&gt;6.2f} {num:&gt;18.9f} {sym:&gt;18.9f} {abs(num-sym):&gt;12.2e}")
+
+# ── Δ. (δ) ΘΜΤ Ολοκληρωτικού Λογισμού ────────────────────
+print("\n──── Δ. (δ) ΘΜΤ Ολοκληρωτικού Λογισμού: f(x)=x² στο [0,3] ────")
+
+c = sp.symbols('c', positive=True)
+a_i, b_i = 0, 3
+I_val = sp.integrate(x**2, (x, a_i, b_i))
+print(f"  ∫₀³ x² dx = {I_val}   [ΑΝΑΜΕΝΟΜΕΝΟ 9]")
+
+sols = sp.solve(sp.Eq(c**2*(b_i - a_i), I_val), c)
+print(f"  solve: f(c)·(b-a) = ∫ₐᵇf  ⇒  c = {sols}")
+c_val = sols[0]
+print(f"  Δεκτή λύση στο [0,3]: c = {c_val} ≈ {float(c_val):.10f}"
+      f"   [ΑΝΑΜΕΝΟΜΕΝΟ √3 ≈ {np.sqrt(3):.10f}]")
+h_rect = c_val**2
+print(f"  Ύψος ορθογωνίου f(c) = {h_rect}")
+print(f"  Εμβαδόν ορθογωνίου f(c)·(b-a) = {sp.simplify(h_rect*(b_i-a_i))}"
+      f"   έναντι  ∫ₐᵇf = {I_val}")
+print(f"  Διαφορά (πρέπει 0): {sp.simplify(h_rect*(b_i - a_i) - I_val)}")
+
+cf, hf = float(c_val), float(h_rect)
+zz = np.linspace(0, 3, 500)
+plt.figure(figsize=(7.8, 5.2))
+plt.fill_between(zz, 0, zz**2, color='steelblue', alpha=.35,
+                 label="χωρίο κάτω από f(x)=x²   (εμβαδόν = 9)")
+plt.fill_between([0, 3], 0, [hf, hf], color='crimson', alpha=.18,
+                 label=f"ορθογώνιο ύψους f(c) = {hf:.0f}   (εμβαδόν = {hf*3:.0f})")
+plt.plot(zz, zz**2, 'b-', lw=2.3)
+plt.axhline(hf, color='crimson', lw=2, ls='--')
+plt.vlines(cf, 0, hf, color='k', ls=':', lw=1.3)
+plt.plot([cf], [hf], 'ko', ms=8, zorder=5)
+plt.annotate(f"c = √3 ≈ {cf:.4f}", (cf, hf), textcoords="offset points",
+             xytext=(12, -22), fontsize=10)
+plt.xlim(0, 3); plt.ylim(0, 9.6)
+plt.xlabel("x"); plt.ylabel("y")
+plt.title("ΘΜΤ Ολοκληρωτικού Λογισμού: τα δύο εμβαδά είναι ίσα")
+plt.legend(fontsize=9, loc='upper left'); plt.grid(alpha=.3)
+plt.tight_layout()
+
+print("\n✓ Ολοκληρώθηκε το Κεφάλαιο 15.")
+plt.show()
+</textarea>
+      <pre class="py-output" id="py-output"></pre>
+      <div class="py-plots" id="py-plots"></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+}
+function loadCode(file, elementId, lang) {
+  fetch(file+'?v='+Date.now())
+    .then(r=>r.ok?r.text():Promise.reject(r.status))
+    .then(text=>{
+      const el=document.getElementById(elementId);
+      el.textContent=text; el.className='language-'+lang;
+      Prism.highlightElement(el);
+    })
+    .catch(err=>{document.getElementById(elementId).textContent='⚠ Αδυναμία φόρτωσης ('+err+'). Χρήση κουμπιού Λήψη.';});
+}
+
+/* ── In-browser Python runner (Pyodide) ── */
+const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+let pyodideReady = null, originalPy = '';
+const $ = id => document.getElementById(id);
+originalPy = $('py-editor').value;
+$('py-reset').onclick = () => { $('py-editor').value = originalPy; $('py-output').textContent=''; $('py-plots').innerHTML=''; };
+
+async function ensurePyodide(setStatus){
+  if (pyodideReady) return pyodideReady;
+  pyodideReady = (async () => {
+    setStatus('Λήψη περιβάλλοντος Python… (πρώτη φορά ~15–25 MB)');
+    if (!window.loadPyodide){
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = PYODIDE_URL; sc.onload = res; sc.onerror = () => rej('script load error');
+        document.head.appendChild(sc);
+      });
+    }
+    return await loadPyodide();
+  })();
+  return pyodideReady;
+}
+
+$('py-run').onclick = async function(){
+  const btn = this, out = $('py-output'), plots = $('py-plots');
+  const setStatus = t => $('py-status').textContent = t;
+  btn.disabled = true; out.textContent = ''; plots.innerHTML = '';
+  try {
+    const py = await ensurePyodide(setStatus);
+    py.setStdout({ batched: s => { out.textContent += s; } });
+    py.setStderr({ batched: s => { out.textContent += s; } });
+    const code = $('py-editor').value;
+    setStatus('Φόρτωση βιβλιοθηκών…');
+    await py.loadPackagesFromImports(code);
+    setStatus('Εκτέλεση…');
+    await py.runPythonAsync("try:\n    import matplotlib; matplotlib.use('AGG')\nexcept Exception:\n    pass");
+    py.globals.set('__user_src__', code);
+    await py.runPythonAsync(`
+import traceback
+try:
+    exec(__user_src__, {'__name__': '__main__'})
+except Exception:
+    traceback.print_exc()
+`);
+    const figs = await py.runPythonAsync(`
+import base64, io
+_imgs = []
+try:
+    import matplotlib.pyplot as plt
+    for _n in plt.get_fignums():
+        _f = plt.figure(_n); _b = io.BytesIO()
+        _f.savefig(_b, format='png', dpi=110, bbox_inches='tight'); _b.seek(0)
+        _imgs.append(base64.b64encode(_b.read()).decode())
+    plt.close('all')
+except Exception:
+    pass
+_imgs
+`);
+    const arr = figs.toJs(); if (figs.destroy) figs.destroy();
+    arr.forEach(b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; plots.appendChild(img); });
+    setStatus(arr.length ? ('Ολοκληρώθηκε ✓ — ' + arr.length + ' γράφημα/τα') : 'Ολοκληρώθηκε ✓');
+  } catch (e) {
+    out.textContent += '\n⚠ Σφάλμα: ' + e;
+    setStatus('Σφάλμα');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>

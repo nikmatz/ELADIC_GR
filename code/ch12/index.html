@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κώδικας Κεφ. 12 — Εφαρμογές Παραγώγου · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222}
+  header{background:var(--blue);color:white;padding:18px 24px}
+  header h1{font-size:1.25rem;font-weight:700}
+  header p{font-size:.9rem;margin-top:4px;opacity:.85}
+  .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd}
+  .breadcrumb a{color:var(--blue);text-decoration:none}
+  .container{max-width:960px;margin:0 auto;padding:24px 16px}
+  .info-box{background:white;border-left:5px solid var(--blue);padding:14px 18px;margin-bottom:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .info-box h2{font-size:1rem;color:var(--blue);margin-bottom:8px}
+  .info-box p{font-size:.88rem;line-height:1.6}
+  .tabs{display:flex;gap:6px;margin-bottom:0}
+  .tab-btn{padding:10px 20px;border:none;border-radius:6px 6px 0 0;font-size:.9rem;font-weight:600;cursor:pointer}
+  .tab-btn.maxima{background:#d5f5e3;color:var(--teal)}
+  .tab-btn.python{background:#d6eaf8;color:var(--blue)}
+  .tab-btn.active.maxima{background:var(--teal);color:white}
+  .tab-btn.active.python{background:var(--blue);color:white}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  .code-card{background:white;border-radius:0 6px 6px 6px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+  .code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-size:.85rem;font-weight:600}
+  .code-header.maxima{background:var(--teal);color:white}
+  .code-header.python{background:var(--blue);color:white}
+  .download-btn{display:inline-block;padding:5px 12px;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.5);border-radius:4px;text-decoration:none;font-size:.8rem;font-weight:600}
+  .download-btn:hover{background:rgba(255,255,255,.35)}
+  pre[class*="language-"]{margin:0!important;border-radius:0!important;max-height:520px;overflow-y:auto;font-size:.83rem}
+  .commands-box{background:#fffde7;border:1px solid #f9a825;border-radius:4px;padding:12px 16px;margin:16px 0;font-size:.85rem}
+  .commands-box strong{color:var(--orange)}
+  .commands-box code{background:#fff3cd;padding:1px 5px;border-radius:3px;font-size:.82rem}
+  footer{text-align:center;padding:20px;font-size:.8rem;color:#888;margin-top:32px;border-top:1px solid #ddd}
+
+  /* ── In-browser Python runner ── */
+  .py-toolbar{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#1d2b36;}
+  .run-btn{background:#16a34a;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .run-btn:disabled{opacity:.55;cursor:default;}
+  .reset-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;}
+  .py-status{color:#9fb3c8;font-size:.8rem;margin-left:auto;text-align:right;}
+  textarea.py-editor{display:block;width:100%;min-height:360px;border:none;background:#272822;color:#f8f8f2;font-family:Consolas,Monaco,monospace;font-size:.83rem;line-height:1.5;padding:14px 16px;resize:vertical;outline:none;tab-size:4;}
+  .py-output{background:#0e1416;color:#e6edf3;font-family:Consolas,Monaco,monospace;font-size:.82rem;white-space:pre-wrap;padding:14px 16px;margin:0;max-height:380px;overflow:auto;border-top:1px solid #2a3942;}
+  .py-output:empty{display:none;}
+  .py-plots{padding:8px 16px 14px;background:#fff;text-align:center;}
+  .py-plots img{max-width:100%;border:1px solid #ddd;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 Κεφάλαιο 12 — Εφαρμογές Παραγώγου</h1>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+</header>
+<div class="breadcrumb">
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 12
+</div>
+<div class="container">
+  <div class="info-box">
+    <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
+    <p><strong>Αντικείμενο:</strong> κανόνας L'Hôpital βήμα-βήμα, προβλήματα βελτιστοποίησης, μέθοδος Newton–Raphson, πλήρης μελέτη συνάρτησης<br><br>
+    Επιλέξτε γλώσσα από τις καρτέλες. Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.</p>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn maxima active" onclick="showTab('maxima')">⚙️ Maxima (.mac)</button>
+    <button class="tab-btn python"        onclick="showTab('python')">🐍 Python (.py)</button>
+  </div>
+  <div id="tab-maxima" class="tab-content active">
+    <div class="code-card">
+      <div class="code-header maxima">
+        <span>maxima_efarm_par.mac</span>
+        <a class="download-btn" href="maxima_efarm_par.mac" download>⬇ Λήψη .mac</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βασικές εντολές:</strong>
+        <code>limit(f,x,a)</code> &nbsp;
+        <code>diff(f,x)</code> &nbsp;
+        <code>solve(diff(f,x)=0,x)</code> &nbsp;
+        <code>assume(x&gt;0)</code> &nbsp;
+        <code>find_root(f,x,a,b)</code> &nbsp;
+        <code>float()</code>
+      </div>
+      <pre><code class="language-maxima" id="maxima-code">/* ============================================================
+   maxima_efarm_par.mac
+   Κεφάλαιο 12 — Εφαρμογές Παραγώγου: L'Hôpital, Βελτιστοποίηση,
+                 Newton-Raphson, Πλήρης μελέτη συνάρτησης
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     limit(f, x, a)            -&gt; όριο (και limit(f,x,a,plus) πλευρικό)
+     diff(f, x)                -&gt; παράγωγος (L'Hôpital: αριθμ./παρον.)
+     solve(diff(f,x)=0, x)     -&gt; κρίσιμα σημεία
+     assume(x &gt; 0)             -&gt; υπόθεση ΠΡΙΝ από solve/limit
+     find_root(f, x, a, b)     -&gt; αριθμητική ρίζα σε [a,b]
+     float(...)                -&gt; δεκαδικές τιμές
+
+   Εκτελέστε με: wxMaxima (File/Batch) ή
+                 maxima -b maxima_efarm_par.mac
+   ============================================================ */
+
+/* ── Α. Κανόνας L'Hôpital ───────────────────────────────── */
+print("════ Α. Κανόνας L'Hôpital ════")$
+
+/* (1) lim_{x-&gt;0} (e^x - 1 - x)/x^2 — μορφή 0/0 */
+n1 : exp(x) - 1 - x$
+d1 : x^2$
+print("")$
+print("(1) lim_{x-&gt;0} (e^x-1-x)/x^2")$
+print("    Μορφή αοριστίας: αριθμητής -&gt;", limit(n1, x, 0),
+      ", παρονομαστής -&gt;", limit(d1, x, 0), "  =&gt;  0/0")$
+print("    1η παραγώγιση -&gt; (", diff(n1,x), ")/(", diff(d1,x), ")")$
+print("      στο x=0:", limit(diff(n1,x), x, 0), "/", limit(diff(d1,x), x, 0),
+      " =&gt; πάλι 0/0, συνεχίζουμε")$
+print("    2η παραγώγιση -&gt; (", diff(n1,x,2), ")/(", diff(d1,x,2), ")")$
+print("      στο x=0:", limit(diff(n1,x,2), x, 0), "/",
+      limit(diff(d1,x,2), x, 0), " =&gt; ορισμένο, τιμή =",
+      limit(diff(n1,x,2)/diff(d1,x,2), x, 0))$
+print("    limit(n1/d1, x, 0) =", limit(n1/d1, x, 0), "   (αναμ. 1/2)")$
+
+/* (2) lim_{x-&gt;0+} x ln x — μορφή 0·(-inf) -&gt; (ln x)/(1/x) = -inf/inf */
+print("")$
+print("(2) lim_{x-&gt;0+} x ln(x)")$
+print("    Μορφή αοριστίας: x -&gt;", limit(x, x, 0, plus),
+      ", ln(x) -&gt;", limit(log(x), x, 0, plus), "  =&gt;  0 · (-oo)")$
+print("    Μετατροπή: x ln x = ln(x)/(1/x)  =&gt;  μορφή -oo/oo")$
+n2 : log(x)$
+d2 : 1/x$
+q2 : ratsimp(diff(n2,x)/diff(d2,x))$
+print("    L'Hôpital: (", diff(n2,x), ")/(", diff(d2,x), ") =", q2)$
+print("      lim_{x-&gt;0+} (", q2, ") =", limit(q2, x, 0, plus))$
+print("    limit(x*log(x), x, 0, plus) =", limit(x*log(x), x, 0, plus),
+      "   (αναμ. 0)")$
+
+/* (3) lim_{x-&gt;+inf} x^2/e^x — μορφή inf/inf */
+print("")$
+print("(3) lim_{x-&gt;+oo} x^2/e^x")$
+n3 : x^2$
+d3 : exp(x)$
+print("    Μορφή αοριστίας: αριθμητής -&gt;", limit(n3, x, inf),
+      ", παρονομαστής -&gt;", limit(d3, x, inf), "  =&gt;  oo/oo")$
+print("    1η παραγώγιση -&gt; (", diff(n3,x), ")/(", diff(d3,x), ")")$
+print("      στο +oo:", limit(diff(n3,x), x, inf), "/",
+      limit(diff(d3,x), x, inf), " =&gt; πάλι oo/oo, συνεχίζουμε")$
+print("    2η παραγώγιση -&gt; (", diff(n3,x,2), ")/(", diff(d3,x,2), ")")$
+print("      στο +oo:", limit(diff(n3,x,2), x, inf), "/",
+      limit(diff(d3,x,2), x, inf), " =&gt; ορισμένο, τιμή =",
+      limit(diff(n3,x,2)/diff(d3,x,2), x, inf))$
+print("    limit(n3/d3, x, inf) =", limit(n3/d3, x, inf), "   (αναμ. 0)")$
+print("    Ερμηνεία: η e^x κυριαρχεί κάθε πολυωνύμου.")$
+
+/* (4) lim_{x-&gt;0} (1/x - 1/sin x) — μορφή oo - oo */
+print("")$
+print("(4) lim_{x-&gt;0} (1/x - 1/sin x)")$
+print("    Μορφή αοριστίας: 1/x -&gt;", limit(1/x, x, 0, plus),
+      " και 1/sin(x) -&gt;", limit(1/sin(x), x, 0, plus),
+      " (από δεξιά)  =&gt;  oo - oo")$
+n4 : sin(x) - x$
+d4 : x*sin(x)$
+print("    Κοινός παρονομαστής: (", n4, ")/(", d4, ")")$
+print("      στο x=0:", limit(n4, x, 0), "/", limit(d4, x, 0), "  =&gt;  0/0")$
+print("    1η παραγώγιση -&gt; (", diff(n4,x), ")/(", diff(d4,x), ")")$
+print("      στο x=0:", limit(diff(n4,x), x, 0), "/",
+      limit(diff(d4,x), x, 0), " =&gt; πάλι 0/0, συνεχίζουμε")$
+print("    2η παραγώγιση -&gt; (", diff(n4,x,2), ")/(", diff(d4,x,2), ")")$
+print("      στο x=0:", limit(diff(n4,x,2), x, 0), "/",
+      limit(diff(d4,x,2), x, 0), " =&gt; ορισμένο, τιμή =",
+      limit(diff(n4,x,2)/diff(d4,x,2), x, 0))$
+print("    limit(1/x - 1/sin(x), x, 0) =", limit(1/x - 1/sin(x), x, 0),
+      "   (αναμ. 0)")$
+
+/* ── Β. Βελτιστοποίηση ──────────────────────────────────── */
+print("")$
+print("════ Β. Βελτιστοποίηση ════")$
+
+/* Β1. Ορθογώνιο με περίμετρο P = 20:  πλευρές x και 10-x */
+print("")$
+print("Β1. Ορθογώνιο περιμέτρου P=20: E(x) = x(10-x)")$
+E : x*(10 - x)$
+dE : diff(E, x)$
+xopt : map(rhs, solve(dE = 0, x))$
+print("    E'(x) =", dE, "   E'(x)=0  -&gt;  x =", xopt, "   (αναμ. 5)")$
+print("    E''(x) =", diff(E, x, 2),
+      " &lt; 0  -&gt;  ΜΕΓΙΣΤΟ")$
+print("    E_max =", subst(first(xopt), x, E), "   (αναμ. 25 — τετράγωνο 5x5)")$
+
+/* Β2. Ανοικτό δοχείο (χωρίς καπάκι), όγκος V=32, τετραγωνική βάση x.
+       Ύψος: h = 32/x^2.  Επιφάνεια: S = x^2 + 4*x*h = x^2 + 128/x.  */
+print("")$
+print("Β2. Ανοικτό δοχείο V=32, τετραγωνική βάση πλευράς x")$
+assume(x &gt; 0)$                        /* ΠΡΙΝ από solve: αποφεύγει ερωτήσεις */
+hbox : 32/x^2$
+S : ratsimp(x^2 + 4*x*hbox)$
+print("    ύψος h = 32/x^2,  S(x) = x^2 + 4xh =", S, "   (αναμ. x^2 + 128/x)")$
+dS : ratsimp(diff(S, x))$
+print("    S'(x) =", dS)$
+allS : map(rhs, solve(dS = 0, x))$
+realS : sublist(allS, lambda([q], freeof(%i, q)))$
+print("    S'(x)=0  -&gt;  όλες οι ρίζες:", allS)$
+print("    πραγματική ρίζα: x =", realS, "   (αναμ. 4)")$
+xs : first(realS)$
+print("    S''(x) =", ratsimp(diff(S, x, 2)), "  στο x=", xs, " ισούται με",
+      subst(xs, x, diff(S, x, 2)), " &gt; 0  -&gt;  ΕΛΑΧΙΣΤΟ")$
+print("    S_min = S(", xs, ") =", subst(xs, x, S), "   (αναμ. 48)")$
+print("    ύψος h =", subst(xs, x, hbox), "   (αναμ. 2)")$
+print("    Έλεγχος όγκου: x^2 * h =", subst(xs, x, x^2*hbox), "   (αναμ. 32)")$
+forget(x &gt; 0)$
+
+plot2d([S], [x, 1, 10], [y, 0, 200],
+       [legend, "S(x)=x^2+128/x"],
+       [title, "Ανοικτό δοχείο V=32: ελάχιστη επιφάνεια στο x=4 (S=48)"])$
+
+/* ── Γ. Μέθοδος Newton-Raphson: x^3 - x - 2 = 0 ─────────── */
+print("")$
+print("════ Γ. Newton-Raphson για x^3 - x - 2 = 0, x0 = 1.5 ════")$
+
+kill(t)$
+fN  : t^3 - t - 2$
+dfN : diff(fN, t)$                   /* ΟΧΙ f(t):=diff(f(t),t) — θα έσκαγε */
+print("    f(t) =", fN, "   f'(t) =", dfN)$
+
+/* Ακριβής ρίζα για σύγκριση (αριθμητικά) */
+rroot : find_root(fN, t, 1, 2)$
+print("    find_root(f, t, 1, 2) =", rroot)$
+
+print("")$
+print("    i        x_i                  f(x_i)            |x_i - ρίζα|")$
+xi : 1.5$
+print("    0   ", xi, "        ", float(subst(xi, t, fN)),
+      "     ", float(abs(xi - rroot)))$
+for i:1 thru 5 do
+  block([fv, dv, er],
+    fv : float(subst(xi, t, fN)),
+    dv : float(subst(xi, t, dfN)),
+    xi : xi - fv/dv,
+    er : float(abs(xi - rroot)),
+    print("   ", i, "   ", xi, "   ", float(subst(xi, t, fN)), "   ", er))$
+
+print("")$
+print("    Ρίζα (Newton, 5 βήματα):", xi)$
+print("    Ρίζα (find_root):       ", rroot)$
+print("    Διαφορά:", float(abs(xi - rroot)), "   (αναμ. ~0)")$
+print("    Αναμενόμενη ρίζα: 1.5213797 (7 σωστά δεκαδικά)")$
+
+/* Τετραγωνική σύγκλιση: τα σωστά δεκαδικά ψηφία διπλασιάζονται.
+   Σφάλματα ~ 3.6e-4, 9.9e-8, 7.6e-15 -&gt; ~3.4, ~7.0, ~14.1 ψηφία. */
+print("")$
+print("    Τετραγωνική σύγκλιση — σωστά δεκαδικά ψηφία ανά βήμα:")$
+xi : 1.5$
+for i:1 thru 4 do
+  block([fv, dv, er],
+    fv : float(subst(xi, t, fN)),
+    dv : float(subst(xi, t, dfN)),
+    xi : xi - fv/dv,
+    er : float(abs(xi - rroot)),
+    if er &gt; 0 then
+      print("      βήμα", i, ": σφάλμα =", er,
+            "  -&gt;  ~", float(-log(er)/log(10)), "σωστά ψηφία")
+    else
+      print("      βήμα", i, ": σφάλμα = 0 (όριο ακρίβειας μηχανής)"))$
+
+/* ── Δ. Πλήρης μελέτη: f(x) = (x^2-1)/(x^2+1) ───────────── */
+print("")$
+print("════ Δ. Πλήρης μελέτη της f(x) = (x^2-1)/(x^2+1) ════")$
+
+F  : (x^2 - 1)/(x^2 + 1)$
+F1 : ratsimp(diff(F, x))$
+F2 : ratsimp(diff(F, x, 2))$
+
+print("")$
+print("Δ1. Πεδίο ορισμού")$
+print("    x^2+1 = 0  -&gt;  λύσεις:", map(rhs, solve(x^2 + 1 = 0, x)),
+      "  (μιγαδικές)")$
+print("    Άρα ο παρονομαστής δεν μηδενίζεται ποτέ: D(f) = R.")$
+
+print("")$
+print("Δ2. Ασύμπτωτες")$
+print("    lim_{x-&gt;+oo} f =", limit(F, x, inf), "   (αναμ. 1)")$
+print("    lim_{x-&gt;-oo} f =", limit(F, x, minf), "  (αναμ. 1)")$
+print("    -&gt; οριζόντια ασύμπτωτη y = 1. Κατακόρυφες: καμία (D=R).")$
+
+print("")$
+print("Δ3. Μονοτονία και ακρότατα")$
+print("    f'(x) =", F1, " =", factor(F1), "   (αναμ. 4x/(x^2+1)^2)")$
+critF : map(rhs, solve(F1 = 0, x))$
+print("    f'(x)=0  -&gt;  x =", critF, "   (αναμ. 0)")$
+print("    f'(-1) =", subst(-1, x, F1), " &lt; 0  -&gt;  φθίνουσα στο (-oo,0)")$
+print("    f'( 1) =", subst( 1, x, F1), " &gt; 0  -&gt;  αύξουσα  στο (0,+oo)")$
+print("    f''(x) =", factor(F2))$
+print("    f''(0) =", subst(0, x, F2), " &gt; 0  -&gt;  ΟΛΙΚΟ ΕΛΑΧΙΣΤΟ")$
+print("    f(0) =", subst(0, x, F), "   (αναμ. -1)")$
+print("    Σύνολο τιμών: [-1, 1)")$
+
+print("")$
+print("Δ4. Κυρτότητα και σημεία καμπής")$
+inflF : sort(map(rhs, solve(F2 = 0, x)))$
+print("    f''(x)=0  -&gt;  x =", inflF, " =", float(inflF),
+      "   (αναμ. ±1/sqrt(3) ≈ ±0.5774)")$
+for c in inflF do
+  print("      x =", c, "  f =", ratsimp(subst(c, x, F)), "   (αναμ. -1/2)")$
+print("    f''(-2) =", float(subst(-2, x, F2)), " &lt; 0  -&gt;  κοίλη")$
+print("    f''( 0) =", float(subst( 0, x, F2)), " &gt; 0  -&gt;  κυρτή")$
+print("    f''( 2) =", float(subst( 2, x, F2)), " &lt; 0  -&gt;  κοίλη")$
+print("    Κυρτή στο (-1/sqrt(3), 1/sqrt(3)), κοίλη εκτός.")$
+
+plot2d([F, 1], [x, -6, 6], [y, -1.4, 1.4],
+       [legend, "f(x)=(x^2-1)/(x^2+1)", "ασύμπτωτη y=1"],
+       [title, "Πλήρης μελέτη: ελάχιστο (0,-1), καμπή στα ±1/sqrt(3)"])$
+
+print("")$
+print("Ολοκληρώθηκε το Κεφάλαιο 12.")$
+</code></pre>
+    </div>
+  </div>
+  <div id="tab-python" class="tab-content">
+    <div class="code-card">
+      <div class="code-header python">
+        <span>python_efarm_par.py</span>
+        <a class="download-btn" href="python_efarm_par.py" download>⬇ Λήψη .py</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βιβλιοθήκες / εντολές:</strong>
+        <code>sympy.limit()</code> &nbsp;
+        <code>sympy.solve()</code> &nbsp;
+        <code>scipy.optimize.minimize_scalar()</code> &nbsp;
+        <code>scipy.optimize.newton()</code> &nbsp;
+        <code>matplotlib.pyplot</code>
+      </div>
+            <div class="py-toolbar">
+        <button class="run-btn" id="py-run">▶ Τρέξε</button>
+        <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
+        <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
+      </div>
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># ============================================================
+# python_efarm_par.py
+# Κεφάλαιο 12 — Εφαρμογές Παραγώγου: SymPy &amp; SciPy
+# Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+# ============================================================
+#
+# ΒΙΒΛΙΟΘΗΚΕΣ:
+#   sympy  → όρια (L'Hôpital), κρίσιμα σημεία
+#   scipy  → optimize.minimize_scalar, optimize.newton
+#   numpy / matplotlib → γραφήματα σύγκλισης και βελτιστοποίησης
+#
+# ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:
+#   sympy.limit(f, x, a)                  → όριο (dir='+' για πλευρικό)
+#   sympy.solve(diff(f, x), x)            → κρίσιμα σημεία
+#   scipy.optimize.minimize_scalar(f, ...)→ αριθμητική ελαχιστοποίηση
+#   scipy.optimize.newton(f, x0, fprime)  → αριθμητική ρίζα (Newton)
+# ============================================================
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import minimize_scalar, newton
+from sympy import (symbols, diff, limit, solve, simplify, lambdify, together,
+                   fraction, exp, log, sin, oo, nan, zoo, S)
+
+x = symbols('x')
+
+print("=" * 58)
+print(" Κεφάλαιο 12: Εφαρμογές Παραγώγου — Python")
+print("=" * 58)
+
+# ── Α. Κανόνας L'Hôpital — βήμα βήμα ──────────────────────
+print("\n── Α. Κανόνας L'Hôpital ──")
+
+INDET = (S.Zero, oo, -oo, zoo, nan)
+
+
+def _form(num, den, pt, direction):
+    """Επιστρέφει (lim αριθμητή, lim παρονομαστή) στο σημείο pt."""
+    ln = limit(num, x, pt, direction)
+    ld = limit(den, x, pt, direction)
+    return ln, ld
+
+
+def _is_indeterminate(ln, ld):
+    """0/0 ή ±oo/±oo ;"""
+    zero_zero = (ln == 0 and ld == 0)
+    inf_inf = (ln in (oo, -oo, zoo) and ld in (oo, -oo, zoo))
+    return zero_zero or inf_inf
+
+
+def lhopital(num, den, pt, direction='+-', max_steps=5, label=""):
+    """Εφαρμόζει L'Hôpital βήμα-βήμα και τυπώνει κάθε ενδιάμεσο βήμα."""
+    print(f"\n  {label}")
+    ln, ld = _form(num, den, pt, direction)
+    print(f"    Βήμα 0: ({num}) / ({den})")
+    print(f"            αριθμητής → {ln},  παρονομαστής → {ld}")
+    if not _is_indeterminate(ln, ld):
+        val = limit(num/den, x, pt, direction)
+        print(f"            δεν είναι απροσδιόριστη μορφή· τιμή = {val}")
+        return val
+    form = "0/0" if ln == 0 else "±oo/±oo"
+    print(f"            απροσδιόριστη μορφή {form} → εφαρμόζουμε L'Hôpital")
+
+    n_k, d_k = num, den
+    for k in range(1, max_steps + 1):
+        n_raw, d_raw = diff(n_k, x), diff(d_k, x)
+        print(f"    Βήμα {k}: ({n_raw}) / ({d_raw})")
+        # Αλγεβρική αναδιάταξη του πηλίκου — αλλιώς μορφές όπως
+        # (1/x)/(-1/x^2) θα έμεναν "oo/oo" επ' άπειρον.
+        n_k, d_k = fraction(together(simplify(n_raw/d_raw)))
+        if (n_k, d_k) != (n_raw, d_raw):
+            print(f"            μετά από απλοποίηση: ({n_k}) / ({d_k})")
+        ln, ld = _form(n_k, d_k, pt, direction)
+        print(f"            αριθμητής → {ln},  παρονομαστής → {ld}")
+        if not _is_indeterminate(ln, ld):
+            val = limit(n_k/d_k, x, pt, direction)
+            print(f"            η αοριστία ΑΡΘΗΚΕ · όριο = {val}")
+            return val
+        form = "0/0" if ln == 0 else "±oo/±oo"
+        print(f"            πάλι {form} → συνεχίζουμε")
+    print(f"    Δεν άρθηκε σε {max_steps} βήματα.")
+    return None
+
+
+# (1) lim_{x→0} (e^x - 1 - x)/x^2      [0/0]  → 1/2
+v1 = lhopital(exp(x) - 1 - x, x**2, 0,
+              label="(1) lim_(x→0) (e^x - 1 - x)/x^2      [μορφή 0/0]")
+d1 = limit((exp(x) - 1 - x)/x**2, x, 0)
+print(f"    sympy.limit = {d1}   (αναμ. 1/2)   L'Hôpital βήμα-βήμα: {v1}"
+      f"   συμφωνία: {simplify(v1 - d1) == 0}")
+
+# (2) lim_{x→0+} x·ln x                [0·(-oo)] → 0
+print("\n  (2) lim_(x→0+) x·ln(x)      [μορφή 0 · (-oo)]")
+print(f"    x → {limit(x, x, 0, '+')},  ln(x) → {limit(log(x), x, 0, '+')}")
+print("    Μετατροπή σε πηλίκο: x·ln x = ln(x) / (1/x)   [μορφή -oo/oo]")
+v2 = lhopital(log(x), 1/x, 0, direction='+',
+              label="(2β) lim_(x→0+) ln(x)/(1/x)")
+d2 = limit(x*log(x), x, 0, '+')
+print(f"    sympy.limit = {d2}   (αναμ. 0)   L'Hôpital βήμα-βήμα: {v2}"
+      f"   συμφωνία: {simplify(v2 - d2) == 0}")
+
+# (3) lim_{x→+oo} x^2/e^x              [oo/oo] → 0
+v3 = lhopital(x**2, exp(x), oo,
+              label="(3) lim_(x→+oo) x^2/e^x      [μορφή oo/oo]")
+d3 = limit(x**2/exp(x), x, oo)
+print(f"    sympy.limit = {d3}   (αναμ. 0)   L'Hôpital βήμα-βήμα: {v3}"
+      f"   συμφωνία: {simplify(v3 - d3) == 0}")
+print("    Ερμηνεία: η e^x κυριαρχεί κάθε πολυωνύμου.")
+
+# (4) lim_{x→0} (1/x - 1/sin x)        [oo - oo] → 0
+print("\n  (4) lim_(x→0) (1/x - 1/sin x)      [μορφή oo - oo]")
+expr4 = 1/x - 1/sin(x)
+num4, den4 = fraction(together(expr4))
+print(f"    Κοινός παρονομαστής: ({num4}) / ({den4})")
+v4 = lhopital(num4, den4, 0, label="(4β) lim_(x→0) (sin x - x)/(x·sin x)")
+d4 = limit(expr4, x, 0)
+print(f"    sympy.limit = {d4}   (αναμ. 0)   L'Hôpital βήμα-βήμα: {v4}"
+      f"   συμφωνία: {simplify(v4 - d4) == 0}")
+
+# ── Β. Βελτιστοποίηση: ορθογώνιο με περίμετρο P = 20 ──────
+print("\n── Β. Ορθογώνιο περιμέτρου P=20: E(x) = x(10-x) ──")
+
+E = x*(10 - x)
+dE = diff(E, x)
+sol_E = solve(dE, x)
+xE = sol_E[0]
+print(f"  E'(x) = {dE},  E'(x)=0 → x = {sol_E}   (αναμ. [5])")
+print(f"  E''(x) = {diff(E, x, 2)} &lt; 0 → ΜΕΓΙΣΤΟ")
+print(f"  E_max = E({xE}) = {E.subs(x, xE)}   (αναμ. 25 — τετράγωνο 5×5)")
+
+# Αριθμητική επαλήθευση: ελαχιστοποιούμε το -E
+E_num = lambdify(x, E, 'numpy')
+resE = minimize_scalar(lambda t: -E_num(t), bounds=(0, 10), method='bounded')
+print(f"  scipy.minimize_scalar(-E): x = {resE.x:.8f}, E = {-resE.fun:.8f}")
+print(f"  Απόκλιση από το x=5: {abs(resE.x - float(xE)):.2e}")
+
+# ── Γ. Ανοικτό δοχείο V=32: S(x) = x^2 + 128/x ────────────
+print("\n── Γ. Ανοικτό δοχείο (χωρίς καπάκι) V=32 ──")
+
+xp = symbols('x', positive=True)
+h_box = 32/xp**2                      # ύψος από τον όγκο: x^2·h = 32
+S_expr = (xp**2 + 4*xp*h_box).expand()  # βάση + 4 πλευρές (χωρίς καπάκι)
+print(f"  ύψος h = 32/x²,  S(x) = x² + 4xh = {S_expr}")
+print(f"  Ταυτίζεται με x² + 128/x: "
+      f"{simplify(S_expr - (xp**2 + 128/xp)) == 0}")
+
+dS = simplify(diff(S_expr, xp))
+sol_S = [s for s in solve(dS, xp) if s.is_real and s &gt; 0]
+xS = sol_S[0]
+print(f"  S'(x) = {dS}")
+print(f"  S'(x)=0 → x = {sol_S}   (αναμ. [4])")
+print(f"  S''(x) = {simplify(diff(S_expr, xp, 2))},  "
+      f"S''({xS}) = {diff(S_expr, xp, 2).subs(xp, xS)} &gt; 0 → ΕΛΑΧΙΣΤΟ")
+print(f"  S_min = S({xS}) = {S_expr.subs(xp, xS)}   (αναμ. 48)")
+print(f"  ύψος h = {h_box.subs(xp, xS)}   (αναμ. 2)")
+print(f"  Έλεγχος όγκου: x²·h = {(xp**2*h_box).subs(xp, xS)}   (αναμ. 32)")
+
+S_num = lambdify(xp, S_expr, 'numpy')
+resS = minimize_scalar(S_num, bounds=(0.5, 20), method='bounded')
+print(f"  scipy.minimize_scalar(S): x = {resS.x:.8f}, S = {resS.fun:.8f}")
+print(f"  Απόκλιση από το x=4: {abs(resS.x - float(xS)):.2e}")
+
+xs_S = np.linspace(1.0, 12.0, 500)
+plt.figure(figsize=(7, 4.5))
+plt.plot(xs_S, S_num(xs_S), 'b-', lw=2.2, label=r"$S(x)=x^2+\dfrac{128}{x}$")
+plt.scatter([float(xS)], [float(S_expr.subs(xp, xS))], color='red', s=90,
+            zorder=5, label=f"ελάχιστο: x={xS}, S={S_expr.subs(xp, xS)}")
+plt.axvline(float(xS), color='0.6', lw=0.9, ls=':')
+plt.axhline(float(S_expr.subs(xp, xS)), color='0.6', lw=0.9, ls=':')
+plt.ylim(0, 250); plt.grid(alpha=0.3); plt.legend()
+plt.xlabel('πλευρά βάσης x'); plt.ylabel('επιφάνεια S')
+plt.title("Ανοικτό δοχείο V=32: ελάχιστη επιφάνεια")
+plt.tight_layout()
+
+# ── Δ. Newton-Raphson: x^3 - x - 2 = 0, x0 = 1.5 ──────────
+print("\n── Δ. Newton-Raphson για x³ - x - 2 = 0 (x₀ = 1.5) ──")
+
+fN_sym = x**3 - x - 2
+dfN_sym = diff(fN_sym, x)
+fN = lambdify(x, fN_sym, 'numpy')
+dfN = lambdify(x, dfN_sym, 'numpy')
+print(f"  f(x) = {fN_sym},  f'(x) = {dfN_sym}")
+
+# Ρίζα αναφοράς με scipy
+root_scipy, info = newton(fN, x0=1.5, fprime=dfN, tol=1e-14, full_output=True)
+print(f"  scipy.optimize.newton: ρίζα = {root_scipy:.13f}  "
+      f"({info.iterations} επαναλήψεις)")
+print(f"  f(ρίζα) = {fN(root_scipy):.3e}")
+
+x0 = 1.5
+iterates = [x0]
+errors = [abs(x0 - root_scipy)]
+print("\n  i        x_i                   f(x_i)          |x_i - ρίζα|   "
+      "σωστά ψηφία")
+print(f"  0   {x0:.13f}   {fN(x0):+.6e}   {errors[0]:.3e}")
+xi = x0
+for i in range(1, 6):
+    xi = xi - fN(xi)/dfN(xi)
+    err = abs(xi - root_scipy)
+    iterates.append(xi)
+    errors.append(err)
+    digits = (f"{-np.log10(err):5.1f}" if err &gt; 0 else " (ακριβές)")
+    print(f"  {i}   {xi:.13f}   {fN(xi):+.6e}   {err:.3e}   {digits}")
+
+print(f"\n  Ρίζα (Newton, 5 βήματα): {iterates[-1]:.13f}")
+print(f"  Ρίζα (scipy.newton):     {root_scipy:.13f}")
+print(f"  Διαφορά: {abs(iterates[-1] - root_scipy):.3e}")
+print("  Αναμενόμενη ρίζα: 1.5213797068046")
+print("  Τετραγωνική σύγκλιση: τα σωστά δεκαδικά ψηφία περίπου")
+print("  διπλασιάζονται σε κάθε βήμα (≈3.4 → 7.0 → 14.1).")
+
+# Γράφημα σύγκλισης: εφαπτόμενες και διαδοχικές προσεγγίσεις
+fig, axes = plt.subplots(1, 2, figsize=(12, 4.8))
+
+ax = axes[0]
+xs_N = np.linspace(1.2, 1.75, 400)
+ax.plot(xs_N, fN(xs_N), 'b-', lw=2.2, label=r"$f(x)=x^3-x-2$")
+ax.axhline(0, color='k', lw=0.8)
+cols = ['#d62728', '#ff7f0e', '#2ca02c', '#9467bd']
+for k in range(min(3, len(iterates) - 1)):
+    xk = iterates[k]
+    yk = fN(xk)
+    # εφαπτόμενη στο (x_k, f(x_k)) — τέμνει τον άξονα στο x_{k+1}
+    tang = yk + dfN(xk)*(xs_N - xk)
+    ax.plot(xs_N, tang, '--', lw=1.2, color=cols[k],
+            label=f"εφαπτόμενη στο $x_{k}$ = {xk:.6f}")
+    ax.plot([xk, xk], [0, yk], ':', lw=1, color=cols[k])
+    ax.scatter([xk], [yk], color=cols[k], s=45, zorder=5)
+    ax.scatter([iterates[k + 1]], [0], color=cols[k], s=45, marker='v', zorder=5)
+ax.scatter([root_scipy], [0], color='k', s=80, marker='*', zorder=6,
+           label=f"ρίζα ≈ {root_scipy:.7f}")
+ax.set_ylim(-0.6, 1.2); ax.set_xlim(1.2, 1.75)
+ax.grid(alpha=0.3); ax.legend(fontsize=8); ax.set_xlabel('x')
+ax.set_title("Newton: κάθε εφαπτόμενη δίνει την επόμενη προσέγγιση")
+
+ax = axes[1]
+nz = [(i, e) for i, e in enumerate(errors) if e &gt; 0]
+ax.semilogy([i for i, _ in nz], [e for _, e in nz], 'o-', lw=2, color='crimson')
+for i, e in nz:
+    ax.annotate(f"{e:.1e}", (i, e), textcoords="offset points",
+                xytext=(6, 6), fontsize=8)
+ax.set_xlabel('επανάληψη i'); ax.set_ylabel(r'$|x_i - r|$  (λογαριθμική)')
+ax.grid(alpha=0.3, which='both')
+ax.set_title("Σφάλμα σε ημιλογαριθμική κλίμακα\n(η καμπύλωση ⇒ τετραγωνική σύγκλιση)")
+
+plt.tight_layout()
+plt.show()
+
+print("\nΟλοκληρώθηκε το Κεφάλαιο 12.")
+</textarea>
+      <pre class="py-output" id="py-output"></pre>
+      <div class="py-plots" id="py-plots"></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+}
+function loadCode(file, elementId, lang) {
+  fetch(file+'?v='+Date.now())
+    .then(r=>r.ok?r.text():Promise.reject(r.status))
+    .then(text=>{
+      const el=document.getElementById(elementId);
+      el.textContent=text; el.className='language-'+lang;
+      Prism.highlightElement(el);
+    })
+    .catch(err=>{document.getElementById(elementId).textContent='⚠ Αδυναμία φόρτωσης ('+err+'). Χρήση κουμπιού Λήψη.';});
+}
+
+/* ── In-browser Python runner (Pyodide) ── */
+const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+let pyodideReady = null, originalPy = '';
+const $ = id => document.getElementById(id);
+originalPy = $('py-editor').value;
+$('py-reset').onclick = () => { $('py-editor').value = originalPy; $('py-output').textContent=''; $('py-plots').innerHTML=''; };
+
+async function ensurePyodide(setStatus){
+  if (pyodideReady) return pyodideReady;
+  pyodideReady = (async () => {
+    setStatus('Λήψη περιβάλλοντος Python… (πρώτη φορά ~15–25 MB)');
+    if (!window.loadPyodide){
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = PYODIDE_URL; sc.onload = res; sc.onerror = () => rej('script load error');
+        document.head.appendChild(sc);
+      });
+    }
+    return await loadPyodide();
+  })();
+  return pyodideReady;
+}
+
+$('py-run').onclick = async function(){
+  const btn = this, out = $('py-output'), plots = $('py-plots');
+  const setStatus = t => $('py-status').textContent = t;
+  btn.disabled = true; out.textContent = ''; plots.innerHTML = '';
+  try {
+    const py = await ensurePyodide(setStatus);
+    py.setStdout({ batched: s => { out.textContent += s; } });
+    py.setStderr({ batched: s => { out.textContent += s; } });
+    const code = $('py-editor').value;
+    setStatus('Φόρτωση βιβλιοθηκών…');
+    await py.loadPackagesFromImports(code);
+    setStatus('Εκτέλεση…');
+    await py.runPythonAsync("try:\n    import matplotlib; matplotlib.use('AGG')\nexcept Exception:\n    pass");
+    py.globals.set('__user_src__', code);
+    await py.runPythonAsync(`
+import traceback
+try:
+    exec(__user_src__, {'__name__': '__main__'})
+except Exception:
+    traceback.print_exc()
+`);
+    const figs = await py.runPythonAsync(`
+import base64, io
+_imgs = []
+try:
+    import matplotlib.pyplot as plt
+    for _n in plt.get_fignums():
+        _f = plt.figure(_n); _b = io.BytesIO()
+        _f.savefig(_b, format='png', dpi=110, bbox_inches='tight'); _b.seek(0)
+        _imgs.append(base64.b64encode(_b.read()).decode())
+    plt.close('all')
+except Exception:
+    pass
+_imgs
+`);
+    const arr = figs.toJs(); if (figs.destroy) figs.destroy();
+    arr.forEach(b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; plots.appendChild(img); });
+    setStatus(arr.length ? ('Ολοκληρώθηκε ✓ — ' + arr.length + ' γράφημα/τα') : 'Ολοκληρώθηκε ✓');
+  } catch (e) {
+    out.textContent += '\n⚠ Σφάλμα: ' + e;
+    setStatus('Σφάλμα');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>

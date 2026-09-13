@@ -1,0 +1,221 @@
+/* ============================================================
+   maxima_orismeno.mac
+   Κεφάλαιο 14 — Ορισμένο Ολοκλήρωμα: Αθροίσματα Riemann & Ιδιότητες
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     sum(expr, i, 1, n)      → συμβολικό άθροισμα
+     ev(S, simpsum)          → κλειστός τύπος του αθροίσματος
+     limit(expr, n, inf)     → όριο καθώς n → ∞
+     float(expr)             → δεκαδική τιμή
+     subst(N, n, expr)       → αντικατάσταση n := N
+     integrate(f, x, a, b)   → ορισμένο ολοκλήρωμα (για επαλήθευση)
+     quad_qags(f, x, a, b)   → αριθμητική ολοκλήρωση υψηλής ακρίβειας
+     random(1.0)             → τυχαίος αριθμός στο [0,1)
+     solve(eq, x)            → επίλυση εξίσωσης
+     plot2d([...], [x,a,b])  → γραφική παράσταση
+
+   ΠΡΟΣΟΧΗ: ΠΟΤΕ δεν γράφουμε n : 100 — αυτό δεσμεύει καθολικά το n
+   και μετά το lim(R_n, n, inf) δεν έχει νόημα. Το n μένει ΕΛΕΥΘΕΡΟ
+   σύμβολο· οι αριθμητικές τιμές μπαίνουν με subst.
+
+   Δραστηριότητα βιβλίου:
+     (α) L_n, M_n, R_n για f(x)=x² στο [0,2], n = 4,10,50,200
+     (β) από τον ορισμό: ∫₀²x²dx = 8/3 και ∫₀¹x dx = 1/2, χωρίς αντιπαράγωγο
+     (γ) τυχαία σημεία x_i* — το όριο δεν αλλάζει
+     (δ) ιδιότητες: γραμμικότητα, αντιστροφή ορίων, πρόσθεση, συμμετρίες
+     (ε) φράγματα m(b-a) ≤ ∫ ≤ M(b-a) και σύγκριση
+     (ζ) μέση τιμή και Θεώρημα Μέσης Τιμής
+
+   Εκτελέστε με: wxMaxima (File → Batch File) ή
+                 maxima -b maxima_orismeno.mac
+   ============================================================ */
+
+/* Καθαρίζουμε κάθε προηγούμενη τιμή του n — το χρειαζόμαστε ΕΛΕΥΘΕΡΟ */
+kill(n)$
+declare(n, integer)$
+
+/* ── Α. (α) Αριστερά, μεσαία και δεξιά αθροίσματα Riemann ── */
+print("════ Α. (α) Αθροίσματα Riemann για f(x)=x² στο [0,2] ════")$
+
+/* Διαμέριση: Δx = 2/n,  x_k = 2k/n  (k = 0,…,n) */
+/* Δεξιά άκρα   x_i  = 2i/n                                    */
+/* Αριστερά     x_(i-1) = 2(i-1)/n                             */
+/* Μέσα         (x_(i-1)+x_i)/2 = (2i-1)/n                     */
+
+Rn : ratsimp(ev(sum((2*i/n)^2     * (2/n), i, 1, n), simpsum))$
+Ln : ratsimp(ev(sum((2*(i-1)/n)^2 * (2/n), i, 1, n), simpsum))$
+Mn : ratsimp(ev(sum(((2*i-1)/n)^2 * (2/n), i, 1, n), simpsum))$
+
+print("L_n =", factor(Ln), "   [Αναμένεται 4(n-1)(2n-1)/(3n²)]")$
+print("M_n =", factor(Mn), "   [Αναμένεται 2(2n-1)(2n+1)/(3n²)]")$
+print("R_n =", factor(Rn), "   [Αναμένεται 4(n+1)(2n+1)/(3n²)]")$
+
+print("")$
+print("Αριθμητικά (float) — παρατηρήστε L_n < 8/3 < R_n:")$
+print("      n        L_n          M_n          R_n      |M_n-8/3|   |R_n-8/3|")$
+for N in [4, 10, 50, 200] do
+  block([LN, MN, RN, I],
+    I  : 8/3,
+    LN : float(subst(N, n, Ln)),
+    MN : float(subst(N, n, Mn)),
+    RN : float(subst(N, n, Rn)),
+    print("  ", N, "  ", LN, "  ", MN, "  ", RN,
+          "  ", float(abs(MN - I)), "  ", float(abs(RN - I)),
+          "   L_n<8/3<R_n ;", is(LN < float(I) and float(I) < RN)))$
+
+print("")$
+print("Το M_n συγκλίνει ταχύτερα: το σφάλμα του πέφτει ~ 1/n²,")$
+print("ενώ των L_n, R_n ~ 1/n (δείτε τη στήλη |M_n-8/3| παραπάνω).")$
+print("Λόγοι σφαλμάτων n=4→n=200 (×50):  M:",
+      float(abs(subst(4,n,Mn)-8/3) / abs(subst(200,n,Mn)-8/3)),
+      "   R:",
+      float(abs(subst(4,n,Rn)-8/3) / abs(subst(200,n,Rn)-8/3)))$
+
+/* ── Β. (β) Από τον ορισμό, χωρίς καμία αντιπαράγωγο ─────── */
+print("")$
+print("════ Β. (β) Από τον ορισμό: όριο αθροισμάτων Riemann ════")$
+
+print("Τύπος: Σ_{i=1}^{n} i² = n(n+1)(2n+1)/6")$
+print("  Maxima:", factor(ev(sum(i^2, i, 1, n), simpsum)))$
+print("R_n = Σ (2i/n)²·(2/n) =", factor(Rn))$
+print("lim_{n→∞} R_n =", limit(Rn, n, inf), "   [ΑΝΑΜΕΝΟΜΕΝΟ 8/3]")$
+print("lim_{n→∞} L_n =", limit(Ln, n, inf))$
+print("lim_{n→∞} M_n =", limit(Mn, n, inf))$
+print("Άρα ∫₀² x² dx = 8/3 =", float(8/3), " — χωρίς να χρησιμοποιηθεί αντιπαράγωγος.")$
+print("Επαλήθευση με integrate:", integrate(x^2, x, 0, 2))$
+
+print("")$
+print("Το ίδιο για ∫₀¹ x dx, με τον τύπο Σ i = n(n+1)/2:")$
+print("  Maxima: Σ i =", factor(ev(sum(i, i, 1, n), simpsum)))$
+Sn1 : ratsimp(ev(sum((i/n)*(1/n), i, 1, n), simpsum))$
+print("  S_n = Σ (i/n)·(1/n) =", Sn1, "   [Αναμένεται (n+1)/(2n)]")$
+print("  lim_{n→∞} S_n =", limit(Sn1, n, inf), "   [ΑΝΑΜΕΝΟΜΕΝΟ 1/2]")$
+print("  Επαλήθευση με integrate:", integrate(x, x, 0, 1))$
+
+/* ── Γ. (γ) Ανεξαρτησία από την επιλογή των σημείων x_i* ─── */
+print("")$
+print("════ Γ. (γ) Τυχαία σημεία x_i* σε κάθε υποδιάστημα ════")$
+print("Θεώρημα Ολοκληρωσιμότητας: η f(x)=x² είναι συνεχής στο [0,2],")$
+print("άρα το όριο δεν εξαρτάται από την επιλογή των x_i*.")$
+
+set_random_state(make_random_state(2026))$
+
+/* Άθροισμα Riemann με ΤΥΧΑΙΟ σημείο σε κάθε υποδιάστημα:      */
+/*   x_i* = x_(i-1) + ρ_i·Δx  με ρ_i ~ U[0,1)                   */
+riemann_random(N) := block([dx, S, xl, xstar],
+  dx : 2.0/N,
+  S  : 0.0,
+  for k : 0 thru N - 1 do (
+    xl    : k*dx,
+    xstar : xl + random(1.0)*dx,
+    S     : S + xstar^2 * dx),
+  S)$
+
+print("")$
+print("      n      τυχαίο άθροισμα    |S_n - 8/3|")$
+for N in [4, 10, 50, 200, 1000, 5000] do
+  block([S],
+    S : riemann_random(N),
+    print("  ", N, "   ", S, "   ", float(abs(S - 8/3))))$
+
+print("")$
+print("Το άθροισμα με τυχαία σημεία τείνει επίσης στο 8/3 =", float(8/3), ".")$
+
+/* ── Δ. (δ) Ιδιότητες του ορισμένου ολοκληρώματος ────────── */
+print("")$
+print("════ Δ. (δ) Ιδιότητες ════")$
+
+/* Γραμμικότητα: ∫(αf+βg) = α∫f + β∫g */
+A1 : integrate(3*x^2 + 5*sin(x), x, 0, 1)$
+A2 : 3*integrate(x^2, x, 0, 1) + 5*integrate(sin(x), x, 0, 1)$
+print("Γραμμικότητα:")$
+print("  ∫₀¹(3x²+5sin x)dx =", A1, "=", float(A1))$
+print("  3∫₀¹x²dx + 5∫₀¹sin x dx =", A2, "=", float(A2))$
+print("  Διαφορά (πρέπει 0):", ratsimp(A1 - A2))$
+
+/* Αντιστροφή ορίων: ∫_a^b = -∫_b^a */
+B1 : integrate(x^2, x, 1, 4)$
+B2 : integrate(x^2, x, 4, 1)$
+print("")$
+print("Αντιστροφή ορίων:")$
+print("  ∫₁⁴x²dx =", B1, "   ∫₄¹x²dx =", B2, "   άθροισμα (πρέπει 0):", B1 + B2)$
+
+/* Πρόσθεση διαστημάτων: ∫_a^b = ∫_a^c + ∫_c^b */
+C1 : integrate(x^2, x, 0, 3)$
+C2 : integrate(x^2, x, 0, 1) + integrate(x^2, x, 1, 3)$
+print("")$
+print("Πρόσθεση διαστημάτων (a=0, c=1, b=3):")$
+print("  ∫₀³x²dx =", C1, "   ∫₀¹ + ∫₁³ =", C2, "   διαφορά:", ratsimp(C1 - C2))$
+/* Ισχύει και για c ΕΞΩ από το [a,b] */
+C3 : integrate(x^2, x, 0, 5) + integrate(x^2, x, 5, 3)$
+print("  Και με c = 5 (εκτός [0,3]):", C3, "   διαφορά:", ratsimp(C1 - C3))$
+
+/* Συμμετρίες: περιττή → 0, άρτια → 2∫₀^a */
+print("")$
+print("Συμμετρίες σε συμμετρικό διάστημα [-2,2]:")$
+print("  x³ περιττή: ∫₋₂²x³dx =", integrate(x^3, x, -2, 2),
+      "   [ΑΝΑΜΕΝΟΜΕΝΟ 0]")$
+print("  sin(x) περιττή: ∫₋₂²sin(x)dx =", integrate(sin(x), x, -2, 2))$
+print("  x² άρτια: ∫₋₂²x²dx =", integrate(x^2, x, -2, 2),
+      "   2·∫₀²x²dx =", 2*integrate(x^2, x, 0, 2),
+      "   διαφορά:", ratsimp(integrate(x^2,x,-2,2) - 2*integrate(x^2,x,0,2)))$
+
+/* ── Ε. (ε) Φράγματα και σύγκριση ────────────────────────── */
+print("")$
+print("════ Ε. (ε) Φράγματα: f(x)=e^(x²) στο [0,1] ════")$
+
+/* Η f(x)=e^(x²) είναι γνησίως αύξουσα στο [0,1] (f'(x)=2x·e^(x²) ≥ 0), */
+/* άρα m = f(0) = 1 και M = f(1) = e.                                     */
+print("f'(x) =", diff(exp(x^2), x), "  ≥ 0 στο [0,1] ⇒ η f είναι αύξουσα")$
+m_bound : subst(0, x, exp(x^2))$
+M_bound : subst(1, x, exp(x^2))$
+print("m = f(0) =", m_bound, "=", float(m_bound))$
+print("M = f(1) =", M_bound, "=", float(M_bound))$
+
+Ival : quad_qags(exp(x^2), x, 0, 1)[1]$
+print("∫₀¹ e^(x²) dx =", Ival, "   (αριθμητικά, quad_qags)")$
+print("Συμβολικά η Maxima δίνει:", integrate(exp(x^2), x, 0, 1),
+      "=", float(integrate(exp(x^2), x, 0, 1)))$
+
+print("")$
+print("Έλεγχος m(b-a) ≤ ∫ ≤ M(b-a)  με b-a = 1:")$
+print("  m(b-a) =", float(m_bound), "  ≤ ∫ =", Ival,
+      "  ≤ M(b-a) =", float(M_bound))$
+print("  Ισχύει;", is(float(m_bound) <= Ival and Ival <= float(M_bound)))$
+
+print("")$
+print("Σύγκριση: στο [0,1] ισχύει x² ≤ x, άρα e^(x²) ≤ e^x:")$
+Iex : integrate(exp(x), x, 0, 1)$
+print("  ∫₀¹ e^(x²) dx =", Ival)$
+print("  ∫₀¹ e^x   dx =", Iex, "=", float(Iex))$
+print("  ∫₀¹e^(x²) ≤ ∫₀¹e^x ;", is(Ival <= float(Iex)))$
+print("  Δείγμα της διαφοράς e^x - e^(x²) στο [0,1] (πρέπει ≥ 0):")$
+print("   ", makelist(float(subst(k/10, x, exp(x) - exp(x^2))), k, 0, 10))$
+
+/* ── Ζ. (ζ) Μέση τιμή και Θεώρημα Μέσης Τιμής ───────────── */
+print("")$
+print("════ Ζ. (ζ) Μέση τιμή της f(x)=x² στο [0,3] ════")$
+
+fbar : integrate(x^2, x, 0, 3)/(3 - 0)$
+print("∫₀³x²dx =", integrate(x^2, x, 0, 3))$
+print("Μέση τιμή f̄ = (1/(b-a))·∫₀³x²dx =", fbar, "=", float(fbar),
+      "   [ΑΝΑΜΕΝΟΜΕΝΟ 3]")$
+
+sols : solve(x^2 = fbar, x)$
+print("Λύσεις της f(ξ) = f̄ :", sols)$
+xi : rhs(second(sols))$
+print("Δεκτή λύση στο [0,3]: ξ =", xi, "=", float(xi),
+      "   [ΑΝΑΜΕΝΟΜΕΝΟ √3 ≈ 1.732]")$
+print("Έλεγχος f(ξ)·(b-a) - ∫₀³f =",
+      ratsimp(subst(xi, x, x^2)*3 - integrate(x^2, x, 0, 3)),
+      "   (πρέπει 0)")$
+
+plot2d([x^2, fbar], [x, 0, 3],
+       [legend, "f(x)=x²", "y = f̄ = 3"],
+       [xlabel, "x"], [ylabel, "y"],
+       [title, "ΘΜΤ Ολοκληρωτικού Λογισμού: ξ = sqrt(3) ≈ 1.732"])$
+
+print("")$
+print("Τέλος — Κεφάλαιο 14.")$

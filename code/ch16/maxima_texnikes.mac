@@ -1,0 +1,254 @@
+/* ============================================================ */
+/* maxima_texnikes.mac                                          */
+/* Κεφάλαιο 16 — Τεχνικές Ολοκλήρωσης                           */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications. */
+/* ------------------------------------------------------------ */
+/* ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:                                             */
+/*   integrate(f,x)            -> αόριστο/ορισμένο ολοκλήρωμα   */
+/*   changevar(expr,eq,u,x)    -> ρητή αλλαγή μεταβλητής        */
+/*   partfrac(f,x)             -> ανάλυση σε μερικά κλάσματα    */
+/*   divide(p,q,x)             -> διαίρεση πολυωνύμων           */
+/*   ratsimp(), trigsimp()     -> απλοποίηση                    */
+/*   diff(F,x)                 -> επαλήθευση με παραγώγιση      */
+/* ============================================================ */
+
+/* Βοηθητική: F είναι αντιπαράγωγος της f  <=>  F' - f = 0 */
+elegxos(F, f) := is(trigsimp(ratsimp(diff(F, x) - f)) = 0)$
+
+/* Βοηθητική: δύο αντιπαράγωγοι διαφέρουν μόνο κατά σταθερά    */
+/* <=> η παράγωγος της διαφοράς τους είναι 0                    */
+katastath(F, G) := is(trigsimp(ratsimp(diff(F - G, x))) = 0)$
+
+print("============================================================")$
+print(" Κεφάλαιο 16: Τεχνικές Ολοκλήρωσης")$
+print("============================================================")$
+
+/* ============================================================ */
+/* Α. ΑΝΤΙΚΑΤΑΣΤΑΣΗ — ρητά με changevar και σύγκριση με integrate */
+/* ============================================================ */
+print("")$
+print("=== Α. ΑΝΤΙΚΑΤΑΣΤΑΣΗ (changevar) ===")$
+
+/* Α1.  int x*e^(x^2) dx,  u = x^2  */
+f1 : x*exp(x^2)$
+J1 : 'integrate(f1, x)$
+print("")$
+print("Α1. f(x) =", f1, "   u = x^2")$
+print("   changevar :", changevar(J1, u = x^2, u, x))$
+F1u : ev(changevar(J1, u = x^2, u, x), integrate)$
+print("   ως προς u :", F1u)$
+F1s : ratsimp(subst(x^2, u, F1u))$
+print("   πίσω u->x^2:", F1s)$
+F1 : integrate(f1, x)$
+print("   άμεσο integrate:", F1, "  (αναμ. e^(x^2)/2)")$
+print("   ίδιες μορφές  :", is(ratsimp(F1s - F1) = 0))$
+print("   έλεγχος diff  :", elegxos(F1, f1))$
+
+/* Α2.  int x/sqrt(x^2+4) dx,  u = x^2+4  */
+f2 : x/sqrt(x^2+4)$
+J2 : 'integrate(f2, x)$
+print("")$
+print("Α2. f(x) =", f2, "   u = x^2+4")$
+print("   changevar :", changevar(J2, u = x^2+4, u, x))$
+F2u : ev(changevar(J2, u = x^2+4, u, x), integrate)$
+print("   ως προς u :", F2u)$
+F2s : ratsimp(subst(x^2+4, u, F2u))$
+print("   πίσω u->x^2+4:", F2s)$
+F2 : integrate(f2, x)$
+print("   άμεσο integrate:", F2, "  (αναμ. sqrt(x^2+4))")$
+print("   ίδιες μορφές  :", is(ratsimp(F2s - F2) = 0))$
+print("   έλεγχος diff  :", elegxos(F2, f2))$
+
+/* Α3.  int ln(x)/x dx,  u = ln(x).  Το x>0 δηλώνεται ΠΡΙΝ,     */
+/*      ώστε η Maxima να μη ρωτήσει τίποτε σε batch εκτέλεση.   */
+assume(x > 0)$
+f3 : log(x)/x$
+J3 : 'integrate(f3, x)$
+print("")$
+print("Α3. f(x) =", f3, "   u = log(x)")$
+print("   changevar :", changevar(J3, u = log(x), u, x))$
+F3u : ev(changevar(J3, u = log(x), u, x), integrate)$
+print("   ως προς u :", F3u)$
+F3s : ratsimp(subst(log(x), u, F3u))$
+print("   πίσω u->ln x:", F3s)$
+F3 : integrate(f3, x)$
+print("   άμεσο integrate:", F3, "  (αναμ. log(x)^2/2)")$
+print("   ίδιες μορφές  :", is(ratsimp(F3s - F3) = 0))$
+print("   έλεγχος diff  :", elegxos(F3, f3))$
+forget(x > 0)$
+
+/* ============================================================ */
+/* Β. ΚΑΤΑ ΠΑΡΑΓΟΝΤΕΣ                                           */
+/*    int u dv = u*v - int v du                                 */
+/* ============================================================ */
+print("")$
+print("=== Β. ΟΛΟΚΛΗΡΩΣΗ ΚΑΤΑ ΠΑΡΑΓΟΝΤΕΣ ===")$
+
+/* Β1.  int x^2*e^x dx  — ΔΙΠΛΗ εφαρμογή                        */
+/*   1η: u = x^2, dv = e^x dx  ->  x^2 e^x - 2*int x e^x dx     */
+/*   2η: u = x,   dv = e^x dx  ->  int x e^x dx = x e^x - e^x   */
+g1 : x^2*exp(x)$
+B_esw : integrate(x*exp(x), x)$
+print("")$
+print("Β1. f(x) =", g1, "  (διπλή εφαρμογή)")$
+print("   2η εφαρμογή: int x*e^x dx =", B_esw)$
+G1_steps : ratsimp(x^2*exp(x) - 2*B_esw)$
+print("   1η εφαρμογή: x^2*e^x - 2*int x*e^x dx =", G1_steps)$
+G1 : integrate(g1, x)$
+print("   άμεσο integrate:", ratsimp(G1), "  (αναμ. (x^2-2x+2)*e^x)")$
+print("   ίδιες μορφές  :", is(ratsimp(G1_steps - G1) = 0))$
+print("   έλεγχος diff  :", elegxos(G1, g1))$
+
+/* Β2.  int atan(x) dx  με u = atan(x), dv = dx                 */
+g2 : atan(x)$
+G2_steps : x*atan(x) - integrate(x/(1+x^2), x)$
+print("")$
+print("Β2. f(x) =", g2, "   u = atan(x), dv = dx")$
+print("   x*atan(x) - int x/(1+x^2) dx =", G2_steps)$
+G2 : integrate(g2, x)$
+print("   άμεσο integrate:", G2, "  (αναμ. x*atan(x) - log(x^2+1)/2)")$
+print("   ίδιες μορφές  :", is(ratsimp(G2_steps - G2) = 0))$
+print("   έλεγχος diff  :", elegxos(G2, g2))$
+
+/* Β3.  int e^x*sin(x) dx  — ΚΥΚΛΙΚΗ: το ολοκλήρωμα            */
+/*      επανεμφανίζεται, οπότε το λύνουμε ως εξίσωση με solve.  */
+g3 : exp(x)*sin(x)$
+print("")$
+print("Β3. f(x) =", g3, "   (κυκλική κατά παράγοντες)")$
+print("   Δύο εφαρμογές δίνουν:  I = e^x*sin(x) - e^x*cos(x) - I")$
+kyklikh : solve(II = exp(x)*sin(x) - exp(x)*cos(x) - II, II)$
+G3_steps : rhs(kyklikh[1])$
+print("   Λύνοντας ως προς I  :", G3_steps)$
+G3 : radcan(integrate(g3, x))$
+print("   άμεσο integrate:", G3, "  (αναμ. e^x*(sin x - cos x)/2)")$
+print("   ίδιες μορφές  :", is(radcan(G3_steps - G3) = 0))$
+print("   έλεγχος diff  :", elegxos(G3, g3))$
+
+/* ============================================================ */
+/* Γ. ΑΝΑΛΥΣΗ ΣΕ ΜΕΡΙΚΑ ΚΛΑΣΜΑΤΑ                                */
+/* ============================================================ */
+print("")$
+print("=== Γ. ΜΕΡΙΚΑ ΚΛΑΣΜΑΤΑ (partfrac) ===")$
+
+/* Γ1.  (2x+3)/(x^2-x-2),  x^2-x-2 = (x-2)(x+1)                 */
+r1 : (2*x+3)/(x^2-x-2)$
+print("")$
+print("Γ1. f(x) =", r1)$
+print("   παρονομαστής:", factor(x^2-x-2))$
+p1 : partfrac(r1, x)$
+print("   partfrac    :", p1, "  (αναμ. 7/(3(x-2)) - 1/(3(x+1)))")$
+R1_oros : integrate(p1, x)$
+print("   όρο προς όρο:", R1_oros)$
+R1 : integrate(r1, x)$
+print("   άμεσο       :", R1, "  (αναμ. 7*log(x-2)/3 - log(x+1)/3)")$
+print("   διαφορά σταθερά:", katastath(R1_oros, R1))$
+print("   έλεγχος diff   :", elegxos(R1, r1))$
+
+/* Γ2.  (2x^2-1)/(x(x+1)^2)  — διπλή ρίζα στον παρονομαστή      */
+r2 : (2*x^2-1)/(x*(x+1)^2)$
+print("")$
+print("Γ2. f(x) =", r2)$
+p2 : partfrac(r2, x)$
+print("   partfrac    :", p2, "  (αναμ. -1/x + 3/(x+1) - 1/(x+1)^2)")$
+R2_oros : integrate(p2, x)$
+print("   όρο προς όρο:", R2_oros)$
+R2 : integrate(r2, x)$
+print("   άμεσο       :", ratsimp(R2), "  (αναμ. -log(x)+3log(x+1)+1/(x+1))")$
+print("   διαφορά σταθερά:", katastath(R2_oros, R2))$
+print("   έλεγχος diff   :", elegxos(R2, r2))$
+
+/* Γ3.  (x^3-1)/(x^2+x+1)  — ΠΡΩΤΑ διαίρεση πολυωνύμων!         */
+/*      Ο βαθμός του αριθμητή (3) είναι >= του παρονομαστή (2), */
+/*      άρα η partfrac δεν αρκεί: κάνουμε πρώτα divide.         */
+r3 : (x^3-1)/(x^2+x+1)$
+print("")$
+print("Γ3. f(x) =", r3, "  (πρώτα διαίρεση πολυωνύμων)")$
+print("   παραγοντοποίηση αριθμητή:", factor(x^3-1))$
+d3 : divide(x^3-1, x^2+x+1, x)$
+print("   divide -> [πηλίκο, υπόλοιπο] =", d3, "  (αναμ. [x-1, 0])")$
+print("   άρα f(x) =", d3[1], " (το υπόλοιπο είναι", d3[2], ")")$
+print("   partfrac    :", partfrac(r3, x))$
+R3_oros : integrate(d3[1], x)$
+print("   int (x-1) dx:", R3_oros)$
+R3 : integrate(r3, x)$
+print("   άμεσο       :", ratsimp(R3), "  (αναμ. x^2/2 - x)")$
+print("   διαφορά σταθερά:", katastath(R3_oros, R3))$
+print("   έλεγχος diff   :", elegxos(R3, r3))$
+
+/* ============================================================ */
+/* Δ. ΤΡΙΓΩΝΟΜΕΤΡΙΚΗ ΑΝΤΙΚΑΤΑΣΤΑΣΗ                              */
+/*    Δηλώνουμε ΠΡΙΝ ότι th στο (0, pi/2), ώστε sqrt(cos^2)=cos */
+/*    και να μη ρωτήσει τίποτε η Maxima σε batch.               */
+/* ============================================================ */
+assume(th > 0, th < %pi/2, sin(th) > 0, cos(th) > 0)$
+print("")$
+print("=== Δ. ΤΡΙΓΩΝΟΜΕΤΡΙΚΗ ΑΝΤΙΚΑΤΑΣΤΑΣΗ ===")$
+
+/* Δ1.  int dx/sqrt(9-4x^2),  x = (3/2)*sin(th)                 */
+s1 : 1/sqrt(9-4*x^2)$
+x1 : 3*sin(th)/2$
+h1 : radcan(trigsimp(subst(x1, x, s1) * diff(x1, th)))$
+print("")$
+print("Δ1. f(x) =", s1, "   x = (3/2)*sin(th)")$
+print("   ολοκληρωτέα ως προς th:", h1)$
+H1 : integrate(h1, th)$
+print("   ως προς th :", H1)$
+S1_xeri : subst(asin(2*x/3), th, H1)$
+print("   πίσω th = asin(2x/3):", S1_xeri, "  (αναμ. asin(2x/3)/2)")$
+S1 : integrate(s1, x)$
+print("   άμεσο integrate:", S1)$
+print("   διαφορά σταθερά:", katastath(S1_xeri, S1))$
+print("   έλεγχος diff   :", elegxos(S1, s1))$
+
+/* Διαφορετική (σωστή) επιλογή του φοιτητή: x = (3/2)*cos(th)   */
+/* δίνει -acos(2x/3)/2, που διαφέρει κατά τη σταθερά pi/4.      */
+S1_alt : -acos(2*x/3)/2$
+print("   εναλλακτική μορφή -acos(2x/3)/2 :", S1_alt)$
+print("   διαφέρει μόνο κατά σταθερά:", katastath(S1, S1_alt))$
+print("   η σταθερά είναι:", float(subst(0.5, x, S1 - S1_alt)),
+      " = pi/4 =", float(%pi/4))$
+
+/* Δ2.  int sqrt(x^2+1) dx,  x = tan(th)                        */
+s2 : sqrt(x^2+1)$
+x2 : tan(th)$
+h2 : radcan(trigsimp(subst(x2, x, s2) * diff(x2, th)))$
+print("")$
+print("Δ2. f(x) =", s2, "   x = tan(th)")$
+print("   ολοκληρωτέα ως προς th:", h2, " (= sec^3(th))")$
+H2 : integrate(h2, th)$
+print("   ως προς th :", H2)$
+S2_xeri : subst(atan(x), th, H2)$
+S2 : integrate(s2, x)$
+print("   άμεσο integrate:", S2, "  (αναμ. (x*sqrt(x^2+1)+asinh(x))/2)")$
+print("   χειρόγραφη vs Maxima, διαφορά σταθερά:", katastath(S2_xeri, S2))$
+print("   έλεγχος diff   :", elegxos(S2, s2))$
+/* asinh(x) = log(x + sqrt(x^2+1)) : ίδια συνάρτηση, άλλη γραφή */
+print("   logarc(asinh(x)) =", logarc(asinh(x)))$
+print("   logarc(asinh(x)) - log(x+sqrt(x^2+1)) =",
+      ratsimp(logarc(asinh(x)) - log(x + sqrt(x^2+1))))$
+
+/* Δ3.  int dx/(x^2+4)^(3/2),  x = 2*tan(th)                    */
+s3 : 1/(x^2+4)^(3/2)$
+x3 : 2*tan(th)$
+h3 : radcan(trigsimp(subst(x3, x, s3) * diff(x3, th)))$
+print("")$
+print("Δ3. f(x) =", s3, "   x = 2*tan(th)")$
+print("   ολοκληρωτέα ως προς th:", h3, " (= cos(th)/4)")$
+H3 : integrate(h3, th)$
+print("   ως προς th :", H3, " (= sin(th)/4)")$
+S3_xeri : trigsimp(subst(atan(x/2), th, H3))$
+print("   πίσω th = atan(x/2):", S3_xeri)$
+S3 : integrate(s3, x)$
+print("   άμεσο integrate:", S3, "  (αναμ. x/(4*sqrt(x^2+4)))")$
+print("   διαφορά σταθερά:", katastath(S3_xeri, S3))$
+print("   έλεγχος diff   :", elegxos(S3, s3))$
+
+forget(th > 0, th < %pi/2, sin(th) > 0, cos(th) > 0)$
+
+/* Ορισμένο ολοκλήρωμα που θα ξαναδούμε στην Python: */
+print("")$
+print("Ορισμένο:  int_0^1 sqrt(x^2+1) dx =", integrate(sqrt(x^2+1), x, 0, 1),
+      "=", float(integrate(sqrt(x^2+1), x, 0, 1)), " (αναμ. 1.147793574696)")$
+
+print("")$
+print("Ολοκληρώθηκε.")$

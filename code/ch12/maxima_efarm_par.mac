@@ -1,0 +1,229 @@
+/* ============================================================
+   maxima_efarm_par.mac
+   Κεφάλαιο 12 — Εφαρμογές Παραγώγου: L'Hôpital, Βελτιστοποίηση,
+                 Newton-Raphson, Πλήρης μελέτη συνάρτησης
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     limit(f, x, a)            -> όριο (και limit(f,x,a,plus) πλευρικό)
+     diff(f, x)                -> παράγωγος (L'Hôpital: αριθμ./παρον.)
+     solve(diff(f,x)=0, x)     -> κρίσιμα σημεία
+     assume(x > 0)             -> υπόθεση ΠΡΙΝ από solve/limit
+     find_root(f, x, a, b)     -> αριθμητική ρίζα σε [a,b]
+     float(...)                -> δεκαδικές τιμές
+
+   Εκτελέστε με: wxMaxima (File/Batch) ή
+                 maxima -b maxima_efarm_par.mac
+   ============================================================ */
+
+/* ── Α. Κανόνας L'Hôpital ───────────────────────────────── */
+print("════ Α. Κανόνας L'Hôpital ════")$
+
+/* (1) lim_{x->0} (e^x - 1 - x)/x^2 — μορφή 0/0 */
+n1 : exp(x) - 1 - x$
+d1 : x^2$
+print("")$
+print("(1) lim_{x->0} (e^x-1-x)/x^2")$
+print("    Μορφή αοριστίας: αριθμητής ->", limit(n1, x, 0),
+      ", παρονομαστής ->", limit(d1, x, 0), "  =>  0/0")$
+print("    1η παραγώγιση -> (", diff(n1,x), ")/(", diff(d1,x), ")")$
+print("      στο x=0:", limit(diff(n1,x), x, 0), "/", limit(diff(d1,x), x, 0),
+      " => πάλι 0/0, συνεχίζουμε")$
+print("    2η παραγώγιση -> (", diff(n1,x,2), ")/(", diff(d1,x,2), ")")$
+print("      στο x=0:", limit(diff(n1,x,2), x, 0), "/",
+      limit(diff(d1,x,2), x, 0), " => ορισμένο, τιμή =",
+      limit(diff(n1,x,2)/diff(d1,x,2), x, 0))$
+print("    limit(n1/d1, x, 0) =", limit(n1/d1, x, 0), "   (αναμ. 1/2)")$
+
+/* (2) lim_{x->0+} x ln x — μορφή 0·(-inf) -> (ln x)/(1/x) = -inf/inf */
+print("")$
+print("(2) lim_{x->0+} x ln(x)")$
+print("    Μορφή αοριστίας: x ->", limit(x, x, 0, plus),
+      ", ln(x) ->", limit(log(x), x, 0, plus), "  =>  0 · (-oo)")$
+print("    Μετατροπή: x ln x = ln(x)/(1/x)  =>  μορφή -oo/oo")$
+n2 : log(x)$
+d2 : 1/x$
+q2 : ratsimp(diff(n2,x)/diff(d2,x))$
+print("    L'Hôpital: (", diff(n2,x), ")/(", diff(d2,x), ") =", q2)$
+print("      lim_{x->0+} (", q2, ") =", limit(q2, x, 0, plus))$
+print("    limit(x*log(x), x, 0, plus) =", limit(x*log(x), x, 0, plus),
+      "   (αναμ. 0)")$
+
+/* (3) lim_{x->+inf} x^2/e^x — μορφή inf/inf */
+print("")$
+print("(3) lim_{x->+oo} x^2/e^x")$
+n3 : x^2$
+d3 : exp(x)$
+print("    Μορφή αοριστίας: αριθμητής ->", limit(n3, x, inf),
+      ", παρονομαστής ->", limit(d3, x, inf), "  =>  oo/oo")$
+print("    1η παραγώγιση -> (", diff(n3,x), ")/(", diff(d3,x), ")")$
+print("      στο +oo:", limit(diff(n3,x), x, inf), "/",
+      limit(diff(d3,x), x, inf), " => πάλι oo/oo, συνεχίζουμε")$
+print("    2η παραγώγιση -> (", diff(n3,x,2), ")/(", diff(d3,x,2), ")")$
+print("      στο +oo:", limit(diff(n3,x,2), x, inf), "/",
+      limit(diff(d3,x,2), x, inf), " => ορισμένο, τιμή =",
+      limit(diff(n3,x,2)/diff(d3,x,2), x, inf))$
+print("    limit(n3/d3, x, inf) =", limit(n3/d3, x, inf), "   (αναμ. 0)")$
+print("    Ερμηνεία: η e^x κυριαρχεί κάθε πολυωνύμου.")$
+
+/* (4) lim_{x->0} (1/x - 1/sin x) — μορφή oo - oo */
+print("")$
+print("(4) lim_{x->0} (1/x - 1/sin x)")$
+print("    Μορφή αοριστίας: 1/x ->", limit(1/x, x, 0, plus),
+      " και 1/sin(x) ->", limit(1/sin(x), x, 0, plus),
+      " (από δεξιά)  =>  oo - oo")$
+n4 : sin(x) - x$
+d4 : x*sin(x)$
+print("    Κοινός παρονομαστής: (", n4, ")/(", d4, ")")$
+print("      στο x=0:", limit(n4, x, 0), "/", limit(d4, x, 0), "  =>  0/0")$
+print("    1η παραγώγιση -> (", diff(n4,x), ")/(", diff(d4,x), ")")$
+print("      στο x=0:", limit(diff(n4,x), x, 0), "/",
+      limit(diff(d4,x), x, 0), " => πάλι 0/0, συνεχίζουμε")$
+print("    2η παραγώγιση -> (", diff(n4,x,2), ")/(", diff(d4,x,2), ")")$
+print("      στο x=0:", limit(diff(n4,x,2), x, 0), "/",
+      limit(diff(d4,x,2), x, 0), " => ορισμένο, τιμή =",
+      limit(diff(n4,x,2)/diff(d4,x,2), x, 0))$
+print("    limit(1/x - 1/sin(x), x, 0) =", limit(1/x - 1/sin(x), x, 0),
+      "   (αναμ. 0)")$
+
+/* ── Β. Βελτιστοποίηση ──────────────────────────────────── */
+print("")$
+print("════ Β. Βελτιστοποίηση ════")$
+
+/* Β1. Ορθογώνιο με περίμετρο P = 20:  πλευρές x και 10-x */
+print("")$
+print("Β1. Ορθογώνιο περιμέτρου P=20: E(x) = x(10-x)")$
+E : x*(10 - x)$
+dE : diff(E, x)$
+xopt : map(rhs, solve(dE = 0, x))$
+print("    E'(x) =", dE, "   E'(x)=0  ->  x =", xopt, "   (αναμ. 5)")$
+print("    E''(x) =", diff(E, x, 2),
+      " < 0  ->  ΜΕΓΙΣΤΟ")$
+print("    E_max =", subst(first(xopt), x, E), "   (αναμ. 25 — τετράγωνο 5x5)")$
+
+/* Β2. Ανοικτό δοχείο (χωρίς καπάκι), όγκος V=32, τετραγωνική βάση x.
+       Ύψος: h = 32/x^2.  Επιφάνεια: S = x^2 + 4*x*h = x^2 + 128/x.  */
+print("")$
+print("Β2. Ανοικτό δοχείο V=32, τετραγωνική βάση πλευράς x")$
+assume(x > 0)$                        /* ΠΡΙΝ από solve: αποφεύγει ερωτήσεις */
+hbox : 32/x^2$
+S : ratsimp(x^2 + 4*x*hbox)$
+print("    ύψος h = 32/x^2,  S(x) = x^2 + 4xh =", S, "   (αναμ. x^2 + 128/x)")$
+dS : ratsimp(diff(S, x))$
+print("    S'(x) =", dS)$
+allS : map(rhs, solve(dS = 0, x))$
+realS : sublist(allS, lambda([q], freeof(%i, q)))$
+print("    S'(x)=0  ->  όλες οι ρίζες:", allS)$
+print("    πραγματική ρίζα: x =", realS, "   (αναμ. 4)")$
+xs : first(realS)$
+print("    S''(x) =", ratsimp(diff(S, x, 2)), "  στο x=", xs, " ισούται με",
+      subst(xs, x, diff(S, x, 2)), " > 0  ->  ΕΛΑΧΙΣΤΟ")$
+print("    S_min = S(", xs, ") =", subst(xs, x, S), "   (αναμ. 48)")$
+print("    ύψος h =", subst(xs, x, hbox), "   (αναμ. 2)")$
+print("    Έλεγχος όγκου: x^2 * h =", subst(xs, x, x^2*hbox), "   (αναμ. 32)")$
+forget(x > 0)$
+
+plot2d([S], [x, 1, 10], [y, 0, 200],
+       [legend, "S(x)=x^2+128/x"],
+       [title, "Ανοικτό δοχείο V=32: ελάχιστη επιφάνεια στο x=4 (S=48)"])$
+
+/* ── Γ. Μέθοδος Newton-Raphson: x^3 - x - 2 = 0 ─────────── */
+print("")$
+print("════ Γ. Newton-Raphson για x^3 - x - 2 = 0, x0 = 1.5 ════")$
+
+kill(t)$
+fN  : t^3 - t - 2$
+dfN : diff(fN, t)$                   /* ΟΧΙ f(t):=diff(f(t),t) — θα έσκαγε */
+print("    f(t) =", fN, "   f'(t) =", dfN)$
+
+/* Ακριβής ρίζα για σύγκριση (αριθμητικά) */
+rroot : find_root(fN, t, 1, 2)$
+print("    find_root(f, t, 1, 2) =", rroot)$
+
+print("")$
+print("    i        x_i                  f(x_i)            |x_i - ρίζα|")$
+xi : 1.5$
+print("    0   ", xi, "        ", float(subst(xi, t, fN)),
+      "     ", float(abs(xi - rroot)))$
+for i:1 thru 5 do
+  block([fv, dv, er],
+    fv : float(subst(xi, t, fN)),
+    dv : float(subst(xi, t, dfN)),
+    xi : xi - fv/dv,
+    er : float(abs(xi - rroot)),
+    print("   ", i, "   ", xi, "   ", float(subst(xi, t, fN)), "   ", er))$
+
+print("")$
+print("    Ρίζα (Newton, 5 βήματα):", xi)$
+print("    Ρίζα (find_root):       ", rroot)$
+print("    Διαφορά:", float(abs(xi - rroot)), "   (αναμ. ~0)")$
+print("    Αναμενόμενη ρίζα: 1.5213797 (7 σωστά δεκαδικά)")$
+
+/* Τετραγωνική σύγκλιση: τα σωστά δεκαδικά ψηφία διπλασιάζονται.
+   Σφάλματα ~ 3.6e-4, 9.9e-8, 7.6e-15 -> ~3.4, ~7.0, ~14.1 ψηφία. */
+print("")$
+print("    Τετραγωνική σύγκλιση — σωστά δεκαδικά ψηφία ανά βήμα:")$
+xi : 1.5$
+for i:1 thru 4 do
+  block([fv, dv, er],
+    fv : float(subst(xi, t, fN)),
+    dv : float(subst(xi, t, dfN)),
+    xi : xi - fv/dv,
+    er : float(abs(xi - rroot)),
+    if er > 0 then
+      print("      βήμα", i, ": σφάλμα =", er,
+            "  ->  ~", float(-log(er)/log(10)), "σωστά ψηφία")
+    else
+      print("      βήμα", i, ": σφάλμα = 0 (όριο ακρίβειας μηχανής)"))$
+
+/* ── Δ. Πλήρης μελέτη: f(x) = (x^2-1)/(x^2+1) ───────────── */
+print("")$
+print("════ Δ. Πλήρης μελέτη της f(x) = (x^2-1)/(x^2+1) ════")$
+
+F  : (x^2 - 1)/(x^2 + 1)$
+F1 : ratsimp(diff(F, x))$
+F2 : ratsimp(diff(F, x, 2))$
+
+print("")$
+print("Δ1. Πεδίο ορισμού")$
+print("    x^2+1 = 0  ->  λύσεις:", map(rhs, solve(x^2 + 1 = 0, x)),
+      "  (μιγαδικές)")$
+print("    Άρα ο παρονομαστής δεν μηδενίζεται ποτέ: D(f) = R.")$
+
+print("")$
+print("Δ2. Ασύμπτωτες")$
+print("    lim_{x->+oo} f =", limit(F, x, inf), "   (αναμ. 1)")$
+print("    lim_{x->-oo} f =", limit(F, x, minf), "  (αναμ. 1)")$
+print("    -> οριζόντια ασύμπτωτη y = 1. Κατακόρυφες: καμία (D=R).")$
+
+print("")$
+print("Δ3. Μονοτονία και ακρότατα")$
+print("    f'(x) =", F1, " =", factor(F1), "   (αναμ. 4x/(x^2+1)^2)")$
+critF : map(rhs, solve(F1 = 0, x))$
+print("    f'(x)=0  ->  x =", critF, "   (αναμ. 0)")$
+print("    f'(-1) =", subst(-1, x, F1), " < 0  ->  φθίνουσα στο (-oo,0)")$
+print("    f'( 1) =", subst( 1, x, F1), " > 0  ->  αύξουσα  στο (0,+oo)")$
+print("    f''(x) =", factor(F2))$
+print("    f''(0) =", subst(0, x, F2), " > 0  ->  ΟΛΙΚΟ ΕΛΑΧΙΣΤΟ")$
+print("    f(0) =", subst(0, x, F), "   (αναμ. -1)")$
+print("    Σύνολο τιμών: [-1, 1)")$
+
+print("")$
+print("Δ4. Κυρτότητα και σημεία καμπής")$
+inflF : sort(map(rhs, solve(F2 = 0, x)))$
+print("    f''(x)=0  ->  x =", inflF, " =", float(inflF),
+      "   (αναμ. ±1/sqrt(3) ≈ ±0.5774)")$
+for c in inflF do
+  print("      x =", c, "  f =", ratsimp(subst(c, x, F)), "   (αναμ. -1/2)")$
+print("    f''(-2) =", float(subst(-2, x, F2)), " < 0  ->  κοίλη")$
+print("    f''( 0) =", float(subst( 0, x, F2)), " > 0  ->  κυρτή")$
+print("    f''( 2) =", float(subst( 2, x, F2)), " < 0  ->  κοίλη")$
+print("    Κυρτή στο (-1/sqrt(3), 1/sqrt(3)), κοίλη εκτός.")$
+
+plot2d([F, 1], [x, -6, 6], [y, -1.4, 1.4],
+       [legend, "f(x)=(x^2-1)/(x^2+1)", "ασύμπτωτη y=1"],
+       [title, "Πλήρης μελέτη: ελάχιστο (0,-1), καμπή στα ±1/sqrt(3)"])$
+
+print("")$
+print("Ολοκληρώθηκε το Κεφάλαιο 12.")$

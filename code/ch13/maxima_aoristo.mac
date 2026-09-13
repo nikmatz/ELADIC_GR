@@ -1,0 +1,174 @@
+/* ============================================================
+   maxima_aoristo.mac
+   Κεφάλαιο 13 — Αόριστο Ολοκλήρωμα: Άμεση Ολοκλήρωση & Αντικατάσταση
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού & Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     integrate(f, x)        → αόριστο ολοκλήρωμα ∫f(x)dx (χωρίς τη σταθερά c)
+     diff(F, x)             → παραγώγιση — ο ασφαλέστερος έλεγχος
+     ratsimp(expr)          → απλοποίηση· ratsimp(diff(F,x)-f) = 0 ⇔ σωστό
+     trigsimp(expr)         → απλοποίηση τριγωνομετρικών παραστάσεων
+     'integrate(f, x)       → ΑΝΕΚΤΕΛΕΣΤΟ ολοκλήρωμα (απόστροφος)
+     changevar(I, eq, u, x) → αλλαγή μεταβλητής βήμα-βήμα
+     ev(expr, integrate)    → εκτέλεση του ανεκτέλεστου ολοκληρώματος
+     solve(eq, c)           → επίλυση ως προς τη σταθερά c
+     plot2d([...], [x,a,b]) → γραφική παράσταση
+
+   Δραστηριότητα βιβλίου:
+     (α) πίνακας βασικών ολοκληρωμάτων + επαλήθευση με diff
+     (β) γραμμικότητα
+     (γ) γραμμική αντικατάσταση: ο παράγοντας 1/a
+     (δ) αντικατάσταση u = g(x) με changevar
+     (ε) πρόβλημα αρχικών τιμών y' = 3x²-4x+1, y(1) = 2
+
+   Εκτελέστε με: wxMaxima (File → Batch File) ή
+                 maxima -b maxima_aoristo.mac
+   ============================================================ */
+
+/* ── Α. (α) Πίνακας βασικών ολοκληρωμάτων ────────────────── */
+print("════ Α. (α) Πίνακας βασικών ολοκληρωμάτων ════")$
+
+basics : [x^4, sqrt(x), exp(x), 1/x, sin(x), sec(x)^2,
+          1/(1+x^2), 1/sqrt(1-x^2)]$
+
+print("  f(x)  →  F(x) = ∫f(x)dx   (+ c)   και ο έλεγχος F'(x) - f(x)")$
+for f in basics do
+  block([F],
+    F : integrate(f, x),
+    print("   ", f, "  →  ", F,
+          "      F'-f =", ratsimp(trigsimp(diff(F, x) - f))))$
+
+/* Όλοι οι έλεγχοι μαζί: η λίστα πρέπει να είναι γεμάτη μηδενικά */
+print("")$
+print("Έλεγχοι F'-f (όλοι πρέπει να είναι 0):")$
+print("   ", map(lambda([f], ratsimp(trigsimp(diff(integrate(f,x),x) - f))),
+                 basics))$
+print("  [Αναμένεται: ∫x⁴=x⁵/5, ∫√x=2x^(3/2)/3, ∫eˣ=eˣ, ∫dx/x=log x,")$
+print("   ∫sin x=-cos x, ∫sec²x=tan x, ∫dx/(1+x²)=atan x, ∫dx/√(1-x²)=asin x]")$
+
+/* ── Β. (β) Γραμμικότητα του ολοκληρώματος ───────────────── */
+print("")$
+print("════ Β. (β) Γραμμικότητα ════")$
+
+g : 3*x^2 - 2*sin(x) + 1/x$
+Ig : integrate(g, x)$
+print("∫(3x² - 2·sin x + 1/x)dx =", Ig)$
+print("  [Αναμένεται: x³ + 2·cos(x) + log(x)]")$
+
+/* Το ίδιο, όρο προς όρο: 3∫x²dx - 2∫sin x dx + ∫dx/x */
+Isum : 3*integrate(x^2, x) - 2*integrate(sin(x), x) + integrate(1/x, x)$
+print("Άθροισμα επιμέρους: 3∫x²dx - 2∫sin x dx + ∫dx/x =", Isum)$
+print("Διαφορά των δύο (πρέπει 0):", ratsimp(Ig - Isum))$
+print("Έλεγχος με diff: F'-f =", ratsimp(diff(Ig, x) - g))$
+
+/* ── Γ. (γ) Γραμμική αντικατάσταση: ο παράγοντας 1/a ─────── */
+print("")$
+print("════ Γ. (γ) Γραμμική αντικατάσταση: ∫f(ax+b)dx = (1/a)F(ax+b) + c ════")$
+
+linear_cases : [exp(2*x), cos(3*x), 1/(2*x+5), (4*x+1)^5]$
+avals        : [2, 3, 2, 4]$
+
+for k : 1 thru length(linear_cases) do
+  block([f, F],
+    f : linear_cases[k],
+    F : integrate(f, x),
+    print("   ∫", f, "dx =", F,
+          "      a =", avals[k],
+          "      F'-f =", ratsimp(diff(F, x) - f)))$
+
+print("")$
+print("  [Αναμένεται: ∫e^(2x)=e^(2x)/2, ∫cos3x=sin(3x)/3,")$
+print("   ∫dx/(2x+5)=log(2x+5)/2, ∫(4x+1)⁵=(4x+1)⁶/24 (σε αναπτυγμένη μορφή)]")$
+/* Η Maxima δίνει το ανάπτυγμα· διαφέρει από το (4x+1)⁶/24 κατά σταθερά */
+print("(4x+1)⁶/24 - F(x) =", ratsimp((4*x+1)^6/24 - integrate((4*x+1)^5, x)),
+      "  ⇒ οι δύο μορφές διαφέρουν κατά σταθερά (απορροφάται στο c)")$
+
+/* Συμβολική επιβεβαίωση του κανόνα: για τυχαία f και σταθερές a, b */
+print("")$
+print("Συμβολική επιβεβαίωση του κανόνα ∫f(ax+b)dx = (1/a)F(ax+b) + c:")$
+kill(a, b)$
+declare(a, constant, b, constant)$
+for f in [exp(u), cos(u), 1/u, u^5] do
+  block([F, cand],
+    F    : integrate(f, u),                  /* F: η αντιπαράγωγος της f */
+    cand : subst(a*x + b, u, F)/a,           /* υποψήφια αντιπαράγωγος   */
+    print("   f(u) =", f, "  →  d/dx[(1/a)F(ax+b)] - f(ax+b) =",
+          ratsimp(diff(cand, x) - subst(a*x + b, u, f))))$
+print("  [Και οι τέσσερις διαφορές είναι 0 ⇒ ο κανόνας ισχύει.]")$
+
+/* ── Δ. (δ) Αντικατάσταση u = g(x) με changevar ──────────── */
+print("")$
+print("════ Δ. (δ) Αντικατάσταση u = g(x) ════")$
+
+/* 1. ∫2x·cos(x²)dx με u = x²  — βήμα-βήμα με changevar */
+I1 : 'integrate(2*x*cos(x^2), x)$
+print("Αρχικό ανεκτέλεστο:", I1)$
+J1 : changevar(I1, u = x^2, u, x)$
+print("Μετά την u = x²:", J1)$
+print("Αποτέλεσμα στο u:", ev(J1, integrate))$
+print("Επιστροφή στο x:", subst(x^2, u, ev(J1, integrate)),
+      "   [Αναμένεται sin(x²)]")$
+print("Απευθείας:", integrate(2*x*cos(x^2), x),
+      "   F'-f =", ratsimp(diff(integrate(2*x*cos(x^2),x),x) - 2*x*cos(x^2)))$
+
+/* 2. ∫6x(3x²+1)⁵dx με u = 3x²+1 */
+print("")$
+I2 : 'integrate(6*x*(3*x^2+1)^5, x)$
+J2 : changevar(I2, u = 3*x^2 + 1, u, x)$
+print("∫6x(3x²+1)⁵dx: μετά την u = 3x²+1 →", J2)$
+print("   = ", integrate(6*x*(3*x^2+1)^5, x),
+      "   [Αναμένεται (3x²+1)⁶/6]")$
+print("   F'-f =", ratsimp(diff(integrate(6*x*(3*x^2+1)^5,x),x)
+                           - 6*x*(3*x^2+1)^5))$
+
+/* 3. ∫sin³x·cos x dx με u = sin x */
+print("")$
+S3 : integrate(sin(x)^3*cos(x), x)$
+print("∫sin³x·cos x dx =", S3, "   [Αναμένεται sin⁴(x)/4]")$
+print("   F'-f =", trigsimp(diff(S3, x) - sin(x)^3*cos(x)))$
+
+/* 4. ∫(2x+3)/(x²+3x+5)dx με u = x²+3x+5  (αριθμητής = u') */
+print("")$
+S4 : integrate((2*x+3)/(x^2+3*x+5), x)$
+print("∫(2x+3)/(x²+3x+5)dx =", S4, "   [Αναμένεται log(x²+3x+5)]")$
+print("   F'-f =", ratsimp(diff(S4, x) - (2*x+3)/(x^2+3*x+5)))$
+
+/* ── Ε. (ε) Πρόβλημα αρχικών τιμών: y' = 3x²-4x+1, y(1) = 2 ── */
+print("")$
+print("════ Ε. (ε) Πρόβλημα αρχικών τιμών ════")$
+
+kill(c)$
+f_ivp : 3*x^2 - 4*x + 1$
+F_ivp : integrate(f_ivp, x)$
+print("y' =", f_ivp)$
+print("Γενική λύση: y = F(x) + c  με F(x) =", F_ivp)$
+print("  [Αναμένεται F(x) = x³ - 2x² + x]")$
+
+print("Συνθήκη y(1) = 2:  F(1) + c = 2  με F(1) =", subst(1, x, F_ivp))$
+sol_c : solve(subst(1, x, F_ivp) + c = 2, c)$
+print("solve →", sol_c, "   [Αναμένεται c = 2]")$
+
+c_val : rhs(first(sol_c))$
+y_part : F_ivp + c_val$
+print("Μερική λύση: y =", y_part)$
+print("Επαλήθευση y(1) =", subst(1, x, y_part), "   (πρέπει 2)")$
+print("Επαλήθευση y'(x) - f(x) =", ratsimp(diff(y_part, x) - f_ivp),
+      "   (πρέπει 0)")$
+
+/* Η οικογένεια y = F(x) + c για c = -2,-1,0,1,2 */
+print("")$
+print("Οικογένεια αντιπαραγώγων για c = -2,-1,0,1,2 — ίδια καμπύλη,")$
+print("κατακόρυφα μετατοπισμένη· η κλίση στο x=1 είναι η ίδια για κάθε c:")$
+for cc in [-2, -1, 0, 1, 2] do
+  print("   c =", cc, "  y(2) =", subst(2, x, F_ivp + cc),
+        "  y'(2) =", subst(2, x, diff(F_ivp + cc, x)),
+        "  [f(2) =", subst(2, x, f_ivp), "]")$
+
+plot2d([F_ivp - 2, F_ivp - 1, F_ivp, F_ivp + 1, F_ivp + 2],
+       [x, -1, 3], [y, -6, 12],
+       [legend, "c=-2", "c=-1", "c=0", "c=+1", "c=+2 (μερική λύση)"],
+       [title, "y = x³-2x²+x + c  —  η μερική λύση y(1)=2 είναι η c=+2"])$
+
+print("")$
+print("Τέλος — Κεφάλαιο 13.")$

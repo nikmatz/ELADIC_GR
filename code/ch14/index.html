@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κώδικας Κεφ. 14 — Ορισμένο Ολοκλήρωμα · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222}
+  header{background:var(--blue);color:white;padding:18px 24px}
+  header h1{font-size:1.25rem;font-weight:700}
+  header p{font-size:.9rem;margin-top:4px;opacity:.85}
+  .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd}
+  .breadcrumb a{color:var(--blue);text-decoration:none}
+  .container{max-width:960px;margin:0 auto;padding:24px 16px}
+  .info-box{background:white;border-left:5px solid var(--blue);padding:14px 18px;margin-bottom:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .info-box h2{font-size:1rem;color:var(--blue);margin-bottom:8px}
+  .info-box p{font-size:.88rem;line-height:1.6}
+  .tabs{display:flex;gap:6px;margin-bottom:0}
+  .tab-btn{padding:10px 20px;border:none;border-radius:6px 6px 0 0;font-size:.9rem;font-weight:600;cursor:pointer}
+  .tab-btn.maxima{background:#d5f5e3;color:var(--teal)}
+  .tab-btn.python{background:#d6eaf8;color:var(--blue)}
+  .tab-btn.active.maxima{background:var(--teal);color:white}
+  .tab-btn.active.python{background:var(--blue);color:white}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  .code-card{background:white;border-radius:0 6px 6px 6px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+  .code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-size:.85rem;font-weight:600}
+  .code-header.maxima{background:var(--teal);color:white}
+  .code-header.python{background:var(--blue);color:white}
+  .download-btn{display:inline-block;padding:5px 12px;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.5);border-radius:4px;text-decoration:none;font-size:.8rem;font-weight:600}
+  .download-btn:hover{background:rgba(255,255,255,.35)}
+  pre[class*="language-"]{margin:0!important;border-radius:0!important;max-height:520px;overflow-y:auto;font-size:.83rem}
+  .commands-box{background:#fffde7;border:1px solid #f9a825;border-radius:4px;padding:12px 16px;margin:16px 0;font-size:.85rem}
+  .commands-box strong{color:var(--orange)}
+  .commands-box code{background:#fff3cd;padding:1px 5px;border-radius:3px;font-size:.82rem}
+  footer{text-align:center;padding:20px;font-size:.8rem;color:#888;margin-top:32px;border-top:1px solid #ddd}
+
+  /* ── In-browser Python runner ── */
+  .py-toolbar{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#1d2b36;}
+  .run-btn{background:#16a34a;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .run-btn:disabled{opacity:.55;cursor:default;}
+  .reset-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;}
+  .py-status{color:#9fb3c8;font-size:.8rem;margin-left:auto;text-align:right;}
+  textarea.py-editor{display:block;width:100%;min-height:360px;border:none;background:#272822;color:#f8f8f2;font-family:Consolas,Monaco,monospace;font-size:.83rem;line-height:1.5;padding:14px 16px;resize:vertical;outline:none;tab-size:4;}
+  .py-output{background:#0e1416;color:#e6edf3;font-family:Consolas,Monaco,monospace;font-size:.82rem;white-space:pre-wrap;padding:14px 16px;margin:0;max-height:380px;overflow:auto;border-top:1px solid #2a3942;}
+  .py-output:empty{display:none;}
+  .py-plots{padding:8px 16px 14px;background:#fff;text-align:center;}
+  .py-plots img{max-width:100%;border:1px solid #ddd;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 Κεφάλαιο 14 — Ορισμένο Ολοκλήρωμα</h1>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+</header>
+<div class="breadcrumb">
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 14
+</div>
+<div class="container">
+  <div class="info-box">
+    <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
+    <p><strong>Αντικείμενο:</strong> αθροίσματα Riemann (αριστερά, μεσαία, δεξιά), το ολοκλήρωμα από τον ορισμό, ιδιότητες, φράγματα, μέση τιμή<br><br>
+    Επιλέξτε γλώσσα από τις καρτέλες. Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.</p>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn maxima active" onclick="showTab('maxima')">⚙️ Maxima (.mac)</button>
+    <button class="tab-btn python"        onclick="showTab('python')">🐍 Python (.py)</button>
+  </div>
+  <div id="tab-maxima" class="tab-content active">
+    <div class="code-card">
+      <div class="code-header maxima">
+        <span>maxima_orismeno.mac</span>
+        <a class="download-btn" href="maxima_orismeno.mac" download>⬇ Λήψη .mac</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βασικές εντολές:</strong>
+        <code>sum(expr,i,1,n)</code> &nbsp;
+        <code>limit(expr,n,inf)</code> &nbsp;
+        <code>float()</code> &nbsp;
+        <code>solve()</code> &nbsp;
+        <code>plot2d()</code>
+      </div>
+      <pre><code class="language-maxima" id="maxima-code">/* ============================================================
+   maxima_orismeno.mac
+   Κεφάλαιο 14 — Ορισμένο Ολοκλήρωμα: Αθροίσματα Riemann &amp; Ιδιότητες
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     sum(expr, i, 1, n)      → συμβολικό άθροισμα
+     ev(S, simpsum)          → κλειστός τύπος του αθροίσματος
+     limit(expr, n, inf)     → όριο καθώς n → ∞
+     float(expr)             → δεκαδική τιμή
+     subst(N, n, expr)       → αντικατάσταση n := N
+     integrate(f, x, a, b)   → ορισμένο ολοκλήρωμα (για επαλήθευση)
+     quad_qags(f, x, a, b)   → αριθμητική ολοκλήρωση υψηλής ακρίβειας
+     random(1.0)             → τυχαίος αριθμός στο [0,1)
+     solve(eq, x)            → επίλυση εξίσωσης
+     plot2d([...], [x,a,b])  → γραφική παράσταση
+
+   ΠΡΟΣΟΧΗ: ΠΟΤΕ δεν γράφουμε n : 100 — αυτό δεσμεύει καθολικά το n
+   και μετά το lim(R_n, n, inf) δεν έχει νόημα. Το n μένει ΕΛΕΥΘΕΡΟ
+   σύμβολο· οι αριθμητικές τιμές μπαίνουν με subst.
+
+   Δραστηριότητα βιβλίου:
+     (α) L_n, M_n, R_n για f(x)=x² στο [0,2], n = 4,10,50,200
+     (β) από τον ορισμό: ∫₀²x²dx = 8/3 και ∫₀¹x dx = 1/2, χωρίς αντιπαράγωγο
+     (γ) τυχαία σημεία x_i* — το όριο δεν αλλάζει
+     (δ) ιδιότητες: γραμμικότητα, αντιστροφή ορίων, πρόσθεση, συμμετρίες
+     (ε) φράγματα m(b-a) ≤ ∫ ≤ M(b-a) και σύγκριση
+     (ζ) μέση τιμή και Θεώρημα Μέσης Τιμής
+
+   Εκτελέστε με: wxMaxima (File → Batch File) ή
+                 maxima -b maxima_orismeno.mac
+   ============================================================ */
+
+/* Καθαρίζουμε κάθε προηγούμενη τιμή του n — το χρειαζόμαστε ΕΛΕΥΘΕΡΟ */
+kill(n)$
+declare(n, integer)$
+
+/* ── Α. (α) Αριστερά, μεσαία και δεξιά αθροίσματα Riemann ── */
+print("════ Α. (α) Αθροίσματα Riemann για f(x)=x² στο [0,2] ════")$
+
+/* Διαμέριση: Δx = 2/n,  x_k = 2k/n  (k = 0,…,n) */
+/* Δεξιά άκρα   x_i  = 2i/n                                    */
+/* Αριστερά     x_(i-1) = 2(i-1)/n                             */
+/* Μέσα         (x_(i-1)+x_i)/2 = (2i-1)/n                     */
+
+Rn : ratsimp(ev(sum((2*i/n)^2     * (2/n), i, 1, n), simpsum))$
+Ln : ratsimp(ev(sum((2*(i-1)/n)^2 * (2/n), i, 1, n), simpsum))$
+Mn : ratsimp(ev(sum(((2*i-1)/n)^2 * (2/n), i, 1, n), simpsum))$
+
+print("L_n =", factor(Ln), "   [Αναμένεται 4(n-1)(2n-1)/(3n²)]")$
+print("M_n =", factor(Mn), "   [Αναμένεται 2(2n-1)(2n+1)/(3n²)]")$
+print("R_n =", factor(Rn), "   [Αναμένεται 4(n+1)(2n+1)/(3n²)]")$
+
+print("")$
+print("Αριθμητικά (float) — παρατηρήστε L_n &lt; 8/3 &lt; R_n:")$
+print("      n        L_n          M_n          R_n      |M_n-8/3|   |R_n-8/3|")$
+for N in [4, 10, 50, 200] do
+  block([LN, MN, RN, I],
+    I  : 8/3,
+    LN : float(subst(N, n, Ln)),
+    MN : float(subst(N, n, Mn)),
+    RN : float(subst(N, n, Rn)),
+    print("  ", N, "  ", LN, "  ", MN, "  ", RN,
+          "  ", float(abs(MN - I)), "  ", float(abs(RN - I)),
+          "   L_n&lt;8/3&lt;R_n ;", is(LN &lt; float(I) and float(I) &lt; RN)))$
+
+print("")$
+print("Το M_n συγκλίνει ταχύτερα: το σφάλμα του πέφτει ~ 1/n²,")$
+print("ενώ των L_n, R_n ~ 1/n (δείτε τη στήλη |M_n-8/3| παραπάνω).")$
+print("Λόγοι σφαλμάτων n=4→n=200 (×50):  M:",
+      float(abs(subst(4,n,Mn)-8/3) / abs(subst(200,n,Mn)-8/3)),
+      "   R:",
+      float(abs(subst(4,n,Rn)-8/3) / abs(subst(200,n,Rn)-8/3)))$
+
+/* ── Β. (β) Από τον ορισμό, χωρίς καμία αντιπαράγωγο ─────── */
+print("")$
+print("════ Β. (β) Από τον ορισμό: όριο αθροισμάτων Riemann ════")$
+
+print("Τύπος: Σ_{i=1}^{n} i² = n(n+1)(2n+1)/6")$
+print("  Maxima:", factor(ev(sum(i^2, i, 1, n), simpsum)))$
+print("R_n = Σ (2i/n)²·(2/n) =", factor(Rn))$
+print("lim_{n→∞} R_n =", limit(Rn, n, inf), "   [ΑΝΑΜΕΝΟΜΕΝΟ 8/3]")$
+print("lim_{n→∞} L_n =", limit(Ln, n, inf))$
+print("lim_{n→∞} M_n =", limit(Mn, n, inf))$
+print("Άρα ∫₀² x² dx = 8/3 =", float(8/3), " — χωρίς να χρησιμοποιηθεί αντιπαράγωγος.")$
+print("Επαλήθευση με integrate:", integrate(x^2, x, 0, 2))$
+
+print("")$
+print("Το ίδιο για ∫₀¹ x dx, με τον τύπο Σ i = n(n+1)/2:")$
+print("  Maxima: Σ i =", factor(ev(sum(i, i, 1, n), simpsum)))$
+Sn1 : ratsimp(ev(sum((i/n)*(1/n), i, 1, n), simpsum))$
+print("  S_n = Σ (i/n)·(1/n) =", Sn1, "   [Αναμένεται (n+1)/(2n)]")$
+print("  lim_{n→∞} S_n =", limit(Sn1, n, inf), "   [ΑΝΑΜΕΝΟΜΕΝΟ 1/2]")$
+print("  Επαλήθευση με integrate:", integrate(x, x, 0, 1))$
+
+/* ── Γ. (γ) Ανεξαρτησία από την επιλογή των σημείων x_i* ─── */
+print("")$
+print("════ Γ. (γ) Τυχαία σημεία x_i* σε κάθε υποδιάστημα ════")$
+print("Θεώρημα Ολοκληρωσιμότητας: η f(x)=x² είναι συνεχής στο [0,2],")$
+print("άρα το όριο δεν εξαρτάται από την επιλογή των x_i*.")$
+
+set_random_state(make_random_state(2026))$
+
+/* Άθροισμα Riemann με ΤΥΧΑΙΟ σημείο σε κάθε υποδιάστημα:      */
+/*   x_i* = x_(i-1) + ρ_i·Δx  με ρ_i ~ U[0,1)                   */
+riemann_random(N) := block([dx, S, xl, xstar],
+  dx : 2.0/N,
+  S  : 0.0,
+  for k : 0 thru N - 1 do (
+    xl    : k*dx,
+    xstar : xl + random(1.0)*dx,
+    S     : S + xstar^2 * dx),
+  S)$
+
+print("")$
+print("      n      τυχαίο άθροισμα    |S_n - 8/3|")$
+for N in [4, 10, 50, 200, 1000, 5000] do
+  block([S],
+    S : riemann_random(N),
+    print("  ", N, "   ", S, "   ", float(abs(S - 8/3))))$
+
+print("")$
+print("Το άθροισμα με τυχαία σημεία τείνει επίσης στο 8/3 =", float(8/3), ".")$
+
+/* ── Δ. (δ) Ιδιότητες του ορισμένου ολοκληρώματος ────────── */
+print("")$
+print("════ Δ. (δ) Ιδιότητες ════")$
+
+/* Γραμμικότητα: ∫(αf+βg) = α∫f + β∫g */
+A1 : integrate(3*x^2 + 5*sin(x), x, 0, 1)$
+A2 : 3*integrate(x^2, x, 0, 1) + 5*integrate(sin(x), x, 0, 1)$
+print("Γραμμικότητα:")$
+print("  ∫₀¹(3x²+5sin x)dx =", A1, "=", float(A1))$
+print("  3∫₀¹x²dx + 5∫₀¹sin x dx =", A2, "=", float(A2))$
+print("  Διαφορά (πρέπει 0):", ratsimp(A1 - A2))$
+
+/* Αντιστροφή ορίων: ∫_a^b = -∫_b^a */
+B1 : integrate(x^2, x, 1, 4)$
+B2 : integrate(x^2, x, 4, 1)$
+print("")$
+print("Αντιστροφή ορίων:")$
+print("  ∫₁⁴x²dx =", B1, "   ∫₄¹x²dx =", B2, "   άθροισμα (πρέπει 0):", B1 + B2)$
+
+/* Πρόσθεση διαστημάτων: ∫_a^b = ∫_a^c + ∫_c^b */
+C1 : integrate(x^2, x, 0, 3)$
+C2 : integrate(x^2, x, 0, 1) + integrate(x^2, x, 1, 3)$
+print("")$
+print("Πρόσθεση διαστημάτων (a=0, c=1, b=3):")$
+print("  ∫₀³x²dx =", C1, "   ∫₀¹ + ∫₁³ =", C2, "   διαφορά:", ratsimp(C1 - C2))$
+/* Ισχύει και για c ΕΞΩ από το [a,b] */
+C3 : integrate(x^2, x, 0, 5) + integrate(x^2, x, 5, 3)$
+print("  Και με c = 5 (εκτός [0,3]):", C3, "   διαφορά:", ratsimp(C1 - C3))$
+
+/* Συμμετρίες: περιττή → 0, άρτια → 2∫₀^a */
+print("")$
+print("Συμμετρίες σε συμμετρικό διάστημα [-2,2]:")$
+print("  x³ περιττή: ∫₋₂²x³dx =", integrate(x^3, x, -2, 2),
+      "   [ΑΝΑΜΕΝΟΜΕΝΟ 0]")$
+print("  sin(x) περιττή: ∫₋₂²sin(x)dx =", integrate(sin(x), x, -2, 2))$
+print("  x² άρτια: ∫₋₂²x²dx =", integrate(x^2, x, -2, 2),
+      "   2·∫₀²x²dx =", 2*integrate(x^2, x, 0, 2),
+      "   διαφορά:", ratsimp(integrate(x^2,x,-2,2) - 2*integrate(x^2,x,0,2)))$
+
+/* ── Ε. (ε) Φράγματα και σύγκριση ────────────────────────── */
+print("")$
+print("════ Ε. (ε) Φράγματα: f(x)=e^(x²) στο [0,1] ════")$
+
+/* Η f(x)=e^(x²) είναι γνησίως αύξουσα στο [0,1] (f'(x)=2x·e^(x²) ≥ 0), */
+/* άρα m = f(0) = 1 και M = f(1) = e.                                     */
+print("f'(x) =", diff(exp(x^2), x), "  ≥ 0 στο [0,1] ⇒ η f είναι αύξουσα")$
+m_bound : subst(0, x, exp(x^2))$
+M_bound : subst(1, x, exp(x^2))$
+print("m = f(0) =", m_bound, "=", float(m_bound))$
+print("M = f(1) =", M_bound, "=", float(M_bound))$
+
+Ival : quad_qags(exp(x^2), x, 0, 1)[1]$
+print("∫₀¹ e^(x²) dx =", Ival, "   (αριθμητικά, quad_qags)")$
+print("Συμβολικά η Maxima δίνει:", integrate(exp(x^2), x, 0, 1),
+      "=", float(integrate(exp(x^2), x, 0, 1)))$
+
+print("")$
+print("Έλεγχος m(b-a) ≤ ∫ ≤ M(b-a)  με b-a = 1:")$
+print("  m(b-a) =", float(m_bound), "  ≤ ∫ =", Ival,
+      "  ≤ M(b-a) =", float(M_bound))$
+print("  Ισχύει;", is(float(m_bound) &lt;= Ival and Ival &lt;= float(M_bound)))$
+
+print("")$
+print("Σύγκριση: στο [0,1] ισχύει x² ≤ x, άρα e^(x²) ≤ e^x:")$
+Iex : integrate(exp(x), x, 0, 1)$
+print("  ∫₀¹ e^(x²) dx =", Ival)$
+print("  ∫₀¹ e^x   dx =", Iex, "=", float(Iex))$
+print("  ∫₀¹e^(x²) ≤ ∫₀¹e^x ;", is(Ival &lt;= float(Iex)))$
+print("  Δείγμα της διαφοράς e^x - e^(x²) στο [0,1] (πρέπει ≥ 0):")$
+print("   ", makelist(float(subst(k/10, x, exp(x) - exp(x^2))), k, 0, 10))$
+
+/* ── Ζ. (ζ) Μέση τιμή και Θεώρημα Μέσης Τιμής ───────────── */
+print("")$
+print("════ Ζ. (ζ) Μέση τιμή της f(x)=x² στο [0,3] ════")$
+
+fbar : integrate(x^2, x, 0, 3)/(3 - 0)$
+print("∫₀³x²dx =", integrate(x^2, x, 0, 3))$
+print("Μέση τιμή f̄ = (1/(b-a))·∫₀³x²dx =", fbar, "=", float(fbar),
+      "   [ΑΝΑΜΕΝΟΜΕΝΟ 3]")$
+
+sols : solve(x^2 = fbar, x)$
+print("Λύσεις της f(ξ) = f̄ :", sols)$
+xi : rhs(second(sols))$
+print("Δεκτή λύση στο [0,3]: ξ =", xi, "=", float(xi),
+      "   [ΑΝΑΜΕΝΟΜΕΝΟ √3 ≈ 1.732]")$
+print("Έλεγχος f(ξ)·(b-a) - ∫₀³f =",
+      ratsimp(subst(xi, x, x^2)*3 - integrate(x^2, x, 0, 3)),
+      "   (πρέπει 0)")$
+
+plot2d([x^2, fbar], [x, 0, 3],
+       [legend, "f(x)=x²", "y = f̄ = 3"],
+       [xlabel, "x"], [ylabel, "y"],
+       [title, "ΘΜΤ Ολοκληρωτικού Λογισμού: ξ = sqrt(3) ≈ 1.732"])$
+
+print("")$
+print("Τέλος — Κεφάλαιο 14.")$
+</code></pre>
+    </div>
+  </div>
+  <div id="tab-python" class="tab-content">
+    <div class="code-card">
+      <div class="code-header python">
+        <span>python_orismeno.py</span>
+        <a class="download-btn" href="python_orismeno.py" download>⬇ Λήψη .py</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βιβλιοθήκες / εντολές:</strong>
+        <code>numpy.linspace()</code> &nbsp;
+        <code>numpy.sum()</code> &nbsp;
+        <code>sympy.summation()</code> &nbsp;
+        <code>sympy.limit()</code> &nbsp;
+        <code>matplotlib.bar()</code> &nbsp;
+        <code>matplotlib.fill_between()</code>
+      </div>
+            <div class="py-toolbar">
+        <button class="run-btn" id="py-run">▶ Τρέξε</button>
+        <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
+        <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
+      </div>
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># ============================================================
+# python_orismeno.py
+# Κεφάλαιο 14 — Ορισμένο Ολοκλήρωμα: Αθροίσματα Riemann
+# Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+# ============================================================
+#
+# ΒΙΒΛΙΟΘΗΚΕΣ:
+#   numpy       → διανυσματικά αθροίσματα Riemann (γρήγορα, χωρίς βρόχους)
+#   sympy       → συμβολικό άθροισμα και όριο (από τον ορισμό)
+#   scipy       → αριθμητική ολοκλήρωση αναφοράς
+#   matplotlib  → bar, fill_between, loglog
+#
+# ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:
+#   numpy.linspace(a, b, n+1)     → διαμέριση του [a,b]
+#   numpy.sum(f(x)) * dx          → άθροισμα Riemann
+#   sympy.summation(expr,(i,1,n)) → κλειστός τύπος αθροίσματος
+#   sympy.limit(expr, n, oo)      → όριο καθώς n → ∞
+#   matplotlib.bar()              → ορθογώνια Riemann
+#   matplotlib.fill_between()     → σκίαση χωρίου
+#
+# Δραστηριότητα βιβλίου:
+#   (α) riemann(f,a,b,n,rule) για f(x)=x² στο [0,2], n=4,10,10²,10⁴
+#   (β) οπτικοποίηση ορθογωνίων για n=4 και n=20
+#   (γ) ταχύτητα σύγκλισης σε διάγραμμα log-log
+#   (δ) συμβολικά από τον ορισμό (sympy.summation, sympy.limit)
+#   (ε) ιδιότητες: γραμμικότητα, πρόσθεση, αντιστροφή, συμμετρίες
+#   (ζ) φράγματα για e^(x²) στο [0,1] και στένεμά τους
+#   (η) μέση τιμή της x² στο [0,3] με fill_between
+# ============================================================
+
+import numpy as np
+import sympy as sp
+import matplotlib.pyplot as plt
+from scipy.integrate import quad
+
+print("=" * 62)
+print(" Κεφάλαιο 14: Ορισμένο Ολοκλήρωμα — Αθροίσματα Riemann")
+print("=" * 62)
+
+EXACT = 8/3          # η ακριβής τιμή του ∫₀² x² dx
+
+
+# ── Α. (α) Η συνάρτηση riemann(f, a, b, n, rule) ──────────
+def riemann(f, a, b, n, rule='left'):
+    """Άθροισμα Riemann της f στο [a,b] με n υποδιαστήματα.
+
+    rule = 'left'  → αριστερά άκρα   x_(i-1)
+    rule = 'mid'   → μέσα            (x_(i-1)+x_i)/2
+    rule = 'right' → δεξιά άκρα      x_i
+    Υλοποίηση με numpy (διανυσματική) — δουλεύει άνετα και για n = 10^4.
+    """
+    edges = np.linspace(a, b, n + 1)
+    dx = (b - a)/n
+    if rule == 'left':
+        pts = edges[:-1]
+    elif rule == 'right':
+        pts = edges[1:]
+    elif rule == 'mid':
+        pts = (edges[:-1] + edges[1:])/2
+    else:
+        raise ValueError("rule ∈ {'left', 'mid', 'right'}")
+    return float(np.sum(f(pts)) * dx)
+
+
+f = lambda z: z**2
+
+print("\n──── Α. (α) riemann(f, a, b, n, rule) για f(x)=x² στο [0,2] ────")
+print(f"  Ακριβής τιμή: ∫₀²x²dx = 8/3 = {EXACT:.10f}")
+print(f"\n  {'n':&gt;7} {'left':&gt;14} {'mid':&gt;14} {'right':&gt;14}"
+      f" {'|mid-8/3|':&gt;12}")
+for n in (4, 10, 10**2, 10**4):
+    L = riemann(f, 0, 2, n, 'left')
+    M = riemann(f, 0, 2, n, 'mid')
+    R = riemann(f, 0, 2, n, 'right')
+    print(f"  {n:&gt;7d} {L:&gt;14.8f} {M:&gt;14.8f} {R:&gt;14.8f} {abs(M-EXACT):&gt;12.2e}")
+
+print("\n  Έλεγχος L_n &lt; 8/3 &lt; R_n για κάθε n:")
+for n in (4, 10, 10**2, 10**4):
+    L = riemann(f, 0, 2, n, 'left')
+    R = riemann(f, 0, 2, n, 'right')
+    print(f"    n = {n:&gt;6d}: {L:.8f} &lt; {EXACT:.8f} &lt; {R:.8f}  →  "
+          f"{L &lt; EXACT &lt; R}")
+
+# ── Β. (β) Οπτικοποίηση των ορθογωνίων Riemann ────────────
+print("\n──── Β. (β) Τα ορθογώνια Riemann για n = 4 και n = 20 ────")
+
+fig, axes = plt.subplots(1, 2, figsize=(11.5, 4.4))
+fig.suptitle("Αθροίσματα Riemann για f(x) = x² στο [0,2]  —  "
+             "όσο μεγαλώνει το n, τα ορθογώνια γεμίζουν το χωρίο",
+             fontsize=11, fontweight='bold')
+
+for ax, n in zip(axes, (4, 20)):
+    edges = np.linspace(0, 2, n + 1)
+    dx = 2/n
+    ax.bar(edges[:-1], f(edges[1:]), width=dx, align='edge',
+           color='steelblue', edgecolor='white', alpha=.55,
+           label=f'δεξιά άκρα (n={n})')
+    ax.bar(edges[:-1], f(edges[:-1]), width=dx, align='edge',
+           color='none', edgecolor='darkorange', lw=1.2,
+           label=f'αριστερά άκρα (n={n})')
+    zz = np.linspace(0, 2, 400)
+    ax.plot(zz, f(zz), 'r-', lw=2.2, label='f(x) = x²')
+    L = riemann(f, 0, 2, n, 'left'); R = riemann(f, 0, 2, n, 'right')
+    ax.set_title(f"n = {n}:  L_n = {L:.4f},  R_n = {R:.4f}", fontsize=10)
+    ax.set_xlabel("x"); ax.legend(fontsize=8); ax.grid(alpha=.3)
+    print(f"  n = {n:2d}: L_n = {L:.6f},  R_n = {R:.6f},  "
+          f"πλάτος φραγμάτων R_n - L_n = {R-L:.6f}")
+
+plt.tight_layout()
+
+# ── Γ. (γ) Ταχύτητα σύγκλισης — διάγραμμα log-log ─────────
+print("\n──── Γ. (γ) Ταχύτητα σύγκλισης (log-log) ────")
+
+ns = np.array([2**k for k in range(2, 15)])          # 4 … 16384
+errors = {}
+for rule in ('left', 'mid', 'right'):
+    errors[rule] = np.array([abs(riemann(f, 0, 2, int(n), rule) - EXACT)
+                             for n in ns])
+
+plt.figure(figsize=(7.2, 5))
+styles = {'left': ('o-', 'darkorange'), 'mid': ('s-', 'seagreen'),
+          'right': ('^-', 'steelblue')}
+for rule in ('left', 'mid', 'right'):
+    mk, col = styles[rule]
+    plt.loglog(ns, errors[rule], mk, color=col, ms=4, lw=1.4,
+               label=f"{rule}")
+# Γραμμές αναφοράς κλίσης -1 και -2
+plt.loglog(ns, 4.0/ns, 'k--', lw=1, alpha=.6, label='αναφορά ~ 1/n')
+plt.loglog(ns, 4.0/ns**2, 'k:', lw=1.2, alpha=.8, label='αναφορά ~ 1/n²')
+plt.xlabel("n (πλήθος υποδιαστημάτων)")
+plt.ylabel("|S_n - 8/3|")
+plt.title("Ταχύτητα σύγκλισης των τριών κανόνων (log-log)")
+plt.legend(fontsize=9); plt.grid(alpha=.3, which='both')
+plt.tight_layout()
+
+print("  Κλίση της ευθείας στο log-log (= -p, όπου σφάλμα ~ n^(-p)):")
+for rule in ('left', 'mid', 'right'):
+    slope = np.polyfit(np.log(ns), np.log(errors[rule]), 1)[0]
+    print(f"    {rule:&gt;5s}: κλίση = {slope:+.4f}  →  σφάλμα ~ n^({slope:.2f})"
+          f"   [τάξη p ≈ {abs(slope):.0f}]")
+print("  ⇒ οι left/right συγκλίνουν σαν 1/n, ο mid σαν 1/n².")
+
+# ── Δ. (δ) Συμβολικά, από τον ορισμό ──────────────────────
+print("\n──── Δ. (δ) Συμβολικά από τον ορισμό (χωρίς αντιπαράγωγο) ────")
+
+i = sp.symbols('i', integer=True, positive=True)
+n = sp.symbols('n', integer=True, positive=True)
+
+# Δx = 2/n, δεξιά άκρα x_i = 2i/n
+R_n = sp.factor(sp.simplify(sp.summation((2*i/n)**2 * (2/n), (i, 1, n))))
+L_n = sp.factor(sp.simplify(sp.summation((2*(i-1)/n)**2 * (2/n), (i, 1, n))))
+M_n = sp.factor(sp.simplify(sp.summation(((2*i-1)/n)**2 * (2/n), (i, 1, n))))
+
+print(f"  Σ i² = {sp.factor(sp.summation(i**2, (i, 1, n)))}")
+print(f"  R_n = {R_n}")
+print(f"  L_n = {L_n}")
+print(f"  M_n = {M_n}")
+print(f"  lim R_n = {sp.limit(R_n, n, sp.oo)}   [ΑΝΑΜΕΝΟΜΕΝΟ 8/3]")
+print(f"  lim L_n = {sp.limit(L_n, n, sp.oo)}")
+print(f"  lim M_n = {sp.limit(M_n, n, sp.oo)}")
+
+xs_ = sp.symbols('x')
+print(f"  Επαλήθευση με sympy.integrate: "
+      f"∫₀²x²dx = {sp.integrate(xs_**2, (xs_, 0, 2))}")
+
+# ── Ε. (ε) Ιδιότητες — αριθμητική επαλήθευση ──────────────
+print("\n──── Ε. (ε) Ιδιότητες του ορισμένου ολοκληρώματος ────")
+
+Q = lambda g, a, b: quad(g, a, b)[0]      # αριθμητικό ∫_a^b g
+
+# Γραμμικότητα
+lhs = Q(lambda z: 3*z**2 + 5*np.sin(z), 0, 1)
+rhs = 3*Q(lambda z: z**2, 0, 1) + 5*Q(np.sin, 0, 1)
+print(f"  Γραμμικότητα : ∫₀¹(3x²+5sin x) = {lhs:.12f}")
+print(f"                 3∫₀¹x² + 5∫₀¹sin x = {rhs:.12f}"
+      f"   |διαφορά| = {abs(lhs-rhs):.2e}")
+
+# Πρόσθεση διαστημάτων
+whole = Q(lambda z: z**2, 0, 3)
+split = Q(lambda z: z**2, 0, 1) + Q(lambda z: z**2, 1, 3)
+print(f"  Πρόσθεση     : ∫₀³x² = {whole:.12f} ,  ∫₀¹+∫₁³ = {split:.12f}"
+      f"   |διαφορά| = {abs(whole-split):.2e}")
+
+# Αντιστροφή ορίων
+fwd = Q(lambda z: z**2, 1, 4)
+bwd = Q(lambda z: z**2, 4, 1)
+print(f"  Αντιστροφή   : ∫₁⁴x² = {fwd:.12f} ,  ∫₄¹x² = {bwd:.12f}"
+      f"   άθροισμα = {fwd+bwd:.2e}")
+
+# Συμμετρίες
+odd = Q(lambda z: z**3, -2, 2)
+even_full = Q(lambda z: z**2, -2, 2)
+even_half = 2*Q(lambda z: z**2, 0, 2)
+print(f"  Περιττή      : ∫₋₂²x³ = {odd:.2e}   [ΑΝΑΜΕΝΟΜΕΝΟ 0]")
+print(f"  Άρτια        : ∫₋₂²x² = {even_full:.12f} ,  "
+      f"2∫₀²x² = {even_half:.12f}   |διαφορά| = {abs(even_full-even_half):.2e}")
+
+# ── Ζ. (ζ) Φράγματα για f(x) = e^(x²) στο [0,1] ───────────
+print("\n──── Ζ. (ζ) Φράγματα για f(x) = e^(x²) στο [0,1] ────")
+
+g = lambda z: np.exp(z**2)
+I_exact = Q(g, 0, 1)
+print(f"  ∫₀¹ e^(x²) dx = {I_exact:.12f}   (quad)")
+print(f"  Η f είναι αύξουσα στο [0,1] (f' = 2x·e^(x²) ≥ 0),")
+print(f"  άρα m = f(0) = {g(0.0):.6f} και M = f(1) = e = {g(1.0):.6f}.")
+print(f"  Χονδρικό φράγμα: {g(0.0):.6f} ≤ ∫ ≤ {g(1.0):.6f}   →  "
+      f"{g(0.0) &lt;= I_exact &lt;= g(1.0)}")
+
+print("\n  Στένεμα με διάσπαση του [0,1] σε k ίσα υποδιαστήματα")
+print("  (σε καθένα m_j = f(αριστερό άκρο), M_j = f(δεξιό άκρο)):")
+print(f"  {'k':&gt;3} {'κάτω φράγμα':&gt;16} {'άνω φράγμα':&gt;16} {'πλάτος':&gt;12}"
+      f" {'περιέχει ∫;':&gt;12}")
+for k in (1, 2, 4, 8):
+    e_ = np.linspace(0, 1, k + 1)
+    h = 1/k
+    lower = float(np.sum(g(e_[:-1])) * h)     # f αύξουσα ⇒ min στο αριστερό
+    upper = float(np.sum(g(e_[1:])) * h)      #             max στο δεξιό
+    print(f"  {k:&gt;3d} {lower:&gt;16.10f} {upper:&gt;16.10f} {upper-lower:&gt;12.6f}"
+          f" {str(lower &lt;= I_exact &lt;= upper):&gt;12s}")
+
+print("\n  Σύγκριση: στο [0,1] ισχύει x² ≤ x, άρα e^(x²) ≤ e^x.")
+I_ex = Q(np.exp, 0, 1)
+print(f"    ∫₀¹e^(x²)dx = {I_exact:.12f}   ≤   ∫₀¹e^x dx = {I_ex:.12f}"
+      f"   →  {I_exact &lt;= I_ex}")
+
+# ── Η. (η) Μέση τιμή της f(x) = x² στο [0,3] ──────────────
+print("\n──── Η. (η) Μέση τιμή της f(x) = x² στο [0,3] ────")
+
+N_big = 10**4
+I_riem = riemann(f, 0, 3, N_big, 'mid')
+fbar = I_riem / (3 - 0)
+print(f"  ∫₀³x²dx ≈ {I_riem:.10f} (μεσαίο άθροισμα Riemann, n = {N_big})"
+      f"   [ακριβές: 9]")
+print(f"  Μέση τιμή f̄ = ∫₀³f/(b-a) ≈ {fbar:.10f}   [ΑΝΑΜΕΝΟΜΕΝΟ 3]")
+
+xi = np.sqrt(fbar)
+print(f"  ΘΜΤ: f(ξ) = f̄  ⇒  ξ = √f̄ ≈ {xi:.10f}   [ΑΝΑΜΕΝΟΜΕΝΟ √3 ≈ "
+      f"{np.sqrt(3):.10f}]")
+print(f"  Εμβαδόν ορθογωνίου f̄·(b-a) = {fbar*3:.10f}  έναντι  "
+      f"∫₀³f = {I_riem:.10f}   |διαφορά| = {abs(fbar*3 - I_riem):.2e}")
+
+zz = np.linspace(0, 3, 400)
+plt.figure(figsize=(7.5, 5))
+plt.fill_between(zz, 0, f(zz), color='steelblue', alpha=.35,
+                 label="χωρίο κάτω από την f(x)=x²   (εμβαδόν = 9)")
+plt.fill_between([0, 3], 0, [fbar, fbar], color='crimson', alpha=.18,
+                 label=f"ορθογώνιο ύψους f̄ = {fbar:.4f}  "
+                       f"(εμβαδόν = {fbar*3:.4f})")
+plt.plot(zz, f(zz), 'b-', lw=2.2)
+plt.axhline(fbar, color='crimson', lw=2, ls='--')
+plt.plot([xi], [fbar], 'ko', ms=8, zorder=5)
+plt.annotate(f"ξ ≈ {xi:.4f}", (xi, fbar), textcoords="offset points",
+             xytext=(10, -18), fontsize=10)
+plt.vlines(xi, 0, fbar, color='k', ls=':', lw=1.2)
+plt.xlabel("x"); plt.ylabel("y"); plt.xlim(0, 3); plt.ylim(0, 9.5)
+plt.title("Μέση τιμή: τα δύο εμβαδά είναι ίσα (Θεώρημα Μέσης Τιμής)")
+plt.legend(fontsize=9, loc='upper left'); plt.grid(alpha=.3)
+plt.tight_layout()
+
+print("\n✓ Ολοκληρώθηκε το Κεφάλαιο 14.")
+plt.show()
+</textarea>
+      <pre class="py-output" id="py-output"></pre>
+      <div class="py-plots" id="py-plots"></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+}
+function loadCode(file, elementId, lang) {
+  fetch(file+'?v='+Date.now())
+    .then(r=>r.ok?r.text():Promise.reject(r.status))
+    .then(text=>{
+      const el=document.getElementById(elementId);
+      el.textContent=text; el.className='language-'+lang;
+      Prism.highlightElement(el);
+    })
+    .catch(err=>{document.getElementById(elementId).textContent='⚠ Αδυναμία φόρτωσης ('+err+'). Χρήση κουμπιού Λήψη.';});
+}
+
+/* ── In-browser Python runner (Pyodide) ── */
+const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+let pyodideReady = null, originalPy = '';
+const $ = id => document.getElementById(id);
+originalPy = $('py-editor').value;
+$('py-reset').onclick = () => { $('py-editor').value = originalPy; $('py-output').textContent=''; $('py-plots').innerHTML=''; };
+
+async function ensurePyodide(setStatus){
+  if (pyodideReady) return pyodideReady;
+  pyodideReady = (async () => {
+    setStatus('Λήψη περιβάλλοντος Python… (πρώτη φορά ~15–25 MB)');
+    if (!window.loadPyodide){
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = PYODIDE_URL; sc.onload = res; sc.onerror = () => rej('script load error');
+        document.head.appendChild(sc);
+      });
+    }
+    return await loadPyodide();
+  })();
+  return pyodideReady;
+}
+
+$('py-run').onclick = async function(){
+  const btn = this, out = $('py-output'), plots = $('py-plots');
+  const setStatus = t => $('py-status').textContent = t;
+  btn.disabled = true; out.textContent = ''; plots.innerHTML = '';
+  try {
+    const py = await ensurePyodide(setStatus);
+    py.setStdout({ batched: s => { out.textContent += s; } });
+    py.setStderr({ batched: s => { out.textContent += s; } });
+    const code = $('py-editor').value;
+    setStatus('Φόρτωση βιβλιοθηκών…');
+    await py.loadPackagesFromImports(code);
+    setStatus('Εκτέλεση…');
+    await py.runPythonAsync("try:\n    import matplotlib; matplotlib.use('AGG')\nexcept Exception:\n    pass");
+    py.globals.set('__user_src__', code);
+    await py.runPythonAsync(`
+import traceback
+try:
+    exec(__user_src__, {'__name__': '__main__'})
+except Exception:
+    traceback.print_exc()
+`);
+    const figs = await py.runPythonAsync(`
+import base64, io
+_imgs = []
+try:
+    import matplotlib.pyplot as plt
+    for _n in plt.get_fignums():
+        _f = plt.figure(_n); _b = io.BytesIO()
+        _f.savefig(_b, format='png', dpi=110, bbox_inches='tight'); _b.seek(0)
+        _imgs.append(base64.b64encode(_b.read()).decode())
+    plt.close('all')
+except Exception:
+    pass
+_imgs
+`);
+    const arr = figs.toJs(); if (figs.destroy) figs.destroy();
+    arr.forEach(b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; plots.appendChild(img); });
+    setStatus(arr.length ? ('Ολοκληρώθηκε ✓ — ' + arr.length + ' γράφημα/τα') : 'Ολοκληρώθηκε ✓');
+  } catch (e) {
+    out.textContent += '\n⚠ Σφάλμα: ' + e;
+    setStatus('Σφάλμα');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κώδικας Κεφ. 11 — Μονοτονία, Κυρτότητα και Ακρότατα · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222}
+  header{background:var(--blue);color:white;padding:18px 24px}
+  header h1{font-size:1.25rem;font-weight:700}
+  header p{font-size:.9rem;margin-top:4px;opacity:.85}
+  .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd}
+  .breadcrumb a{color:var(--blue);text-decoration:none}
+  .container{max-width:960px;margin:0 auto;padding:24px 16px}
+  .info-box{background:white;border-left:5px solid var(--blue);padding:14px 18px;margin-bottom:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .info-box h2{font-size:1rem;color:var(--blue);margin-bottom:8px}
+  .info-box p{font-size:.88rem;line-height:1.6}
+  .tabs{display:flex;gap:6px;margin-bottom:0}
+  .tab-btn{padding:10px 20px;border:none;border-radius:6px 6px 0 0;font-size:.9rem;font-weight:600;cursor:pointer}
+  .tab-btn.maxima{background:#d5f5e3;color:var(--teal)}
+  .tab-btn.python{background:#d6eaf8;color:var(--blue)}
+  .tab-btn.active.maxima{background:var(--teal);color:white}
+  .tab-btn.active.python{background:var(--blue);color:white}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  .code-card{background:white;border-radius:0 6px 6px 6px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+  .code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-size:.85rem;font-weight:600}
+  .code-header.maxima{background:var(--teal);color:white}
+  .code-header.python{background:var(--blue);color:white}
+  .download-btn{display:inline-block;padding:5px 12px;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.5);border-radius:4px;text-decoration:none;font-size:.8rem;font-weight:600}
+  .download-btn:hover{background:rgba(255,255,255,.35)}
+  pre[class*="language-"]{margin:0!important;border-radius:0!important;max-height:520px;overflow-y:auto;font-size:.83rem}
+  .commands-box{background:#fffde7;border:1px solid #f9a825;border-radius:4px;padding:12px 16px;margin:16px 0;font-size:.85rem}
+  .commands-box strong{color:var(--orange)}
+  .commands-box code{background:#fff3cd;padding:1px 5px;border-radius:3px;font-size:.82rem}
+  footer{text-align:center;padding:20px;font-size:.8rem;color:#888;margin-top:32px;border-top:1px solid #ddd}
+
+  /* ── In-browser Python runner ── */
+  .py-toolbar{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#1d2b36;}
+  .run-btn{background:#16a34a;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .run-btn:disabled{opacity:.55;cursor:default;}
+  .reset-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;}
+  .py-status{color:#9fb3c8;font-size:.8rem;margin-left:auto;text-align:right;}
+  textarea.py-editor{display:block;width:100%;min-height:360px;border:none;background:#272822;color:#f8f8f2;font-family:Consolas,Monaco,monospace;font-size:.83rem;line-height:1.5;padding:14px 16px;resize:vertical;outline:none;tab-size:4;}
+  .py-output{background:#0e1416;color:#e6edf3;font-family:Consolas,Monaco,monospace;font-size:.82rem;white-space:pre-wrap;padding:14px 16px;margin:0;max-height:380px;overflow:auto;border-top:1px solid #2a3942;}
+  .py-output:empty{display:none;}
+  .py-plots{padding:8px 16px 14px;background:#fff;text-align:center;}
+  .py-plots img{max-width:100%;border:1px solid #ddd;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 Κεφάλαιο 11 — Μονοτονία, Κυρτότητα και Ακρότατα</h1>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+</header>
+<div class="breadcrumb">
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 11
+</div>
+<div class="container">
+  <div class="info-box">
+    <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
+    <p><strong>Αντικείμενο:</strong> κρίσιμα σημεία και ακρότατα, πίνακας προσήμων, κυρτότητα και σημεία καμπής, Θεώρημα Μέσης Τιμής<br><br>
+    Επιλέξτε γλώσσα από τις καρτέλες. Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.</p>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn maxima active" onclick="showTab('maxima')">⚙️ Maxima (.mac)</button>
+    <button class="tab-btn python"        onclick="showTab('python')">🐍 Python (.py)</button>
+  </div>
+  <div id="tab-maxima" class="tab-content active">
+    <div class="code-card">
+      <div class="code-header maxima">
+        <span>maxima_akrotata.mac</span>
+        <a class="download-btn" href="maxima_akrotata.mac" download>⬇ Λήψη .mac</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βασικές εντολές:</strong>
+        <code>solve(diff(f,x)=0,x)</code> &nbsp;
+        <code>subst(c</code> &nbsp;
+        <code>x</code> &nbsp;
+        <code>diff(f,x,2))</code> &nbsp;
+        <code>plot2d([f</code> &nbsp;
+        <code>diff(f,x)],[x,a,b])</code> &nbsp;
+        <code>float()</code>
+      </div>
+      <pre><code class="language-maxima" id="maxima-code">/* ============================================================
+   maxima_akrotata.mac
+   Κεφάλαιο 11 — Μονοτονία, Ακρότατα, Κυρτότητα, Θ. Μέσης Τιμής
+   Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+   ============================================================
+
+   ΕΝΤΟΛΕΣ ΠΟΥ ΧΡΗΣΙΜΟΠΟΙΟΥΝΤΑΙ:
+     solve(diff(f,x)=0, x)        -&gt; κρίσιμα σημεία
+     subst(c, x, diff(f,x,2))     -&gt; κριτήριο 2ης παραγώγου
+     subst(t, x, diff(f,x))       -&gt; πρόσημο της f' σε δοκιμαστική τιμή
+     plot2d([f,diff(f,x)],[x,a,b])-&gt; γραφική επαλήθευση
+     float(...)                   -&gt; δεκαδικές τιμές
+
+   Εκτελέστε με: wxMaxima (File/Batch) ή
+                 maxima -b maxima_akrotata.mac
+   ============================================================ */
+
+/* Η συνάρτηση του βιβλίου */
+f  : x^3 - 3*x^2 - 9*x + 5$
+f1 : diff(f, x)$
+f2 : diff(f, x, 2)$
+
+print("f(x)   =", f)$
+print("f'(x)  =", f1, "  =", factor(f1))$
+print("f''(x) =", f2, "  =", factor(f2))$
+
+/* ── Α. Κρίσιμα σημεία και κριτήριο 2ης παραγώγου ───────── */
+print("")$
+print("════ Α. Κρίσιμα σημεία — κριτήριο 2ης παραγώγου ════")$
+
+crit : sort(map(rhs, solve(f1 = 0, x)))$
+print("  Κρίσιμα σημεία (f'=0): x =", crit, "   (αναμ. -1 και 3)")$
+
+for c in crit do
+  block([v : subst(c, x, f2), y : subst(c, x, f)],
+    print("    x =", c, "  f(x) =", y, "  f''(x) =", v,
+          if v &gt; 0 then "  -&gt;  τοπικό ΕΛΑΧΙΣΤΟ"
+          else if v &lt; 0 then "  -&gt;  τοπικό ΜΕΓΙΣΤΟ"
+          else "  -&gt;  ασαφές (χρειάζεται άλλο κριτήριο)"))$
+
+print("  Αναμενόμενα: f(-1)=10 τοπικό μέγιστο, f(3)=-22 τοπικό ελάχιστο.")$
+
+/* ── Β. Μονοτονία: πίνακας προσήμων της f' με subst ─────── */
+print("")$
+print("════ Β. Μονοτονία — πίνακας προσήμων της f' ════")$
+
+/* Τα κρίσιμα σημεία χωρίζουν το R σε τρία διαστήματα.
+   Παίρνουμε μία δοκιμαστική τιμή μέσα σε κάθε διάστημα. */
+tests : [-2, 0, 4]$                    /* (-inf,-1), (-1,3), (3,+inf) */
+dlab : ["(-inf, -1)", "(-1, 3)", "(3, +inf)"]$
+
+print("  Διάστημα          δοκιμ. x   f'(x)    πρόσημο   μονοτονία")$
+for i:1 thru 3 do
+  block([t : tests[i], v],
+    v : subst(t, x, f1),
+    print("  ", dlab[i], "     x =", t, "   f' =", v,
+          if v &gt; 0 then "   (+)   ΑΥΞΟΥΣΑ"
+          else if v &lt; 0 then "   (-)   ΦΘΙΝΟΥΣΑ"
+          else "   (0)"))$
+
+print("  Συμπέρασμα: αύξουσα στο (-inf,-1), φθίνουσα στο (-1,3),")$
+print("              αύξουσα στο (3,+inf).")$
+print("  =&gt; στο x=-1 αλλαγή + -&gt; -  (μέγιστο), στο x=3 αλλαγή - -&gt; + (ελάχιστο).")$
+
+/* Γραφική επαλήθευση: f και f' μαζί */
+plot2d([f, f1], [x, -4, 6],
+       [legend, "f(x)", "f'(x)"],
+       [title, "Κεφ.11: f(x)=x^3-3x^2-9x+5 και η f'(x)"])$
+
+/* ── Γ. Σημεία καμπής και κυρτότητα / κοιλότητα ─────────── */
+print("")$
+print("════ Γ. Σημεία καμπής — κυρτότητα / κοιλότητα ════")$
+
+infl : sort(map(rhs, solve(f2 = 0, x)))$
+print("  Σημεία καμπής (f''=0): x =", infl, "   (αναμ. x = 1)")$
+for c in infl do
+  print("    x =", c, "  f(x) =", subst(c, x, f), "   (αναμ. f(1) = -6)")$
+
+/* Πρόσημο της f'' εκατέρωθεν του σημείου καμπής */
+test2 : [0, 2]$
+dlab2 : ["(-inf, 1)", "(1, +inf)"]$
+print("  Διάστημα          δοκιμ. x   f''(x)   κυρτότητα")$
+for i:1 thru 2 do
+  block([t : test2[i], v],
+    v : subst(t, x, f2),
+    print("  ", dlab2[i], "     x =", t, "   f'' =", v,
+          if v &gt; 0 then "    (+)   ΚΥΡΤΗ (convex)"
+          else if v &lt; 0 then "    (-)   ΚΟΙΛΗ (concave)"
+          else "    (0)"))$
+
+print("  Το πρόσημο της f'' αλλάζει στο x=1 =&gt; πράγματι σημείο καμπής.")$
+
+/* Συγκεντρωτικό γράφημα f, f', f'' */
+plot2d([f, f1, f2], [x, -4, 6],
+       [legend, "f", "f'", "f''"],
+       [title, "Κεφ.11: μελέτη της f(x)=x^3-3x^2-9x+5"])$
+
+print("  Τιμές f στα κρίσιμα σημεία (δεκαδικά):",
+      float(map(lambda([c], subst(c, x, f)), crit)))$
+
+/* ── Δ. Θεώρημα Μέσης Τιμής: g(x)=x^2-x+1 στο [1,4] ─────── */
+print("")$
+print("════ Δ. Θεώρημα Μέσης Τιμής — g(x)=x^2-x+1 στο [1,4] ════")$
+
+kill(c)$                               /* το c το χρειαζόμαστε ως μεταβλητή */
+g  : x^2 - x + 1$
+a  : 1$
+b  : 4$
+ga : subst(a, x, g)$
+gb : subst(b, x, g)$
+mslope : (gb - ga)/(b - a)$            /* κλίση χορδής */
+
+print("  g(1) =", ga, "   g(4) =", gb)$
+print("  Κλίση χορδής: (g(4)-g(1))/(4-1) =", mslope, "   (αναμ. 4)")$
+
+/* Λύνουμε g'(c) = κλίση χορδής */
+csol : map(rhs, solve(subst(c, x, diff(g, x)) = mslope, c))$
+print("  Λύση της g'(c) = ", mslope, ":  c =", csol,
+      " =", float(csol), "   (αναμ. c = 5/2)")$
+
+cstar : first(csol)$
+print("  Ανήκει στο ανοικτό (1,4);", is(cstar &gt; a and cstar &lt; b))$
+
+gc : subst(cstar, x, g)$
+chord   : expand(ga + mslope*(x - a))$              /* χορδή A(1,1)-B(4,13) */
+tangent : expand(gc + mslope*(x - cstar))$          /* εφαπτομένη στο c     */
+
+print("  g(c) =", gc, "   (αναμ. 19/4)")$
+print("  Χορδή:      y =", chord,   "   (αναμ. 4x - 3)")$
+print("  Εφαπτομένη: y =", tangent, "   (αναμ. 4x - 21/4)")$
+
+/* Παράλληλες &lt;=&gt; ίδια κλίση &lt;=&gt; η διαφορά τους είναι σταθερή */
+print("  Κλίση χορδής =", diff(chord, x),
+      "   Κλίση εφαπτομένης =", diff(tangent, x))$
+print("  Διαφορά (χορδή - εφαπτομένη) =", expand(chord - tangent),
+      "  -&gt; σταθερά =&gt; ΠΑΡΑΛΛΗΛΕΣ")$
+print("  Έλεγχος d/dx (χορδή - εφαπτομένη) =", diff(chord - tangent, x),
+      "  (πρέπει 0)")$
+
+/* Γράφημα: g, χορδή, εφαπτομένη στο c  (άκρα σε αύξουσα σειρά) */
+plot2d([g, chord, tangent], [x, 0.5, 4.5],
+       [legend, "g(x)=x^2-x+1", "χορδή A(1,1)-B(4,13)",
+                "εφαπτομένη στο c=5/2"],
+       [title, "Θεώρημα Μέσης Τιμής: η εφαπτομένη στο c είναι παράλληλη στη χορδή"])$
+
+print("")$
+print("Ολοκληρώθηκε το Κεφάλαιο 11.")$
+</code></pre>
+    </div>
+  </div>
+  <div id="tab-python" class="tab-content">
+    <div class="code-card">
+      <div class="code-header python">
+        <span>python_akrotata.py</span>
+        <a class="download-btn" href="python_akrotata.py" download>⬇ Λήψη .py</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βιβλιοθήκες / εντολές:</strong>
+        <code>sympy.solve()</code> &nbsp;
+        <code>sympy.diff()</code> &nbsp;
+        <code>sympy.lambdify()</code> &nbsp;
+        <code>np.sign()</code> &nbsp;
+        <code>matplotlib.pyplot</code>
+      </div>
+            <div class="py-toolbar">
+        <button class="run-btn" id="py-run">▶ Τρέξε</button>
+        <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
+        <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
+      </div>
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># ============================================================
+# python_akrotata.py
+# Κεφάλαιο 11 — Μονοτονία και Ακρότατα, SymPy &amp; Matplotlib
+# Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+# ============================================================
+#
+# ΒΙΒΛΙΟΘΗΚΕΣ:
+#   sympy       → κρίσιμα σημεία, κριτήριο 2ης παραγώγου
+#   numpy       → πίνακας προσήμων σε πυκνό πλέγμα (np.sign)
+#   matplotlib  → γραφήματα, σκίαση διαστημάτων (axvspan)
+#
+# ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:
+#   sympy.solve(diff(f,x), x)   → κρίσιμα σημεία
+#   sympy.diff(f, x, 2)         → δεύτερη παράγωγος
+#   sympy.lambdify(x, f)        → συμβολικό → αριθμητικό
+#   np.sign(...)                → πρόσημο σε πυκνό πλέγμα
+#   ax.axvspan(a, b, ...)       → χρωματισμός διαστήματος
+# ============================================================
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sympy import symbols, diff, solve, simplify, lambdify, sqrt, limit
+
+x = symbols('x', real=True)
+
+print("=" * 58)
+print(" Κεφάλαιο 11: Μονοτονία, Ακρότατα, Κυρτότητα — Python")
+print("=" * 58)
+
+# Η συνάρτηση του βιβλίου
+f  = x**3 - 3*x**2 - 9*x + 5
+f1 = diff(f, x)
+f2 = diff(f, x, 2)
+
+print(f"\nf(x)   = {f}")
+print(f"f'(x)  = {f1}")
+print(f"f''(x) = {f2}")
+
+# ── Α. Κρίσιμα σημεία — κριτήριο 2ης παραγώγου ────────────
+print("\n── Α. Κρίσιμα σημεία και κριτήριο 2ης παραγώγου ──")
+
+crits = sorted(solve(f1, x))
+print(f"  Κρίσιμα σημεία (f'=0): x = {crits}   (αναμ. [-1, 3])")
+
+kinds = {}
+for xi in crits:
+    yi  = f.subs(x, xi)
+    f2i = f2.subs(x, xi)
+    if f2i &gt; 0:
+        kind = "τοπικό ΕΛΑΧΙΣΤΟ"
+    elif f2i &lt; 0:
+        kind = "τοπικό ΜΕΓΙΣΤΟ"
+    else:
+        kind = "ασαφές (χρειάζεται άλλο κριτήριο)"
+    kinds[xi] = kind
+    print(f"    x = {xi}:  f = {yi},  f'' = {f2i}  →  {kind}")
+print("  Αναμενόμενα: f(-1)=10 τοπικό μέγιστο, f(3)=-22 τοπικό ελάχιστο.")
+
+f_num  = lambdify(x, f,  'numpy')
+f1_num = lambdify(x, f1, 'numpy')
+f2_num = lambdify(x, f2, 'numpy')
+
+xs = np.linspace(-4, 6, 800)
+
+# Κοινό διάγραμμα f, f', f''
+plt.figure(figsize=(7.5, 5))
+plt.plot(xs, f_num(xs),  'b-',  lw=2,   label=r"$f(x)=x^3-3x^2-9x+5$")
+plt.plot(xs, f1_num(xs), 'g--', lw=1.8, label=r"$f'(x)=3x^2-6x-9$")
+plt.plot(xs, f2_num(xs), 'r:',  lw=1.8, label=r"$f''(x)=6x-6$")
+plt.axhline(0, color='k', lw=0.6)
+for xi in crits:
+    plt.scatter([float(xi)], [float(f.subs(x, xi))], color='darkred', s=70, zorder=5)
+    plt.annotate(f"({xi}, {f.subs(x, xi)})", (float(xi), float(f.subs(x, xi))),
+                 textcoords="offset points", xytext=(8, 8), fontsize=9)
+plt.grid(alpha=0.3); plt.legend(fontsize=9); plt.xlabel('x')
+plt.title("Κεφ. 11 — f, f′ και f″ σε κοινό διάγραμμα")
+plt.tight_layout()
+
+# ── Β. Αυτόματος πίνακας προσήμων της f' (np.sign + axvspan) ──
+print("\n── Β. Πίνακας προσήμων της f' (np.sign σε πυκνό πλέγμα) ──")
+
+xg = np.linspace(-4, 6, 2001)
+s1_all = np.sign(f1_num(xg))
+
+# Αγνοούμε τα σημεία όπου f'=0 (εκεί το πρόσημο δεν ορίζεται) και
+# κοιτάμε μόνο διαδοχικά ΜΗ μηδενικά πρόσημα.
+nz = np.nonzero(s1_all)[0]
+s1 = s1_all[nz]
+xnz = xg[nz]
+changes = np.where(np.diff(s1) != 0)[0]
+print(f"  Αλλαγές προσήμου της f' μεταξύ x = "
+      f"{np.round(xnz[changes], 3)} και {np.round(xnz[changes + 1], 3)}"
+      f"   (αναμ. ≈ -1 και 3)")
+for i in changes:
+    before, after = s1[i], s1[i + 1]
+    if before &gt; 0 &gt; after:
+        kind = "τοπικό ΜΕΓΙΣΤΟ (+ → -)"
+    elif before &lt; 0 &lt; after:
+        kind = "τοπικό ΕΛΑΧΙΣΤΟ (- → +)"
+    else:
+        kind = "χωρίς αλλαγή"
+    print(f"    στο διάστημα [{xnz[i]:7.3f}, {xnz[i+1]:7.3f}]: "
+          f"{before:+.0f} → {after:+.0f}  ⇒  {kind}")
+
+# Διαστήματα μονοτονίας από τα κρίσιμα σημεία
+bounds = [-np.inf] + [float(c) for c in crits] + [np.inf]
+mono = []
+print("\n  Πίνακας μονοτονίας (δοκιμαστική τιμή ανά διάστημα):")
+for a, b in zip(bounds[:-1], bounds[1:]):
+    # δοκιμαστική τιμή μέσα στο διάστημα
+    if np.isinf(a):
+        t = b - 1.0
+    elif np.isinf(b):
+        t = a + 1.0
+    else:
+        t = 0.5*(a + b)
+    v = float(f1_num(t))
+    lab = "ΑΥΞΟΥΣΑ" if v &gt; 0 else ("ΦΘΙΝΟΥΣΑ" if v &lt; 0 else "—")
+    mono.append((a, b, v &gt; 0))
+    astr = "-∞" if np.isinf(a) else f"{a:g}"
+    bstr = "+∞" if np.isinf(b) else f"{b:g}"
+    print(f"    ({astr}, {bstr}):  x={t:6.2f} → f'={v:9.3f}  "
+          f"{'(+)' if v &gt; 0 else '(-)'}  {lab}")
+
+# Γράφημα f με χρωματισμένα τα διαστήματα αύξησης/μείωσης
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(xs, f_num(xs), 'b-', lw=2.2, label=r"$f(x)=x^3-3x^2-9x+5$")
+for a, b, inc in mono:
+    a_p = max(a, xs[0]); b_p = min(b, xs[-1])
+    ax.axvspan(a_p, b_p, color=('#bfe6bf' if inc else '#f6c6c6'), alpha=0.55)
+ax.axhline(0, color='k', lw=0.6)
+for xi in crits:
+    ax.scatter([float(xi)], [float(f.subs(x, xi))], color='darkred', s=70, zorder=5)
+ax.set_xlim(xs[0], xs[-1])
+ax.grid(alpha=0.3); ax.set_xlabel('x')
+ax.set_title("Μονοτονία: πράσινο = αύξουσα (f′&gt;0), κόκκινο = φθίνουσα (f′&lt;0)")
+ax.legend(fontsize=9)
+plt.tight_layout()
+
+# ── Γ. Σημεία καμπής και κυρτότητα / κοιλότητα ────────────
+print("\n── Γ. Σημεία καμπής — κυρτές / κοίλες περιοχές ──")
+
+infl = sorted(solve(f2, x))
+print(f"  Σημεία καμπής (f''=0): x = {infl}   (αναμ. [1])")
+for xi in infl:
+    print(f"    x = {xi}:  f = {f.subs(x, xi)}   (αναμ. f(1) = -6)")
+
+# Επαλήθευση αλλαγής προσήμου της f'' σε κάθε σημείο καμπής
+eps = 0.1
+for xi in infl:
+    left  = float(f2_num(float(xi) - eps))
+    right = float(f2_num(float(xi) + eps))
+    print(f"    f''({float(xi)-eps:g}) = {left:+.3f},  "
+          f"f''({float(xi)+eps:g}) = {right:+.3f}  →  "
+          f"αλλαγή προσήμου: {left*right &lt; 0}")
+
+# Διαστήματα κυρτότητας
+cb = [-np.inf] + [float(i) for i in infl] + [np.inf]
+conv = []
+print("\n  Πίνακας κυρτότητας:")
+for a, b in zip(cb[:-1], cb[1:]):
+    if np.isinf(a):
+        t = b - 1.0
+    elif np.isinf(b):
+        t = a + 1.0
+    else:
+        t = 0.5*(a + b)
+    v = float(f2_num(t))
+    lab = "ΚΥΡΤΗ (convex)" if v &gt; 0 else ("ΚΟΙΛΗ (concave)" if v &lt; 0 else "—")
+    conv.append((a, b, v &gt; 0))
+    astr = "-∞" if np.isinf(a) else f"{a:g}"
+    bstr = "+∞" if np.isinf(b) else f"{b:g}"
+    print(f"    ({astr}, {bstr}):  x={t:6.2f} → f''={v:9.3f}  "
+          f"{'(+)' if v &gt; 0 else '(-)'}  {lab}")
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(xs, f_num(xs), 'b-', lw=2.2, label=r"$f(x)$")
+ax.plot(xs, f2_num(xs), 'r:', lw=1.5, label=r"$f''(x)$")
+for a, b, cx in conv:
+    a_p = max(a, xs[0]); b_p = min(b, xs[-1])
+    ax.axvspan(a_p, b_p, color=('#c9d8f2' if cx else '#f2e3c0'), alpha=0.65)
+ax.axhline(0, color='k', lw=0.6)
+for xi in infl:
+    ax.scatter([float(xi)], [float(f.subs(x, xi))], color='purple', s=80, zorder=5)
+    ax.annotate(f"καμπή ({xi}, {f.subs(x, xi)})",
+                (float(xi), float(f.subs(x, xi))),
+                textcoords="offset points", xytext=(10, -18), fontsize=9)
+ax.set_xlim(xs[0], xs[-1])
+ax.grid(alpha=0.3); ax.set_xlabel('x')
+ax.set_title("Κυρτότητα: μπλε = κυρτή (f″&gt;0), ώχρα = κοίλη (f″&lt;0)")
+ax.legend(fontsize=9)
+plt.tight_layout()
+
+# ── Δ. Θεώρημα Μέσης Τιμής ────────────────────────────────
+print("\n── Δ. Θεώρημα Μέσης Τιμής ──")
+
+
+def mvt(expr, a, b, name):
+    """Βρίσκει c στο (a,b) με f'(c) = (f(b)-f(a))/(b-a) και το επιστρέφει."""
+    fa, fb = expr.subs(x, a), expr.subs(x, b)
+    slope = simplify((fb - fa)/(b - a))
+    d = diff(expr, x)
+    sols = [s for s in solve(d - slope, x) if s.is_real and a &lt; s &lt; b]
+    print(f"\n  {name} στο [{a}, {b}]")
+    print(f"    f({a}) = {fa},  f({b}) = {fb}")
+    print(f"    κλίση χορδής = {slope}  ( = {float(slope):.6f} )")
+    print(f"    f'(x) = {d}")
+    print(f"    λύσεις της f'(c) = κλίση στο ({a},{b}): c = {sols}")
+    return fa, fb, slope, sols
+
+
+# (i) f(x) = x^2 - x + 1 στο [1,4]  → c = 5/2
+g1 = x**2 - x + 1
+a1, b1 = 1, 4
+fa1, fb1, m1, cs1 = mvt(g1, a1, b1, "f(x) = x² - x + 1")
+c1 = cs1[0]
+gc1 = g1.subs(x, c1)
+chord1   = fa1 + m1*(x - a1)
+tangent1 = gc1 + m1*(x - c1)
+print(f"    c = {c1}  (αναμ. 5/2),  f(c) = {gc1}  (αναμ. 19/4)")
+print(f"    χορδή:      y = {chord1.expand()}   (αναμ. 4x - 3)")
+print(f"    εφαπτομένη: y = {tangent1.expand()}   (αναμ. 4x - 21/4)")
+print(f"    κλίσεις: χορδή {diff(chord1, x)}, εφαπτομένη {diff(tangent1, x)} "
+      f"→ παράλληλες: {simplify(diff(chord1, x) - diff(tangent1, x)) == 0}")
+
+g1n = lambdify(x, g1, 'numpy')
+ch1n = lambdify(x, chord1, 'numpy')
+tg1n = lambdify(x, tangent1, 'numpy')
+xx1 = np.linspace(0.5, 4.5, 400)
+
+# (ii) g(x) = sqrt(x) στο [0,4]  → c = 1
+g2 = sqrt(x)
+a2, b2 = 0, 4
+fa2, fb2, m2, cs2 = mvt(g2, a2, b2, "g(x) = √x")
+c2 = cs2[0]
+gc2 = g2.subs(x, c2)
+chord2   = fa2 + m2*(x - a2)
+tangent2 = gc2 + m2*(x - c2)
+print(f"    c = {c2}  (αναμ. 1),  g(c) = {gc2}  (αναμ. 1)")
+print(f"    χορδή:      y = {chord2.expand()}   (αναμ. x/2)")
+print(f"    εφαπτομένη: y = {tangent2.expand()}   (αναμ. x/2 + 1/2)")
+print(f"    κλίσεις: χορδή {diff(chord2, x)}, εφαπτομένη {diff(tangent2, x)} "
+      f"→ παράλληλες: {simplify(diff(chord2, x) - diff(tangent2, x)) == 0}")
+
+# Σχόλιο για την υπόθεση της παραγωγισιμότητας στα ΑΚΡΑ
+dg2 = diff(g2, x)
+lim0 = limit(dg2, x, 0, '+')
+print(f"\n    ΣΧΟΛΙΟ: g'(x) = {dg2}, και lim_(x→0+) g'(x) = {lim0}.")
+print("    Η √x ΔΕΝ είναι παραγωγίσιμη στο άκρο x=0 (κατακόρυφη εφαπτομένη).")
+print("    Το Θ.Μ.Τ. ζητά συνέχεια στο ΚΛΕΙΣΤΟ [a,b] και παραγωγισιμότητα")
+print("    μόνο στο ΑΝΟΙΚΤΟ (a,b) — άρα οι υποθέσεις ΙΣΧΥΟΥΝ και εδώ,")
+print("    γι' αυτό και βρέθηκε c = 1 στο (0,4).")
+
+g2n = lambdify(x, g2, 'numpy')
+ch2n = lambdify(x, chord2, 'numpy')
+tg2n = lambdify(x, tangent2, 'numpy')
+xx2 = np.linspace(0, 4.5, 400)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4.6))
+
+ax = axes[0]
+ax.plot(xx1, g1n(xx1), 'b-', lw=2.2, label=r"$f(x)=x^2-x+1$")
+ax.plot(xx1, ch1n(xx1), 'g--', lw=1.8, label="χορδή A(1,1)–B(4,13)")
+ax.plot(xx1, tg1n(xx1), 'r-.', lw=1.8, label=f"εφαπτομένη στο c={c1}")
+ax.scatter([a1, b1], [float(fa1), float(fb1)], color='green', s=60, zorder=5)
+ax.scatter([float(c1)], [float(gc1)], color='red', s=80, zorder=5)
+ax.axvline(float(c1), color='0.6', lw=0.8, ls=':')
+ax.grid(alpha=0.3); ax.legend(fontsize=8); ax.set_xlabel('x')
+ax.set_title(f"Θ.Μ.Τ. στο [1,4]:  c = {c1}")
+
+ax = axes[1]
+ax.plot(xx2, g2n(xx2), 'b-', lw=2.2, label=r"$g(x)=\sqrt{x}$")
+ax.plot(xx2, ch2n(xx2), 'g--', lw=1.8, label="χορδή A(0,0)–B(4,2)")
+ax.plot(xx2, tg2n(xx2), 'r-.', lw=1.8, label=f"εφαπτομένη στο c={c2}")
+ax.scatter([a2, b2], [float(fa2), float(fb2)], color='green', s=60, zorder=5)
+ax.scatter([float(c2)], [float(gc2)], color='red', s=80, zorder=5)
+ax.axvline(float(c2), color='0.6', lw=0.8, ls=':')
+ax.set_ylim(-0.3, 3.2)
+ax.grid(alpha=0.3); ax.legend(fontsize=8); ax.set_xlabel('x')
+ax.set_title(f"Θ.Μ.Τ. για √x στο [0,4]:  c = {c2}\n(μη παραγωγίσιμη στο άκρο x=0)")
+
+plt.tight_layout()
+plt.show()
+
+print("\nΟλοκληρώθηκε το Κεφάλαιο 11.")
+</textarea>
+      <pre class="py-output" id="py-output"></pre>
+      <div class="py-plots" id="py-plots"></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+}
+function loadCode(file, elementId, lang) {
+  fetch(file+'?v='+Date.now())
+    .then(r=>r.ok?r.text():Promise.reject(r.status))
+    .then(text=>{
+      const el=document.getElementById(elementId);
+      el.textContent=text; el.className='language-'+lang;
+      Prism.highlightElement(el);
+    })
+    .catch(err=>{document.getElementById(elementId).textContent='⚠ Αδυναμία φόρτωσης ('+err+'). Χρήση κουμπιού Λήψη.';});
+}
+
+/* ── In-browser Python runner (Pyodide) ── */
+const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+let pyodideReady = null, originalPy = '';
+const $ = id => document.getElementById(id);
+originalPy = $('py-editor').value;
+$('py-reset').onclick = () => { $('py-editor').value = originalPy; $('py-output').textContent=''; $('py-plots').innerHTML=''; };
+
+async function ensurePyodide(setStatus){
+  if (pyodideReady) return pyodideReady;
+  pyodideReady = (async () => {
+    setStatus('Λήψη περιβάλλοντος Python… (πρώτη φορά ~15–25 MB)');
+    if (!window.loadPyodide){
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = PYODIDE_URL; sc.onload = res; sc.onerror = () => rej('script load error');
+        document.head.appendChild(sc);
+      });
+    }
+    return await loadPyodide();
+  })();
+  return pyodideReady;
+}
+
+$('py-run').onclick = async function(){
+  const btn = this, out = $('py-output'), plots = $('py-plots');
+  const setStatus = t => $('py-status').textContent = t;
+  btn.disabled = true; out.textContent = ''; plots.innerHTML = '';
+  try {
+    const py = await ensurePyodide(setStatus);
+    py.setStdout({ batched: s => { out.textContent += s; } });
+    py.setStderr({ batched: s => { out.textContent += s; } });
+    const code = $('py-editor').value;
+    setStatus('Φόρτωση βιβλιοθηκών…');
+    await py.loadPackagesFromImports(code);
+    setStatus('Εκτέλεση…');
+    await py.runPythonAsync("try:\n    import matplotlib; matplotlib.use('AGG')\nexcept Exception:\n    pass");
+    py.globals.set('__user_src__', code);
+    await py.runPythonAsync(`
+import traceback
+try:
+    exec(__user_src__, {'__name__': '__main__'})
+except Exception:
+    traceback.print_exc()
+`);
+    const figs = await py.runPythonAsync(`
+import base64, io
+_imgs = []
+try:
+    import matplotlib.pyplot as plt
+    for _n in plt.get_fignums():
+        _f = plt.figure(_n); _b = io.BytesIO()
+        _f.savefig(_b, format='png', dpi=110, bbox_inches='tight'); _b.seek(0)
+        _imgs.append(base64.b64encode(_b.read()).decode())
+    plt.close('all')
+except Exception:
+    pass
+_imgs
+`);
+    const arr = figs.toJs(); if (figs.destroy) figs.destroy();
+    arr.forEach(b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; plots.appendChild(img); });
+    setStatus(arr.length ? ('Ολοκληρώθηκε ✓ — ' + arr.length + ' γράφημα/τα') : 'Ολοκληρώθηκε ✓');
+  } catch (e) {
+    out.textContent += '\n⚠ Σφάλμα: ' + e;
+    setStatus('Σφάλμα');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κώδικας Κεφ. 17 — Εφαρμογές Ολοκληρωτικού Λογισμού · Στοιχεία ΓΑ &amp; ΔΟΛ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root { --blue:#1a5276; --teal:#0e6655; --orange:#ca6f1e; --bg:#f5f5f0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222}
+  header{background:var(--blue);color:white;padding:18px 24px}
+  header h1{font-size:1.25rem;font-weight:700}
+  header p{font-size:.9rem;margin-top:4px;opacity:.85}
+  .breadcrumb{font-size:.82rem;padding:10px 24px;background:#eee;border-bottom:1px solid #ddd}
+  .breadcrumb a{color:var(--blue);text-decoration:none}
+  .container{max-width:960px;margin:0 auto;padding:24px 16px}
+  .info-box{background:white;border-left:5px solid var(--blue);padding:14px 18px;margin-bottom:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .info-box h2{font-size:1rem;color:var(--blue);margin-bottom:8px}
+  .info-box p{font-size:.88rem;line-height:1.6}
+  .tabs{display:flex;gap:6px;margin-bottom:0}
+  .tab-btn{padding:10px 20px;border:none;border-radius:6px 6px 0 0;font-size:.9rem;font-weight:600;cursor:pointer}
+  .tab-btn.maxima{background:#d5f5e3;color:var(--teal)}
+  .tab-btn.python{background:#d6eaf8;color:var(--blue)}
+  .tab-btn.active.maxima{background:var(--teal);color:white}
+  .tab-btn.active.python{background:var(--blue);color:white}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  .code-card{background:white;border-radius:0 6px 6px 6px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+  .code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-size:.85rem;font-weight:600}
+  .code-header.maxima{background:var(--teal);color:white}
+  .code-header.python{background:var(--blue);color:white}
+  .download-btn{display:inline-block;padding:5px 12px;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.5);border-radius:4px;text-decoration:none;font-size:.8rem;font-weight:600}
+  .download-btn:hover{background:rgba(255,255,255,.35)}
+  pre[class*="language-"]{margin:0!important;border-radius:0!important;max-height:520px;overflow-y:auto;font-size:.83rem}
+  .commands-box{background:#fffde7;border:1px solid #f9a825;border-radius:4px;padding:12px 16px;margin:16px 0;font-size:.85rem}
+  .commands-box strong{color:var(--orange)}
+  .commands-box code{background:#fff3cd;padding:1px 5px;border-radius:3px;font-size:.82rem}
+  footer{text-align:center;padding:20px;font-size:.8rem;color:#888;margin-top:32px;border-top:1px solid #ddd}
+
+  /* ── In-browser Python runner ── */
+  .py-toolbar{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#1d2b36;}
+  .run-btn{background:#16a34a;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .run-btn:disabled{opacity:.55;cursor:default;}
+  .reset-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.45);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;}
+  .py-status{color:#9fb3c8;font-size:.8rem;margin-left:auto;text-align:right;}
+  textarea.py-editor{display:block;width:100%;min-height:360px;border:none;background:#272822;color:#f8f8f2;font-family:Consolas,Monaco,monospace;font-size:.83rem;line-height:1.5;padding:14px 16px;resize:vertical;outline:none;tab-size:4;}
+  .py-output{background:#0e1416;color:#e6edf3;font-family:Consolas,Monaco,monospace;font-size:.82rem;white-space:pre-wrap;padding:14px 16px;margin:0;max-height:380px;overflow:auto;border-top:1px solid #2a3942;}
+  .py-output:empty{display:none;}
+  .py-plots{padding:8px 16px 14px;background:#fff;text-align:center;}
+  .py-plots img{max-width:100%;border:1px solid #ddd;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 Κεφάλαιο 17 — Εφαρμογές Ολοκληρωτικού Λογισμού</h1>
+  <p>«Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού» &nbsp;|&nbsp; Ν. Ματζάκος</p>
+</header>
+<div class="breadcrumb">
+  <a href="../../index.html">🏠 Αρχική</a> › <a href="../">Κώδικας</a> › Κεφ. 17
+</div>
+<div class="container">
+  <div class="info-box">
+    <h2>📋 Περιεχόμενα Δραστηριοτήτων</h2>
+    <p><strong>Αντικείμενο:</strong> εμβαδόν μεταξύ καμπυλών, όγκος περιστροφής (δίσκοι, δακτύλιοι, κελύφη), μήκος τόξου, εμβαδόν επιφάνειας, έργο και κέντρο βάρους<br><br>
+    Επιλέξτε γλώσσα από τις καρτέλες. Τον κώδικα <strong>Python</strong> μπορείτε να τον <strong>τρέξετε εδώ μέσα στη σελίδα</strong> (κουμπί «▶ Τρέξε») — μπορείτε και να τον επεξεργαστείτε. Ο κώδικας <strong>Maxima</strong> εκτελείται στο <strong>wxMaxima</strong>.</p>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn maxima active" onclick="showTab('maxima')">⚙️ Maxima (.mac)</button>
+    <button class="tab-btn python"        onclick="showTab('python')">🐍 Python (.py)</button>
+  </div>
+  <div id="tab-maxima" class="tab-content active">
+    <div class="code-card">
+      <div class="code-header maxima">
+        <span>maxima_efarm_ol.mac</span>
+        <a class="download-btn" href="maxima_efarm_ol.mac" download>⬇ Λήψη .mac</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βασικές εντολές:</strong>
+        <code>integrate(f,x,a,b)</code> &nbsp;
+        <code>romberg(f,x,a,b)</code> &nbsp;
+        <code>diff(f,x)</code> &nbsp;
+        <code>sqrt()</code> &nbsp;
+        <code>solve(f=g,x)</code>
+      </div>
+      <pre><code class="language-maxima" id="maxima-code">/* ============================================================ */
+/* maxima_efarm_ol.mac                                          */
+/* Κεφάλαιο 17 — Εφαρμογές Ολοκληρωτικού Λογισμού               */
+/*   Εμβαδόν, Όγκος Περιστροφής, Μήκος Τόξου                    */
+/* Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications. */
+/* ------------------------------------------------------------ */
+/* ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:                                             */
+/*   integrate(f,x,a,b)  -&gt; ορισμένο ολοκλήρωμα                 */
+/*   romberg(f,x,a,b)    -&gt; αριθμητικό ολοκλήρωμα               */
+/*   solve(f=g,x)        -&gt; σημεία τομής                        */
+/*   diff(f,x), sqrt()   -&gt; μήκος τόξου / επιφάνεια             */
+/*   trigsimp(), ratsimp()                                      */
+/* ΠΡΟΣΟΧΗ: τα σχόλια στη Maxima ανοίγουν με κάθετο-αστερίσκο     */
+/*   και κλείνουν με αστερίσκο-κάθετο. Ποτέ με ερωτηματικά.     */
+/* ============================================================ */
+
+load(romberg)$
+/* Σφίγγουμε την ανοχή της romberg (προεπιλογή 1e-4) ώστε τα     */
+/* αριθμητικά αποτελέσματα να συμφωνούν με τα συμβολικά.         */
+rombergtol : 1e-10$
+rombergit  : 20$
+
+print("============================================================")$
+print(" Κεφάλαιο 17: Εφαρμογές Ολοκληρωτικού Λογισμού")$
+print("============================================================")$
+
+/* ============================================================ */
+/* Α. ΕΜΒΑΔΟΝ                                                   */
+/* ============================================================ */
+print("")$
+print("=== Α. ΕΜΒΑΔΟΝ ===")$
+
+/* Α1.  int_{-1}^{1} |x^3 - x| dx                               */
+/* Η Maxima δεν ολοκληρώνει απευθείας την απόλυτη τιμή:         */
+/* βρίσκουμε τις ρίζες, τις ΤΑΞΙΝΟΜΟΥΜΕ και σπάμε το διάστημα.  */
+print("")$
+print("Α1. int_{-1}^{1} |x^3 - x| dx")$
+rizes : sort(map(rhs, solve(x^3 - x = 0, x)))$
+print("   ρίζες της x^3-x (ταξινομημένες):", rizes, " (αναμ. [-1,0,1])")$
+/* Στο [-1,0] είναι x^3-x &gt;= 0, στο [0,1] είναι x^3-x &lt;= 0 */
+A1a : integrate(x^3 - x, x, -1, 0)$
+A1b : integrate(-(x^3 - x), x, 0, 1)$
+print("   int_{-1}^{0} (x^3-x) dx  =", A1a)$
+print("   int_{0}^{1} -(x^3-x) dx  =", A1b)$
+A1 : A1a + A1b$
+print("   ΣΥΝΟΛΟ (integrate)       =", A1, "=", float(A1), " (αναμ. 1/2)")$
+A1r : romberg(abs(x^3 - x), x, -1, 1)$
+print("   ΣΥΝΟΛΟ (romberg)         =", A1r)$
+print("   integrate vs romberg, |διαφορά| &lt; 1e-8 :",
+      is(abs(float(A1) - A1r) &lt; 1e-8))$
+
+/* Α2.  Εμβαδόν μεταξύ y = -x^2+4 και y = x^2-2x                */
+print("")$
+print("Α2. Εμβαδόν μεταξύ y = -x^2+4 και y = x^2-2x")$
+f : -x^2 + 4$
+g : x^2 - 2*x$
+/* ΠΑΝΤΑ ταξινομούμε τις ρίζες: η solve τις επιστρέφει [2,-1],  */
+/* και με [a,b]=[2,-1] θα βγει ΑΡΝΗΤΙΚΟ εμβαδόν (και θα σκάσει  */
+/* η plot2d, που απαιτεί min &lt; max).                            */
+tomes : sort(map(rhs, solve(f = g, x)))$
+print("   solve(f=g,x) ταξινομημένα:", tomes, " (αναμ. [-1,2])")$
+a : tomes[1]$
+b : tomes[2]$
+print("   a =", a, ",  b =", b)$
+A2 : integrate(f - g, x, a, b)$
+print("   Εμβαδόν =", A2, "=", float(A2), " (αναμ. 9)")$
+print("   θετικό εμβαδόν:", is(A2 &gt; 0))$
+A2r : romberg(f - g, x, float(a), float(b))$
+print("   Εμβαδόν (romberg) =", A2r)$
+print("   integrate vs romberg, |διαφορά| &lt; 1e-8 :",
+      is(abs(float(A2) - A2r) &lt; 1e-8))$
+
+/* Γράφημα: τα άκρα ΠΑΝΤΑ σε αύξουσα σειρά */
+plot2d([f, g],
+       [x, a - 0.5, b + 0.5],
+       [style, [lines, 2, 1], [lines, 2, 2]],
+       [legend, "f(x) = -x^2+4", "g(x) = x^2-2x"],
+       [xlabel, "x"], [ylabel, "y"],
+       [title, "Εμβαδόν μεταξύ δύο καμπυλών (= 9)"])$
+
+/* ============================================================ */
+/* Β. ΟΓΚΟΣ ΠΕΡΙΣΤΡΟΦΗΣ                                         */
+/* ============================================================ */
+print("")$
+print("=== Β. ΟΓΚΟΣ ΠΕΡΙΣΤΡΟΦΗΣ ===")$
+
+/* Β1. ΔΙΣΚΟΙ:  V = pi * int_a^b [f(x)]^2 dx                    */
+print("")$
+print("Β1. Μέθοδος δίσκων:  V = pi*int_a^b f(x)^2 dx")$
+fd1 : sqrt(x)$
+Vd1 : %pi * integrate(fd1^2, x, 0, 4)$
+print("   y = sqrt(x), [0,4] : V =", Vd1, "=", float(Vd1), " (αναμ. 8*pi)")$
+print("   έλεγχος V = 8*pi   :", is(ratsimp(Vd1 - 8*%pi) = 0))$
+
+fd2 : sin(x)$
+Vd2 : %pi * integrate(fd2^2, x, 0, %pi)$
+print("   y = sin(x), [0,pi] : V =", Vd2, "=", float(Vd2), " (αναμ. pi^2/2)")$
+print("   έλεγχος V = pi^2/2 :", is(ratsimp(Vd2 - %pi^2/2) = 0))$
+
+/* Β2. ΔΑΚΤΥΛΙΟΙ: V = pi*int_a^b ([R]^2 - [r]^2) dx             */
+/*     y = sqrt(x) (εξωτερική) vs y = x (εσωτερική),            */
+/*     περιστροφή γύρω από τον x-άξονα.                         */
+print("")$
+print("Β2. Μέθοδος δακτυλίων: y = sqrt(x) vs y = x, γύρω από τον x-άξονα")$
+/* Η solve δεν χειρίζεται καλά τη ρίζα: υψώνουμε στο τετράγωνο  */
+/* (sqrt(x) = x  &lt;=&gt;  x = x^2 για x &gt;= 0) και ΤΑΞΙΝΟΜΟΥΜΕ.      */
+tomes2 : sort(map(rhs, solve(x = x^2, x)))$
+print("   τομές (ταξινομημένες):", tomes2, " (αναμ. [0,1])")$
+R_ex : sqrt(x)$
+r_es : x$
+Vw : %pi * integrate(R_ex^2 - r_es^2, x, tomes2[1], tomes2[2])$
+print("   V =", Vw, "=", float(Vw), " (αναμ. pi/6)")$
+print("   έλεγχος V = pi/6 :", is(ratsimp(Vw - %pi/6) = 0))$
+/* Διασταύρωση με κελύφη ως προς y: ακτίνα y, ύψος (y - y^2) */
+Vw_shell : 2*%pi * integrate(y*(y - y^2), y, 0, 1)$
+print("   ίδιο με κελύφη ως προς y:", Vw_shell,
+      " ταυτίζονται:", is(ratsimp(Vw - Vw_shell) = 0))$
+
+/* Β3. ΚΕΛΥΦΗ: V = 2*pi*int_a^b x*f(x) dx (γύρω από τον y-άξονα) */
+print("")$
+print("Β3. Μέθοδος κελυφών: y = x^3 γύρω από τον y-άξονα, [0,2]")$
+fs : x^3$
+Vs : 2*%pi * integrate(x*fs, x, 0, 2)$
+print("   V = 2*pi*int_0^2 x*x^3 dx =", Vs, "=", float(Vs), " (αναμ. 64*pi/5)")$
+print("   έλεγχος V = 64*pi/5 :", is(ratsimp(Vs - 64*%pi/5) = 0))$
+/* Διασταύρωση με δακτυλίους ως προς y (y από 0 ως 8, x = y^(1/3)) */
+/* Το y &gt; 0 δηλώνεται ΠΡΙΝ, ώστε να μη ρωτήσει η Maxima.          */
+assume(y &gt; 0)$
+Vs_wash : %pi * integrate(2^2 - (y^(1/3))^2, y, 0, 8)$
+print("   ίδιο με δακτυλίους ως προς y:", ratsimp(Vs_wash),
+      " ταυτίζονται:", is(ratsimp(Vs - Vs_wash) = 0))$
+forget(y &gt; 0)$
+
+/* ============================================================ */
+/* Γ. ΜΗΚΟΣ ΤΟΞΟΥ:  L = int_a^b sqrt(1 + [f'(x)]^2) dx          */
+/* ============================================================ */
+print("")$
+print("=== Γ. ΜΗΚΟΣ ΤΟΞΟΥ ===")$
+
+/* Γ1.  y = x^(3/2) στο [0,4] */
+print("")$
+print("Γ1. y = x^(3/2), [0,4]")$
+y1 : x^(3/2)$
+dy1 : diff(y1, x)$
+print("   f'(x) =", dy1)$
+ds1 : sqrt(1 + dy1^2)$
+print("   sqrt(1+f'^2) =", ratsimp(ds1))$
+L1 : ratsimp(integrate(ds1, x, 0, 4))$
+print("   L =", L1, "=", float(L1), " (αναμ. (80*sqrt(10)-8)/27 = 9.073415289)")$
+print("   έλεγχος κλειστής μορφής:", is(ratsimp(L1 - (80*sqrt(10)-8)/27) = 0))$
+L1r : romberg(ds1, x, 0, 4)$
+print("   L (romberg) =", L1r)$
+print("   integrate vs romberg, |διαφορά| &lt; 1e-8 :",
+      is(abs(float(L1) - L1r) &lt; 1e-8))$
+
+/* Γ2.  y = ln(cos x) στο [0, pi/3] — εδώ χρειάζεται trigsimp   */
+/*      1 + tan^2(x) = sec^2(x), άρα sqrt(1+f'^2) = sec(x).     */
+/*      Δηλώνουμε cos(x)&gt;0 ΠΡΙΝ, ώστε sqrt(1/cos^2) = 1/cos.    */
+assume(cos(x) &gt; 0)$
+print("")$
+print("Γ2. y = ln(cos x), [0, pi/3]")$
+y2 : log(cos(x))$
+dy2 : diff(y2, x)$
+print("   f'(x) =", dy2, " (= -tan x)")$
+ds2raw : 1 + dy2^2$
+ds2 : trigsimp(ds2raw)$
+print("   trigsimp(1 + f'^2) =", ds2, " (= sec^2 x)")$
+L2 : integrate(sqrt(ds2), x, 0, %pi/3)$
+print("   L =", L2)$
+print("   L =", float(L2), " (αναμ. ln(2+sqrt(3)) = 1.316957897)")$
+print("   έλεγχος L = ln(2+sqrt(3)) :",
+      is(abs(float(L2) - float(log(2 + sqrt(3)))) &lt; 1e-9))$
+L2r : romberg(sqrt(ds2), x, 0, float(%pi/3))$
+print("   L (romberg) =", L2r)$
+print("   integrate vs romberg, |διαφορά| &lt; 1e-8 :",
+      is(abs(float(L2) - L2r) &lt; 1e-8))$
+forget(cos(x) &gt; 0)$
+
+/* ============================================================ */
+/* Δ. ΕΜΒΑΔΟΝ ΕΠΙΦΑΝΕΙΑΣ ΕΚ ΠΕΡΙΣΤΡΟΦΗΣ                         */
+/*    S = 2*pi * int_a^b f(x)*sqrt(1 + f'(x)^2) dx              */
+/* ============================================================ */
+print("")$
+print("=== Δ. ΕΜΒΑΔΟΝ ΕΠΙΦΑΝΕΙΑΣ (κώνος y = x, [0,2]) ===")$
+fc : x$
+dfc : diff(fc, x)$
+print("   f(x) =", fc, ",  f'(x) =", dfc)$
+print("   sqrt(1+f'^2) =", sqrt(1 + dfc^2), " (= sqrt(2))")$
+S : 2*%pi * integrate(fc*sqrt(1 + dfc^2), x, 0, 2)$
+print("   S = 2*pi*int_0^2 x*sqrt(2) dx =", S, "=", float(S),
+      " (αναμ. 4*sqrt(2)*pi = 17.77153175)")$
+/* Επαλήθευση με τον γεωμετρικό τύπο S = pi*r*l */
+r_kwnou : 2$
+l_kwnou : 2*sqrt(2)$
+S_typos : %pi * r_kwnou * l_kwnou$
+print("   Τύπος S = pi*r*l, r =", r_kwnou, ", l =", l_kwnou, " -&gt; S =",
+      S_typos, "=", float(S_typos))$
+print("   ταυτίζονται:", is(ratsimp(S - S_typos) = 0))$
+
+/* ============================================================ */
+/* Ε. ΦΥΣΙΚΕΣ ΕΦΑΡΜΟΓΕΣ                                         */
+/* ============================================================ */
+print("")$
+print("=== Ε. ΦΥΣΙΚΕΣ ΕΦΑΡΜΟΓΕΣ ===")$
+
+/* Ε1. Έργο ελατηρίου:  W = int_0^{0.1} F(x) dx,  F = 200x (N)  */
+print("")$
+print("Ε1. Έργο ελατηρίου, F(x) = 200*x N, x από 0 έως 0,1 m")$
+F_elat : 200*x$
+W : integrate(F_elat, x, 0, 1/10)$
+print("   W = int_0^{1/10} 200*x dx =", W, "J =", float(W), "J  (αναμ. 1 J)")$
+print("   έλεγχος W = 1 J:", is(W = 1))$
+/* Ισοδύναμα από τον τύπο W = k*x^2/2 με k = 200, x = 0,1 */
+print("   τύπος k*x^2/2 =", 200*(1/10)^2/2, "J  ταυτίζεται:",
+      is(W - 200*(1/10)^2/2 = 0))$
+
+/* Ε2. Κέντρο βάρους του χωρίου κάτω από την y = x^2, [0,3]     */
+/*     A  = int_0^3 f dx                                        */
+/*     xb = (1/A)*int_0^3 x*f dx                                */
+/*     yb = (1/A)*int_0^3 (1/2)*f^2 dx                          */
+print("")$
+print("Ε2. Κέντρο βάρους του χωρίου κάτω από την y = x^2, [0,3]")$
+fy : x^2$
+Ar : integrate(fy, x, 0, 3)$
+xb : integrate(x*fy, x, 0, 3) / Ar$
+yb : integrate(fy^2/2, x, 0, 3) / Ar$
+print("   Εμβαδόν A =", Ar, " (αναμ. 9)")$
+print("   x_bar =", xb, "=", float(xb), " (αναμ. 9/4 = 2.25)")$
+print("   y_bar =", yb, "=", float(yb), " (αναμ. 27/10 = 2.7)")$
+print("   έλεγχοι:", is(Ar = 9), is(xb = 9/4), is(yb = 27/10))$
+
+print("")$
+print("Ολοκληρώθηκε.")$
+</code></pre>
+    </div>
+  </div>
+  <div id="tab-python" class="tab-content">
+    <div class="code-card">
+      <div class="code-header python">
+        <span>python_efarm_ol.py</span>
+        <a class="download-btn" href="python_efarm_ol.py" download>⬇ Λήψη .py</a>
+      </div>
+      <div class="commands-box" style="margin:12px 16px 0">
+        <strong>Βιβλιοθήκες / εντολές:</strong>
+        <code>sympy.integrate()</code> &nbsp;
+        <code>sympy.diff()</code> &nbsp;
+        <code>scipy.integrate.quad()</code> &nbsp;
+        <code>mpl_toolkits.mplot3d</code> &nbsp;
+        <code>fill_between()</code>
+      </div>
+            <div class="py-toolbar">
+        <button class="run-btn" id="py-run">▶ Τρέξε</button>
+        <button class="reset-btn" id="py-reset">↺ Επαναφορά</button>
+        <span class="py-status" id="py-status">Ο κώδικας τρέχει στον browser (Pyodide).</span>
+      </div>
+      <textarea class="py-editor" id="py-editor" spellcheck="false"># ============================================================
+# python_efarm_ol.py
+# Κεφάλαιο 17 — Εφαρμογές Ολοκληρωτικού Λογισμού
+#   Εμβαδόν, Όγκος Περιστροφής, Μήκος Τόξου, Φυσικές Εφαρμογές
+# Ματζάκος, Ν. (2026). Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.
+# ------------------------------------------------------------
+# ΒΑΣΙΚΕΣ ΕΝΤΟΛΕΣ:
+#   sympy.integrate(f, (x,a,b))   -&gt; ορισμένο ολοκλήρωμα
+#   sympy.diff(f, x)              -&gt; παράγωγος
+#   sympy.solve(f-g, x)           -&gt; σημεία τομής
+#   scipy.integrate.quad(f, a, b) -&gt; αριθμητικό ολοκλήρωμα
+#   matplotlib.fill_between()     -&gt; σκιασμένη περιοχή
+#   mpl_toolkits.mplot3d          -&gt; 3D στερεό εκ περιστροφής
+# ============================================================
+import sympy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import quad, cumulative_trapezoid
+from mpl_toolkits.mplot3d import Axes3D          # noqa: F401 (ενεργοποιεί το 3D)
+
+x = sp.symbols('x', real=True)
+y = sp.symbols('y', nonnegative=True)
+
+print("=" * 62)
+print(" Κεφάλαιο 17: Εφαρμογές Ολοκληρωτικού Λογισμού")
+print("=" * 62)
+
+
+# ============================================================
+# Α. ΕΜΒΑΔΟΝ ΜΕΤΑΞΥ ΚΑΜΠΥΛΩΝ
+# ============================================================
+print("\n=== Α. ΕΜΒΑΔΟΝ ===")
+
+# Α1.  int_{-1}^{1} |x^3 - x| dx
+f_abs = sp.Abs(x**3 - x)
+A1 = sp.integrate(f_abs, (x, -1, 1))
+A1_num, A1_err = quad(lambda t: abs(t**3 - t), -1, 1)
+print(f"\nΑ1. ∫_(-1)^1 |x^3-x| dx = {A1} = {float(A1)}   (αναμ. 1/2)")
+print(f"    scipy quad            = {A1_num:.12f}  (εκτ. σφάλμα {A1_err:.1e})")
+print(f"    |διαφορά| &lt; 1e-8      : {abs(float(A1) - A1_num) &lt; 1e-8}")
+
+# Α2.  Εμβαδόν μεταξύ y = -x^2+4 και y = x^2-2x
+f = -x**2 + 4
+g = x**2 - 2*x
+# ΠΑΝΤΑ ταξινομούμε τις ρίζες, αλλιώς βγαίνει αρνητικό εμβαδόν.
+tomes = sorted(sp.solve(sp.Eq(f, g), x))
+a, b = tomes[0], tomes[1]
+A2 = sp.integrate(f - g, (x, a, b))
+print(f"\nΑ2. f(x) = {f},  g(x) = {g}")
+print(f"    τομές (ταξινομημένες) : x = {a}, x = {b}   (αναμ. -1, 2)")
+print(f"    Εμβαδόν = ∫_({a})^({b}) (f-g) dx = {A2}   (αναμ. 9)")
+print(f"    θετικό εμβαδόν        : {A2 &gt; 0}")
+
+xv = np.linspace(float(a) - 0.8, float(b) + 0.8, 400)
+fv = -xv**2 + 4
+gv = xv**2 - 2*xv
+xs = np.linspace(float(a), float(b), 300)
+fs_ = -xs**2 + 4
+gs_ = xs**2 - 2*xs
+
+plt.figure(figsize=(7, 4.4))
+plt.plot(xv, fv, 'b-', lw=2, label=r'$f(x)=-x^2+4$')
+plt.plot(xv, gv, 'r-', lw=2, label=r'$g(x)=x^2-2x$')
+plt.fill_between(xs, gs_, fs_, alpha=0.30, color='tab:green',
+                 label=f'Εμβαδόν = {A2}')
+plt.plot([float(a), float(b)], [float(f.subs(x, a)), float(f.subs(x, b))],
+         'ko', ms=5)
+plt.axhline(0, color='k', lw=0.6)
+plt.xlabel('x'); plt.ylabel('y')
+plt.title('Α. Εμβαδόν μεταξύ δύο καμπυλών')
+plt.legend(); plt.grid(True, alpha=0.3)
+plt.tight_layout()
+
+
+# ============================================================
+# Β. ΟΓΚΟΣ ΠΕΡΙΣΤΡΟΦΗΣ — και οι τρεις μέθοδοι στο ΙΔΙΟ στερεό
+#    Χωρίο ανάμεσα στις y = sqrt(x) (έξω) και y = x (μέσα),
+#    περιστροφή γύρω από τον x-άξονα. Τομές: x = 0, 1.
+# ============================================================
+print("\n=== Β. ΟΓΚΟΣ ΠΕΡΙΣΤΡΟΦΗΣ ===")
+
+R_ex = sp.sqrt(x)      # εξωτερική ακτίνα
+r_es = x               # εσωτερική ακτίνα
+tomesB = sorted(sp.solve(sp.Eq(x, x**2), x))     # sqrt(x)=x &lt;=&gt; x=x^2, x&gt;=0
+print(f"\nΧωρίο: y = sqrt(x) και y = x,  τομές x = {tomesB}   (αναμ. [0, 1])")
+
+# (i) ΔΙΣΚΟΙ: ο όγκος ως διαφορά δύο συμπαγών στερεών
+V_disk_ex = sp.pi * sp.integrate(R_ex**2, (x, 0, 1))
+V_disk_es = sp.pi * sp.integrate(r_es**2, (x, 0, 1))
+V_disks = sp.simplify(V_disk_ex - V_disk_es)
+# (ii) ΔΑΚΤΥΛΙΟΙ: V = pi*∫ (R^2 - r^2) dx
+V_wash = sp.simplify(sp.pi * sp.integrate(R_ex**2 - r_es**2, (x, 0, 1)))
+# (iii) ΚΕΛΥΦΗ ως προς y: ακτίνα y, ύψος (x_δεξιά - x_αριστερά) = y - y^2
+V_shell = sp.simplify(2*sp.pi * sp.integrate(y*(y - y**2), (y, 0, 1)))
+
+print(f"  (i)   δίσκοι    : π∫x dx - π∫x² dx = {V_disk_ex} - {V_disk_es} = {V_disks}")
+print(f"  (ii)  δακτύλιοι : π∫(R²-r²) dx                     = {V_wash}")
+print(f"  (iii) κελύφη    : 2π∫y(y-y²) dy                     = {V_shell}")
+print(f"  αριθμητικά: {float(V_wash):.12f}   (αναμ. π/6 = {float(sp.pi/6):.12f})")
+print(f"  δίσκοι == δακτύλιοι : {sp.simplify(V_disks - V_wash) == 0}")
+print(f"  δακτύλιοι == κελύφη : {sp.simplify(V_wash - V_shell) == 0}")
+print(f"  και οι τρεις ίσες με π/6 : "
+      f"{sp.simplify(V_disks - sp.pi/6) == 0 and sp.simplify(V_shell - sp.pi/6) == 0}")
+
+# Οι υπόλοιπες περιπτώσεις της δραστηριότητας Maxima
+V_sqrt = sp.pi * sp.integrate(x, (x, 0, 4))                 # δίσκοι, y=sqrt(x), [0,4]
+V_sin = sp.pi * sp.integrate(sp.sin(x)**2, (x, 0, sp.pi))   # δίσκοι, y=sin x, [0,π]
+V_x3 = 2*sp.pi * sp.integrate(x*x**3, (x, 0, 2))            # κελύφη, y=x^3, [0,2]
+print(f"\n  δίσκοι  y=sqrt(x), [0,4] : V = {V_sqrt}  (αναμ. 8π)")
+print(f"  δίσκοι  y=sin(x), [0,π]  : V = {V_sin}  (αναμ. π²/2)")
+print(f"  κελύφη  y=x³ γύρω από y, [0,2]: V = {V_x3}  (αναμ. 64π/5)")
+print(f"  έλεγχοι: {sp.simplify(V_sqrt-8*sp.pi)==0}, "
+      f"{sp.simplify(V_sin-sp.pi**2/2)==0}, {sp.simplify(V_x3-sp.Rational(64,5)*sp.pi)==0}")
+
+# --- 3D οπτικοποίηση του στερεού (δακτυλιοειδές) ---
+tt = np.linspace(0, 1, 60)
+th = np.linspace(0, 2*np.pi, 60)
+T, TH = np.meshgrid(tt, th)
+fig = plt.figure(figsize=(7, 5))
+ax = fig.add_subplot(111, projection='3d')
+# εξωτερική επιφάνεια: ακτίνα sqrt(x)
+ax.plot_surface(T, np.sqrt(T)*np.cos(TH), np.sqrt(T)*np.sin(TH),
+                color='tab:blue', alpha=0.45, linewidth=0)
+# εσωτερική επιφάνεια: ακτίνα x
+ax.plot_surface(T, T*np.cos(TH), T*np.sin(TH),
+                color='tab:red', alpha=0.75, linewidth=0)
+ax.set_xlabel('x'); ax.set_ylabel('y'); ax.set_zlabel('z')
+ax.set_title('Β. Στερεό εκ περιστροφής: y=√x (έξω) και y=x (μέσα), V = π/6')
+plt.tight_layout()
+
+
+# ============================================================
+# Γ. ΜΗΚΟΣ ΤΟΞΟΥ:  L = ∫_a^b sqrt(1 + f'(x)^2) dx
+# ============================================================
+print("\n=== Γ. ΜΗΚΟΣ ΤΟΞΟΥ ===")
+
+# Γ1.  y = x^(3/2) στο [0,4]
+y1 = x**sp.Rational(3, 2)
+ds1 = sp.sqrt(1 + sp.diff(y1, x)**2)
+L1 = sp.simplify(sp.integrate(ds1, (x, 0, 4)))
+L1_num, L1_err = quad(sp.lambdify(x, ds1, 'numpy'), 0, 4)
+L1_kleisto = (80*sp.sqrt(10) - 8) / 27
+print(f"\nΓ1. y = x^(3/2), [0,4]")
+print(f"    f'(x) = {sp.diff(y1, x)},  sqrt(1+f'^2) = {sp.simplify(ds1)}")
+print(f"    L (sympy) = {L1} = {float(L1):.12f}   (αναμ. (80√10-8)/27 = 9.073415289388)")
+print(f"    L (quad)  = {L1_num:.12f}  (εκτ. σφάλμα {L1_err:.1e})")
+print(f"    κλειστή μορφή σωστή : {sp.simplify(L1 - L1_kleisto) == 0}")
+print(f"    |sympy - quad| &lt; 1e-8: {abs(float(L1) - L1_num) &lt; 1e-8}")
+
+# Γ2.  y = ln(cos x) στο [0, π/3]  -&gt;  sqrt(1+tan²x) = sec x
+y2 = sp.log(sp.cos(x))
+d2 = sp.diff(y2, x)
+ds2 = sp.sqrt(sp.trigsimp(1 + d2**2))
+L2 = sp.simplify(sp.integrate(sp.sec(x), (x, 0, sp.pi/3)))
+L2_num, L2_err = quad(lambda t: 1/np.cos(t), 0, np.pi/3)
+print(f"\nΓ2. y = ln(cos x), [0, π/3]")
+print(f"    f'(x) = {sp.simplify(d2)},  trigsimp(1+f'^2) = {sp.trigsimp(1 + d2**2)}")
+print(f"    L (sympy) = {float(L2):.12f}   (αναμ. ln(2+√3) = 1.316957896925)")
+print(f"    L (quad)  = {L2_num:.12f}  (εκτ. σφάλμα {L2_err:.1e})")
+# Η SymPy επιστρέφει τον λογάριθμο σε άλλη (ισοδύναμη) μορφή, γι' αυτό
+# ελέγχουμε ισοδύναμα ότι  e^L = 2+√3.
+print(f"    e^L == 2+√3          : "
+      f"{sp.simplify(sp.exp(L2) - (2 + sp.sqrt(3))) == 0}")
+print(f"    |sympy - quad| &lt; 1e-8: {abs(float(L2) - L2_num) &lt; 1e-8}")
+
+# --- Σωρευτικό μήκος τόξου L(t) δίπλα στην καμπύλη ---
+tgrid = np.linspace(0, 4, 400)
+ds1_num = sp.lambdify(x, ds1, 'numpy')
+Lcum = cumulative_trapezoid(ds1_num(tgrid), tgrid, initial=0.0)
+print(f"\n    Σωρευτικό μήκος: L(0) = {Lcum[0]:.6f}, L(4) = {Lcum[-1]:.9f}")
+print(f"    L(4) ≈ L (sympy)     : {abs(Lcum[-1] - float(L1)) &lt; 1e-4}")
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+axs[0].plot(tgrid, tgrid**1.5, 'b-', lw=2)
+axs[0].set_title(r'Καμπύλη $y=x^{3/2}$ στο $[0,4]$')
+axs[0].set_xlabel('x'); axs[0].set_ylabel('y'); axs[0].grid(True, alpha=0.3)
+axs[1].plot(tgrid, Lcum, 'g-', lw=2,
+            label=r"$L(t)=\int_0^t\sqrt{1+[f'(u)]^2}\,du$")
+axs[1].axhline(float(L1), color='r', ls='--', lw=1,
+               label=f'ολικό μήκος = {float(L1):.6f}')
+axs[1].set_title('Γ. Σωρευτικό μήκος τόξου')
+axs[1].set_xlabel('t'); axs[1].set_ylabel('L(t)')
+axs[1].legend(); axs[1].grid(True, alpha=0.3)
+plt.tight_layout()
+
+
+# ============================================================
+# Δ. ΦΥΣΙΚΕΣ ΕΦΑΡΜΟΓΕΣ
+# ============================================================
+print("\n=== Δ. ΦΥΣΙΚΕΣ ΕΦΑΡΜΟΓΕΣ ===")
+
+# Δ1. Έργο ελατηρίου: F(x) = 200x N, x από 0 έως 0,1 m
+F_elat = 200*x
+W = sp.integrate(F_elat, (x, 0, sp.Rational(1, 10)))
+print(f"\nΔ1. Έργο ελατηρίου, F(x) = 200x N, x ∈ [0, 0.1] m")
+print(f"    W = ∫_0^0.1 200x dx = {W} J = {float(W)} J   (αναμ. 1 J)")
+print(f"    τύπος k·x²/2 = {200*sp.Rational(1,10)**2/2} J, ταυτίζεται: "
+      f"{sp.simplify(W - 200*sp.Rational(1,10)**2/2) == 0}")
+
+# Δ2. Κέντρο βάρους του χωρίου κάτω από την y = x^2, [0,3]
+fy = x**2
+Ar = sp.integrate(fy, (x, 0, 3))
+xbar = sp.integrate(x*fy, (x, 0, 3)) / Ar
+ybar = sp.integrate(fy**2/2, (x, 0, 3)) / Ar
+print(f"\nΔ2. Κέντρο βάρους χωρίου κάτω από y = x², [0,3]")
+print(f"    A = {Ar}   (αναμ. 9)")
+print(f"    x̄ = {xbar} = {float(xbar)}   (αναμ. 9/4 = 2.25)")
+print(f"    ȳ = {ybar} = {float(ybar)}   (αναμ. 27/10 = 2.7)")
+print(f"    έλεγχοι: {Ar == 9}, {xbar == sp.Rational(9,4)}, {ybar == sp.Rational(27,10)}")
+
+# Δ3. Υδροστατική δύναμη σε κατακόρυφο τοίχωμα ορθογωνικής δεξαμενής
+#     πλάτος w = 4 m, βάθος d = 3 m, ρg = 9810 N/m^3
+#     F = ρg * ∫_0^d h * w dh   (h = βάθος από την επιφάνεια)
+h = sp.symbols('h', nonnegative=True)
+rho_g, w_pl, d_bath = 9810, 4, 3
+F_ydro = rho_g * sp.integrate(h * w_pl, (h, 0, d_bath))
+print(f"\nΔ3. Υδροστατική δύναμη σε κατακόρυφο τοίχωμα {w_pl} m × {d_bath} m")
+print(f"    ρg = {rho_g} N/m³")
+print(f"    F = ρg·∫_0^{d_bath} h·{w_pl} dh = {F_ydro} N = {float(F_ydro)/1000:.3f} kN")
+print(f"    (αναμ. 9810·4·3²/2 = 176580 N)")
+F_typos = sp.Rational(rho_g * w_pl * d_bath**2, 2)
+print(f"    τύπος F = ρg·w·d²/2 = {F_typos} N, ταυτίζεται: "
+      f"{sp.simplify(F_ydro - F_typos) == 0}")
+# Το κέντρο πίεσης βρίσκεται σε βάθος (∫h·h·w dh)/(∫h·w dh)
+h_cp = sp.integrate(h*h*w_pl, (h, 0, d_bath)) / sp.integrate(h*w_pl, (h, 0, d_bath))
+print(f"    κέντρο πίεσης σε βάθος {h_cp} m = {float(h_cp)} m   (= 2d/3 = 2.0 m)")
+
+# --- Γράφημα κατανομής πίεσης ---
+hh = np.linspace(0, d_bath, 200)
+plt.figure(figsize=(6.5, 4.2))
+plt.fill_betweenx(hh, 0, rho_g*hh/1000, alpha=0.35, color='tab:cyan',
+                  label=f'F = {float(F_ydro)/1000:.2f} kN (πλάτος {w_pl} m)')
+plt.plot(rho_g*hh/1000, hh, 'b-', lw=2, label='p(h) = ρgh')
+plt.axhline(float(h_cp), color='r', ls='--', lw=1,
+            label=f'κέντρο πίεσης h = {float(h_cp)} m')
+plt.gca().invert_yaxis()
+plt.xlabel('πίεση p (kPa)'); plt.ylabel('βάθος h (m)')
+plt.title('Δ. Υδροστατική πίεση σε τοίχωμα δεξαμενής 4 m × 3 m')
+plt.legend(); plt.grid(True, alpha=0.3)
+plt.tight_layout()
+
+print("\nΟλοκληρώθηκε.")
+plt.show()
+</textarea>
+      <pre class="py-output" id="py-output"></pre>
+      <div class="py-plots" id="py-plots"></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.</small>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+}
+function loadCode(file, elementId, lang) {
+  fetch(file+'?v='+Date.now())
+    .then(r=>r.ok?r.text():Promise.reject(r.status))
+    .then(text=>{
+      const el=document.getElementById(elementId);
+      el.textContent=text; el.className='language-'+lang;
+      Prism.highlightElement(el);
+    })
+    .catch(err=>{document.getElementById(elementId).textContent='⚠ Αδυναμία φόρτωσης ('+err+'). Χρήση κουμπιού Λήψη.';});
+}
+
+/* ── In-browser Python runner (Pyodide) ── */
+const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+let pyodideReady = null, originalPy = '';
+const $ = id => document.getElementById(id);
+originalPy = $('py-editor').value;
+$('py-reset').onclick = () => { $('py-editor').value = originalPy; $('py-output').textContent=''; $('py-plots').innerHTML=''; };
+
+async function ensurePyodide(setStatus){
+  if (pyodideReady) return pyodideReady;
+  pyodideReady = (async () => {
+    setStatus('Λήψη περιβάλλοντος Python… (πρώτη φορά ~15–25 MB)');
+    if (!window.loadPyodide){
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = PYODIDE_URL; sc.onload = res; sc.onerror = () => rej('script load error');
+        document.head.appendChild(sc);
+      });
+    }
+    return await loadPyodide();
+  })();
+  return pyodideReady;
+}
+
+$('py-run').onclick = async function(){
+  const btn = this, out = $('py-output'), plots = $('py-plots');
+  const setStatus = t => $('py-status').textContent = t;
+  btn.disabled = true; out.textContent = ''; plots.innerHTML = '';
+  try {
+    const py = await ensurePyodide(setStatus);
+    py.setStdout({ batched: s => { out.textContent += s; } });
+    py.setStderr({ batched: s => { out.textContent += s; } });
+    const code = $('py-editor').value;
+    setStatus('Φόρτωση βιβλιοθηκών…');
+    await py.loadPackagesFromImports(code);
+    setStatus('Εκτέλεση…');
+    await py.runPythonAsync("try:\n    import matplotlib; matplotlib.use('AGG')\nexcept Exception:\n    pass");
+    py.globals.set('__user_src__', code);
+    await py.runPythonAsync(`
+import traceback
+try:
+    exec(__user_src__, {'__name__': '__main__'})
+except Exception:
+    traceback.print_exc()
+`);
+    const figs = await py.runPythonAsync(`
+import base64, io
+_imgs = []
+try:
+    import matplotlib.pyplot as plt
+    for _n in plt.get_fignums():
+        _f = plt.figure(_n); _b = io.BytesIO()
+        _f.savefig(_b, format='png', dpi=110, bbox_inches='tight'); _b.seek(0)
+        _imgs.append(base64.b64encode(_b.read()).decode())
+    plt.close('all')
+except Exception:
+    pass
+_imgs
+`);
+    const arr = figs.toJs(); if (figs.destroy) figs.destroy();
+    arr.forEach(b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; plots.appendChild(img); });
+    setStatus(arr.length ? ('Ολοκληρώθηκε ✓ — ' + arr.length + ' γράφημα/τα') : 'Ολοκληρώθηκε ✓');
+  } catch (e) {
+    out.textContent += '\n⚠ Σφάλμα: ' + e;
+    setStatus('Σφάλμα');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>
