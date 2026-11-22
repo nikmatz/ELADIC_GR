@@ -1,23 +1,87 @@
 <!DOCTYPE html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Βασικές Ιδιότητες Γραμμικού Χώρου</title>
-<script>window.MathJax={tex:{inlineMath:[['$','$'],['\(','\)']],displayMath:[['$$','$$'],['\[','\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
 .btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
 .p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
 </style></head><body>
 <h1>Βασικές Ιδιότητες Γραμμικού Χώρου</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
+<p class="sub">Κεφάλαιο 1 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
 <div class="stmt"><span class="lbl">Εκφώνηση</span>Σε διανυσματικό χώρο $V$: το μηδενικό διάνυσμα $0$ είναι μοναδικό· το αντίθετο $-u$ κάθε $u$ είναι μοναδικό· $0\cdot u=0$, $\lambda\cdot 0=0$, $(-1)\cdot u=-u$, και αν $\lambda\cdot u=0$ τότε $\lambda=0$ ή $u=0$.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%A3%CE%B5%20%CE%B4%CE%B9%CE%B1%CE%BD%CF%85%CF%83%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CF%8C%20%CF%87%CF%8E%CF%81%CE%BF%20%24V%24%3A%20%CF%84%CE%BF%20%CE%BC%CE%B7%CE%B4%CE%B5%CE%BD%CE%B9%CE%BA%CF%8C%20%CE%B4%CE%B9%CE%AC%CE%BD%CF%85%CF%83%CE%BC%CE%B1%20%240%24%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BC%CE%BF%CE%BD%CE%B1%CE%B4%CE%B9%CE%BA%CF%8C%C2%B7%20%CF%84%CE%BF%20%CE%B1%CE%BD%CF%84%CE%AF%CE%B8%CE%B5%CF%84%CE%BF%20%24-u%24%20%CE%BA%CE%AC%CE%B8%CE%B5%20%24u%24%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BC%CE%BF%CE%BD%CE%B1%CE%B4%CE%B9%CE%BA%CF%8C%C2%B7%20%240%5Ccdot%20u%3D0%24%2C%20%24%5Clambda%5Ccdot%200%3D0%24%2C%20%24%28-1%29%5Ccdot%20u%3D-u%24%2C%20%CE%BA%CE%B1%CE%B9%20%CE%B1%CE%BD%20%24%5Clambda%5Ccdot%20u%3D0%24%20%CF%84%CF%8C%CF%84%CE%B5%20%24%5Clambda%3D0%24%20%CE%AE%20%24u%3D0%24.">ChatGPT</a>
@@ -27,6 +91,200 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Σε διανυσματικό χώρο $V$: το μηδενικό διάνυσμα $0$ είναι μοναδικό· το αντίθετο $-u$ κάθε $u$ είναι μοναδικό· $0\cdot u=0$, $\lambda\cdot 0=0$, $(-1)\cdot u=-u$, και αν $\lambda\cdot u=0$ τότε $\lambda=0$ ή $u=0$.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Και οι έξι ιδιότητες αποδείχθηκαν στον Lean 4 και ο έλεγχος πέρασε χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 22/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. Εδώ ξεκινάμε από τα οκτώ αξιώματα του γραμμικού χώρου, όπως στο βιβλίο, και αποδεικνύουμε όλα τα υπόλοιπα μόνο από αυτά.</p>
+
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Το μηδενικό διάνυσμα $0$ είναι μοναδικό</div><pre class="ln"><span class="kw">theorem</span> zero_unique (z : V) (hz : ∀ u : V, u + z = u) : z = 0</pre></li><li><div class="bk">Το αντίθετο $-u$ κάθε $u$ είναι μοναδικό</div><pre class="ln"><span class="kw">theorem</span> neg_unique {u w : V} (h : u + w = 0) : w = -u</pre></li><li><div class="bk">$0\cdot u=0$</div><pre class="ln"><span class="kw">theorem</span> zero_smul&#x27; (u : V) : (0 : ℝ) • u = 0</pre></li><li><div class="bk">$\lambda\cdot 0=0$</div><pre class="ln"><span class="kw">theorem</span> smul_zero&#x27; (κ : ℝ) : κ • (0 : V) = 0</pre></li><li><div class="bk">$(-1)\cdot u=-u$</div><pre class="ln"><span class="kw">theorem</span> neg_one_smul&#x27; (u : V) : (-1 : ℝ) • u = -u</pre></li><li><div class="bk">Αν $\lambda\cdot u=0$, τότε $\lambda=0$ ή $u=0$</div><pre class="ln"><span class="kw">theorem</span> eq_zero_or_eq_zero_of_smul_eq_zero {κ : ℝ} {u : V}
+    (h : κ • u = 0) : κ = 0 ∨ u = 0</pre></li></ul>
+<p class="note">Πώς διαβάζονται: <code>•</code> είναι ο βαθμωτός πολλαπλασιασμός, <code>∀</code> σημαίνει «για κάθε», <code>∨</code> σημαίνει «ή», και το <code>(h : …)</code> είναι μια υπόθεση με όνομα <code>h</code>. Το <code>λ</code> είναι δεσμευμένη λέξη του Lean, γι' αυτό τον αριθμό τον λέμε <code>κ</code>. Ο Lean ελέγχει την απόδειξη· το αν η διατύπωσή του λέει το ίδιο με το βιβλίο το κρίνει ο αναγνώστης, γι' αυτό τις βάζουμε δίπλα-δίπλα.</p>
+<details><summary>Τα οκτώ αξιώματα, όπως τα γράψαμε στον Lean</summary><div class="in">
+<table><tbody><tr><td><code>add_comm</code></td><td>$u+v=v+u$</td></tr><tr><td><code>add_assoc</code></td><td>$(u+v)+w=u+(v+w)$</td></tr><tr><td><code>add_zero</code></td><td>$u+0=u$</td></tr><tr><td><code>add_neg</code></td><td>$u+(-u)=0$</td></tr><tr><td><code>smul_add</code></td><td>$\kappa(u+v)=\kappa u+\kappa v$</td></tr><tr><td><code>add_smul</code></td><td>$(\kappa+\mu)u=\kappa u+\mu u$</td></tr><tr><td><code>mul_smul</code></td><td>$(\kappa\mu)u=\kappa(\mu u)$</td></tr><tr><td><code>one_smul</code></td><td>$1\cdot u=u$</td></tr></tbody></table>
+<p class="note">Για κάθε $u,v,w\in V$ και $\kappa,\mu\in\mathbb{R}$. Στον κώδικα ο ορισμός είναι η δομή <code>VectorSpace</code>:</p>
+<pre class="ln"><span class="kw">class</span> VectorSpace (V : Type) <span class="kw">extends</span> Add V, Zero V, Neg V, SMul ℝ V <span class="kw">where</span>
+  <span class="cm">/-- u + v = v + u -/</span>
+  add_comm : ∀ u v : V, u + v = v + u
+  <span class="cm">/-- (u + v) + w = u + (v + w) -/</span>
+  add_assoc : ∀ u v w : V, u + v + w = u + (v + w)
+  <span class="cm">/-- u + 0 = u -/</span>
+  add_zero : ∀ u : V, u + 0 = u
+  <span class="cm">/-- u + (−u) = 0 -/</span>
+  add_neg : ∀ u : V, u + -u = 0
+  <span class="cm">/-- κ·(u + v) = κ·u + κ·v -/</span>
+  smul_add : ∀ (κ : ℝ) (u v : V), κ • (u + v) = κ • u + κ • v
+  <span class="cm">/-- (κ + μ)·u = κ·u + μ·u -/</span>
+  add_smul : ∀ (κ μ : ℝ) (u : V), (κ + μ) • u = κ • u + μ • u
+  <span class="cm">/-- (κμ)·u = κ·(μ·u) -/</span>
+  mul_smul : ∀ (κ μ : ℝ) (u : V), (κ * μ) • u = κ • (μ • u)
+  <span class="cm">/-- 1·u = u -/</span>
+  one_smul : ∀ u : V, (1 : ℝ) • u = u</pre></div></details>
+
+<h2>2. Βήμα προς βήμα: η απόδειξη του $0\cdot u=0$</h2>
+<p class="note">Στο βιβλίο: $0\cdot u=(0+0)\cdot u=0\cdot u+0\cdot u$, και προσθέτοντας το $-(0\cdot u)$ και στα δύο μέλη παίρνουμε $0\cdot u=0$. Στον Lean η ίδια ιδέα γίνεται τρία βήματα. Ξεκινάμε από τον στόχο:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>V : Type
+inst✝ : VectorSpace V
+u : V
+⊢ 0 • u = 0</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε (το $V$ είναι γραμμικός χώρος, το $u$ ένα διάνυσμά του)· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Αυτά δεν αλλάζουν παρακάτω, γι' αυτό δείχνουμε μόνο τη γραμμή του στόχου.</p>
+<ol class="steps"><li><pre class="ln"><span class="tc">apply</span> eq_zero_of_add_self</pre><p>Αρκεί να δείξουμε ότι $0\cdot u+0\cdot u=0\cdot u$. Γιατί; Αν $x+x=x$, προσθέτουμε το $-x$ και στα δύο μέλη και βρίσκουμε $x=0$. Αυτό είναι το λήμμα <code>eq_zero_of_add_self</code> (δες παρακάτω).</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ 0 • u + 0 • u = 0 • u</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [← VectorSpace.add_smul]</pre><p>Από το αξίωμα $(\kappa+\mu)u=\kappa u+\mu u$, διαβασμένο από δεξιά προς τα αριστερά: $0\cdot u+0\cdot u=(0+0)\cdot u$. Το σύμβολο <code>←</code> σημαίνει «από δεξιά προς τα αριστερά».</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ (0 + 0) • u = 0 • u</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [add_zero]</pre><p>Στους πραγματικούς $0+0=0$, άρα τα δύο μέλη γίνονται ίδια και ο Lean κλείνει μόνος του την ισότητα.</p><div class="goal done"><span>✓ </span>Καμία εκκρεμότητα (No goals): η απόδειξη ολοκληρώθηκε.</div></li></ol>
+<details><summary>Το λήμμα που χρησιμοποιήσαμε: αν $x+x=x$, τότε $x=0$</summary><div class="in">
+<pre class="ln"><span class="kw">theorem</span> eq_zero_of_add_self {x : V} (h : x + x = x) : x = 0 := <span class="kw">by</span>
+  <span class="kw">calc</span> x = x + 0 := (VectorSpace.add_zero x).symm
+    _ = x + (x + -x) := <span class="kw">by</span> <span class="tc">rw</span> [VectorSpace.add_neg]
+    _ = x + x + -x := (VectorSpace.add_assoc x x (-x)).symm
+    _ = x + -x := <span class="kw">by</span> <span class="tc">rw</span> [h]
+    _ = 0 := VectorSpace.add_neg x</pre>
+<p class="note">Κάθε γραμμή του <code>calc</code> είναι μια ισότητα, και δίπλα της ο λόγος που ισχύει:</p>
+<table class="calc"><tbody><tr><td><code>x = x + 0</code></td><td>αξίωμα <code>add_zero</code></td></tr><tr><td><code>_ = x + (x + -x)</code></td><td>αξίωμα <code>add_neg</code>: $x+(-x)=0$</td></tr><tr><td><code>_ = x + x + -x</code></td><td>αξίωμα <code>add_assoc</code></td></tr><tr><td><code>_ = x + -x</code></td><td>η υπόθεση <code>h</code>: $x+x=x$</td></tr><tr><td><code>_ = 0</code></td><td>αξίωμα <code>add_neg</code></td></tr></tbody></table></div></details>
+
+<h2>3. Δοκίμασε εσύ: $\lambda\cdot 0=0$</h2>
+<div class="ex"><p>Η απόδειξη έχει την ίδια μορφή με του $0\cdot u=0$. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=import%20Mathlib%0A%0A%2F-!%0A%23%20%CE%92%CE%B1%CF%83%CE%B9%CE%BA%CE%AD%CF%82%20%CE%99%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B5%CF%82%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%A7%CF%8E%CF%81%CE%BF%CF%85%20%28%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%201%29%0A%0A%CE%9F%CF%81%CE%AF%CE%B6%CE%BF%CF%85%CE%BC%CE%B5%20%CF%84%CE%BF%CE%BD%20%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8C%20%CF%87%CF%8E%CF%81%CE%BF%20%CF%8C%CF%80%CF%89%CF%82%20%CF%83%CF%84%CE%BF%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%3A%20%CE%AD%CE%BD%CE%B1%20%CF%83%CF%8D%CE%BD%CE%BF%CE%BB%CE%BF%20%C2%ABV%C2%BB%20%CE%BC%CE%B5%20%CF%80%CF%81%CF%8C%CF%83%CE%B8%CE%B5%CF%83%CE%B7%2C%0A%CE%BC%CE%B7%CE%B4%CE%B5%CE%BD%CE%B9%CE%BA%CF%8C%20%CE%B4%CE%B9%CE%AC%CE%BD%CF%85%CF%83%CE%BC%CE%B1%2C%20%CE%B1%CE%BD%CF%84%CE%AF%CE%B8%CE%B5%CF%84%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CE%B2%CE%B1%CE%B8%CE%BC%CF%89%CF%84%CF%8C%20%CF%80%CE%BF%CE%BB%CE%BB%CE%B1%CF%80%CE%BB%CE%B1%CF%83%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%20%CE%BC%CE%B5%20%CF%80%CF%81%CE%B1%CE%B3%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%CF%82%0A%CE%B1%CF%81%CE%B9%CE%B8%CE%BC%CE%BF%CF%8D%CF%82%2C%20%CF%80%CE%BF%CF%85%20%CE%B9%CE%BA%CE%B1%CE%BD%CE%BF%CF%80%CE%BF%CE%B9%CE%BF%CF%8D%CE%BD%20%CE%BF%CE%BA%CF%84%CF%8E%20%CE%B1%CE%BE%CE%B9%CF%8E%CE%BC%CE%B1%CF%84%CE%B1.%20%CE%9A%CE%AC%CE%B8%CE%B5%20%CE%B9%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B1%20%CF%80%CE%B1%CF%81%CE%B1%CE%BA%CE%AC%CF%84%CF%89%0A%CE%B1%CF%80%CE%BF%CE%B4%CE%B5%CE%B9%CE%BA%CE%BD%CF%8D%CE%B5%CF%84%CE%B1%CE%B9%20%CE%BC%CF%8C%CE%BD%CE%BF%20%CE%B1%CF%80%CF%8C%20%CE%B1%CF%85%CF%84%CE%AC%20%CF%84%CE%B1%20%CE%B1%CE%BE%CE%B9%CF%8E%CE%BC%CE%B1%CF%84%CE%B1.%0A%28%CE%A4%CE%BF%20%C2%AB%CE%BB%C2%BB%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%B4%CE%B5%CF%83%CE%BC%CE%B5%CF%85%CE%BC%CE%AD%CE%BD%CE%B7%20%CE%BB%CE%AD%CE%BE%CE%B7%20%CF%84%CE%BF%CF%85%20Lean%2C%20%CE%B3%CE%B9'%20%CE%B1%CF%85%CF%84%CF%8C%20%CF%84%CE%BF%CF%85%CF%82%20%CE%B1%CF%81%CE%B9%CE%B8%CE%BC%CE%BF%CF%8D%CF%82%20%CF%84%CE%BF%CF%85%CF%82%20%CE%BB%CE%AD%CE%BC%CE%B5%20%C2%AB%CE%BA%C2%BB%2C%20%C2%AB%CE%BC%C2%BB.%29%0A-%2F%0A%0A%2F--%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8C%CF%82%20%28%CE%B4%CE%B9%CE%B1%CE%BD%CF%85%CF%83%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CF%8C%CF%82%29%20%CF%87%CF%8E%CF%81%CE%BF%CF%82%20%CF%80%CE%AC%CE%BD%CF%89%20%CF%83%CF%84%CE%BF%20%E2%84%9D%2C%20%CE%BC%CE%B5%20%CF%84%CE%B1%20%CE%BF%CE%BA%CF%84%CF%8E%20%CE%B1%CE%BE%CE%B9%CF%8E%CE%BC%CE%B1%CF%84%CE%B1%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85.%20-%2F%0Aclass%20VectorSpace%20%28V%20%3A%20Type%29%20extends%20Add%20V%2C%20Zero%20V%2C%20Neg%20V%2C%20SMul%20%E2%84%9D%20V%20where%0A%20%20%2F--%20u%20%2B%20v%20%3D%20v%20%2B%20u%20-%2F%0A%20%20add_comm%20%3A%20%E2%88%80%20u%20v%20%3A%20V%2C%20u%20%2B%20v%20%3D%20v%20%2B%20u%0A%20%20%2F--%20%28u%20%2B%20v%29%20%2B%20w%20%3D%20u%20%2B%20%28v%20%2B%20w%29%20-%2F%0A%20%20add_assoc%20%3A%20%E2%88%80%20u%20v%20w%20%3A%20V%2C%20u%20%2B%20v%20%2B%20w%20%3D%20u%20%2B%20%28v%20%2B%20w%29%0A%20%20%2F--%20u%20%2B%200%20%3D%20u%20-%2F%0A%20%20add_zero%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20u%20%2B%200%20%3D%20u%0A%20%20%2F--%20u%20%2B%20%28%E2%88%92u%29%20%3D%200%20-%2F%0A%20%20add_neg%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20u%20%2B%20-u%20%3D%200%0A%20%20%2F--%20%CE%BA%C2%B7%28u%20%2B%20v%29%20%3D%20%CE%BA%C2%B7u%20%2B%20%CE%BA%C2%B7v%20-%2F%0A%20%20smul_add%20%3A%20%E2%88%80%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%28u%20v%20%3A%20V%29%2C%20%CE%BA%20%E2%80%A2%20%28u%20%2B%20v%29%20%3D%20%CE%BA%20%E2%80%A2%20u%20%2B%20%CE%BA%20%E2%80%A2%20v%0A%20%20%2F--%20%28%CE%BA%20%2B%20%CE%BC%29%C2%B7u%20%3D%20%CE%BA%C2%B7u%20%2B%20%CE%BC%C2%B7u%20-%2F%0A%20%20add_smul%20%3A%20%E2%88%80%20%28%CE%BA%20%CE%BC%20%3A%20%E2%84%9D%29%20%28u%20%3A%20V%29%2C%20%28%CE%BA%20%2B%20%CE%BC%29%20%E2%80%A2%20u%20%3D%20%CE%BA%20%E2%80%A2%20u%20%2B%20%CE%BC%20%E2%80%A2%20u%0A%20%20%2F--%20%28%CE%BA%CE%BC%29%C2%B7u%20%3D%20%CE%BA%C2%B7%28%CE%BC%C2%B7u%29%20-%2F%0A%20%20mul_smul%20%3A%20%E2%88%80%20%28%CE%BA%20%CE%BC%20%3A%20%E2%84%9D%29%20%28u%20%3A%20V%29%2C%20%28%CE%BA%20*%20%CE%BC%29%20%E2%80%A2%20u%20%3D%20%CE%BA%20%E2%80%A2%20%28%CE%BC%20%E2%80%A2%20u%29%0A%20%20%2F--%201%C2%B7u%20%3D%20u%20-%2F%0A%20%20one_smul%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20%281%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20u%0A%0Anamespace%20%CE%9A%CE%B5%CF%861%0A%0Avariable%20%7BV%20%3A%20Type%7D%20%5BVectorSpace%20V%5D%0A%0A%2F--%20%281%29%20%CE%A4%CE%BF%20%CE%BC%CE%B7%CE%B4%CE%B5%CE%BD%CE%B9%CE%BA%CF%8C%20%CE%B4%CE%B9%CE%AC%CE%BD%CF%85%CF%83%CE%BC%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BC%CE%BF%CE%BD%CE%B1%CE%B4%CE%B9%CE%BA%CF%8C.%20-%2F%0Atheorem%20zero_unique%20%28z%20%3A%20V%29%20%28hz%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20u%20%2B%20z%20%3D%20u%29%20%3A%20z%20%3D%200%20%3A%3D%20by%0A%20%20calc%20z%20%3D%20z%20%2B%200%20%3A%3D%20%28VectorSpace.add_zero%20z%29.symm%0A%20%20%20%20_%20%3D%200%20%2B%20z%20%3A%3D%20VectorSpace.add_comm%20z%200%0A%20%20%20%20_%20%3D%200%20%3A%3D%20hz%200%0A%0A%2F--%20%282%29%20%CE%A4%CE%BF%20%CE%B1%CE%BD%CF%84%CE%AF%CE%B8%CE%B5%CF%84%CE%BF%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%B4%CE%B9%CE%B1%CE%BD%CF%8D%CF%83%CE%BC%CE%B1%CF%84%CE%BF%CF%82%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BC%CE%BF%CE%BD%CE%B1%CE%B4%CE%B9%CE%BA%CF%8C.%20-%2F%0Atheorem%20neg_unique%20%7Bu%20w%20%3A%20V%7D%20%28h%20%3A%20u%20%2B%20w%20%3D%200%29%20%3A%20w%20%3D%20-u%20%3A%3D%20by%0A%20%20calc%20w%20%3D%20w%20%2B%200%20%3A%3D%20%28VectorSpace.add_zero%20w%29.symm%0A%20%20%20%20_%20%3D%20w%20%2B%20%28u%20%2B%20-u%29%20%3A%3D%20by%20rw%20%5BVectorSpace.add_neg%5D%0A%20%20%20%20_%20%3D%20w%20%2B%20u%20%2B%20-u%20%3A%3D%20%28VectorSpace.add_assoc%20w%20u%20%28-u%29%29.symm%0A%20%20%20%20_%20%3D%20u%20%2B%20w%20%2B%20-u%20%3A%3D%20by%20rw%20%5BVectorSpace.add_comm%20w%20u%5D%0A%20%20%20%20_%20%3D%200%20%2B%20-u%20%3A%3D%20by%20rw%20%5Bh%5D%0A%20%20%20%20_%20%3D%20-u%20%2B%200%20%3A%3D%20VectorSpace.add_comm%200%20%28-u%29%0A%20%20%20%20_%20%3D%20-u%20%3A%3D%20VectorSpace.add_zero%20%28-u%29%0A%0A%2F--%20%CE%9B%CE%AE%CE%BC%CE%BC%CE%B1%3A%20%CE%B1%CE%BD%20x%20%2B%20x%20%3D%20x%2C%20%CF%84%CF%8C%CF%84%CE%B5%20x%20%3D%200%20%28%CF%80%CF%81%CE%BF%CF%83%CE%B8%CE%AD%CF%84%CE%BF%CF%85%CE%BC%CE%B5%20%CF%84%CE%BF%20%E2%88%92x%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%84%CE%B1%20%CE%B4%CF%8D%CE%BF%20%CE%BC%CE%AD%CE%BB%CE%B7%29.%20-%2F%0Atheorem%20eq_zero_of_add_self%20%7Bx%20%3A%20V%7D%20%28h%20%3A%20x%20%2B%20x%20%3D%20x%29%20%3A%20x%20%3D%200%20%3A%3D%20by%0A%20%20calc%20x%20%3D%20x%20%2B%200%20%3A%3D%20%28VectorSpace.add_zero%20x%29.symm%0A%20%20%20%20_%20%3D%20x%20%2B%20%28x%20%2B%20-x%29%20%3A%3D%20by%20rw%20%5BVectorSpace.add_neg%5D%0A%20%20%20%20_%20%3D%20x%20%2B%20x%20%2B%20-x%20%3A%3D%20%28VectorSpace.add_assoc%20x%20x%20%28-x%29%29.symm%0A%20%20%20%20_%20%3D%20x%20%2B%20-x%20%3A%3D%20by%20rw%20%5Bh%5D%0A%20%20%20%20_%20%3D%200%20%3A%3D%20VectorSpace.add_neg%20x%0A%0A%2F--%20%283%29%200%C2%B7u%20%3D%200%20-%2F%0Atheorem%20zero_smul'%20%28u%20%3A%20V%29%20%3A%20%280%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%200%20%3A%3D%20by%0A%20%20apply%20eq_zero_of_add_self%0A%20%20rw%20%5B%E2%86%90%20VectorSpace.add_smul%5D%0A%20%20rw%20%5Badd_zero%5D%0A%0A%2F--%20%284%29%20%CE%BA%C2%B70%20%3D%200%20-%2F%0Atheorem%20smul_zero'%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%3A%20%CE%BA%20%E2%80%A2%20%280%20%3A%20V%29%20%3D%200%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%BC%CE%B9%CE%BC%CE%AE%CF%83%CE%BF%CF%85%20%CF%84%CE%B7%CE%BD%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%84%CE%BF%CF%85%200%C2%B7u%20%3D%200%20%CF%80%CE%B9%CE%BF%20%CF%80%CE%AC%CE%BD%CF%89.%0A%20%20--%20%CE%A5%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%3A%20%CF%87%CF%81%CE%B5%CE%B9%CE%AC%CE%B6%CE%B5%CF%83%CE%B1%CE%B9%20%CF%84%CE%BF%20%CE%B1%CE%BE%CE%AF%CF%89%CE%BC%CE%B1%20%C2%ABVectorSpace.smul_add%C2%BB%20%CE%B1%CE%BD%CF%84%CE%AF%20%CE%B3%CE%B9%CE%B1%20%CF%84%CE%BF%20%C2%ABVectorSpace.add_smul%C2%BB.%0A%20%20sorry%0A%0A%2F--%20%285%29%20%28%E2%88%921%29%C2%B7u%20%3D%20%E2%88%92u%20-%2F%0Atheorem%20neg_one_smul'%20%28u%20%3A%20V%29%20%3A%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20-u%20%3A%3D%20by%0A%20%20apply%20neg_unique%0A%20%20calc%20u%20%2B%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20%281%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%2B%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3A%3D%20by%20rw%20%5BVectorSpace.one_smul%5D%0A%20%20%20%20_%20%3D%20%28%281%20%3A%20%E2%84%9D%29%20%2B%20-1%29%20%E2%80%A2%20u%20%3A%3D%20%28VectorSpace.add_smul%201%20%28-1%29%20u%29.symm%0A%20%20%20%20_%20%3D%20%280%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3A%3D%20by%20norm_num%0A%20%20%20%20_%20%3D%200%20%3A%3D%20zero_smul'%20u%0A%0A%2F--%20%286%29%20%CE%91%CE%BD%20%CE%BA%C2%B7u%20%3D%200%2C%20%CF%84%CF%8C%CF%84%CE%B5%20%CE%BA%20%3D%200%20%CE%AE%20u%20%3D%200.%20-%2F%0Atheorem%20eq_zero_or_eq_zero_of_smul_eq_zero%20%7B%CE%BA%20%3A%20%E2%84%9D%7D%20%7Bu%20%3A%20V%7D%20%28h%20%3A%20%CE%BA%20%E2%80%A2%20u%20%3D%200%29%20%3A%0A%20%20%20%20%CE%BA%20%3D%200%20%E2%88%A8%20u%20%3D%200%20%3A%3D%20by%0A%20%20by_cases%20h%CE%BA%20%3A%20%CE%BA%20%3D%200%0A%20%20%C2%B7%20left%0A%20%20%20%20exact%20h%CE%BA%0A%20%20%C2%B7%20right%0A%20%20%20%20calc%20u%20%3D%20%281%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3A%3D%20%28VectorSpace.one_smul%20u%29.symm%0A%20%20%20%20%20%20_%20%3D%20%28%CE%BA%E2%81%BB%C2%B9%20*%20%CE%BA%29%20%E2%80%A2%20u%20%3A%3D%20by%20rw%20%5Binv_mul_cancel%E2%82%80%20h%CE%BA%5D%0A%20%20%20%20%20%20_%20%3D%20%CE%BA%E2%81%BB%C2%B9%20%E2%80%A2%20%28%CE%BA%20%E2%80%A2%20u%29%20%3A%3D%20VectorSpace.mul_smul%20%CE%BA%E2%81%BB%C2%B9%20%CE%BA%20u%0A%20%20%20%20%20%20_%20%3D%20%CE%BA%E2%81%BB%C2%B9%20%E2%80%A2%20%280%20%3A%20V%29%20%3A%3D%20by%20rw%20%5Bh%5D%0A%20%20%20%20%20%20_%20%3D%200%20%3A%3D%20smul_zero'%20%CE%BA%E2%81%BB%C2%B9%0A%0Aend%20%CE%9A%CE%B5%CF%861%0A%0A%2F-!%20%23%23%20%CE%9F%CE%B9%20%CE%AF%CE%B4%CE%B9%CE%B5%CF%82%20%CE%B9%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B5%CF%82%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%AD%CF%84%CE%BF%CE%B9%CE%BC%CE%B5%CF%82%20%CF%83%CF%84%CE%B7%20Mathlib%20%28%CE%B5%CE%BA%CE%B5%CE%AF%20%CE%BF%20%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8C%CF%82%20%CF%87%CF%8E%CF%81%CE%BF%CF%82%20%CE%BB%CE%AD%CE%B3%CE%B5%CF%84%CE%B1%CE%B9%20%C2%ABModule%C2%BB%29%20-%2F%0Asection%20InMathlib%0Avariable%20%7BW%20%3A%20Type%7D%20%5BAddCommGroup%20W%5D%20%5BModule%20%E2%84%9D%20W%5D%0A%0Aexample%20%28u%20%3A%20W%29%20%3A%20%280%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%200%20%3A%3D%20zero_smul%20%E2%84%9D%20u%0Aexample%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%3A%20%CE%BA%20%E2%80%A2%20%280%20%3A%20W%29%20%3D%200%20%3A%3D%20smul_zero%20%CE%BA%0Aexample%20%28u%20%3A%20W%29%20%3A%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20-u%20%3A%3D%20neg_one_smul%20%E2%84%9D%20u%0Aexample%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%28u%20%3A%20W%29%20%3A%20%CE%BA%20%E2%80%A2%20u%20%3D%200%20%E2%86%94%20%CE%BA%20%3D%200%20%E2%88%A8%20u%20%3D%200%20%3A%3D%20smul_eq_zero%0Aend%20InMathlib%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Ξεκίνα με <code>apply eq_zero_of_add_self</code>, όπως πριν. Μετά χρειάζεσαι το αξίωμα $\kappa(u+v)=\kappa u+\kappa v$, δηλαδή το <code>VectorSpace.smul_add</code>, αντί για το <code>VectorSpace.add_smul</code>.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> smul_zero&#x27; (κ : ℝ) : κ • (0 : V) = 0 := <span class="kw">by</span>
+  <span class="tc">apply</span> eq_zero_of_add_self
+  <span class="tc">rw</span> [← VectorSpace.smul_add]
+  <span class="tc">rw</span> [VectorSpace.add_zero]</pre></div></details>
+</div>
+
+<h2>4. Ολόκληρη η απόδειξη και των έξι ιδιοτήτων</h2>
+<details><summary>Δες τον κώδικα (103 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ίδιος ακριβώς με αυτόν που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="kw">import</span> Mathlib
+
+<span class="cm">/-!
+# Βασικές Ιδιότητες Γραμμικού Χώρου (Κεφάλαιο 1)
+
+Ορίζουμε τον γραμμικό χώρο όπως στο βιβλίο: ένα σύνολο «V» με πρόσθεση,
+μηδενικό διάνυσμα, αντίθετα και βαθμωτό πολλαπλασιασμό με πραγματικούς
+αριθμούς, που ικανοποιούν οκτώ αξιώματα. Κάθε ιδιότητα παρακάτω
+αποδεικνύεται μόνο από αυτά τα αξιώματα.
+(Το «λ» είναι δεσμευμένη λέξη του Lean, γι&#x27; αυτό τους αριθμούς τους λέμε «κ», «μ».)
+-/</span>
+
+<span class="cm">/-- Γραμμικός (διανυσματικός) χώρος πάνω στο ℝ, με τα οκτώ αξιώματα του βιβλίου. -/</span>
+<span class="kw">class</span> VectorSpace (V : Type) <span class="kw">extends</span> Add V, Zero V, Neg V, SMul ℝ V <span class="kw">where</span>
+  <span class="cm">/-- u + v = v + u -/</span>
+  add_comm : ∀ u v : V, u + v = v + u
+  <span class="cm">/-- (u + v) + w = u + (v + w) -/</span>
+  add_assoc : ∀ u v w : V, u + v + w = u + (v + w)
+  <span class="cm">/-- u + 0 = u -/</span>
+  add_zero : ∀ u : V, u + 0 = u
+  <span class="cm">/-- u + (−u) = 0 -/</span>
+  add_neg : ∀ u : V, u + -u = 0
+  <span class="cm">/-- κ·(u + v) = κ·u + κ·v -/</span>
+  smul_add : ∀ (κ : ℝ) (u v : V), κ • (u + v) = κ • u + κ • v
+  <span class="cm">/-- (κ + μ)·u = κ·u + μ·u -/</span>
+  add_smul : ∀ (κ μ : ℝ) (u : V), (κ + μ) • u = κ • u + μ • u
+  <span class="cm">/-- (κμ)·u = κ·(μ·u) -/</span>
+  mul_smul : ∀ (κ μ : ℝ) (u : V), (κ * μ) • u = κ • (μ • u)
+  <span class="cm">/-- 1·u = u -/</span>
+  one_smul : ∀ u : V, (1 : ℝ) • u = u
+
+<span class="kw">namespace</span> Κεφ1
+
+<span class="kw">variable</span> {V : Type} [VectorSpace V]
+
+<span class="cm">/-- (1) Το μηδενικό διάνυσμα είναι μοναδικό. -/</span>
+<span class="kw">theorem</span> zero_unique (z : V) (hz : ∀ u : V, u + z = u) : z = 0 := <span class="kw">by</span>
+  <span class="kw">calc</span> z = z + 0 := (VectorSpace.add_zero z).symm
+    _ = 0 + z := VectorSpace.add_comm z 0
+    _ = 0 := hz 0
+
+<span class="cm">/-- (2) Το αντίθετο κάθε διανύσματος είναι μοναδικό. -/</span>
+<span class="kw">theorem</span> neg_unique {u w : V} (h : u + w = 0) : w = -u := <span class="kw">by</span>
+  <span class="kw">calc</span> w = w + 0 := (VectorSpace.add_zero w).symm
+    _ = w + (u + -u) := <span class="kw">by</span> <span class="tc">rw</span> [VectorSpace.add_neg]
+    _ = w + u + -u := (VectorSpace.add_assoc w u (-u)).symm
+    _ = u + w + -u := <span class="kw">by</span> <span class="tc">rw</span> [VectorSpace.add_comm w u]
+    _ = 0 + -u := <span class="kw">by</span> <span class="tc">rw</span> [h]
+    _ = -u + 0 := VectorSpace.add_comm 0 (-u)
+    _ = -u := VectorSpace.add_zero (-u)
+
+<span class="cm">/-- Λήμμα: αν x + x = x, τότε x = 0 (προσθέτουμε το −x και στα δύο μέλη). -/</span>
+<span class="kw">theorem</span> eq_zero_of_add_self {x : V} (h : x + x = x) : x = 0 := <span class="kw">by</span>
+  <span class="kw">calc</span> x = x + 0 := (VectorSpace.add_zero x).symm
+    _ = x + (x + -x) := <span class="kw">by</span> <span class="tc">rw</span> [VectorSpace.add_neg]
+    _ = x + x + -x := (VectorSpace.add_assoc x x (-x)).symm
+    _ = x + -x := <span class="kw">by</span> <span class="tc">rw</span> [h]
+    _ = 0 := VectorSpace.add_neg x
+
+<span class="cm">/-- (3) 0·u = 0 -/</span>
+<span class="kw">theorem</span> zero_smul&#x27; (u : V) : (0 : ℝ) • u = 0 := <span class="kw">by</span>
+  <span class="tc">apply</span> eq_zero_of_add_self
+  <span class="tc">rw</span> [← VectorSpace.add_smul]
+  <span class="tc">rw</span> [add_zero]
+
+<span class="cm">/-- (4) κ·0 = 0 -/</span>
+<span class="kw">theorem</span> smul_zero&#x27; (κ : ℝ) : κ • (0 : V) = 0 := <span class="kw">by</span>
+  <span class="tc">apply</span> eq_zero_of_add_self
+  <span class="tc">rw</span> [← VectorSpace.smul_add]
+  <span class="tc">rw</span> [VectorSpace.add_zero]
+
+<span class="cm">/-- (5) (−1)·u = −u -/</span>
+<span class="kw">theorem</span> neg_one_smul&#x27; (u : V) : (-1 : ℝ) • u = -u := <span class="kw">by</span>
+  <span class="tc">apply</span> neg_unique
+  <span class="kw">calc</span> u + (-1 : ℝ) • u = (1 : ℝ) • u + (-1 : ℝ) • u := <span class="kw">by</span> <span class="tc">rw</span> [VectorSpace.one_smul]
+    _ = ((1 : ℝ) + -1) • u := (VectorSpace.add_smul 1 (-1) u).symm
+    _ = (0 : ℝ) • u := <span class="kw">by</span> <span class="tc">norm_num</span>
+    _ = 0 := zero_smul&#x27; u
+
+<span class="cm">/-- (6) Αν κ·u = 0, τότε κ = 0 ή u = 0. -/</span>
+<span class="kw">theorem</span> eq_zero_or_eq_zero_of_smul_eq_zero {κ : ℝ} {u : V} (h : κ • u = 0) :
+    κ = 0 ∨ u = 0 := <span class="kw">by</span>
+  <span class="tc">by_cases</span> hκ : κ = 0
+  · <span class="tc">left</span>
+    <span class="tc">exact</span> hκ
+  · <span class="tc">right</span>
+    <span class="kw">calc</span> u = (1 : ℝ) • u := (VectorSpace.one_smul u).symm
+      _ = (κ⁻¹ * κ) • u := <span class="kw">by</span> <span class="tc">rw</span> [inv_mul_cancel₀ hκ]
+      _ = κ⁻¹ • (κ • u) := VectorSpace.mul_smul κ⁻¹ κ u
+      _ = κ⁻¹ • (0 : V) := <span class="kw">by</span> <span class="tc">rw</span> [h]
+      _ = 0 := smul_zero&#x27; κ⁻¹
+
+<span class="kw">end</span> Κεφ1
+
+<span class="cm">/-! ## Οι ίδιες ιδιότητες είναι έτοιμες στη Mathlib (εκεί ο γραμμικός χώρος λέγεται «Module») -/</span>
+<span class="kw">section</span> InMathlib
+<span class="kw">variable</span> {W : Type} [AddCommGroup W] [Module ℝ W]
+
+<span class="kw">example</span> (u : W) : (0 : ℝ) • u = 0 := zero_smul ℝ u
+<span class="kw">example</span> (κ : ℝ) : κ • (0 : W) = 0 := smul_zero κ
+<span class="kw">example</span> (u : W) : (-1 : ℝ) • u = -u := neg_one_smul ℝ u
+<span class="kw">example</span> (κ : ℝ) (u : W) : κ • u = 0 ↔ κ = 0 ∨ u = 0 := smul_eq_zero
+<span class="kw">end</span> InMathlib
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=import%20Mathlib%0A%0A%2F-!%0A%23%20%CE%92%CE%B1%CF%83%CE%B9%CE%BA%CE%AD%CF%82%20%CE%99%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B5%CF%82%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%A7%CF%8E%CF%81%CE%BF%CF%85%20%28%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%201%29%0A%0A%CE%9F%CF%81%CE%AF%CE%B6%CE%BF%CF%85%CE%BC%CE%B5%20%CF%84%CE%BF%CE%BD%20%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8C%20%CF%87%CF%8E%CF%81%CE%BF%20%CF%8C%CF%80%CF%89%CF%82%20%CF%83%CF%84%CE%BF%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%3A%20%CE%AD%CE%BD%CE%B1%20%CF%83%CF%8D%CE%BD%CE%BF%CE%BB%CE%BF%20%C2%ABV%C2%BB%20%CE%BC%CE%B5%20%CF%80%CF%81%CF%8C%CF%83%CE%B8%CE%B5%CF%83%CE%B7%2C%0A%CE%BC%CE%B7%CE%B4%CE%B5%CE%BD%CE%B9%CE%BA%CF%8C%20%CE%B4%CE%B9%CE%AC%CE%BD%CF%85%CF%83%CE%BC%CE%B1%2C%20%CE%B1%CE%BD%CF%84%CE%AF%CE%B8%CE%B5%CF%84%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CE%B2%CE%B1%CE%B8%CE%BC%CF%89%CF%84%CF%8C%20%CF%80%CE%BF%CE%BB%CE%BB%CE%B1%CF%80%CE%BB%CE%B1%CF%83%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%20%CE%BC%CE%B5%20%CF%80%CF%81%CE%B1%CE%B3%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%CF%82%0A%CE%B1%CF%81%CE%B9%CE%B8%CE%BC%CE%BF%CF%8D%CF%82%2C%20%CF%80%CE%BF%CF%85%20%CE%B9%CE%BA%CE%B1%CE%BD%CE%BF%CF%80%CE%BF%CE%B9%CE%BF%CF%8D%CE%BD%20%CE%BF%CE%BA%CF%84%CF%8E%20%CE%B1%CE%BE%CE%B9%CF%8E%CE%BC%CE%B1%CF%84%CE%B1.%20%CE%9A%CE%AC%CE%B8%CE%B5%20%CE%B9%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B1%20%CF%80%CE%B1%CF%81%CE%B1%CE%BA%CE%AC%CF%84%CF%89%0A%CE%B1%CF%80%CE%BF%CE%B4%CE%B5%CE%B9%CE%BA%CE%BD%CF%8D%CE%B5%CF%84%CE%B1%CE%B9%20%CE%BC%CF%8C%CE%BD%CE%BF%20%CE%B1%CF%80%CF%8C%20%CE%B1%CF%85%CF%84%CE%AC%20%CF%84%CE%B1%20%CE%B1%CE%BE%CE%B9%CF%8E%CE%BC%CE%B1%CF%84%CE%B1.%0A%28%CE%A4%CE%BF%20%C2%AB%CE%BB%C2%BB%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%B4%CE%B5%CF%83%CE%BC%CE%B5%CF%85%CE%BC%CE%AD%CE%BD%CE%B7%20%CE%BB%CE%AD%CE%BE%CE%B7%20%CF%84%CE%BF%CF%85%20Lean%2C%20%CE%B3%CE%B9'%20%CE%B1%CF%85%CF%84%CF%8C%20%CF%84%CE%BF%CF%85%CF%82%20%CE%B1%CF%81%CE%B9%CE%B8%CE%BC%CE%BF%CF%8D%CF%82%20%CF%84%CE%BF%CF%85%CF%82%20%CE%BB%CE%AD%CE%BC%CE%B5%20%C2%AB%CE%BA%C2%BB%2C%20%C2%AB%CE%BC%C2%BB.%29%0A-%2F%0A%0A%2F--%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8C%CF%82%20%28%CE%B4%CE%B9%CE%B1%CE%BD%CF%85%CF%83%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CF%8C%CF%82%29%20%CF%87%CF%8E%CF%81%CE%BF%CF%82%20%CF%80%CE%AC%CE%BD%CF%89%20%CF%83%CF%84%CE%BF%20%E2%84%9D%2C%20%CE%BC%CE%B5%20%CF%84%CE%B1%20%CE%BF%CE%BA%CF%84%CF%8E%20%CE%B1%CE%BE%CE%B9%CF%8E%CE%BC%CE%B1%CF%84%CE%B1%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85.%20-%2F%0Aclass%20VectorSpace%20%28V%20%3A%20Type%29%20extends%20Add%20V%2C%20Zero%20V%2C%20Neg%20V%2C%20SMul%20%E2%84%9D%20V%20where%0A%20%20%2F--%20u%20%2B%20v%20%3D%20v%20%2B%20u%20-%2F%0A%20%20add_comm%20%3A%20%E2%88%80%20u%20v%20%3A%20V%2C%20u%20%2B%20v%20%3D%20v%20%2B%20u%0A%20%20%2F--%20%28u%20%2B%20v%29%20%2B%20w%20%3D%20u%20%2B%20%28v%20%2B%20w%29%20-%2F%0A%20%20add_assoc%20%3A%20%E2%88%80%20u%20v%20w%20%3A%20V%2C%20u%20%2B%20v%20%2B%20w%20%3D%20u%20%2B%20%28v%20%2B%20w%29%0A%20%20%2F--%20u%20%2B%200%20%3D%20u%20-%2F%0A%20%20add_zero%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20u%20%2B%200%20%3D%20u%0A%20%20%2F--%20u%20%2B%20%28%E2%88%92u%29%20%3D%200%20-%2F%0A%20%20add_neg%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20u%20%2B%20-u%20%3D%200%0A%20%20%2F--%20%CE%BA%C2%B7%28u%20%2B%20v%29%20%3D%20%CE%BA%C2%B7u%20%2B%20%CE%BA%C2%B7v%20-%2F%0A%20%20smul_add%20%3A%20%E2%88%80%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%28u%20v%20%3A%20V%29%2C%20%CE%BA%20%E2%80%A2%20%28u%20%2B%20v%29%20%3D%20%CE%BA%20%E2%80%A2%20u%20%2B%20%CE%BA%20%E2%80%A2%20v%0A%20%20%2F--%20%28%CE%BA%20%2B%20%CE%BC%29%C2%B7u%20%3D%20%CE%BA%C2%B7u%20%2B%20%CE%BC%C2%B7u%20-%2F%0A%20%20add_smul%20%3A%20%E2%88%80%20%28%CE%BA%20%CE%BC%20%3A%20%E2%84%9D%29%20%28u%20%3A%20V%29%2C%20%28%CE%BA%20%2B%20%CE%BC%29%20%E2%80%A2%20u%20%3D%20%CE%BA%20%E2%80%A2%20u%20%2B%20%CE%BC%20%E2%80%A2%20u%0A%20%20%2F--%20%28%CE%BA%CE%BC%29%C2%B7u%20%3D%20%CE%BA%C2%B7%28%CE%BC%C2%B7u%29%20-%2F%0A%20%20mul_smul%20%3A%20%E2%88%80%20%28%CE%BA%20%CE%BC%20%3A%20%E2%84%9D%29%20%28u%20%3A%20V%29%2C%20%28%CE%BA%20*%20%CE%BC%29%20%E2%80%A2%20u%20%3D%20%CE%BA%20%E2%80%A2%20%28%CE%BC%20%E2%80%A2%20u%29%0A%20%20%2F--%201%C2%B7u%20%3D%20u%20-%2F%0A%20%20one_smul%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20%281%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20u%0A%0Anamespace%20%CE%9A%CE%B5%CF%861%0A%0Avariable%20%7BV%20%3A%20Type%7D%20%5BVectorSpace%20V%5D%0A%0A%2F--%20%281%29%20%CE%A4%CE%BF%20%CE%BC%CE%B7%CE%B4%CE%B5%CE%BD%CE%B9%CE%BA%CF%8C%20%CE%B4%CE%B9%CE%AC%CE%BD%CF%85%CF%83%CE%BC%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BC%CE%BF%CE%BD%CE%B1%CE%B4%CE%B9%CE%BA%CF%8C.%20-%2F%0Atheorem%20zero_unique%20%28z%20%3A%20V%29%20%28hz%20%3A%20%E2%88%80%20u%20%3A%20V%2C%20u%20%2B%20z%20%3D%20u%29%20%3A%20z%20%3D%200%20%3A%3D%20by%0A%20%20calc%20z%20%3D%20z%20%2B%200%20%3A%3D%20%28VectorSpace.add_zero%20z%29.symm%0A%20%20%20%20_%20%3D%200%20%2B%20z%20%3A%3D%20VectorSpace.add_comm%20z%200%0A%20%20%20%20_%20%3D%200%20%3A%3D%20hz%200%0A%0A%2F--%20%282%29%20%CE%A4%CE%BF%20%CE%B1%CE%BD%CF%84%CE%AF%CE%B8%CE%B5%CF%84%CE%BF%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%B4%CE%B9%CE%B1%CE%BD%CF%8D%CF%83%CE%BC%CE%B1%CF%84%CE%BF%CF%82%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BC%CE%BF%CE%BD%CE%B1%CE%B4%CE%B9%CE%BA%CF%8C.%20-%2F%0Atheorem%20neg_unique%20%7Bu%20w%20%3A%20V%7D%20%28h%20%3A%20u%20%2B%20w%20%3D%200%29%20%3A%20w%20%3D%20-u%20%3A%3D%20by%0A%20%20calc%20w%20%3D%20w%20%2B%200%20%3A%3D%20%28VectorSpace.add_zero%20w%29.symm%0A%20%20%20%20_%20%3D%20w%20%2B%20%28u%20%2B%20-u%29%20%3A%3D%20by%20rw%20%5BVectorSpace.add_neg%5D%0A%20%20%20%20_%20%3D%20w%20%2B%20u%20%2B%20-u%20%3A%3D%20%28VectorSpace.add_assoc%20w%20u%20%28-u%29%29.symm%0A%20%20%20%20_%20%3D%20u%20%2B%20w%20%2B%20-u%20%3A%3D%20by%20rw%20%5BVectorSpace.add_comm%20w%20u%5D%0A%20%20%20%20_%20%3D%200%20%2B%20-u%20%3A%3D%20by%20rw%20%5Bh%5D%0A%20%20%20%20_%20%3D%20-u%20%2B%200%20%3A%3D%20VectorSpace.add_comm%200%20%28-u%29%0A%20%20%20%20_%20%3D%20-u%20%3A%3D%20VectorSpace.add_zero%20%28-u%29%0A%0A%2F--%20%CE%9B%CE%AE%CE%BC%CE%BC%CE%B1%3A%20%CE%B1%CE%BD%20x%20%2B%20x%20%3D%20x%2C%20%CF%84%CF%8C%CF%84%CE%B5%20x%20%3D%200%20%28%CF%80%CF%81%CE%BF%CF%83%CE%B8%CE%AD%CF%84%CE%BF%CF%85%CE%BC%CE%B5%20%CF%84%CE%BF%20%E2%88%92x%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%84%CE%B1%20%CE%B4%CF%8D%CE%BF%20%CE%BC%CE%AD%CE%BB%CE%B7%29.%20-%2F%0Atheorem%20eq_zero_of_add_self%20%7Bx%20%3A%20V%7D%20%28h%20%3A%20x%20%2B%20x%20%3D%20x%29%20%3A%20x%20%3D%200%20%3A%3D%20by%0A%20%20calc%20x%20%3D%20x%20%2B%200%20%3A%3D%20%28VectorSpace.add_zero%20x%29.symm%0A%20%20%20%20_%20%3D%20x%20%2B%20%28x%20%2B%20-x%29%20%3A%3D%20by%20rw%20%5BVectorSpace.add_neg%5D%0A%20%20%20%20_%20%3D%20x%20%2B%20x%20%2B%20-x%20%3A%3D%20%28VectorSpace.add_assoc%20x%20x%20%28-x%29%29.symm%0A%20%20%20%20_%20%3D%20x%20%2B%20-x%20%3A%3D%20by%20rw%20%5Bh%5D%0A%20%20%20%20_%20%3D%200%20%3A%3D%20VectorSpace.add_neg%20x%0A%0A%2F--%20%283%29%200%C2%B7u%20%3D%200%20-%2F%0Atheorem%20zero_smul'%20%28u%20%3A%20V%29%20%3A%20%280%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%200%20%3A%3D%20by%0A%20%20apply%20eq_zero_of_add_self%0A%20%20rw%20%5B%E2%86%90%20VectorSpace.add_smul%5D%0A%20%20rw%20%5Badd_zero%5D%0A%0A%2F--%20%284%29%20%CE%BA%C2%B70%20%3D%200%20-%2F%0Atheorem%20smul_zero'%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%3A%20%CE%BA%20%E2%80%A2%20%280%20%3A%20V%29%20%3D%200%20%3A%3D%20by%0A%20%20apply%20eq_zero_of_add_self%0A%20%20rw%20%5B%E2%86%90%20VectorSpace.smul_add%5D%0A%20%20rw%20%5BVectorSpace.add_zero%5D%0A%0A%2F--%20%285%29%20%28%E2%88%921%29%C2%B7u%20%3D%20%E2%88%92u%20-%2F%0Atheorem%20neg_one_smul'%20%28u%20%3A%20V%29%20%3A%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20-u%20%3A%3D%20by%0A%20%20apply%20neg_unique%0A%20%20calc%20u%20%2B%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20%281%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%2B%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3A%3D%20by%20rw%20%5BVectorSpace.one_smul%5D%0A%20%20%20%20_%20%3D%20%28%281%20%3A%20%E2%84%9D%29%20%2B%20-1%29%20%E2%80%A2%20u%20%3A%3D%20%28VectorSpace.add_smul%201%20%28-1%29%20u%29.symm%0A%20%20%20%20_%20%3D%20%280%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3A%3D%20by%20norm_num%0A%20%20%20%20_%20%3D%200%20%3A%3D%20zero_smul'%20u%0A%0A%2F--%20%286%29%20%CE%91%CE%BD%20%CE%BA%C2%B7u%20%3D%200%2C%20%CF%84%CF%8C%CF%84%CE%B5%20%CE%BA%20%3D%200%20%CE%AE%20u%20%3D%200.%20-%2F%0Atheorem%20eq_zero_or_eq_zero_of_smul_eq_zero%20%7B%CE%BA%20%3A%20%E2%84%9D%7D%20%7Bu%20%3A%20V%7D%20%28h%20%3A%20%CE%BA%20%E2%80%A2%20u%20%3D%200%29%20%3A%0A%20%20%20%20%CE%BA%20%3D%200%20%E2%88%A8%20u%20%3D%200%20%3A%3D%20by%0A%20%20by_cases%20h%CE%BA%20%3A%20%CE%BA%20%3D%200%0A%20%20%C2%B7%20left%0A%20%20%20%20exact%20h%CE%BA%0A%20%20%C2%B7%20right%0A%20%20%20%20calc%20u%20%3D%20%281%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3A%3D%20%28VectorSpace.one_smul%20u%29.symm%0A%20%20%20%20%20%20_%20%3D%20%28%CE%BA%E2%81%BB%C2%B9%20*%20%CE%BA%29%20%E2%80%A2%20u%20%3A%3D%20by%20rw%20%5Binv_mul_cancel%E2%82%80%20h%CE%BA%5D%0A%20%20%20%20%20%20_%20%3D%20%CE%BA%E2%81%BB%C2%B9%20%E2%80%A2%20%28%CE%BA%20%E2%80%A2%20u%29%20%3A%3D%20VectorSpace.mul_smul%20%CE%BA%E2%81%BB%C2%B9%20%CE%BA%20u%0A%20%20%20%20%20%20_%20%3D%20%CE%BA%E2%81%BB%C2%B9%20%E2%80%A2%20%280%20%3A%20V%29%20%3A%3D%20by%20rw%20%5Bh%5D%0A%20%20%20%20%20%20_%20%3D%200%20%3A%3D%20smul_zero'%20%CE%BA%E2%81%BB%C2%B9%0A%0Aend%20%CE%9A%CE%B5%CF%861%0A%0A%2F-!%20%23%23%20%CE%9F%CE%B9%20%CE%AF%CE%B4%CE%B9%CE%B5%CF%82%20%CE%B9%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B5%CF%82%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%AD%CF%84%CE%BF%CE%B9%CE%BC%CE%B5%CF%82%20%CF%83%CF%84%CE%B7%20Mathlib%20%28%CE%B5%CE%BA%CE%B5%CE%AF%20%CE%BF%20%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8C%CF%82%20%CF%87%CF%8E%CF%81%CE%BF%CF%82%20%CE%BB%CE%AD%CE%B3%CE%B5%CF%84%CE%B1%CE%B9%20%C2%ABModule%C2%BB%29%20-%2F%0Asection%20InMathlib%0Avariable%20%7BW%20%3A%20Type%7D%20%5BAddCommGroup%20W%5D%20%5BModule%20%E2%84%9D%20W%5D%0A%0Aexample%20%28u%20%3A%20W%29%20%3A%20%280%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%200%20%3A%3D%20zero_smul%20%E2%84%9D%20u%0Aexample%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%3A%20%CE%BA%20%E2%80%A2%20%280%20%3A%20W%29%20%3D%200%20%3A%3D%20smul_zero%20%CE%BA%0Aexample%20%28u%20%3A%20W%29%20%3A%20%28-1%20%3A%20%E2%84%9D%29%20%E2%80%A2%20u%20%3D%20-u%20%3A%3D%20neg_one_smul%20%E2%84%9D%20u%0Aexample%20%28%CE%BA%20%3A%20%E2%84%9D%29%20%28u%20%3A%20W%29%20%3A%20%CE%BA%20%E2%80%A2%20u%20%3D%200%20%E2%86%94%20%CE%BA%20%3D%200%20%E2%88%A8%20u%20%3D%200%20%3A%3D%20smul_eq_zero%0Aend%20InMathlib%0A" target="_blank" rel="noopener">Άνοιξέ την στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+<p class="note"><b>Στη Mathlib</b>, τη μεγάλη βιβλιοθήκη μαθηματικών του Lean, οι ίδιες ιδιότητες υπάρχουν έτοιμες: <code>zero_smul</code>, <code>smul_zero</code>, <code>neg_one_smul</code>, <code>smul_eq_zero</code>. Εκεί όμως ο ορισμός είναι γενικότερος και τα $0\cdot u=0$, $\lambda\cdot 0=0$ μπαίνουν ως αξιώματα. Γι' αυτό εδώ γράψαμε τον ορισμό του βιβλίου και τα αποδείξαμε.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Axler, S. (2024). <em>Linear Algebra Done Right</em> (4th ed.). Springer.</li><li>Hoffman, K., &amp; Kunze, R. (1971). <em>Linear Algebra</em> (2nd ed.). Prentice-Hall.</li><li>Strang, G. (2016). <em>Introduction to Linear Algebra</em> (5th ed.). Wellesley-Cambridge Press.</li><li>Βάρσος, Δ. Α., Δεριζιώτης, Δ. Ι., Μαλιάκας, Μ. Π., Παπασταυρίδης, Σ. Γ., Ράπτης, Ε., &amp; Ταλέλλη, Ο. Π. (2003). <em>Εισαγωγή στη Γραμμική Άλγεβρα</em> (Τόμ. Α΄). Εκδόσεις Σοφία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>
