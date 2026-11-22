@@ -2,22 +2,88 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Ιδιότητες Εσωτερικού Γινομένου</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
-<div class="stmt"><span class="lbl">Εκφώνηση</span>Για $\vec{u},\vec{v},\vec{w}\in\mathbb{R}^n$ και $\lambda\in\mathbb{R}$: $\vec{u}\cdot\vec{v}=\vec{v}\cdot\vec{u}$· $\vec{u}\cdot(\vec{v}+\vec{w})=\vec{u}\cdot\vec{v}+\vec{u}\cdot\vec{w}$· $(\lambda\vec{u})\cdot\vec{v}=\lambda(\vec{u}\cdot\vec{v})$· $\vec{u}\cdot\vec{u}=\|\vec{u}\|^2\ge 0$ με ισότητα μόνο όταν $\vec{u}=\vec{0}$· και ο γεωμετρικός τύπος $\vec{u}\cdot\vec{v}=\|\vec{u}\|\,\|\vec{v}\|\cos\theta$, όπου $\theta$ η γωνία των $\vec{u},\vec{v}$.</div>
+<p class="sub">Κεφάλαιο 0 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
+<div class="stmt"><span class="lbl">Εκφώνηση</span>Για $\vec{u},\vec{v},\vec{w}\in\mathbb{R}^n$ και $\lambda\in\mathbb{R}$: $\vec{u}\cdot\vec{v}$<wbr>${}=\vec{v}\cdot\vec{u}$· $\vec{u}\cdot(\vec{v}+\vec{w})$<wbr>${}=\vec{u}\cdot\vec{v}+\vec{u}\cdot\vec{w}$· $(\lambda\vec{u})\cdot\vec{v}$<wbr>${}=\lambda(\vec{u}\cdot\vec{v})$· $\vec{u}\cdot\vec{u}$<wbr>${}=\|\vec{u}\|^2\ge 0$ με ισότητα μόνο όταν $\vec{u}=\vec{0}$· και ο γεωμετρικός τύπος $\vec{u}\cdot\vec{v}$<wbr>${}=\|\vec{u}\|\,\|\vec{v}\|\cos\theta$, όπου $\theta$ η γωνία των $\vec{u},\vec{v}$.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%93%CE%B9%CE%B1%20%24%5Cvec%7Bu%7D%2C%5Cvec%7Bv%7D%2C%5Cvec%7Bw%7D%5Cin%5Cmathbb%7BR%7D%5En%24%20%CE%BA%CE%B1%CE%B9%20%24%5Clambda%5Cin%5Cmathbb%7BR%7D%24%3A%20%24%5Cvec%7Bu%7D%5Ccdot%5Cvec%7Bv%7D%3D%5Cvec%7Bv%7D%5Ccdot%5Cvec%7Bu%7D%24%C2%B7%20%24%5Cvec%7Bu%7D%5Ccdot%28%5Cvec%7Bv%7D%2B%5Cvec%7Bw%7D%29%3D%5Cvec%7Bu%7D%5Ccdot%5Cvec%7Bv%7D%2B%5Cvec%7Bu%7D%5Ccdot%5Cvec%7Bw%7D%24%C2%B7%20%24%28%5Clambda%5Cvec%7Bu%7D%29%5Ccdot%5Cvec%7Bv%7D%3D%5Clambda%28%5Cvec%7Bu%7D%5Ccdot%5Cvec%7Bv%7D%29%24%C2%B7%20%24%5Cvec%7Bu%7D%5Ccdot%5Cvec%7Bu%7D%3D%5C%7C%5Cvec%7Bu%7D%5C%7C%5E2%5Cge%200%24%20%CE%BC%CE%B5%20%CE%B9%CF%83%CF%8C%CF%84%CE%B7%CF%84%CE%B1%20%CE%BC%CF%8C%CE%BD%CE%BF%20%CF%8C%CF%84%CE%B1%CE%BD%20%24%5Cvec%7Bu%7D%3D%5Cvec%7B0%7D%24%C2%B7%20%CE%BA%CE%B1%CE%B9%20%CE%BF%20%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CF%8C%CF%82%20%CF%84%CF%8D%CF%80%CE%BF%CF%82%20%24%5Cvec%7Bu%7D%5Ccdot%5Cvec%7Bv%7D%3D%5C%7C%5Cvec%7Bu%7D%5C%7C%5C%2C%5C%7C%5Cvec%7Bv%7D%5C%7C%5Ccos%5Ctheta%24%2C%20%CF%8C%CF%80%CE%BF%CF%85%20%24%5Ctheta%24%20%CE%B7%20%CE%B3%CF%89%CE%BD%CE%AF%CE%B1%20%CF%84%CF%89%CE%BD%20%24%5Cvec%7Bu%7D%2C%5Cvec%7Bv%7D%24.">ChatGPT</a>
@@ -27,6 +93,103 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Για $\vec{u},\vec{v},\vec{w}\in\mathbb{R}^n$ και $\lambda\in\mathbb{R}$: $\vec{u}\cdot\vec{v}=\vec{v}\cdot\vec{u}$· $\vec{u}\cdot(\vec{v}+\vec{w})=\vec{u}\cdot\vec{v}+\vec{u}\cdot\vec{w}$· $(\lambda\vec{u})\cdot\vec{v}=\lambda(\vec{u}\cdot\vec{v})$· $\vec{u}\cdot\vec{u}=\|\vec{u}\|^2\ge 0$ με ισότητα μόνο όταν $\vec{u}=\vec{0}$· και ο γεωμετρικός τύπος $\vec{u}\cdot\vec{v}=\|\vec{u}\|\,\|\vec{v}\|\cos\theta$, όπου $\theta$ η γωνία των $\vec{u},\vec{v}$.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Οι ιδιότητες του εσωτερικού γινομένου αποδείχθηκαν στον Lean 4 χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 22/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. Ένα διάνυσμα του $\mathbb{R}^n$ γράφεται στον Lean ως συνάρτηση <code>Fin n → ℝ</code> (η συντεταγμένη $i$, για $i=0,\dots,n-1$) και το εσωτερικό γινόμενο $\vec u\cdot\vec v=\sum_i u_iv_i$ γράφεται <code>u ⬝ᵥ v</code>.</p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">$\vec{u}\cdot\vec{v}$<wbr>${}=\vec{v}\cdot\vec{u}$</div><pre class="ln"><span class="kw">theorem</span> comm (u v : Fin n → ℝ) : u ⬝ᵥ v = v ⬝ᵥ u</pre></li><li><div class="bk">$\vec{u}\cdot(\vec{v}+\vec{w})$<wbr>${}=\vec{u}\cdot\vec{v}+\vec{u}\cdot\vec{w}$</div><pre class="ln"><span class="kw">theorem</span> add_right (u v w : Fin n → ℝ) : u ⬝ᵥ (v + w) = u ⬝ᵥ v + u ⬝ᵥ w</pre></li><li><div class="bk">$(\lambda\vec{u})\cdot\vec{v}$<wbr>${}=\lambda(\vec{u}\cdot\vec{v})$</div><pre class="ln"><span class="kw">theorem</span> smul_left (c : ℝ) (u v : Fin n → ℝ) : (c • u) ⬝ᵥ v = c * (u ⬝ᵥ v)</pre></li><li><div class="bk">$\vec{u}\cdot\vec{u}\ge 0$</div><pre class="ln"><span class="kw">theorem</span> self_nonneg (u : Fin n → ℝ) : 0 ≤ u ⬝ᵥ u</pre></li><li><div class="bk">$\vec{u}\cdot\vec{u}=0$ μόνο όταν $\vec{u}=\vec{0}$</div><pre class="ln"><span class="kw">theorem</span> self_eq_zero (u : Fin n → ℝ) : u ⬝ᵥ u = 0 ↔ u = 0</pre></li><li><div class="bk">$\vec{u}\cdot\vec{u}=\|\vec{u}\|^2$</div><pre class="ln"><span class="kw">theorem</span> self_eq_norm_sq (u : EuclideanSpace ℝ (Fin n)) : ⟪u, u⟫_ℝ = ‖u‖ ^ 2</pre></li><li><div class="bk">$\vec{u}\cdot\vec{v}$<wbr>${}=\|\vec{u}\|\,\|\vec{v}\|\cos\theta$</div><pre class="ln"><span class="kw">theorem</span> geometric (u v : EuclideanSpace ℝ (Fin n)) :
+    ⟪u, v⟫_ℝ = ‖u‖ * ‖v‖ * Real.cos (InnerProductGeometry.angle u v)</pre></li></ul>
+<p class="note">Το <code>•</code> είναι ο πολλαπλασιασμός με αριθμό (το $\lambda$ λέγεται εδώ <code>c</code>). Για το μέτρο και τη γωνία χρησιμοποιούμε τον <code>EuclideanSpace ℝ (Fin n)</code>, δηλαδή τον $\mathbb{R}^n$ με την ευκλείδεια νόρμα· εκεί το εσωτερικό γινόμενο γράφεται <code>⟪u, v⟫_ℝ</code> και είναι το ίδιο άθροισμα $\sum_i u_iv_i$. Στη Mathlib η γωνία $\theta$ ορίζεται από το εσωτερικό γινόμενο (μέσω του $\arccos$), όπως και στο βιβλίο, οπότε ο γεωμετρικός τύπος είναι σχεδόν ο ορισμός.</p>
+<h2>2. Βήμα προς βήμα: η αντιμεταθετική ιδιότητα</h2>
+<p class="note">Στο βιβλίο: $\vec u\cdot\vec v$<wbr>${}=\sum_i u_iv_i$<wbr>${}=\sum_i v_iu_i$<wbr>${}=\vec v\cdot\vec u$, αφού ο πολλαπλασιασμός πραγματικών είναι αντιμεταθετικός. Στον Lean:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>n : ℕ
+u v : Fin n → ℝ
+⊢ u ⬝ᵥ v = v ⬝ᵥ u</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Μετά από κάθε βήμα δείχνουμε μόνο ό,τι άλλαξε.</p>
+<ol class="steps"><li><pre class="ln"><span class="tc">unfold</span> dotProduct</pre><p>Ανοίγουμε τον ορισμό: το εσωτερικό γινόμενο είναι το άθροισμα $\sum_i u_iv_i$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ ∑ i, u i * v i = ∑ i, v i * u i</pre></div></li><li><pre class="ln"><span class="tc">apply</span> Finset.sum_congr rfl</pre><p>Δύο αθροίσματα πάνω στους ίδιους δείκτες είναι ίσα αν οι όροι τους είναι ίσοι ένας προς έναν (<code>Finset.sum_congr</code>).</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ ∀ x ∈ Finset.univ, u x * v x = v x * u x</pre></div></li><li><pre class="ln"><span class="tc">intro</span> i _</pre><p>Παίρνουμε έναν τυχαίο δείκτη $i$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>i : Fin n
+a✝ : i ∈ Finset.univ
+⊢ u i * v i = v i * u i</pre></div></li><li><pre class="ln"><span class="tc">exact</span> mul_comm (u i) (v i)</pre><p>Για αυτόν, $u_iv_i=v_iu_i$ είναι η αντιμεταθετική ιδιότητα του πολλαπλασιασμού (<code>mul_comm</code>).</p><div class="goal done"><span>✓ </span>Καμία εκκρεμότητα: η απόδειξη ολοκληρώθηκε.</div></li></ol>
+<h2>3. Δοκίμασε εσύ: η επιμεριστική ιδιότητα</h2>
+<div class="ex"><p>Απόδειξε ότι $\vec{u}\cdot(\vec{v}+\vec{w})$<wbr>${}=\vec{u}\cdot\vec{v}+\vec{u}\cdot\vec{w}$. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%200%20%C2%B7%20%CE%99%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B5%CF%82%20%CE%95%CF%83%CF%89%CF%84%CE%B5%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%93%CE%B9%CE%BD%CE%BF%CE%BC%CE%AD%CE%BD%CE%BF%CF%85%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%860.EsotGinomeno%0Aopen%20scoped%20InnerProductSpace%0A%0Avariable%20%7Bn%20%3A%20%E2%84%95%7D%0A%0Atheorem%20comm%20%28u%20v%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20u%20%E2%AC%9D%E1%B5%A5%20v%20%3D%20v%20%E2%AC%9D%E1%B5%A5%20u%20%3A%3D%20by%0A%20%20unfold%20dotProduct%0A%20%20apply%20Finset.sum_congr%20rfl%0A%20%20intro%20i%20_%0A%20%20exact%20mul_comm%20%28u%20i%29%20%28v%20i%29%0A%0Atheorem%20add_right%20%28u%20v%20w%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20u%20%E2%AC%9D%E1%B5%A5%20%28v%20%2B%20w%29%20%3D%20u%20%E2%AC%9D%E1%B5%A5%20v%20%2B%20u%20%E2%AC%9D%E1%B5%A5%20w%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%B1%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B7%CF%83%CE%B5%20%CF%84%CE%BF%20sorry%20%CE%BC%CE%B5%20%CF%84%CE%B7%20%CE%B4%CE%B9%CE%BA%CE%AE%20%CF%83%CE%BF%CF%85%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7.%0A%20%20sorry%0A%0Atheorem%20smul_left%20%28c%20%3A%20%E2%84%9D%29%20%28u%20v%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20%28c%20%E2%80%A2%20u%29%20%E2%AC%9D%E1%B5%A5%20v%20%3D%20c%20*%20%28u%20%E2%AC%9D%E1%B5%A5%20v%29%20%3A%3D%20by%0A%20%20simp%20only%20%5BdotProduct%2C%20Pi.smul_apply%2C%20smul_eq_mul%2C%20Finset.mul_sum%2C%20mul_assoc%5D%0A%0Atheorem%20self_nonneg%20%28u%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%200%20%E2%89%A4%20u%20%E2%AC%9D%E1%B5%A5%20u%20%3A%3D%20by%0A%20%20unfold%20dotProduct%0A%20%20exact%20Finset.sum_nonneg%20%28fun%20i%20_%20%3D%3E%20mul_self_nonneg%20%28u%20i%29%29%0A%0Atheorem%20self_eq_zero%20%28u%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20u%20%E2%AC%9D%E1%B5%A5%20u%20%3D%200%20%E2%86%94%20u%20%3D%200%20%3A%3D%20dotProduct_self_eq_zero%0A%0Atheorem%20self_eq_norm_sq%20%28u%20%3A%20EuclideanSpace%20%E2%84%9D%20%28Fin%20n%29%29%20%3A%20%E2%9F%AAu%2C%20u%E2%9F%AB_%E2%84%9D%20%3D%20%E2%80%96u%E2%80%96%20%5E%202%20%3A%3D%0A%20%20real_inner_self_eq_norm_sq%20u%0A%0Atheorem%20geometric%20%28u%20v%20%3A%20EuclideanSpace%20%E2%84%9D%20%28Fin%20n%29%29%20%3A%0A%20%20%20%20%E2%9F%AAu%2C%20v%E2%9F%AB_%E2%84%9D%20%3D%20%E2%80%96u%E2%80%96%20*%20%E2%80%96v%E2%80%96%20*%20Real.cos%20%28InnerProductGeometry.angle%20u%20v%29%20%3A%3D%20by%0A%20%20rw%20%5B%E2%86%90%20InnerProductGeometry.cos_angle_mul_norm_mul_norm%20u%20v%5D%0A%20%20ring%0A%0Aend%20%CE%9A%CE%B5%CF%860.EsotGinomeno%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Δοκίμασε <code>simp only [dotProduct, Pi.add_apply, mul_add, Finset.sum_add_distrib]</code>: ανοίγει τον ορισμό, γράφει $(v+w)_i=v_i+w_i$, εφαρμόζει την επιμεριστική $u_i(v_i+w_i)=u_iv_i+u_iw_i$ και σπάει το άθροισμα σε δύο.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> add_right (u v w : Fin n → ℝ) : u ⬝ᵥ (v + w) = u ⬝ᵥ v + u ⬝ᵥ w := <span class="kw">by</span>
+  <span class="tc">simp</span> only [dotProduct, Pi.add_apply, mul_add, Finset.sum_add_distrib]</pre></div></details>
+</div>
+<h2>4. Στη Mathlib</h2>
+<p class="note">Τρεις ιδιότητες τις πήραμε έτοιμες:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=dotProduct_self_eq_zero#doc" target="_blank" rel="noopener"><code>dotProduct_self_eq_zero</code></a>: $\vec u\cdot\vec u=0$ ακριβώς όταν $\vec u=\vec 0$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=real_inner_self_eq_norm_sq#doc" target="_blank" rel="noopener"><code>real_inner_self_eq_norm_sq</code></a>: $\langle u,u\rangle=\|u\|^2$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=InnerProductGeometry.cos_angle_mul_norm_mul_norm#doc" target="_blank" rel="noopener"><code>InnerProductGeometry.cos_angle_mul_norm_mul_norm</code></a>: $\cos\theta\,\|u\|\,\|v\|$<wbr>${}=\langle u,v\rangle$.</li></ul>
+<h2>5. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (39 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 0 · Ιδιότητες Εσωτερικού Γινομένου · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (22/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ0.EsotGinomeno
+<span class="kw">open</span> <span class="kw">scoped</span> InnerProductSpace
+
+<span class="kw">variable</span> {n : ℕ}
+
+<span class="kw">theorem</span> comm (u v : Fin n → ℝ) : u ⬝ᵥ v = v ⬝ᵥ u := <span class="kw">by</span>
+  <span class="tc">unfold</span> dotProduct
+  <span class="tc">apply</span> Finset.sum_congr rfl
+  <span class="tc">intro</span> i _
+  <span class="tc">exact</span> mul_comm (u i) (v i)
+
+<span class="kw">theorem</span> add_right (u v w : Fin n → ℝ) : u ⬝ᵥ (v + w) = u ⬝ᵥ v + u ⬝ᵥ w := <span class="kw">by</span>
+  <span class="tc">simp</span> only [dotProduct, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+
+<span class="kw">theorem</span> smul_left (c : ℝ) (u v : Fin n → ℝ) : (c • u) ⬝ᵥ v = c * (u ⬝ᵥ v) := <span class="kw">by</span>
+  <span class="tc">simp</span> only [dotProduct, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
+
+<span class="kw">theorem</span> self_nonneg (u : Fin n → ℝ) : 0 ≤ u ⬝ᵥ u := <span class="kw">by</span>
+  <span class="tc">unfold</span> dotProduct
+  <span class="tc">exact</span> Finset.sum_nonneg (<span class="kw">fun</span> i _ =&gt; mul_self_nonneg (u i))
+
+<span class="kw">theorem</span> self_eq_zero (u : Fin n → ℝ) : u ⬝ᵥ u = 0 ↔ u = 0 := dotProduct_self_eq_zero
+
+<span class="kw">theorem</span> self_eq_norm_sq (u : EuclideanSpace ℝ (Fin n)) : ⟪u, u⟫_ℝ = ‖u‖ ^ 2 :=
+  real_inner_self_eq_norm_sq u
+
+<span class="kw">theorem</span> geometric (u v : EuclideanSpace ℝ (Fin n)) :
+    ⟪u, v⟫_ℝ = ‖u‖ * ‖v‖ * Real.cos (InnerProductGeometry.angle u v) := <span class="kw">by</span>
+  <span class="tc">rw</span> [← InnerProductGeometry.cos_angle_mul_norm_mul_norm u v]
+  <span class="tc">ring</span>
+
+<span class="kw">end</span> Κεφ0.EsotGinomeno
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%200%20%C2%B7%20%CE%99%CE%B4%CE%B9%CF%8C%CF%84%CE%B7%CF%84%CE%B5%CF%82%20%CE%95%CF%83%CF%89%CF%84%CE%B5%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%93%CE%B9%CE%BD%CE%BF%CE%BC%CE%AD%CE%BD%CE%BF%CF%85%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%860.EsotGinomeno%0Aopen%20scoped%20InnerProductSpace%0A%0Avariable%20%7Bn%20%3A%20%E2%84%95%7D%0A%0Atheorem%20comm%20%28u%20v%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20u%20%E2%AC%9D%E1%B5%A5%20v%20%3D%20v%20%E2%AC%9D%E1%B5%A5%20u%20%3A%3D%20by%0A%20%20unfold%20dotProduct%0A%20%20apply%20Finset.sum_congr%20rfl%0A%20%20intro%20i%20_%0A%20%20exact%20mul_comm%20%28u%20i%29%20%28v%20i%29%0A%0Atheorem%20add_right%20%28u%20v%20w%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20u%20%E2%AC%9D%E1%B5%A5%20%28v%20%2B%20w%29%20%3D%20u%20%E2%AC%9D%E1%B5%A5%20v%20%2B%20u%20%E2%AC%9D%E1%B5%A5%20w%20%3A%3D%20by%0A%20%20simp%20only%20%5BdotProduct%2C%20Pi.add_apply%2C%20mul_add%2C%20Finset.sum_add_distrib%5D%0A%0Atheorem%20smul_left%20%28c%20%3A%20%E2%84%9D%29%20%28u%20v%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20%28c%20%E2%80%A2%20u%29%20%E2%AC%9D%E1%B5%A5%20v%20%3D%20c%20*%20%28u%20%E2%AC%9D%E1%B5%A5%20v%29%20%3A%3D%20by%0A%20%20simp%20only%20%5BdotProduct%2C%20Pi.smul_apply%2C%20smul_eq_mul%2C%20Finset.mul_sum%2C%20mul_assoc%5D%0A%0Atheorem%20self_nonneg%20%28u%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%200%20%E2%89%A4%20u%20%E2%AC%9D%E1%B5%A5%20u%20%3A%3D%20by%0A%20%20unfold%20dotProduct%0A%20%20exact%20Finset.sum_nonneg%20%28fun%20i%20_%20%3D%3E%20mul_self_nonneg%20%28u%20i%29%29%0A%0Atheorem%20self_eq_zero%20%28u%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%3A%20u%20%E2%AC%9D%E1%B5%A5%20u%20%3D%200%20%E2%86%94%20u%20%3D%200%20%3A%3D%20dotProduct_self_eq_zero%0A%0Atheorem%20self_eq_norm_sq%20%28u%20%3A%20EuclideanSpace%20%E2%84%9D%20%28Fin%20n%29%29%20%3A%20%E2%9F%AAu%2C%20u%E2%9F%AB_%E2%84%9D%20%3D%20%E2%80%96u%E2%80%96%20%5E%202%20%3A%3D%0A%20%20real_inner_self_eq_norm_sq%20u%0A%0Atheorem%20geometric%20%28u%20v%20%3A%20EuclideanSpace%20%E2%84%9D%20%28Fin%20n%29%29%20%3A%0A%20%20%20%20%E2%9F%AAu%2C%20v%E2%9F%AB_%E2%84%9D%20%3D%20%E2%80%96u%E2%80%96%20*%20%E2%80%96v%E2%80%96%20*%20Real.cos%20%28InnerProductGeometry.angle%20u%20v%29%20%3A%3D%20by%0A%20%20rw%20%5B%E2%86%90%20InnerProductGeometry.cos_angle_mul_norm_mul_norm%20u%20v%5D%0A%20%20ring%0A%0Aend%20%CE%9A%CE%B5%CF%860.EsotGinomeno%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Axler, S. (2024). <em>Linear Algebra Done Right</em> (4th ed.). Springer.</li><li>Hoffman, K., &amp; Kunze, R. (1971). <em>Linear Algebra</em> (2nd ed.). Prentice-Hall.</li><li>Strang, G. (2016). <em>Introduction to Linear Algebra</em> (5th ed.). Wellesley-Cambridge Press.</li><li>Βάρσος, Δ. Α., Δεριζιώτης, Δ. Ι., Μαλιάκας, Μ. Π., Παπασταυρίδης, Σ. Γ., Ράπτης, Ε., &amp; Ταλέλλη, Ο. Π. (2003). <em>Εισαγωγή στη Γραμμική Άλγεβρα</em> (Τόμ. Α΄). Εκδόσεις Σοφία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>

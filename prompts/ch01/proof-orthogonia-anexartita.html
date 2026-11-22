@@ -2,22 +2,88 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Ορθογώνια Σύνολα είναι Γραμμικώς Ανεξάρτητα</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
+<p class="sub">Κεφάλαιο 1 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
 <div class="stmt"><span class="lbl">Εκφώνηση</span>Κάθε σύνολο μη μηδενικών, ανά δύο ορθογώνιων διανυσμάτων είναι γραμμικώς ανεξάρτητο.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%9A%CE%AC%CE%B8%CE%B5%20%CF%83%CF%8D%CE%BD%CE%BF%CE%BB%CE%BF%20%CE%BC%CE%B7%20%CE%BC%CE%B7%CE%B4%CE%B5%CE%BD%CE%B9%CE%BA%CF%8E%CE%BD%2C%20%CE%B1%CE%BD%CE%AC%20%CE%B4%CF%8D%CE%BF%20%CE%BF%CF%81%CE%B8%CE%BF%CE%B3%CF%8E%CE%BD%CE%B9%CF%89%CE%BD%20%CE%B4%CE%B9%CE%B1%CE%BD%CF%85%CF%83%CE%BC%CE%AC%CF%84%CF%89%CE%BD%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8E%CF%82%20%CE%B1%CE%BD%CE%B5%CE%BE%CE%AC%CF%81%CF%84%CE%B7%CF%84%CE%BF.">ChatGPT</a>
@@ -27,6 +93,123 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Κάθε σύνολο μη μηδενικών, ανά δύο ορθογώνιων διανυσμάτων είναι γραμμικώς ανεξάρτητο.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Το θεώρημα αποδείχθηκε στον Lean 4 χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 22/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Μη μηδενικά, ανά δύο ορθογώνια διανύσματα είναι γραμμικώς ανεξάρτητα</div><pre class="ln"><span class="kw">theorem</span> independent {k : ℕ} (v : Fin k → V) (hz : ∀ i, v i ≠ 0)
+    (ho : ∀ i j, i ≠ j → ⟪v i, v j⟫_ℝ = 0) : LinearIndependent ℝ v</pre></li><li><div class="bk">Ειδικά, τα ορθοκανονικά διανύσματα είναι γραμμικώς ανεξάρτητα</div><pre class="ln"><span class="kw">theorem</span> orthonormal_independent {k : ℕ} (v : Fin k → V) (hv : Orthonormal ℝ v) :
+    LinearIndependent ℝ v</pre></li></ul>
+<p class="note">Τα διανύσματα είναι μια οικογένεια <code>v : Fin k → V</code> σε χώρο <code>V</code> με εσωτερικό γινόμενο. Η υπόθεση <code>hz</code> λέει ότι κανένα δεν είναι μηδενικό και η <code>ho</code> ότι $\langle v_i,v_j\rangle=0$ για $i\neq j$. Το <code>Orthonormal ℝ v</code> σημαίνει ότι έχουν μήκος $1$ και είναι ανά δύο ορθογώνια.</p>
+<h2>2. Βήμα προς βήμα: μη μηδενικά ορθογώνια διανύσματα είναι ανεξάρτητα</h2>
+<p class="note">Η απόδειξη του βιβλίου: αν $\sum_i c_iv_i=0$, παίρνουμε εσωτερικό γινόμενο με το $v_j$ και όλοι οι όροι εκτός από έναν μηδενίζονται. Ξεκινάμε από τον στόχο:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>V : Type u_1
+inst✝¹ : NormedAddCommGroup V
+inst✝ : InnerProductSpace ℝ V
+k : ℕ
+v : Fin k → V
+hz : ∀ (i : Fin k), v i ≠ 0
+ho : ∀ (i j : Fin k), i ≠ j → ⟪v i, v j⟫_ℝ = 0
+⊢ LinearIndependent ℝ v</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Μετά από κάθε βήμα δείχνουμε μόνο ό,τι άλλαξε.</p>
+<ol class="steps"><li><pre class="ln"><span class="tc">rw</span> [Fintype.linearIndependent_iff]</pre><p>Ο ορισμός της ανεξαρτησίας: αν $\sum_i c_iv_i=0$, τότε όλα τα $c_i$ είναι μηδέν.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ ∀ (g : Fin k → ℝ), ∑ i, g i • v i = 0 → ∀ (i : Fin k), g i = 0</pre></div></li><li><pre class="ln"><span class="tc">intro</span> c hc j</pre><p>Παίρνουμε αριθμούς $c_i$ με $\sum_i c_iv_i=0$ (υπόθεση <code>hc</code>) και θα δείξουμε ότι $c_j=0$ για τυχαίο $j$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>c : Fin k → ℝ
+hc : ∑ i, c i • v i = 0
+j : Fin k
+⊢ c j = 0</pre></div></li><li><pre class="ln"><span class="kw">have</span> h1 : ⟪v j, ∑ i, c i • v i⟫_ℝ = 0 := <span class="kw">by</span> <span class="tc">rw</span> [hc, inner_zero_right]</pre><p>Παίρνουμε εσωτερικό γινόμενο με το $v_j$: $\langle v_j,\sum_i c_iv_i\rangle$<wbr>${}=\langle v_j,\mathbf{0}\rangle$<wbr>${}=0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h1 : ⟪v j, ∑ i, c i • v i⟫_ℝ = 0
+⊢ c j = 0</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [inner_sum] <span class="kw">at</span> h1</pre><p>Το εσωτερικό γινόμενο μοιράζεται στο άθροισμα: $\sum_i\langle v_j,c_iv_i\rangle=0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h1 : ∑ i, ⟪v j, c i • v i⟫_ℝ = 0
+⊢ c j = 0</pre></div></li><li><pre class="ln"><span class="tc">simp</span> only [real_inner_smul_right] <span class="kw">at</span> h1</pre><p>Βγάζουμε τους αριθμούς έξω: $\sum_i c_i\langle v_j,v_i\rangle=0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h1 : ∑ x, c x * ⟪v j, v x⟫_ℝ = 0
+⊢ c j = 0</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [Finset.sum_eq_single j] <span class="kw">at</span> h1</pre><p>Μένει μόνο ο όρος $i=j$: $c_j\langle v_j,v_j\rangle=0$. Το θεώρημα <code>Finset.sum_eq_single</code> αφήνει δύο υποχρεώσεις: ότι οι άλλοι όροι είναι μηδέν (<code>h₀</code>) και μια τεχνική συνθήκη (<code>h₁</code>).</p><div class="goal"><span>Τι μένει να αποδειχθεί (3 στόχοι)</span><pre>h1 : c j * ⟪v j, v j⟫_ℝ = 0
+⊢ c j = 0</pre><i class="case">σκέλος h₀</i><pre>⊢ ∀ b ∈ Finset.univ, b ≠ j → c b * ⟪v j, v b⟫_ℝ = 0</pre><i class="case">σκέλος h₁</i><pre>⊢ j ∉ Finset.univ → c j * ⟪v j, v j⟫_ℝ = 0</pre></div></li><li><pre class="ln">· <span class="kw">have</span> h2 : ⟪v j, v j⟫_ℝ ≠ 0 := inner_self_ne_zero.mpr (hz j)
+  <span class="tc">exact</span> (mul_eq_zero.mp h1).resolve_right h2</pre><p>Επειδή $v_j\neq\mathbf{0}$, ισχύει $\langle v_j,v_j\rangle\neq 0$ (υπόθεση <code>h2</code>). Από $c_j\langle v_j,v_j\rangle=0$ μένει $c_j=0$.</p><div class="goal done"><span>✓ </span>Αυτό το σκέλος ολοκληρώθηκε.</div></li><li><pre class="ln">· <span class="tc">intro</span> i _ hij
+  <span class="tc">rw</span> [ho j i (Ne.symm hij), mul_zero]</pre><p>Οι άλλοι όροι: για $i\neq j$ ισχύει $\langle v_j,v_i\rangle=0$, άρα $c_i\cdot 0=0$.</p><div class="goal done"><span>✓ </span>Αυτό το σκέλος ολοκληρώθηκε.</div></li><li><pre class="ln">· <span class="tc">intro</span> hj
+  <span class="tc">exact</span> <span class="tc">absurd</span> (Finset.mem_univ j) hj</pre><p>Η τεχνική συνθήκη: το $j$ ανήκει στο σύνολο όλων των δεικτών, άρα η υπόθεση ότι δεν ανήκει είναι άτοπη.</p><div class="goal done"><span>✓ </span>Καμία εκκρεμότητα: η απόδειξη ολοκληρώθηκε.</div></li></ol>
+<h2>3. Δοκίμασε εσύ: ορθοκανονικά διανύσματα είναι ανεξάρτητα</h2>
+<div class="ex"><p>Συνέπεια του θεωρήματος: τα ορθοκανονικά διανύσματα έχουν μήκος $1$, άρα δεν είναι μηδενικά. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%201%20%C2%B7%20%CE%9F%CF%81%CE%B8%CE%BF%CE%B3%CF%8E%CE%BD%CE%B9%CE%B1%20%CE%A3%CF%8D%CE%BD%CE%BF%CE%BB%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8E%CF%82%20%CE%91%CE%BD%CE%B5%CE%BE%CE%AC%CF%81%CF%84%CE%B7%CF%84%CE%B1%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%861.OrthogoniaAnexartita%0Aopen%20scoped%20InnerProductSpace%0A%0Avariable%20%7BV%20%3A%20Type*%7D%20%5BNormedAddCommGroup%20V%5D%20%5BInnerProductSpace%20%E2%84%9D%20V%5D%0A%0Atheorem%20independent%20%7Bk%20%3A%20%E2%84%95%7D%20%28v%20%3A%20Fin%20k%20%E2%86%92%20V%29%20%28hz%20%3A%20%E2%88%80%20i%2C%20v%20i%20%E2%89%A0%200%29%0A%20%20%20%20%28ho%20%3A%20%E2%88%80%20i%20j%2C%20i%20%E2%89%A0%20j%20%E2%86%92%20%E2%9F%AAv%20i%2C%20v%20j%E2%9F%AB_%E2%84%9D%20%3D%200%29%20%3A%20LinearIndependent%20%E2%84%9D%20v%20%3A%3D%20by%0A%20%20rw%20%5BFintype.linearIndependent_iff%5D%0A%20%20intro%20c%20hc%20j%0A%20%20have%20h1%20%3A%20%E2%9F%AAv%20j%2C%20%E2%88%91%20i%2C%20c%20i%20%E2%80%A2%20v%20i%E2%9F%AB_%E2%84%9D%20%3D%200%20%3A%3D%20by%20rw%20%5Bhc%2C%20inner_zero_right%5D%0A%20%20rw%20%5Binner_sum%5D%20at%20h1%0A%20%20simp%20only%20%5Breal_inner_smul_right%5D%20at%20h1%0A%20%20rw%20%5BFinset.sum_eq_single%20j%5D%20at%20h1%0A%20%20%C2%B7%20have%20h2%20%3A%20%E2%9F%AAv%20j%2C%20v%20j%E2%9F%AB_%E2%84%9D%20%E2%89%A0%200%20%3A%3D%20inner_self_ne_zero.mpr%20%28hz%20j%29%0A%20%20%20%20exact%20%28mul_eq_zero.mp%20h1%29.resolve_right%20h2%0A%20%20%C2%B7%20intro%20i%20_%20hij%0A%20%20%20%20rw%20%5Bho%20j%20i%20%28Ne.symm%20hij%29%2C%20mul_zero%5D%0A%20%20%C2%B7%20intro%20hj%0A%20%20%20%20exact%20absurd%20%28Finset.mem_univ%20j%29%20hj%0A%0Atheorem%20orthonormal_independent%20%7Bk%20%3A%20%E2%84%95%7D%20%28v%20%3A%20Fin%20k%20%E2%86%92%20V%29%20%28hv%20%3A%20Orthonormal%20%E2%84%9D%20v%29%20%3A%0A%20%20%20%20LinearIndependent%20%E2%84%9D%20v%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%B1%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B7%CF%83%CE%B5%20%CF%84%CE%BF%20sorry%20%CE%BC%CE%B5%20%CF%84%CE%B7%20%CE%B4%CE%B9%CE%BA%CE%AE%20%CF%83%CE%BF%CF%85%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7.%0A%20%20sorry%0A%0Aend%20%CE%9A%CE%B5%CF%861.OrthogoniaAnexartita%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Ξεκίνα με <code>apply independent v</code>. Μένουν δύο στόχοι. Για τον πρώτο: αν <code>v i = 0</code>, το <code>hv.1 i</code>, που λέει $\|v_i\|=1$, γίνεται $0=1$. Για τον δεύτερο: <code>intro i j hij</code> και <code>exact hv.2 hij</code>.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> orthonormal_independent {k : ℕ} (v : Fin k → V) (hv : Orthonormal ℝ v) :
+    LinearIndependent ℝ v := <span class="kw">by</span>
+  <span class="tc">apply</span> independent v
+  · <span class="tc">intro</span> i h
+    <span class="kw">have</span> h1 := hv.1 i
+    <span class="tc">rw</span> [h, norm_zero] <span class="kw">at</span> h1
+    <span class="tc">norm_num</span> <span class="kw">at</span> h1
+  · <span class="tc">intro</span> i j hij
+    <span class="tc">exact</span> hv.2 hij</pre></div></details>
+</div>
+<h2>4. Στη Mathlib</h2>
+<p class="note">Και τα δύο υπάρχουν έτοιμα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=linearIndependent_of_ne_zero_of_inner_eq_zero#doc" target="_blank" rel="noopener"><code>linearIndependent_of_ne_zero_of_inner_eq_zero</code></a>: μη μηδενικά ορθογώνια διανύσματα είναι ανεξάρτητα.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Orthonormal.linearIndependent#doc" target="_blank" rel="noopener"><code>Orthonormal.linearIndependent</code></a>: ορθοκανονικά διανύσματα είναι ανεξάρτητα.</li></ul>
+<h2>5. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (38 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 1 · Ορθογώνια Σύνολα είναι Γραμμικώς Ανεξάρτητα · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (22/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ1.OrthogoniaAnexartita
+<span class="kw">open</span> <span class="kw">scoped</span> InnerProductSpace
+
+<span class="kw">variable</span> {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+
+<span class="kw">theorem</span> independent {k : ℕ} (v : Fin k → V) (hz : ∀ i, v i ≠ 0)
+    (ho : ∀ i j, i ≠ j → ⟪v i, v j⟫_ℝ = 0) : LinearIndependent ℝ v := <span class="kw">by</span>
+  <span class="tc">rw</span> [Fintype.linearIndependent_iff]
+  <span class="tc">intro</span> c hc j
+  <span class="kw">have</span> h1 : ⟪v j, ∑ i, c i • v i⟫_ℝ = 0 := <span class="kw">by</span> <span class="tc">rw</span> [hc, inner_zero_right]
+  <span class="tc">rw</span> [inner_sum] <span class="kw">at</span> h1
+  <span class="tc">simp</span> only [real_inner_smul_right] <span class="kw">at</span> h1
+  <span class="tc">rw</span> [Finset.sum_eq_single j] <span class="kw">at</span> h1
+  · <span class="kw">have</span> h2 : ⟪v j, v j⟫_ℝ ≠ 0 := inner_self_ne_zero.mpr (hz j)
+    <span class="tc">exact</span> (mul_eq_zero.mp h1).resolve_right h2
+  · <span class="tc">intro</span> i _ hij
+    <span class="tc">rw</span> [ho j i (Ne.symm hij), mul_zero]
+  · <span class="tc">intro</span> hj
+    <span class="tc">exact</span> <span class="tc">absurd</span> (Finset.mem_univ j) hj
+
+<span class="kw">theorem</span> orthonormal_independent {k : ℕ} (v : Fin k → V) (hv : Orthonormal ℝ v) :
+    LinearIndependent ℝ v := <span class="kw">by</span>
+  <span class="tc">apply</span> independent v
+  · <span class="tc">intro</span> i h
+    <span class="kw">have</span> h1 := hv.1 i
+    <span class="tc">rw</span> [h, norm_zero] <span class="kw">at</span> h1
+    <span class="tc">norm_num</span> <span class="kw">at</span> h1
+  · <span class="tc">intro</span> i j hij
+    <span class="tc">exact</span> hv.2 hij
+
+<span class="kw">end</span> Κεφ1.OrthogoniaAnexartita
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%201%20%C2%B7%20%CE%9F%CF%81%CE%B8%CE%BF%CE%B3%CF%8E%CE%BD%CE%B9%CE%B1%20%CE%A3%CF%8D%CE%BD%CE%BF%CE%BB%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CF%8E%CF%82%20%CE%91%CE%BD%CE%B5%CE%BE%CE%AC%CF%81%CF%84%CE%B7%CF%84%CE%B1%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%861.OrthogoniaAnexartita%0Aopen%20scoped%20InnerProductSpace%0A%0Avariable%20%7BV%20%3A%20Type*%7D%20%5BNormedAddCommGroup%20V%5D%20%5BInnerProductSpace%20%E2%84%9D%20V%5D%0A%0Atheorem%20independent%20%7Bk%20%3A%20%E2%84%95%7D%20%28v%20%3A%20Fin%20k%20%E2%86%92%20V%29%20%28hz%20%3A%20%E2%88%80%20i%2C%20v%20i%20%E2%89%A0%200%29%0A%20%20%20%20%28ho%20%3A%20%E2%88%80%20i%20j%2C%20i%20%E2%89%A0%20j%20%E2%86%92%20%E2%9F%AAv%20i%2C%20v%20j%E2%9F%AB_%E2%84%9D%20%3D%200%29%20%3A%20LinearIndependent%20%E2%84%9D%20v%20%3A%3D%20by%0A%20%20rw%20%5BFintype.linearIndependent_iff%5D%0A%20%20intro%20c%20hc%20j%0A%20%20have%20h1%20%3A%20%E2%9F%AAv%20j%2C%20%E2%88%91%20i%2C%20c%20i%20%E2%80%A2%20v%20i%E2%9F%AB_%E2%84%9D%20%3D%200%20%3A%3D%20by%20rw%20%5Bhc%2C%20inner_zero_right%5D%0A%20%20rw%20%5Binner_sum%5D%20at%20h1%0A%20%20simp%20only%20%5Breal_inner_smul_right%5D%20at%20h1%0A%20%20rw%20%5BFinset.sum_eq_single%20j%5D%20at%20h1%0A%20%20%C2%B7%20have%20h2%20%3A%20%E2%9F%AAv%20j%2C%20v%20j%E2%9F%AB_%E2%84%9D%20%E2%89%A0%200%20%3A%3D%20inner_self_ne_zero.mpr%20%28hz%20j%29%0A%20%20%20%20exact%20%28mul_eq_zero.mp%20h1%29.resolve_right%20h2%0A%20%20%C2%B7%20intro%20i%20_%20hij%0A%20%20%20%20rw%20%5Bho%20j%20i%20%28Ne.symm%20hij%29%2C%20mul_zero%5D%0A%20%20%C2%B7%20intro%20hj%0A%20%20%20%20exact%20absurd%20%28Finset.mem_univ%20j%29%20hj%0A%0Atheorem%20orthonormal_independent%20%7Bk%20%3A%20%E2%84%95%7D%20%28v%20%3A%20Fin%20k%20%E2%86%92%20V%29%20%28hv%20%3A%20Orthonormal%20%E2%84%9D%20v%29%20%3A%0A%20%20%20%20LinearIndependent%20%E2%84%9D%20v%20%3A%3D%20by%0A%20%20apply%20independent%20v%0A%20%20%C2%B7%20intro%20i%20h%0A%20%20%20%20have%20h1%20%3A%3D%20hv.1%20i%0A%20%20%20%20rw%20%5Bh%2C%20norm_zero%5D%20at%20h1%0A%20%20%20%20norm_num%20at%20h1%0A%20%20%C2%B7%20intro%20i%20j%20hij%0A%20%20%20%20exact%20hv.2%20hij%0A%0Aend%20%CE%9A%CE%B5%CF%861.OrthogoniaAnexartita%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Axler, S. (2024). <em>Linear Algebra Done Right</em> (4th ed.). Springer.</li><li>Hoffman, K., &amp; Kunze, R. (1971). <em>Linear Algebra</em> (2nd ed.). Prentice-Hall.</li><li>Strang, G. (2016). <em>Introduction to Linear Algebra</em> (5th ed.). Wellesley-Cambridge Press.</li><li>Βάρσος, Δ. Α., Δεριζιώτης, Δ. Ι., Μαλιάκας, Μ. Π., Παπασταυρίδης, Σ. Γ., Ράπτης, Ε., &amp; Ταλέλλη, Ο. Π. (2003). <em>Εισαγωγή στη Γραμμική Άλγεβρα</em> (Τόμ. Α΄). Εκδόσεις Σοφία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>

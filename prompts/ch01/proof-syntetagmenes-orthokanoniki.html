@@ -2,22 +2,88 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Συντεταγμένες ως προς Ορθοκανονική Βάση</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
+<p class="sub">Κεφάλαιο 1 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
 <div class="stmt"><span class="lbl">Εκφώνηση</span>Ως προς ορθοκανονική βάση $\{e_1,\dots,e_n\}$, κάθε διάνυσμα γράφεται $v=\sum_i\langle v,e_i\rangle e_i$· οι συντεταγμένες είναι τα εσωτερικά γινόμενα $\langle v,e_i\rangle$.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%A9%CF%82%20%CF%80%CF%81%CE%BF%CF%82%20%CE%BF%CF%81%CE%B8%CE%BF%CE%BA%CE%B1%CE%BD%CE%BF%CE%BD%CE%B9%CE%BA%CE%AE%20%CE%B2%CE%AC%CF%83%CE%B7%20%24%5C%7Be_1%2C%5Cdots%2Ce_n%5C%7D%24%2C%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%B4%CE%B9%CE%AC%CE%BD%CF%85%CF%83%CE%BC%CE%B1%20%CE%B3%CF%81%CE%AC%CF%86%CE%B5%CF%84%CE%B1%CE%B9%20%24v%3D%5Csum_i%5Clangle%20v%2Ce_i%5Crangle%20e_i%24%C2%B7%20%CE%BF%CE%B9%20%CF%83%CF%85%CE%BD%CF%84%CE%B5%CF%84%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B5%CF%82%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%84%CE%B1%20%CE%B5%CF%83%CF%89%CF%84%CE%B5%CF%81%CE%B9%CE%BA%CE%AC%20%CE%B3%CE%B9%CE%BD%CF%8C%CE%BC%CE%B5%CE%BD%CE%B1%20%24%5Clangle%20v%2Ce_i%5Crangle%24.">ChatGPT</a>
@@ -27,6 +93,104 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Ως προς ορθοκανονική βάση $\{e_1,\dots,e_n\}$, κάθε διάνυσμα γράφεται $v=\sum_i\langle v,e_i\rangle e_i$· οι συντεταγμένες είναι τα εσωτερικά γινόμενα $\langle v,e_i\rangle$.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Και οι δύο ισχυρισμοί αποδείχθηκαν στον Lean 4 χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 22/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Κάθε διάνυσμα γράφεται $v=\sum_i\langle v,e_i\rangle e_i$</div><pre class="ln"><span class="kw">theorem</span> expansion {n : ℕ} (b : OrthonormalBasis (Fin n) ℝ V) (v : V) :
+    v = ∑ i, ⟪v, b i⟫_ℝ • b i</pre></li><li><div class="bk">Οι συντεταγμένες είναι τα εσωτερικά γινόμενα: αν $v=\sum_i c_ie_i$, τότε $\langle v,e_j\rangle=c_j$</div><pre class="ln"><span class="kw">theorem</span> coordinate {n : ℕ} (b : OrthonormalBasis (Fin n) ℝ V) (c : Fin n → ℝ) (j : Fin n) :
+    ⟪∑ i, c i • b i, b j⟫_ℝ = c j</pre></li></ul>
+<p class="note">Η ορθοκανονική βάση $\{e_1,\dots,e_n\}$ είναι το <code>b : OrthonormalBasis (Fin n) ℝ V</code> και το $e_i$ γράφεται <code>b i</code>. Τα <code>b.orthonormal.1 j</code>, που λέει $\|e_j\|=1$, και <code>b.orthonormal.2</code>, που λέει $\langle e_i,e_j\rangle=0$ για $i\neq j$, είναι οι δύο ιδιότητες της ορθοκανονικότητας.</p>
+<h2>2. Βήμα προς βήμα: η συντεταγμένη $c_j$ είναι το $\langle v,e_j\rangle$</h2>
+<p class="note">Αν $v=\sum_i c_ie_i$, παίρνουμε εσωτερικό γινόμενο με το $e_j$ και βρίσκουμε $\langle v,e_j\rangle=c_j$. Αυτό δείχνει ότι οι συντεταγμένες είναι τα εσωτερικά γινόμενα. Ξεκινάμε από τον στόχο:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>V : Type u_1
+inst✝¹ : NormedAddCommGroup V
+inst✝ : InnerProductSpace ℝ V
+n : ℕ
+b : OrthonormalBasis (Fin n) ℝ V
+c : Fin n → ℝ
+j : Fin n
+⊢ ⟪∑ i, c i • b i, b j⟫_ℝ = c j</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Μετά από κάθε βήμα δείχνουμε μόνο ό,τι άλλαξε.</p>
+<ol class="steps"><li><pre class="ln"><span class="tc">rw</span> [sum_inner]</pre><p>Το εσωτερικό γινόμενο μοιράζεται στο άθροισμα: $\sum_i\langle c_ie_i,e_j\rangle$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ ∑ i, ⟪c i • b i, b j⟫_ℝ = c j</pre></div></li><li><pre class="ln"><span class="tc">simp</span> only [real_inner_smul_left]</pre><p>Βγάζουμε τους αριθμούς $c_i$ έξω: $\sum_i c_i\langle e_i,e_j\rangle$. Ο Lean ονομάζει εδώ τον δείκτη <code>x</code>.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ ∑ x, c x * ⟪b x, b j⟫_ℝ = c j</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [Finset.sum_eq_single j]</pre><p>Μένει μόνο ο όρος $i=j$, γιατί $\langle e_i,e_j\rangle=0$ για $i\neq j$. Μένουν τρεις στόχοι: ο κύριος $c_j\langle e_j,e_j\rangle=c_j$, η υποχρέωση <code>h₀</code> για τους άλλους όρους και η τεχνική συνθήκη <code>h₁</code>.</p><div class="goal"><span>Τι μένει να αποδειχθεί (3 στόχοι)</span><pre>⊢ c j * ⟪b j, b j⟫_ℝ = c j</pre><i class="case">σκέλος h₀</i><pre>⊢ ∀ b_1 ∈ Finset.univ, b_1 ≠ j → c b_1 * ⟪b b_1, b j⟫_ℝ = 0</pre><i class="case">σκέλος h₁</i><pre>⊢ j ∉ Finset.univ → c j * ⟪b j, b j⟫_ℝ = 0</pre></div></li><li><pre class="ln">· <span class="tc">rw</span> [real_inner_self_eq_norm_sq, b.orthonormal.1 j]</pre><p>Ισχύει $\langle e_j,e_j\rangle=\|e_j\|^2$ και $\|e_j\|=1$, γιατί η βάση είναι ορθοκανονική.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ c j * 1 ^ 2 = c j</pre></div></li><li><pre class="ln"><span class="tc">ring</span></pre><p>Είναι $c_j\cdot 1^2=c_j$.</p><div class="goal done"><span>✓ </span>Αυτό το σκέλος ολοκληρώθηκε.</div></li><li><pre class="ln">· <span class="tc">intro</span> i _ hij
+  <span class="tc">rw</span> [b.orthonormal.2 hij, mul_zero]</pre><p>Για $i\neq j$ ισχύει $\langle e_i,e_j\rangle=0$, άρα ο όρος είναι $0$.</p><div class="goal done"><span>✓ </span>Αυτό το σκέλος ολοκληρώθηκε.</div></li><li><pre class="ln">· <span class="tc">intro</span> hj
+  <span class="tc">exact</span> <span class="tc">absurd</span> (Finset.mem_univ j) hj</pre><p>Η τεχνική συνθήκη: το $j$ είναι ένας από τους δείκτες, άρα η υπόθεση ότι δεν είναι είναι άτοπη.</p><div class="goal done"><span>✓ </span>Καμία εκκρεμότητα: η απόδειξη ολοκληρώθηκε.</div></li></ol>
+<h2>3. Δοκίμασε εσύ: ο τύπος $v=\sum_i\langle v,e_i\rangle e_i$</h2>
+<div class="ex"><p>Δείξε ότι κάθε διάνυσμα γράφεται με συντεταγμένες τα εσωτερικά γινόμενα. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%201%20%C2%B7%20%CE%A3%CF%85%CE%BD%CF%84%CE%B5%CF%84%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B5%CF%82%20%CF%89%CF%82%20%CF%80%CF%81%CE%BF%CF%82%20%CE%9F%CF%81%CE%B8%CE%BF%CE%BA%CE%B1%CE%BD%CE%BF%CE%BD%CE%B9%CE%BA%CE%AE%20%CE%92%CE%AC%CF%83%CE%B7%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%861.Syntetagmenes%0Aopen%20scoped%20InnerProductSpace%0A%0Avariable%20%7BV%20%3A%20Type*%7D%20%5BNormedAddCommGroup%20V%5D%20%5BInnerProductSpace%20%E2%84%9D%20V%5D%0A%0Atheorem%20coordinate%20%7Bn%20%3A%20%E2%84%95%7D%20%28b%20%3A%20OrthonormalBasis%20%28Fin%20n%29%20%E2%84%9D%20V%29%20%28c%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%28j%20%3A%20Fin%20n%29%20%3A%0A%20%20%20%20%E2%9F%AA%E2%88%91%20i%2C%20c%20i%20%E2%80%A2%20b%20i%2C%20b%20j%E2%9F%AB_%E2%84%9D%20%3D%20c%20j%20%3A%3D%20by%0A%20%20rw%20%5Bsum_inner%5D%0A%20%20simp%20only%20%5Breal_inner_smul_left%5D%0A%20%20rw%20%5BFinset.sum_eq_single%20j%5D%0A%20%20%C2%B7%20rw%20%5Breal_inner_self_eq_norm_sq%2C%20b.orthonormal.1%20j%5D%0A%20%20%20%20ring%0A%20%20%C2%B7%20intro%20i%20_%20hij%0A%20%20%20%20rw%20%5Bb.orthonormal.2%20hij%2C%20mul_zero%5D%0A%20%20%C2%B7%20intro%20hj%0A%20%20%20%20exact%20absurd%20%28Finset.mem_univ%20j%29%20hj%0A%0Atheorem%20expansion%20%7Bn%20%3A%20%E2%84%95%7D%20%28b%20%3A%20OrthonormalBasis%20%28Fin%20n%29%20%E2%84%9D%20V%29%20%28v%20%3A%20V%29%20%3A%0A%20%20%20%20v%20%3D%20%E2%88%91%20i%2C%20%E2%9F%AAv%2C%20b%20i%E2%9F%AB_%E2%84%9D%20%E2%80%A2%20b%20i%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%B1%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B7%CF%83%CE%B5%20%CF%84%CE%BF%20sorry%20%CE%BC%CE%B5%20%CF%84%CE%B7%20%CE%B4%CE%B9%CE%BA%CE%AE%20%CF%83%CE%BF%CF%85%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7.%0A%20%20sorry%0A%0Aend%20%CE%9A%CE%B5%CF%861.Syntetagmenes%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Η Mathlib έχει τον τύπο με τη σειρά $\langle e_i,v\rangle$, στο <code>b.sum_repr' v</code>. Γράψε <code>conv_lhs => rw [← b.sum_repr' v]</code>, μετά <code>refine Finset.sum_congr rfl (fun i _ => ?_)</code> και τέλος <code>rw [real_inner_comm]</code> για τη συμμετρία του εσωτερικού γινομένου.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> expansion {n : ℕ} (b : OrthonormalBasis (Fin n) ℝ V) (v : V) :
+    v = ∑ i, ⟪v, b i⟫_ℝ • b i := <span class="kw">by</span>
+  <span class="tc">conv_lhs</span> =&gt; <span class="tc">rw</span> [← b.sum_repr&#x27; v]
+  <span class="tc">refine</span> Finset.sum_congr rfl (<span class="kw">fun</span> i _ =&gt; ?_)
+  <span class="tc">rw</span> [real_inner_comm]</pre></div></details>
+</div>
+<h2>4. Στη Mathlib</h2>
+<p class="note">Χρησιμοποιήσαμε τα εξής θεωρήματα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=OrthonormalBasis.sum_repr%27#doc" target="_blank" rel="noopener"><code>OrthonormalBasis.sum_repr&#x27;</code></a>: ο τύπος $v=\sum_i\langle e_i,v\rangle e_i$.</li></ul>
+<h2>5. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (31 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 1 · Συντεταγμένες ως προς Ορθοκανονική Βάση · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (22/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ1.Syntetagmenes
+<span class="kw">open</span> <span class="kw">scoped</span> InnerProductSpace
+
+<span class="kw">variable</span> {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+
+<span class="kw">theorem</span> coordinate {n : ℕ} (b : OrthonormalBasis (Fin n) ℝ V) (c : Fin n → ℝ) (j : Fin n) :
+    ⟪∑ i, c i • b i, b j⟫_ℝ = c j := <span class="kw">by</span>
+  <span class="tc">rw</span> [sum_inner]
+  <span class="tc">simp</span> only [real_inner_smul_left]
+  <span class="tc">rw</span> [Finset.sum_eq_single j]
+  · <span class="tc">rw</span> [real_inner_self_eq_norm_sq, b.orthonormal.1 j]
+    <span class="tc">ring</span>
+  · <span class="tc">intro</span> i _ hij
+    <span class="tc">rw</span> [b.orthonormal.2 hij, mul_zero]
+  · <span class="tc">intro</span> hj
+    <span class="tc">exact</span> <span class="tc">absurd</span> (Finset.mem_univ j) hj
+
+<span class="kw">theorem</span> expansion {n : ℕ} (b : OrthonormalBasis (Fin n) ℝ V) (v : V) :
+    v = ∑ i, ⟪v, b i⟫_ℝ • b i := <span class="kw">by</span>
+  <span class="tc">conv_lhs</span> =&gt; <span class="tc">rw</span> [← b.sum_repr&#x27; v]
+  <span class="tc">refine</span> Finset.sum_congr rfl (<span class="kw">fun</span> i _ =&gt; ?_)
+  <span class="tc">rw</span> [real_inner_comm]
+
+<span class="kw">end</span> Κεφ1.Syntetagmenes
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%201%20%C2%B7%20%CE%A3%CF%85%CE%BD%CF%84%CE%B5%CF%84%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B5%CF%82%20%CF%89%CF%82%20%CF%80%CF%81%CE%BF%CF%82%20%CE%9F%CF%81%CE%B8%CE%BF%CE%BA%CE%B1%CE%BD%CE%BF%CE%BD%CE%B9%CE%BA%CE%AE%20%CE%92%CE%AC%CF%83%CE%B7%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%861.Syntetagmenes%0Aopen%20scoped%20InnerProductSpace%0A%0Avariable%20%7BV%20%3A%20Type*%7D%20%5BNormedAddCommGroup%20V%5D%20%5BInnerProductSpace%20%E2%84%9D%20V%5D%0A%0Atheorem%20coordinate%20%7Bn%20%3A%20%E2%84%95%7D%20%28b%20%3A%20OrthonormalBasis%20%28Fin%20n%29%20%E2%84%9D%20V%29%20%28c%20%3A%20Fin%20n%20%E2%86%92%20%E2%84%9D%29%20%28j%20%3A%20Fin%20n%29%20%3A%0A%20%20%20%20%E2%9F%AA%E2%88%91%20i%2C%20c%20i%20%E2%80%A2%20b%20i%2C%20b%20j%E2%9F%AB_%E2%84%9D%20%3D%20c%20j%20%3A%3D%20by%0A%20%20rw%20%5Bsum_inner%5D%0A%20%20simp%20only%20%5Breal_inner_smul_left%5D%0A%20%20rw%20%5BFinset.sum_eq_single%20j%5D%0A%20%20%C2%B7%20rw%20%5Breal_inner_self_eq_norm_sq%2C%20b.orthonormal.1%20j%5D%0A%20%20%20%20ring%0A%20%20%C2%B7%20intro%20i%20_%20hij%0A%20%20%20%20rw%20%5Bb.orthonormal.2%20hij%2C%20mul_zero%5D%0A%20%20%C2%B7%20intro%20hj%0A%20%20%20%20exact%20absurd%20%28Finset.mem_univ%20j%29%20hj%0A%0Atheorem%20expansion%20%7Bn%20%3A%20%E2%84%95%7D%20%28b%20%3A%20OrthonormalBasis%20%28Fin%20n%29%20%E2%84%9D%20V%29%20%28v%20%3A%20V%29%20%3A%0A%20%20%20%20v%20%3D%20%E2%88%91%20i%2C%20%E2%9F%AAv%2C%20b%20i%E2%9F%AB_%E2%84%9D%20%E2%80%A2%20b%20i%20%3A%3D%20by%0A%20%20conv_lhs%20%3D%3E%20rw%20%5B%E2%86%90%20b.sum_repr'%20v%5D%0A%20%20refine%20Finset.sum_congr%20rfl%20%28fun%20i%20_%20%3D%3E%20%3F_%29%0A%20%20rw%20%5Breal_inner_comm%5D%0A%0Aend%20%CE%9A%CE%B5%CF%861.Syntetagmenes%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Axler, S. (2024). <em>Linear Algebra Done Right</em> (4th ed.). Springer.</li><li>Hoffman, K., &amp; Kunze, R. (1971). <em>Linear Algebra</em> (2nd ed.). Prentice-Hall.</li><li>Strang, G. (2016). <em>Introduction to Linear Algebra</em> (5th ed.). Wellesley-Cambridge Press.</li><li>Βάρσος, Δ. Α., Δεριζιώτης, Δ. Ι., Μαλιάκας, Μ. Π., Παπασταυρίδης, Σ. Γ., Ράπτης, Ε., &amp; Ταλέλλη, Ο. Π. (2003). <em>Εισαγωγή στη Γραμμική Άλγεβρα</em> (Τόμ. Α΄). Εκδόσεις Σοφία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>
