@@ -2,22 +2,88 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Κριτήριο Σύγκρισης</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
+<p class="sub">Κεφάλαιο 19 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
 <div class="stmt"><span class="lbl">Εκφώνηση</span>Έστω $0\le a_n\le b_n$ για $n\ge N$: αν η $\sum b_n$ συγκλίνει τότε και η $\sum a_n$· αν η $\sum a_n$ αποκλίνει τότε και η $\sum b_n$.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%88%CF%83%CF%84%CF%89%20%240%5Cle%20a_n%5Cle%20b_n%24%20%CE%B3%CE%B9%CE%B1%20%24n%5Cge%20N%24%3A%20%CE%B1%CE%BD%20%CE%B7%20%24%5Csum%20b_n%24%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%20%CF%84%CF%8C%CF%84%CE%B5%20%CE%BA%CE%B1%CE%B9%20%CE%B7%20%24%5Csum%20a_n%24%C2%B7%20%CE%B1%CE%BD%20%CE%B7%20%24%5Csum%20a_n%24%20%CE%B1%CF%80%CE%BF%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%20%CF%84%CF%8C%CF%84%CE%B5%20%CE%BA%CE%B1%CE%B9%20%CE%B7%20%24%5Csum%20b_n%24.">ChatGPT</a>
@@ -27,6 +93,115 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Έστω $0\le a_n\le b_n$ για $n\ge N$: αν η $\sum b_n$ συγκλίνει τότε και η $\sum a_n$· αν η $\sum a_n$ αποκλίνει τότε και η $\sum b_n$.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Το κριτήριο, η εκδοχή του για $n\ge N$ και η μορφή της απόκλισης αποδείχθηκαν στον Lean 4 χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 23/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Αν $0\le a_n\le b_n$ για κάθε $n$ και η $\sum b_n$ συγκλίνει, τότε συγκλίνει και η $\sum a_n$</div><pre class="ln"><span class="kw">theorem</span> comparison (a b : ℕ → ℝ) (ha : ∀ n, 0 ≤ a n) (hab : ∀ n, a n ≤ b n)
+    (hb : Summable b) : Summable a</pre></li><li><div class="bk">Το ίδιο, όταν το $0\le a_n\le b_n$ ισχύει μόνο για $n\ge N$</div><pre class="ln"><span class="kw">theorem</span> comparison_from (a b : ℕ → ℝ) (N : ℕ) (ha : ∀ n ≥ N, 0 ≤ a n)
+    (hab : ∀ n ≥ N, a n ≤ b n) (hb : Summable b) : Summable a</pre></li><li><div class="bk">Αν η $\sum a_n$ αποκλίνει, τότε αποκλίνει και η $\sum b_n$</div><pre class="ln"><span class="kw">theorem</span> comparison_diverges (a b : ℕ → ℝ) (ha : ∀ n, 0 ≤ a n) (hab : ∀ n, a n ≤ b n)
+    (hdiv : ¬ Summable a) : ¬ Summable b</pre></li></ul>
+<p class="note">Η σύγκλιση μιας σειράς γράφεται <code>Summable</code>. Για πραγματικούς αριθμούς αυτή η έννοια της Mathlib σημαίνει απόλυτη σύγκλιση, αλλά για σειρές με μη αρνητικούς όρους, όπως εδώ, είναι ακριβώς η σύγκλιση του βιβλίου· η απόκλιση γράφεται <code>¬ Summable</code>. Το άθροισμα της σειράς $\sum_{n=0}^{\infty}b_n$ γράφεται <code>∑' n, b n</code> και η αρίθμηση των όρων ξεκινά από το $0$. Η εκδοχή με $n\ge N$ ανάγεται στην πρώτη μέσω των «ουρών» $a_{n+N}$ και $b_{n+N}$: μια σειρά συγκλίνει ακριβώς όταν συγκλίνει η ουρά της.</p>
+<h2>2. Βήμα προς βήμα: $0\le a_n\le b_n$ και η $\sum b_n$ συγκλίνει $\Rightarrow$ η $\sum a_n$ συγκλίνει</h2>
+<p class="note">Η ιδέα: τα μερικά αθροίσματα της $\sum a_n$ αυξάνουν και είναι φραγμένα από το άθροισμα της $\sum b_n$. Ξεκινάμε από τον στόχο:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>a b : ℕ → ℝ
+ha : ∀ (n : ℕ), 0 ≤ a n
+hab : ∀ (n : ℕ), a n ≤ b n
+hb : Summable b
+⊢ Summable a</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Μετά από κάθε βήμα δείχνουμε μόνο ό,τι άλλαξε.</p>
+<ol class="steps"><li><pre class="ln"><span class="cm">-- τα μερικά αθροίσματα της a είναι φραγμένα από το άθροισμα της b</span>
+<span class="kw">have</span> hbound : ∀ N, ∑ n ∈ Finset.range N, a n ≤ ∑&#x27; n, b n := <span class="kw">by</span>
+  <span class="tc">intro</span> N</pre><p>Δείχνουμε πρώτα ότι κάθε μερικό άθροισμα της $a$ είναι το πολύ $\sum_{n=0}^{\infty}b_n$. Παίρνουμε τυχαίο $N$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>N : ℕ
+⊢ ∑ n ∈ Finset.range N, a n ≤ ∑&#x27; (n : ℕ), b n</pre></div></li><li><pre class="ln"><span class="cm">-- όρο προς όρο: a n ≤ b n</span>
+<span class="kw">have</span> h1 : ∑ n ∈ Finset.range N, a n ≤ ∑ n ∈ Finset.range N, b n :=
+  Finset.sum_le_sum <span class="kw">fun</span> n _ =&gt; hab n</pre><p>Όρο προς όρο $a_n\le b_n$, άρα $a_0+\dots+a_{N-1}\le b_0+\dots+b_{N-1}$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h1 : ∑ n ∈ Finset.range N, a n ≤ ∑ n ∈ Finset.range N, b n
+⊢ ∑ n ∈ Finset.range N, a n ≤ ∑&#x27; (n : ℕ), b n</pre></div></li><li><pre class="ln"><span class="cm">-- κάθε μερικό άθροισμα της b είναι ≤ του αθροίσματος της σειράς, γιατί b n ≥ 0</span>
+<span class="kw">have</span> h2 : ∑ n ∈ Finset.range N, b n ≤ ∑&#x27; n, b n :=
+  hb.sum_le_tsum (Finset.range N) <span class="kw">fun</span> n _ =&gt; (ha n).trans (hab n)</pre><p>Οι όροι της $b$ είναι μη αρνητικοί, αφού $b_n\ge a_n\ge 0$· άρα κάθε μερικό άθροισμα της $b$ είναι το πολύ ίσο με το άθροισμα όλης της σειράς.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h2 : ∑ n ∈ Finset.range N, b n ≤ ∑&#x27; (n : ℕ), b n
+⊢ ∑ n ∈ Finset.range N, a n ≤ ∑&#x27; (n : ℕ), b n</pre></div></li><li><pre class="ln"><span class="tc">exact</span> h1.trans h2</pre><p>Οι δύο ανισότητες δίνουν το φράγμα <code>hbound</code> για κάθε $N$. Μια σειρά με μη αρνητικούς όρους και φραγμένα μερικά αθροίσματα συγκλίνει, γιατί τα μερικά αθροίσματα σχηματίζουν αύξουσα και άνω φραγμένη ακολουθία· αυτό κλείνει την απόδειξη.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>hbound : ∀ (N : ℕ), ∑ n ∈ Finset.range N, a n ≤ ∑&#x27; (n : ℕ), b n
+⊢ Summable a</pre></div></li></ol>
+<h2>3. Δοκίμασε εσύ: Η μορφή της απόκλισης</h2>
+<div class="ex"><p>Δείξε ότι αν η $\sum a_n$ αποκλίνει, τότε αποκλίνει και η $\sum b_n$. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2019%20%C2%B7%20%CE%9A%CF%81%CE%B9%CF%84%CE%AE%CF%81%CE%B9%CE%BF%20%CE%A3%CF%8D%CE%B3%CE%BA%CF%81%CE%B9%CF%83%CE%B7%CF%82%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2823%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8619.KritirioSygkrisis%0A%0Atheorem%20comparison%20%28a%20b%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28ha%20%3A%20%E2%88%80%20n%2C%200%20%E2%89%A4%20a%20n%29%20%28hab%20%3A%20%E2%88%80%20n%2C%20a%20n%20%E2%89%A4%20b%20n%29%0A%20%20%20%20%28hb%20%3A%20Summable%20b%29%20%3A%20Summable%20a%20%3A%3D%20by%0A%20%20--%20%CF%84%CE%B1%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CE%AC%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%B1%20%CF%84%CE%B7%CF%82%20a%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%86%CF%81%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B1%20%CE%B1%CF%80%CF%8C%20%CF%84%CE%BF%20%CE%AC%CE%B8%CF%81%CE%BF%CE%B9%CF%83%CE%BC%CE%B1%20%CF%84%CE%B7%CF%82%20b%0A%20%20have%20hbound%20%3A%20%E2%88%80%20N%2C%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20a%20n%20%E2%89%A4%20%E2%88%91'%20n%2C%20b%20n%20%3A%3D%20by%0A%20%20%20%20intro%20N%0A%20%20%20%20--%20%CF%8C%CF%81%CE%BF%20%CF%80%CF%81%CE%BF%CF%82%20%CF%8C%CF%81%CE%BF%3A%20a%20n%20%E2%89%A4%20b%20n%0A%20%20%20%20have%20h1%20%3A%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20a%20n%20%E2%89%A4%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20b%20n%20%3A%3D%0A%20%20%20%20%20%20Finset.sum_le_sum%20fun%20n%20_%20%3D%3E%20hab%20n%0A%20%20%20%20--%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CF%8C%20%CE%AC%CE%B8%CF%81%CE%BF%CE%B9%CF%83%CE%BC%CE%B1%20%CF%84%CE%B7%CF%82%20b%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%E2%89%A4%20%CF%84%CE%BF%CF%85%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%BF%CF%82%20%CF%84%CE%B7%CF%82%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%CF%82%2C%20%CE%B3%CE%B9%CE%B1%CF%84%CE%AF%20b%20n%20%E2%89%A5%200%0A%20%20%20%20have%20h2%20%3A%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20b%20n%20%E2%89%A4%20%E2%88%91'%20n%2C%20b%20n%20%3A%3D%0A%20%20%20%20%20%20hb.sum_le_tsum%20%28Finset.range%20N%29%20fun%20n%20_%20%3D%3E%20%28ha%20n%29.trans%20%28hab%20n%29%0A%20%20%20%20exact%20h1.trans%20h2%0A%20%20--%20%CE%BC%CE%B7%20%CE%B1%CF%81%CE%BD%CE%B7%CF%84%CE%B9%CE%BA%CE%BF%CE%AF%20%CF%8C%CF%81%CE%BF%CE%B9%20%CE%BC%CE%B5%20%CF%86%CF%81%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B1%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CE%AC%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%B1%3A%20%CE%B7%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%0A%20%20exact%20summable_of_sum_range_le%20ha%20hbound%0A%0A--%20%CF%84%CE%BF%20%CE%AF%CE%B4%CE%B9%CE%BF%2C%20%CF%8C%CF%84%CE%B1%CE%BD%200%20%E2%89%A4%20a%20n%20%E2%89%A4%20b%20n%20%CE%B9%CF%83%CF%87%CF%8D%CE%B5%CE%B9%20%CE%BC%CF%8C%CE%BD%CE%BF%20%CE%B3%CE%B9%CE%B1%20n%20%E2%89%A5%20N%0Atheorem%20comparison_from%20%28a%20b%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28N%20%3A%20%E2%84%95%29%20%28ha%20%3A%20%E2%88%80%20n%20%E2%89%A5%20N%2C%200%20%E2%89%A4%20a%20n%29%0A%20%20%20%20%28hab%20%3A%20%E2%88%80%20n%20%E2%89%A5%20N%2C%20a%20n%20%E2%89%A4%20b%20n%29%20%28hb%20%3A%20Summable%20b%29%20%3A%20Summable%20a%20%3A%3D%20by%0A%20%20--%20%CE%B5%CF%86%CE%B1%CF%81%CE%BC%CF%8C%CE%B6%CE%BF%CF%85%CE%BC%CE%B5%20%CF%84%CE%BF%20%CE%BA%CF%81%CE%B9%CF%84%CE%AE%CF%81%CE%B9%CE%BF%20%CF%83%CF%84%CE%B9%CF%82%20%CE%BF%CF%85%CF%81%CE%AD%CF%82%20a%20%28n%20%2B%20N%29%20%CE%BA%CE%B1%CE%B9%20b%20%28n%20%2B%20N%29%0A%20%20have%20h%20%3A%3D%20comparison%20%28fun%20n%20%3D%3E%20a%20%28n%20%2B%20N%29%29%20%28fun%20n%20%3D%3E%20b%20%28n%20%2B%20N%29%29%0A%20%20%20%20%28fun%20n%20%3D%3E%20ha%20%28n%20%2B%20N%29%20%28Nat.le_add_left%20N%20n%29%29%20%28fun%20n%20%3D%3E%20hab%20%28n%20%2B%20N%29%20%28Nat.le_add_left%20N%20n%29%29%0A%20%20%20%20%28%28summable_nat_add_iff%20N%29.mpr%20hb%29%0A%20%20exact%20%28summable_nat_add_iff%20N%29.mp%20h%0A%0Atheorem%20comparison_diverges%20%28a%20b%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28ha%20%3A%20%E2%88%80%20n%2C%200%20%E2%89%A4%20a%20n%29%20%28hab%20%3A%20%E2%88%80%20n%2C%20a%20n%20%E2%89%A4%20b%20n%29%0A%20%20%20%20%28hdiv%20%3A%20%C2%AC%20Summable%20a%29%20%3A%20%C2%AC%20Summable%20b%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%B1%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B7%CF%83%CE%B5%20%CF%84%CE%BF%20sorry%20%CE%BC%CE%B5%20%CF%84%CE%B7%20%CE%B4%CE%B9%CE%BA%CE%AE%20%CF%83%CE%BF%CF%85%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7.%0A%20%20sorry%0A%0Aend%20%CE%9A%CE%B5%CF%8619.KritirioSygkrisis%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Με απαγωγή σε άτοπο: αν η $\sum b_n$ συνέκλινε, το κριτήριο θα έδινε ότι συγκλίνει και η $\sum a_n$. <code>exact fun hb => hdiv (comparison a b ha hab hb)</code>.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> comparison_diverges (a b : ℕ → ℝ) (ha : ∀ n, 0 ≤ a n) (hab : ∀ n, a n ≤ b n)
+    (hdiv : ¬ Summable a) : ¬ Summable b :=
+  <span class="kw">fun</span> hb =&gt; hdiv (comparison a b ha hab hb)</pre></div></details>
+</div>
+<h2>4. Στη Mathlib</h2>
+<p class="note">Χρησιμοποιήσαμε τα εξής θεωρήματα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Finset.sum_le_sum#doc" target="_blank" rel="noopener"><code>Finset.sum_le_sum</code></a>: αν $f(i)\le g(i)$ για κάθε $i$, τότε $\sum f(i)\le\sum g(i)$ σε πεπερασμένο άθροισμα.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Summable.sum_le_tsum#doc" target="_blank" rel="noopener"><code>Summable.sum_le_tsum</code></a>: για σειρά με μη αρνητικούς όρους, κάθε μερικό άθροισμα είναι το πολύ ίσο με το άθροισμα της σειράς.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=summable_of_sum_range_le#doc" target="_blank" rel="noopener"><code>summable_of_sum_range_le</code></a>: μη αρνητικοί όροι και φραγμένα μερικά αθροίσματα: η σειρά συγκλίνει.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=summable_nat_add_iff#doc" target="_blank" rel="noopener"><code>summable_nat_add_iff</code></a>: μια σειρά συγκλίνει ακριβώς όταν συγκλίνει η ουρά της $\sum a_{n+N}$.</li></ul>
+<h2>5. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (38 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 19 · Κριτήριο Σύγκρισης · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (23/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ19.KritirioSygkrisis
+
+<span class="kw">theorem</span> comparison (a b : ℕ → ℝ) (ha : ∀ n, 0 ≤ a n) (hab : ∀ n, a n ≤ b n)
+    (hb : Summable b) : Summable a := <span class="kw">by</span>
+  <span class="cm">-- τα μερικά αθροίσματα της a είναι φραγμένα από το άθροισμα της b</span>
+  <span class="kw">have</span> hbound : ∀ N, ∑ n ∈ Finset.range N, a n ≤ ∑&#x27; n, b n := <span class="kw">by</span>
+    <span class="tc">intro</span> N
+    <span class="cm">-- όρο προς όρο: a n ≤ b n</span>
+    <span class="kw">have</span> h1 : ∑ n ∈ Finset.range N, a n ≤ ∑ n ∈ Finset.range N, b n :=
+      Finset.sum_le_sum <span class="kw">fun</span> n _ =&gt; hab n
+    <span class="cm">-- κάθε μερικό άθροισμα της b είναι ≤ του αθροίσματος της σειράς, γιατί b n ≥ 0</span>
+    <span class="kw">have</span> h2 : ∑ n ∈ Finset.range N, b n ≤ ∑&#x27; n, b n :=
+      hb.sum_le_tsum (Finset.range N) <span class="kw">fun</span> n _ =&gt; (ha n).trans (hab n)
+    <span class="tc">exact</span> h1.trans h2
+  <span class="cm">-- μη αρνητικοί όροι με φραγμένα μερικά αθροίσματα: η σειρά συγκλίνει</span>
+  <span class="tc">exact</span> summable_of_sum_range_le ha hbound
+
+<span class="cm">-- το ίδιο, όταν 0 ≤ a n ≤ b n ισχύει μόνο για n ≥ N</span>
+<span class="kw">theorem</span> comparison_from (a b : ℕ → ℝ) (N : ℕ) (ha : ∀ n ≥ N, 0 ≤ a n)
+    (hab : ∀ n ≥ N, a n ≤ b n) (hb : Summable b) : Summable a := <span class="kw">by</span>
+  <span class="cm">-- εφαρμόζουμε το κριτήριο στις ουρές a (n + N) και b (n + N)</span>
+  <span class="kw">have</span> h := comparison (<span class="kw">fun</span> n =&gt; a (n + N)) (<span class="kw">fun</span> n =&gt; b (n + N))
+    (<span class="kw">fun</span> n =&gt; ha (n + N) (Nat.le_add_left N n)) (<span class="kw">fun</span> n =&gt; hab (n + N) (Nat.le_add_left N n))
+    ((summable_nat_add_iff N).mpr hb)
+  <span class="tc">exact</span> (summable_nat_add_iff N).mp h
+
+<span class="kw">theorem</span> comparison_diverges (a b : ℕ → ℝ) (ha : ∀ n, 0 ≤ a n) (hab : ∀ n, a n ≤ b n)
+    (hdiv : ¬ Summable a) : ¬ Summable b :=
+  <span class="kw">fun</span> hb =&gt; hdiv (comparison a b ha hab hb)
+
+<span class="kw">end</span> Κεφ19.KritirioSygkrisis
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2019%20%C2%B7%20%CE%9A%CF%81%CE%B9%CF%84%CE%AE%CF%81%CE%B9%CE%BF%20%CE%A3%CF%8D%CE%B3%CE%BA%CF%81%CE%B9%CF%83%CE%B7%CF%82%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2823%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8619.KritirioSygkrisis%0A%0Atheorem%20comparison%20%28a%20b%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28ha%20%3A%20%E2%88%80%20n%2C%200%20%E2%89%A4%20a%20n%29%20%28hab%20%3A%20%E2%88%80%20n%2C%20a%20n%20%E2%89%A4%20b%20n%29%0A%20%20%20%20%28hb%20%3A%20Summable%20b%29%20%3A%20Summable%20a%20%3A%3D%20by%0A%20%20--%20%CF%84%CE%B1%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CE%AC%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%B1%20%CF%84%CE%B7%CF%82%20a%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%86%CF%81%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B1%20%CE%B1%CF%80%CF%8C%20%CF%84%CE%BF%20%CE%AC%CE%B8%CF%81%CE%BF%CE%B9%CF%83%CE%BC%CE%B1%20%CF%84%CE%B7%CF%82%20b%0A%20%20have%20hbound%20%3A%20%E2%88%80%20N%2C%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20a%20n%20%E2%89%A4%20%E2%88%91'%20n%2C%20b%20n%20%3A%3D%20by%0A%20%20%20%20intro%20N%0A%20%20%20%20--%20%CF%8C%CF%81%CE%BF%20%CF%80%CF%81%CE%BF%CF%82%20%CF%8C%CF%81%CE%BF%3A%20a%20n%20%E2%89%A4%20b%20n%0A%20%20%20%20have%20h1%20%3A%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20a%20n%20%E2%89%A4%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20b%20n%20%3A%3D%0A%20%20%20%20%20%20Finset.sum_le_sum%20fun%20n%20_%20%3D%3E%20hab%20n%0A%20%20%20%20--%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CF%8C%20%CE%AC%CE%B8%CF%81%CE%BF%CE%B9%CF%83%CE%BC%CE%B1%20%CF%84%CE%B7%CF%82%20b%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%E2%89%A4%20%CF%84%CE%BF%CF%85%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%BF%CF%82%20%CF%84%CE%B7%CF%82%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%CF%82%2C%20%CE%B3%CE%B9%CE%B1%CF%84%CE%AF%20b%20n%20%E2%89%A5%200%0A%20%20%20%20have%20h2%20%3A%20%E2%88%91%20n%20%E2%88%88%20Finset.range%20N%2C%20b%20n%20%E2%89%A4%20%E2%88%91'%20n%2C%20b%20n%20%3A%3D%0A%20%20%20%20%20%20hb.sum_le_tsum%20%28Finset.range%20N%29%20fun%20n%20_%20%3D%3E%20%28ha%20n%29.trans%20%28hab%20n%29%0A%20%20%20%20exact%20h1.trans%20h2%0A%20%20--%20%CE%BC%CE%B7%20%CE%B1%CF%81%CE%BD%CE%B7%CF%84%CE%B9%CE%BA%CE%BF%CE%AF%20%CF%8C%CF%81%CE%BF%CE%B9%20%CE%BC%CE%B5%20%CF%86%CF%81%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B1%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CE%AC%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%B1%3A%20%CE%B7%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%0A%20%20exact%20summable_of_sum_range_le%20ha%20hbound%0A%0A--%20%CF%84%CE%BF%20%CE%AF%CE%B4%CE%B9%CE%BF%2C%20%CF%8C%CF%84%CE%B1%CE%BD%200%20%E2%89%A4%20a%20n%20%E2%89%A4%20b%20n%20%CE%B9%CF%83%CF%87%CF%8D%CE%B5%CE%B9%20%CE%BC%CF%8C%CE%BD%CE%BF%20%CE%B3%CE%B9%CE%B1%20n%20%E2%89%A5%20N%0Atheorem%20comparison_from%20%28a%20b%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28N%20%3A%20%E2%84%95%29%20%28ha%20%3A%20%E2%88%80%20n%20%E2%89%A5%20N%2C%200%20%E2%89%A4%20a%20n%29%0A%20%20%20%20%28hab%20%3A%20%E2%88%80%20n%20%E2%89%A5%20N%2C%20a%20n%20%E2%89%A4%20b%20n%29%20%28hb%20%3A%20Summable%20b%29%20%3A%20Summable%20a%20%3A%3D%20by%0A%20%20--%20%CE%B5%CF%86%CE%B1%CF%81%CE%BC%CF%8C%CE%B6%CE%BF%CF%85%CE%BC%CE%B5%20%CF%84%CE%BF%20%CE%BA%CF%81%CE%B9%CF%84%CE%AE%CF%81%CE%B9%CE%BF%20%CF%83%CF%84%CE%B9%CF%82%20%CE%BF%CF%85%CF%81%CE%AD%CF%82%20a%20%28n%20%2B%20N%29%20%CE%BA%CE%B1%CE%B9%20b%20%28n%20%2B%20N%29%0A%20%20have%20h%20%3A%3D%20comparison%20%28fun%20n%20%3D%3E%20a%20%28n%20%2B%20N%29%29%20%28fun%20n%20%3D%3E%20b%20%28n%20%2B%20N%29%29%0A%20%20%20%20%28fun%20n%20%3D%3E%20ha%20%28n%20%2B%20N%29%20%28Nat.le_add_left%20N%20n%29%29%20%28fun%20n%20%3D%3E%20hab%20%28n%20%2B%20N%29%20%28Nat.le_add_left%20N%20n%29%29%0A%20%20%20%20%28%28summable_nat_add_iff%20N%29.mpr%20hb%29%0A%20%20exact%20%28summable_nat_add_iff%20N%29.mp%20h%0A%0Atheorem%20comparison_diverges%20%28a%20b%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28ha%20%3A%20%E2%88%80%20n%2C%200%20%E2%89%A4%20a%20n%29%20%28hab%20%3A%20%E2%88%80%20n%2C%20a%20n%20%E2%89%A4%20b%20n%29%0A%20%20%20%20%28hdiv%20%3A%20%C2%AC%20Summable%20a%29%20%3A%20%C2%AC%20Summable%20b%20%3A%3D%0A%20%20fun%20hb%20%3D%3E%20hdiv%20%28comparison%20a%20b%20ha%20hab%20hb%29%0A%0Aend%20%CE%9A%CE%B5%CF%8619.KritirioSygkrisis%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Stewart, J. (2016). <em>Calculus: Early Transcendentals</em> (8th ed.). Cengage Learning.</li><li>Bartle, R. G., &amp; Sherbert, D. R. (2011). <em>Introduction to Real Analysis</em> (4th ed.). Wiley.</li><li>Rudin, W. (1976). <em>Principles of Mathematical Analysis</em> (3rd ed.). McGraw-Hill.</li><li>Νεγρεπόντης, Σ., Γιωτόπουλος, Σ., &amp; Γιαννακούλιας, Ε. (1999). <em>Απειροστικός Λογισμός</em> (Τόμ. Ι). Εκδόσεις Συμμετρία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>

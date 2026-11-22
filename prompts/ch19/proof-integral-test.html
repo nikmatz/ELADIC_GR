@@ -2,22 +2,88 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Κριτήριο Ολοκληρώματος</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
-<div class="stmt"><span class="lbl">Εκφώνηση</span>Αν $f:[1,\infty)\to\mathbb{R}$ συνεχής, θετική, φθίνουσα, τότε η $\sum_{n=1}^{\infty}f(n)$ και το $\int_1^{\infty}f(x)\,dx$ συγκλίνουν ή αποκλίνουν ταυτόχρονα, με $\int_1^{\infty}f\,dx\le\sum_{n=1}^{\infty}f(n)\le f(1)+\int_1^{\infty}f\,dx$.</div>
+<p class="sub">Κεφάλαιο 19 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
+<div class="stmt"><span class="lbl">Εκφώνηση</span>Αν $f:[1,\infty)\to\mathbb{R}$ συνεχής, θετική, φθίνουσα, τότε η $\sum_{n=1}^{\infty}f(n)$ και το $\int_1^{\infty}f(x)\,dx$ συγκλίνουν ή αποκλίνουν ταυτόχρονα, με $\int_1^{\infty}f\,dx\le\sum_{n=1}^{\infty}f(n)\le f(1)$<wbr>${}+\int_1^{\infty}f\,dx$.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%91%CE%BD%20%24f%3A%5B1%2C%5Cinfty%29%5Cto%5Cmathbb%7BR%7D%24%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%CF%82%2C%20%CE%B8%CE%B5%CF%84%CE%B9%CE%BA%CE%AE%2C%20%CF%86%CE%B8%CE%AF%CE%BD%CE%BF%CF%85%CF%83%CE%B1%2C%20%CF%84%CF%8C%CF%84%CE%B5%20%CE%B7%20%24%5Csum_%7Bn%3D1%7D%5E%7B%5Cinfty%7Df%28n%29%24%20%CE%BA%CE%B1%CE%B9%20%CF%84%CE%BF%20%24%5Cint_1%5E%7B%5Cinfty%7Df%28x%29%5C%2Cdx%24%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%BF%CF%85%CE%BD%20%CE%AE%20%CE%B1%CF%80%CE%BF%CE%BA%CE%BB%CE%AF%CE%BD%CE%BF%CF%85%CE%BD%20%CF%84%CE%B1%CF%85%CF%84%CF%8C%CF%87%CF%81%CE%BF%CE%BD%CE%B1%2C%20%CE%BC%CE%B5%20%24%5Cint_1%5E%7B%5Cinfty%7Df%5C%2Cdx%5Cle%5Csum_%7Bn%3D1%7D%5E%7B%5Cinfty%7Df%28n%29%5Cle%20f%281%29%2B%5Cint_1%5E%7B%5Cinfty%7Df%5C%2Cdx%24.">ChatGPT</a>
@@ -27,6 +93,120 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Αν $f:[1,\infty)\to\mathbb{R}$ συνεχής, θετική, φθίνουσα, τότε η $\sum_{n=1}^{\infty}f(n)$ και το $\int_1^{\infty}f(x)\,dx$ συγκλίνουν ή αποκλίνουν ταυτόχρονα, με $\int_1^{\infty}f\,dx\le\sum_{n=1}^{\infty}f(n)\le f(1)+\int_1^{\infty}f\,dx$.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Οι διατυπώσεις αποδείχθηκαν στον Lean 4, με βάση θεωρήματα της Mathlib, χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 23/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Για $f$ φθίνουσα και μη αρνητική στο $[1,+\infty)$: η $\sum_{n=1}^{\infty}f(n)$ συγκλίνει αν και μόνο αν συγκλίνει το $\int_1^{+\infty}f\,dx$</div><pre class="ln"><span class="kw">theorem</span> integral_test (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1))
+    (h0 : ∀ x ∈ Set.Ici (1 : ℝ), 0 ≤ f x) :
+    Summable (<span class="kw">fun</span> n : ℕ =&gt; f (n + 1)) ↔ IntegrableOn f (Set.Ioi 1)</pre></li><li><div class="bk">$\int_1^{1+N}f\,dx\le f(1)+f(2)+\cdots+f(N)$</div><pre class="ln"><span class="kw">theorem</span> integral_le_partial_sum (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1)) (N : ℕ) :
+    ∫ x <span class="kw">in</span> (1 : ℝ)..1 + N, f x ≤ ∑ i ∈ Finset.range N, f (1 + i)</pre></li><li><div class="bk">$f(2)+f(3)+\cdots+f(N+1)\le\int_1^{1+N}f\,dx$</div><pre class="ln"><span class="kw">theorem</span> partial_sum_le_integral (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1)) (N : ℕ) :
+    ∑ i ∈ Finset.range N, f (1 + (i + 1 : ℕ)) ≤ ∫ x <span class="kw">in</span> (1 : ℝ)..1 + N, f x</pre></li><li><div class="bk">Όταν η σειρά συγκλίνει: $\int_1^{+\infty}f\,dx\le\sum_{n=1}^{\infty}f(n)\le f(1)$<wbr>${}+\int_1^{+\infty}f\,dx$</div><pre class="ln"><span class="kw">theorem</span> integral_test_bounds (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1))
+    (h0 : ∀ x ∈ Set.Ici (1 : ℝ), 0 ≤ f x) (hs : Summable (<span class="kw">fun</span> n : ℕ =&gt; f (n + 1))) :
+    ∫ x <span class="kw">in</span> Set.Ioi (1 : ℝ), f x ≤ ∑&#x27; n : ℕ, f (n + 1) ∧
+      ∑&#x27; n : ℕ, f (n + 1) ≤ f 1 + ∫ x <span class="kw">in</span> Set.Ioi (1 : ℝ), f x</pre></li></ul>
+<p class="note">Η σειρά $f(1)+f(2)+\cdots$ γράφεται με αρίθμηση από το $0$ ως $\sum_{n\ge 0}f(n+1)$, και η σύγκλισή της ως <code>Summable</code>· για σειρές με μη αρνητικούς όρους αυτό είναι ακριβώς η σύγκλιση του βιβλίου. Η σύγκλιση του $\int_1^{+\infty}f\,dx$ γράφεται ως ολοκληρωσιμότητα στο $(1,+\infty)$, <code>IntegrableOn f (Set.Ioi 1)</code>, όπως στο Κεφάλαιο 18, και το $[1,+\infty)$ γράφεται <code>Set.Ici 1</code>. Η συνέχεια δεν χρειάζεται: η Mathlib αποδεικνύει το κριτήριο για κάθε φθίνουσα συνάρτηση, και αρκεί $f\ge 0$ αντί για $f\gt 0$. Οι δύο ανισότητες με τα μερικά αθροίσματα είναι η καρδιά της απόδειξης: συγκρίνουν το εμβαδόν κάτω από την καμπύλη με ορθογώνια πλάτους $1$. Από αυτές, με όριο $N\to+\infty$, προκύπτουν οι ανισότητες του βιβλίου· το άθροισμα της σειράς γράφεται <code>∑' n : ℕ, f (n + 1)</code>.</p>
+<h2>2. Πού βρίσκεται στη Mathlib</h2>
+<p class="note">Χρησιμοποιήσαμε τα εξής θεωρήματα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=AntitoneOn.integrableOn_Ioi_of_summable_comp_add#doc" target="_blank" rel="noopener"><code>AntitoneOn.integrableOn_Ioi_of_summable_comp_add</code></a>: αν η σειρά συγκλίνει, η $f$ είναι ολοκληρώσιμη στο $(N,+\infty)$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=AntitoneOn.summable_of_integrableOn_Ioi#doc" target="_blank" rel="noopener"><code>AntitoneOn.summable_of_integrableOn_Ioi</code></a>: αν η $f$ είναι ολοκληρώσιμη στο $(N,+\infty)$, η σειρά συγκλίνει.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=summable_nat_add_iff#doc" target="_blank" rel="noopener"><code>summable_nat_add_iff</code></a>: μια σειρά συγκλίνει ακριβώς όταν συγκλίνει η ουρά της.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=AntitoneOn.integral_le_sum#doc" target="_blank" rel="noopener"><code>AntitoneOn.integral_le_sum</code></a>: το ολοκλήρωμα είναι το πολύ ίσο με το άθροισμα των «αριστερών» ορθογωνίων.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=AntitoneOn.sum_le_integral#doc" target="_blank" rel="noopener"><code>AntitoneOn.sum_le_integral</code></a>: το άθροισμα των «δεξιών» ορθογωνίων είναι το πολύ ίσο με το ολοκλήρωμα.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=MeasureTheory.intervalIntegral_tendsto_integral_Ioi#doc" target="_blank" rel="noopener"><code>MeasureTheory.intervalIntegral_tendsto_integral_Ioi</code></a>: $\int_1^R f\,dx\to\int_1^{+\infty}f\,dx$ καθώς $R\to+\infty$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=le_of_tendsto_of_tendsto%27#doc" target="_blank" rel="noopener"><code>le_of_tendsto_of_tendsto&#x27;</code></a>: οι ανισότητες διατηρούνται στο όριο.</li></ul>
+<h2>3. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (66 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 19 · Κριτήριο Ολοκληρώματος · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (23/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ19.KritirioOloklirwmatos
+<span class="kw">open</span> MeasureTheory Filter Topology
+
+<span class="cm">-- f φθίνουσα και μη αρνητική στο [1, +∞): η σειρά f(1) + f(2) + … γράφεται Σ f(n + 1)</span>
+<span class="kw">theorem</span> integral_test (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1))
+    (h0 : ∀ x ∈ Set.Ici (1 : ℝ), 0 ≤ f x) :
+    Summable (<span class="kw">fun</span> n : ℕ =&gt; f (n + 1)) ↔ IntegrableOn f (Set.Ioi 1) := <span class="kw">by</span>
+  <span class="kw">have</span> hf&#x27; : AntitoneOn f (Set.Ici ((1 : ℕ) : ℝ)) := <span class="kw">by</span> <span class="tc">simpa</span> using hf
+  <span class="kw">have</span> h0&#x27; : ∀ t ∈ Set.Ioi ((1 : ℕ) : ℝ), 0 ≤ f t := <span class="kw">fun</span> t ht =&gt; <span class="kw">by</span>
+    <span class="tc">simp</span> only [Nat.cast_one, Set.mem_Ioi] <span class="kw">at</span> ht
+    <span class="tc">exact</span> h0 t (Set.mem_Ici.mpr ht.le)
+  <span class="tc">constructor</span>
+  · <span class="tc">intro</span> hs
+    <span class="kw">have</span> h := hf&#x27;.integrableOn_Ioi_of_summable_comp_add (<span class="kw">by</span> <span class="tc">simpa</span> using hs) h0&#x27;
+    <span class="tc">simpa</span> using h
+  · <span class="tc">intro</span> hi
+    <span class="kw">have</span> h := hf&#x27;.summable_of_integrableOn_Ioi (<span class="kw">by</span> <span class="tc">simpa</span> using hi) h0&#x27;
+    <span class="kw">have</span> h2 := (summable_nat_add_iff 1).mpr h
+    <span class="tc">simpa</span> using h2
+
+<span class="cm">-- φράγματα με τα μερικά αθροίσματα: ∫ από 1 έως 1 + N ≤ f(1) + … + f(N)</span>
+<span class="kw">theorem</span> integral_le_partial_sum (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1)) (N : ℕ) :
+    ∫ x <span class="kw">in</span> (1 : ℝ)..1 + N, f x ≤ ∑ i ∈ Finset.range N, f (1 + i) :=
+  (hf.mono Set.Icc_subset_Ici_self).integral_le_sum
+
+<span class="cm">-- και f(2) + … + f(N + 1) ≤ ∫ από 1 έως 1 + N</span>
+<span class="kw">theorem</span> partial_sum_le_integral (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1)) (N : ℕ) :
+    ∑ i ∈ Finset.range N, f (1 + (i + 1 : ℕ)) ≤ ∫ x <span class="kw">in</span> (1 : ℝ)..1 + N, f x :=
+  (hf.mono Set.Icc_subset_Ici_self).sum_le_integral
+
+<span class="cm">-- οι ανισότητες του βιβλίου, όταν η σειρά συγκλίνει</span>
+<span class="kw">theorem</span> integral_test_bounds (f : ℝ → ℝ) (hf : AntitoneOn f (Set.Ici 1))
+    (h0 : ∀ x ∈ Set.Ici (1 : ℝ), 0 ≤ f x) (hs : Summable (<span class="kw">fun</span> n : ℕ =&gt; f (n + 1))) :
+    ∫ x <span class="kw">in</span> Set.Ioi (1 : ℝ), f x ≤ ∑&#x27; n : ℕ, f (n + 1) ∧
+      ∑&#x27; n : ℕ, f (n + 1) ≤ f 1 + ∫ x <span class="kw">in</span> Set.Ioi (1 : ℝ), f x := <span class="kw">by</span>
+  <span class="kw">have</span> hi : IntegrableOn f (Set.Ioi 1) := (integral_test f hf h0).mp hs
+  <span class="cm">-- το ∫ από 1 έως 1 + N τείνει στο ∫ από 1 έως +∞</span>
+  <span class="kw">have</span> hI : Tendsto (<span class="kw">fun</span> N : ℕ =&gt; ∫ x <span class="kw">in</span> (1 : ℝ)..1 + N, f x) atTop
+      (𝓝 (∫ x <span class="kw">in</span> Set.Ioi (1 : ℝ), f x)) :=
+    intervalIntegral_tendsto_integral_Ioi 1 hi
+      (tendsto_atTop_add_const_left atTop 1 tendsto_natCast_atTop_atTop)
+  <span class="cm">-- τα μερικά αθροίσματα f(1) + … + f(N) τείνουν στο άθροισμα της σειράς</span>
+  <span class="kw">have</span> hS : Tendsto (<span class="kw">fun</span> N =&gt; ∑ i ∈ Finset.range N, f (1 + i)) atTop
+      (𝓝 (∑&#x27; n : ℕ, f (n + 1))) := <span class="kw">by</span>
+    <span class="kw">have</span> h := hs.hasSum.tendsto_sum_nat
+    <span class="tc">simp</span> only [add_comm (1 : ℝ)]
+    <span class="tc">exact</span> h
+  <span class="kw">have</span> hS1 : Tendsto (<span class="kw">fun</span> N : ℕ =&gt; ∑ i ∈ Finset.range (N + 1), f (1 + i)) atTop
+      (𝓝 (∑&#x27; n : ℕ, f (n + 1))) :=
+    hS.comp (tendsto_add_atTop_nat 1)
+  <span class="cm">-- f(1) + f(2) + … + f(N + 1) ≤ f(1) + ∫ από 1 έως 1 + N</span>
+  <span class="kw">have</span> h2 : ∀ N : ℕ, ∑ i ∈ Finset.range (N + 1), f (1 + i) ≤ f 1 + ∫ x <span class="kw">in</span> (1 : ℝ)..1 + N, f x := <span class="kw">by</span>
+    <span class="tc">intro</span> N
+    <span class="tc">rw</span> [Finset.sum_range_succ&#x27;, Nat.cast_zero, add_zero]
+    <span class="tc">linarith</span> [partial_sum_le_integral f hf N]
+  <span class="tc">exact</span> ⟨le_of_tendsto_of_tendsto&#x27; hI hS (integral_le_partial_sum f hf),
+    le_of_tendsto_of_tendsto&#x27; hS1 (hI.const_add (f 1)) h2⟩
+
+<span class="kw">end</span> Κεφ19.KritirioOloklirwmatos
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2019%20%C2%B7%20%CE%9A%CF%81%CE%B9%CF%84%CE%AE%CF%81%CE%B9%CE%BF%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%8E%CE%BC%CE%B1%CF%84%CE%BF%CF%82%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2823%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8619.KritirioOloklirwmatos%0Aopen%20MeasureTheory%20Filter%20Topology%0A%0A--%20f%20%CF%86%CE%B8%CE%AF%CE%BD%CE%BF%CF%85%CF%83%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B7%20%CE%B1%CF%81%CE%BD%CE%B7%CF%84%CE%B9%CE%BA%CE%AE%20%CF%83%CF%84%CE%BF%20%5B1%2C%20%2B%E2%88%9E%29%3A%20%CE%B7%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%20f%281%29%20%2B%20f%282%29%20%2B%20%E2%80%A6%20%CE%B3%CF%81%CE%AC%CF%86%CE%B5%CF%84%CE%B1%CE%B9%20%CE%A3%20f%28n%20%2B%201%29%0Atheorem%20integral_test%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28hf%20%3A%20AntitoneOn%20f%20%28Set.Ici%201%29%29%0A%20%20%20%20%28h0%20%3A%20%E2%88%80%20x%20%E2%88%88%20Set.Ici%20%281%20%3A%20%E2%84%9D%29%2C%200%20%E2%89%A4%20f%20x%29%20%3A%0A%20%20%20%20Summable%20%28fun%20n%20%3A%20%E2%84%95%20%3D%3E%20f%20%28n%20%2B%201%29%29%20%E2%86%94%20IntegrableOn%20f%20%28Set.Ioi%201%29%20%3A%3D%20by%0A%20%20have%20hf'%20%3A%20AntitoneOn%20f%20%28Set.Ici%20%28%281%20%3A%20%E2%84%95%29%20%3A%20%E2%84%9D%29%29%20%3A%3D%20by%20simpa%20using%20hf%0A%20%20have%20h0'%20%3A%20%E2%88%80%20t%20%E2%88%88%20Set.Ioi%20%28%281%20%3A%20%E2%84%95%29%20%3A%20%E2%84%9D%29%2C%200%20%E2%89%A4%20f%20t%20%3A%3D%20fun%20t%20ht%20%3D%3E%20by%0A%20%20%20%20simp%20only%20%5BNat.cast_one%2C%20Set.mem_Ioi%5D%20at%20ht%0A%20%20%20%20exact%20h0%20t%20%28Set.mem_Ici.mpr%20ht.le%29%0A%20%20constructor%0A%20%20%C2%B7%20intro%20hs%0A%20%20%20%20have%20h%20%3A%3D%20hf'.integrableOn_Ioi_of_summable_comp_add%20%28by%20simpa%20using%20hs%29%20h0'%0A%20%20%20%20simpa%20using%20h%0A%20%20%C2%B7%20intro%20hi%0A%20%20%20%20have%20h%20%3A%3D%20hf'.summable_of_integrableOn_Ioi%20%28by%20simpa%20using%20hi%29%20h0'%0A%20%20%20%20have%20h2%20%3A%3D%20%28summable_nat_add_iff%201%29.mpr%20h%0A%20%20%20%20simpa%20using%20h2%0A%0A--%20%CF%86%CF%81%CE%AC%CE%B3%CE%BC%CE%B1%CF%84%CE%B1%20%CE%BC%CE%B5%20%CF%84%CE%B1%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CE%AC%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%B1%3A%20%E2%88%AB%20%CE%B1%CF%80%CF%8C%201%20%CE%AD%CF%89%CF%82%201%20%2B%20N%20%E2%89%A4%20f%281%29%20%2B%20%E2%80%A6%20%2B%20f%28N%29%0Atheorem%20integral_le_partial_sum%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28hf%20%3A%20AntitoneOn%20f%20%28Set.Ici%201%29%29%20%28N%20%3A%20%E2%84%95%29%20%3A%0A%20%20%20%20%E2%88%AB%20x%20in%20%281%20%3A%20%E2%84%9D%29..1%20%2B%20N%2C%20f%20x%20%E2%89%A4%20%E2%88%91%20i%20%E2%88%88%20Finset.range%20N%2C%20f%20%281%20%2B%20i%29%20%3A%3D%0A%20%20%28hf.mono%20Set.Icc_subset_Ici_self%29.integral_le_sum%0A%0A--%20%CE%BA%CE%B1%CE%B9%20f%282%29%20%2B%20%E2%80%A6%20%2B%20f%28N%20%2B%201%29%20%E2%89%A4%20%E2%88%AB%20%CE%B1%CF%80%CF%8C%201%20%CE%AD%CF%89%CF%82%201%20%2B%20N%0Atheorem%20partial_sum_le_integral%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28hf%20%3A%20AntitoneOn%20f%20%28Set.Ici%201%29%29%20%28N%20%3A%20%E2%84%95%29%20%3A%0A%20%20%20%20%E2%88%91%20i%20%E2%88%88%20Finset.range%20N%2C%20f%20%281%20%2B%20%28i%20%2B%201%20%3A%20%E2%84%95%29%29%20%E2%89%A4%20%E2%88%AB%20x%20in%20%281%20%3A%20%E2%84%9D%29..1%20%2B%20N%2C%20f%20x%20%3A%3D%0A%20%20%28hf.mono%20Set.Icc_subset_Ici_self%29.sum_le_integral%0A%0A--%20%CE%BF%CE%B9%20%CE%B1%CE%BD%CE%B9%CF%83%CF%8C%CF%84%CE%B7%CF%84%CE%B5%CF%82%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%2C%20%CF%8C%CF%84%CE%B1%CE%BD%20%CE%B7%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%0Atheorem%20integral_test_bounds%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28hf%20%3A%20AntitoneOn%20f%20%28Set.Ici%201%29%29%0A%20%20%20%20%28h0%20%3A%20%E2%88%80%20x%20%E2%88%88%20Set.Ici%20%281%20%3A%20%E2%84%9D%29%2C%200%20%E2%89%A4%20f%20x%29%20%28hs%20%3A%20Summable%20%28fun%20n%20%3A%20%E2%84%95%20%3D%3E%20f%20%28n%20%2B%201%29%29%29%20%3A%0A%20%20%20%20%E2%88%AB%20x%20in%20Set.Ioi%20%281%20%3A%20%E2%84%9D%29%2C%20f%20x%20%E2%89%A4%20%E2%88%91'%20n%20%3A%20%E2%84%95%2C%20f%20%28n%20%2B%201%29%20%E2%88%A7%0A%20%20%20%20%20%20%E2%88%91'%20n%20%3A%20%E2%84%95%2C%20f%20%28n%20%2B%201%29%20%E2%89%A4%20f%201%20%2B%20%E2%88%AB%20x%20in%20Set.Ioi%20%281%20%3A%20%E2%84%9D%29%2C%20f%20x%20%3A%3D%20by%0A%20%20have%20hi%20%3A%20IntegrableOn%20f%20%28Set.Ioi%201%29%20%3A%3D%20%28integral_test%20f%20hf%20h0%29.mp%20hs%0A%20%20--%20%CF%84%CE%BF%20%E2%88%AB%20%CE%B1%CF%80%CF%8C%201%20%CE%AD%CF%89%CF%82%201%20%2B%20N%20%CF%84%CE%B5%CE%AF%CE%BD%CE%B5%CE%B9%20%CF%83%CF%84%CE%BF%20%E2%88%AB%20%CE%B1%CF%80%CF%8C%201%20%CE%AD%CF%89%CF%82%20%2B%E2%88%9E%0A%20%20have%20hI%20%3A%20Tendsto%20%28fun%20N%20%3A%20%E2%84%95%20%3D%3E%20%E2%88%AB%20x%20in%20%281%20%3A%20%E2%84%9D%29..1%20%2B%20N%2C%20f%20x%29%20atTop%0A%20%20%20%20%20%20%28%F0%9D%93%9D%20%28%E2%88%AB%20x%20in%20Set.Ioi%20%281%20%3A%20%E2%84%9D%29%2C%20f%20x%29%29%20%3A%3D%0A%20%20%20%20intervalIntegral_tendsto_integral_Ioi%201%20hi%0A%20%20%20%20%20%20%28tendsto_atTop_add_const_left%20atTop%201%20tendsto_natCast_atTop_atTop%29%0A%20%20--%20%CF%84%CE%B1%20%CE%BC%CE%B5%CF%81%CE%B9%CE%BA%CE%AC%20%CE%B1%CE%B8%CF%81%CE%BF%CE%AF%CF%83%CE%BC%CE%B1%CF%84%CE%B1%20f%281%29%20%2B%20%E2%80%A6%20%2B%20f%28N%29%20%CF%84%CE%B5%CE%AF%CE%BD%CE%BF%CF%85%CE%BD%20%CF%83%CF%84%CE%BF%20%CE%AC%CE%B8%CF%81%CE%BF%CE%B9%CF%83%CE%BC%CE%B1%20%CF%84%CE%B7%CF%82%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%CF%82%0A%20%20have%20hS%20%3A%20Tendsto%20%28fun%20N%20%3D%3E%20%E2%88%91%20i%20%E2%88%88%20Finset.range%20N%2C%20f%20%281%20%2B%20i%29%29%20atTop%0A%20%20%20%20%20%20%28%F0%9D%93%9D%20%28%E2%88%91'%20n%20%3A%20%E2%84%95%2C%20f%20%28n%20%2B%201%29%29%29%20%3A%3D%20by%0A%20%20%20%20have%20h%20%3A%3D%20hs.hasSum.tendsto_sum_nat%0A%20%20%20%20simp%20only%20%5Badd_comm%20%281%20%3A%20%E2%84%9D%29%5D%0A%20%20%20%20exact%20h%0A%20%20have%20hS1%20%3A%20Tendsto%20%28fun%20N%20%3A%20%E2%84%95%20%3D%3E%20%E2%88%91%20i%20%E2%88%88%20Finset.range%20%28N%20%2B%201%29%2C%20f%20%281%20%2B%20i%29%29%20atTop%0A%20%20%20%20%20%20%28%F0%9D%93%9D%20%28%E2%88%91'%20n%20%3A%20%E2%84%95%2C%20f%20%28n%20%2B%201%29%29%29%20%3A%3D%0A%20%20%20%20hS.comp%20%28tendsto_add_atTop_nat%201%29%0A%20%20--%20f%281%29%20%2B%20f%282%29%20%2B%20%E2%80%A6%20%2B%20f%28N%20%2B%201%29%20%E2%89%A4%20f%281%29%20%2B%20%E2%88%AB%20%CE%B1%CF%80%CF%8C%201%20%CE%AD%CF%89%CF%82%201%20%2B%20N%0A%20%20have%20h2%20%3A%20%E2%88%80%20N%20%3A%20%E2%84%95%2C%20%E2%88%91%20i%20%E2%88%88%20Finset.range%20%28N%20%2B%201%29%2C%20f%20%281%20%2B%20i%29%20%E2%89%A4%20f%201%20%2B%20%E2%88%AB%20x%20in%20%281%20%3A%20%E2%84%9D%29..1%20%2B%20N%2C%20f%20x%20%3A%3D%20by%0A%20%20%20%20intro%20N%0A%20%20%20%20rw%20%5BFinset.sum_range_succ'%2C%20Nat.cast_zero%2C%20add_zero%5D%0A%20%20%20%20linarith%20%5Bpartial_sum_le_integral%20f%20hf%20N%5D%0A%20%20exact%20%E2%9F%A8le_of_tendsto_of_tendsto'%20hI%20hS%20%28integral_le_partial_sum%20f%20hf%29%2C%0A%20%20%20%20le_of_tendsto_of_tendsto'%20hS1%20%28hI.const_add%20%28f%201%29%29%20h2%E2%9F%A9%0A%0Aend%20%CE%9A%CE%B5%CF%8619.KritirioOloklirwmatos%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Stewart, J. (2016). <em>Calculus: Early Transcendentals</em> (8th ed.). Cengage Learning.</li><li>Bartle, R. G., &amp; Sherbert, D. R. (2011). <em>Introduction to Real Analysis</em> (4th ed.). Wiley.</li><li>Rudin, W. (1976). <em>Principles of Mathematical Analysis</em> (3rd ed.). McGraw-Hill.</li><li>Νεγρεπόντης, Σ., Γιωτόπουλος, Σ., &amp; Γιαννακούλιας, Ε. (1999). <em>Απειροστικός Λογισμός</em> (Τόμ. Ι). Εκδόσεις Συμμετρία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>

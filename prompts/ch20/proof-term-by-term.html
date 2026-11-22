@@ -2,23 +2,89 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Παραγώγιση και Ολοκλήρωση Σειρών Δυνάμεων</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
-<div class="stmt"><span class="lbl">Εκφώνηση</span>Έστω $f(x)=\sum_{n=0}^{\infty}c_n(x-x_0)^n$ με ακτίνα σύγκλισης $R>0$. Τότε για $|x-x_0|&lt;R$ η $f$ είναι παραγωγίσιμη και $f′(x)=\sum_{n=1}^{\infty} n\,c_n(x-x_0)^{n-1}$, $\int f(x)\,dx=C+\sum_{n=0}^{\infty}\dfrac{c_n}{n+1}(x-x_0)^{n+1}$, με την ίδια ακτίνα σύγκλισης $R$.</div>
-<p>Διάλεξε βοηθό &mdash; θα ανοίξει με το ερώτημα έτοιμο:</p>
+<p class="sub">Κεφάλαιο 20 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
+<div class="stmt"><span class="lbl">Εκφώνηση</span>Έστω $f(x)$<wbr>${}=\sum_{n=0}^{\infty}c_n(x-x_0)^n$ με ακτίνα σύγκλισης $R>0$. Τότε για $|x-x_0|&lt;R$ η $f$ είναι παραγωγίσιμη και $f′(x)$<wbr>${}=\sum_{n=1}^{\infty} n\,c_n(x-x_0)^{n-1}$, $\int f(x)\,dx$<wbr>${}=C$<wbr>${}+\sum_{n=0}^{\infty}\dfrac{c_n}{n+1}(x-x_0)^{n+1}$, με την ίδια ακτίνα σύγκλισης $R$.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
+<p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%88%CF%83%CF%84%CF%89%20%24f%28x%29%3D%5Csum_%7Bn%3D0%7D%5E%7B%5Cinfty%7Dc_n%28x-x_0%29%5En%24%20%CE%BC%CE%B5%20%CE%B1%CE%BA%CF%84%CE%AF%CE%BD%CE%B1%20%CF%83%CF%8D%CE%B3%CE%BA%CE%BB%CE%B9%CF%83%CE%B7%CF%82%20%24R%3E0%24.%20%CE%A4%CF%8C%CF%84%CE%B5%20%CE%B3%CE%B9%CE%B1%20%24%7Cx-x_0%7C%3CR%24%20%CE%B7%20%24f%24%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%80%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%AF%CF%83%CE%B9%CE%BC%CE%B7%20%CE%BA%CE%B1%CE%B9%20%24f%E2%80%B2%28x%29%3D%5Csum_%7Bn%3D1%7D%5E%7B%5Cinfty%7D%20n%5C%2Cc_n%28x-x_0%29%5E%7Bn-1%7D%24%2C%20%24%5Cint%20f%28x%29%5C%2Cdx%3DC%2B%5Csum_%7Bn%3D0%7D%5E%7B%5Cinfty%7D%5Cdfrac%7Bc_n%7D%7Bn%2B1%7D%28x-x_0%29%5E%7Bn%2B1%7D%24%2C%20%CE%BC%CE%B5%20%CF%84%CE%B7%CE%BD%20%CE%AF%CE%B4%CE%B9%CE%B1%20%CE%B1%CE%BA%CF%84%CE%AF%CE%BD%CE%B1%20%CF%83%CF%8D%CE%B3%CE%BA%CE%BB%CE%B9%CF%83%CE%B7%CF%82%20%24R%24.">ChatGPT</a>
 <a class="btn c" href="https://claude.ai/new?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%88%CF%83%CF%84%CF%89%20%24f%28x%29%3D%5Csum_%7Bn%3D0%7D%5E%7B%5Cinfty%7Dc_n%28x-x_0%29%5En%24%20%CE%BC%CE%B5%20%CE%B1%CE%BA%CF%84%CE%AF%CE%BD%CE%B1%20%CF%83%CF%8D%CE%B3%CE%BA%CE%BB%CE%B9%CF%83%CE%B7%CF%82%20%24R%3E0%24.%20%CE%A4%CF%8C%CF%84%CE%B5%20%CE%B3%CE%B9%CE%B1%20%24%7Cx-x_0%7C%3CR%24%20%CE%B7%20%24f%24%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%80%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%AF%CF%83%CE%B9%CE%BC%CE%B7%20%CE%BA%CE%B1%CE%B9%20%24f%E2%80%B2%28x%29%3D%5Csum_%7Bn%3D1%7D%5E%7B%5Cinfty%7D%20n%5C%2Cc_n%28x-x_0%29%5E%7Bn-1%7D%24%2C%20%24%5Cint%20f%28x%29%5C%2Cdx%3DC%2B%5Csum_%7Bn%3D0%7D%5E%7B%5Cinfty%7D%5Cdfrac%7Bc_n%7D%7Bn%2B1%7D%28x-x_0%29%5E%7Bn%2B1%7D%24%2C%20%CE%BC%CE%B5%20%CF%84%CE%B7%CE%BD%20%CE%AF%CE%B4%CE%B9%CE%B1%20%CE%B1%CE%BA%CF%84%CE%AF%CE%BD%CE%B1%20%CF%83%CF%8D%CE%B3%CE%BA%CE%BB%CE%B9%CF%83%CE%B7%CF%82%20%24R%24.">Claude</a>
@@ -27,6 +93,155 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Έστω $f(x)=\sum_{n=0}^{\infty}c_n(x-x_0)^n$ με ακτίνα σύγκλισης $R>0$. Τότε για $|x-x_0|&lt;R$ η $f$ είναι παραγωγίσιμη και $f′(x)=\sum_{n=1}^{\infty} n\,c_n(x-x_0)^{n-1}$, $\int f(x)\,dx=C+\sum_{n=0}^{\infty}\dfrac{c_n}{n+1}(x-x_0)^{n+1}$, με την ίδια ακτίνα σύγκλισης $R$.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Οι διατυπώσεις αποδείχθηκαν στον Lean 4, με βάση θεωρήματα της Mathlib, χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 23/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Για $|x-x_0|\lt R$ η παραγωγισμένη σειρά $\sum_{n=1}^{\infty}n\,c_n(x-x_0)^{n-1}$ συγκλίνει</div><pre class="ln"><span class="kw">theorem</span> deriv_series_summable (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    Summable (<span class="kw">fun</span> n =&gt; (n + 1) * c (n + 1) * (x - x₀) ^ n)</pre></li><li><div class="bk">Για $|x-x_0|\lt R$: $f'(x)$<wbr>${}=\sum_{n=1}^{\infty}n\,c_n(x-x_0)^{n-1}$</div><pre class="ln"><span class="kw">theorem</span> deriv_term_by_term (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    HasDerivAt (<span class="kw">fun</span> y =&gt; ∑&#x27; n, c n * (y - x₀) ^ n)
+      (∑&#x27; n, (n + 1) * c (n + 1) * (x - x₀) ^ n) x</pre></li><li><div class="bk">Για $|x-x_0|\lt R$ η ολοκληρωμένη σειρά $\sum_{n=0}^{\infty}\dfrac{c_n}{n+1}(x-x_0)^{n+1}$ συγκλίνει απολύτως</div><pre class="ln"><span class="kw">theorem</span> integral_series_summable (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    Summable (<span class="kw">fun</span> n =&gt; |c n / (n + 1) * (x - x₀) ^ (n + 1)|)</pre></li><li><div class="bk">Για $|x-x_0|\lt R$ η $G(x)$<wbr>${}=\sum_{n=0}^{\infty}\dfrac{c_n}{n+1}(x-x_0)^{n+1}$ έχει παράγωγο $f(x)$, δηλαδή $\int f(x)\,dx=C+G(x)$</div><pre class="ln"><span class="kw">theorem</span> integral_term_by_term (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    HasDerivAt (<span class="kw">fun</span> y =&gt; ∑&#x27; n, c n / (n + 1) * (y - x₀) ^ (n + 1))
+      (∑&#x27; n, c n * (x - x₀) ^ n) x</pre></li></ul>
+<p class="note">Η σειρά δυνάμεων $\sum c_n y^n$ και η ακτίνα σύγκλισής της $R$ γράφονται όπως στον τύπο Cauchy–Hadamard: <code>FormalMultilinearSeries.ofScalars ℝ c</code> και <code>.radius</code>, με $y=x-x_0$ και το $|x-x_0|$ ως <code>‖x - x₀‖ₑ</code>. Η $f(x)$<wbr>${}=\sum_{n=0}^{\infty}c_n(x-x_0)^n$ γράφεται <code>fun y => ∑' n, c n * (y - x₀) ^ n</code>. Η παραγωγισμένη σειρά γράφεται με αρίθμηση από το $0$, ως $\sum_{n=0}^{\infty}(n+1)\,c_{n+1}(x-x_0)^n$, που είναι η $\sum_{n=1}^{\infty}n\,c_n(x-x_0)^{n-1}$ του βιβλίου. Το $\int f(x)\,dx=C+G(x)$ σημαίνει ότι η $G$ είναι αντιπαράγωγος της $f$, δηλαδή ότι $G'(x)=f(x)$, και έτσι διατυπώνεται. Η παραγώγιση χρησιμοποιεί το θεώρημα της Mathlib για σειρές δυνάμεων. Η ολοκλήρωση αποδεικνύεται με παραγώγιση όρο προς όρο στο διάστημα $|y-x_0|\lt r$, για κάποιο $r$ με $|x-x_0|\lt r\lt R$, όπου οι παράγωγοι των όρων φράσσονται από τους όρους $|c_n|\,r^n$ μιας συγκλίνουσας σειράς. Ότι οι δύο νέες σειρές συγκλίνουν για $|x-x_0|\lt R$ σημαίνει ότι η ακτίνα σύγκλισής τους είναι τουλάχιστον $R$· ότι είναι ακριβώς $R$, δηλαδή ότι αποκλίνουν για $|x-x_0|\gt R$, δεν διατυπώνεται εδώ.</p>
+<h2>2. Πού βρίσκεται στη Mathlib</h2>
+<p class="note">Χρησιμοποιήσαμε τα εξής θεωρήματα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=FormalMultilinearSeries.hasDerivAt_sum#doc" target="_blank" rel="noopener"><code>FormalMultilinearSeries.hasDerivAt_sum</code></a>: η παράγωγος του αθροίσματος μιας σειράς δυνάμεων, όρο προς όρο.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=FormalMultilinearSeries.derivSeries_coeff_one#doc" target="_blank" rel="noopener"><code>FormalMultilinearSeries.derivSeries_coeff_one</code></a>: οι συντελεστές της παραγωγισμένης σειράς είναι $(n+1)\,c_{n+1}$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=FormalMultilinearSeries.radius_le_radius_derivSeries#doc" target="_blank" rel="noopener"><code>FormalMultilinearSeries.radius_le_radius_derivSeries</code></a>: η παραγωγισμένη σειρά έχει ακτίνα τουλάχιστον $R$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=FormalMultilinearSeries.ofScalars_apply_eq#doc" target="_blank" rel="noopener"><code>FormalMultilinearSeries.ofScalars_apply_eq</code></a>: ο $n$-οστός όρος της σειράς είναι $c_n y^n$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.comp_sub_const#doc" target="_blank" rel="noopener"><code>HasDerivAt.comp_sub_const</code></a>: η μετατόπιση $y=x-x_0$ δεν αλλάζει την παράγωγο.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=FormalMultilinearSeries.summable_norm_mul_pow#doc" target="_blank" rel="noopener"><code>FormalMultilinearSeries.summable_norm_mul_pow</code></a>: για $r\lt R$ η $\sum|c_n|\,r^n$ συγκλίνει.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=ENNReal.lt_iff_exists_nnreal_btwn#doc" target="_blank" rel="noopener"><code>ENNReal.lt_iff_exists_nnreal_btwn</code></a>: ανάμεσα στο $|x-x_0|$ και στο $R$ υπάρχει πραγματικός $r$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=hasDerivAt_tsum_of_isPreconnected#doc" target="_blank" rel="noopener"><code>hasDerivAt_tsum_of_isPreconnected</code></a>: παραγώγιση σειράς συναρτήσεων όρο προς όρο σε διάστημα, όταν οι παράγωγοι των όρων φράσσονται από τους όρους συγκλίνουσας σειράς.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=hasDerivAt_pow#doc" target="_blank" rel="noopener"><code>hasDerivAt_pow</code></a>: η παράγωγος του $y^{n+1}$ είναι $(n+1)\,y^n$.</li></ul>
+<h2>3. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (98 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 20 · Παραγώγιση και Ολοκλήρωση Σειρών Δυνάμεων · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (23/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ20.OroProsOro
+<span class="kw">open</span> Filter Topology
+<span class="kw">open</span> <span class="kw">scoped</span> NNReal ENNReal
+
+<span class="cm">-- f(x) = Σ cₙ (x - x₀)ⁿ, και R η ακτίνα σύγκλισης της σειράς δυνάμεων Σ cₙ yⁿ</span>
+<span class="cm">-- η παραγωγισμένη σειρά Σ (n + 1) cₙ₊₁ (x - x₀)ⁿ, δηλαδή Σ n cₙ (x - x₀)ⁿ⁻¹, συγκλίνει</span>
+<span class="kw">theorem</span> deriv_series_summable (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    Summable (<span class="kw">fun</span> n =&gt; (n + 1) * c (n + 1) * (x - x₀) ^ n) := <span class="kw">by</span>
+  <span class="tc">set</span> p := FormalMultilinearSeries.ofScalars ℝ c <span class="kw">with</span> hp
+  <span class="kw">have</span> hs : Summable <span class="kw">fun</span> n =&gt; (x - x₀) ^ n • p.derivSeries.coeff n := <span class="kw">by</span>
+    <span class="tc">simpa</span> using p.derivSeries.summable &lt;|
+      Metric.eball_subset_eball p.radius_le_radius_derivSeries &lt;| <span class="kw">by</span> <span class="tc">simpa</span> using hx
+  <span class="kw">have</span> h1 := (ContinuousLinearMap.apply ℝ ℝ (1 : ℝ)).summable hs
+  <span class="tc">simp</span> only [ContinuousLinearMap.apply_apply, smul_apply,
+    FormalMultilinearSeries.derivSeries_coeff_one, hp, FormalMultilinearSeries.coeff_ofScalars,
+    smul_eq_mul, nsmul_eq_mul] <span class="kw">at</span> h1
+  <span class="tc">refine</span> h1.congr <span class="kw">fun</span> n =&gt; ?_
+  <span class="tc">push_cast</span>
+  <span class="tc">ring</span>
+
+<span class="cm">-- παραγώγιση όρο προς όρο: f&#x27;(x) = Σ (n + 1) cₙ₊₁ (x - x₀)ⁿ</span>
+<span class="kw">theorem</span> deriv_term_by_term (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    HasDerivAt (<span class="kw">fun</span> y =&gt; ∑&#x27; n, c n * (y - x₀) ^ n)
+      (∑&#x27; n, (n + 1) * c (n + 1) * (x - x₀) ^ n) x := <span class="kw">by</span>
+  <span class="kw">have</span> h := (FormalMultilinearSeries.ofScalars ℝ c).hasDerivAt_sum hx
+  <span class="cm">-- το άθροισμα της σειράς δυνάμεων στο y είναι Σ cₙ yⁿ</span>
+  <span class="kw">have</span> hsum : (FormalMultilinearSeries.ofScalars ℝ c).sum = <span class="kw">fun</span> y =&gt; ∑&#x27; n, c n * y ^ n := <span class="kw">by</span>
+    funext y
+    <span class="tc">simp</span> only [FormalMultilinearSeries.sum, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul]
+  <span class="tc">rw</span> [hsum] <span class="kw">at</span> h
+  <span class="cm">-- μετατόπιση: y = x - x₀</span>
+  <span class="kw">have</span> h2 := h.comp_sub_const x x₀
+  convert h2 using 1
+  <span class="tc">refine</span> tsum_congr <span class="kw">fun</span> n =&gt; ?_
+  <span class="tc">simp</span> only [FormalMultilinearSeries.coeff_ofScalars, smul_eq_mul, nsmul_eq_mul]
+  <span class="tc">push_cast</span>
+  <span class="tc">ring</span>
+
+<span class="cm">-- η ολοκληρωμένη σειρά Σ cₙ/(n + 1) (x - x₀)ⁿ⁺¹ συγκλίνει απολύτως</span>
+<span class="kw">theorem</span> integral_series_summable (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    Summable (<span class="kw">fun</span> n =&gt; |c n / (n + 1) * (x - x₀) ^ (n + 1)|) := <span class="kw">by</span>
+  <span class="kw">have</span> h := (FormalMultilinearSeries.ofScalars ℝ c).summable_norm_mul_pow hx
+  <span class="tc">simp</span> only [FormalMultilinearSeries.ofScalars_norm, coe_nnNorm, Real.norm_eq_abs] <span class="kw">at</span> h
+  <span class="tc">refine</span> Summable.of_nonneg_of_le (<span class="kw">fun</span> n =&gt; abs_nonneg _) (<span class="kw">fun</span> n =&gt; ?_) (h.mul_left |x - x₀|)
+  <span class="cm">-- |cₙ/(n + 1)| |x - x₀|ⁿ⁺¹ ≤ |x - x₀| · |cₙ| |x - x₀|ⁿ</span>
+  <span class="kw">have</span> h1 : |(n : ℝ) + 1| = (n : ℝ) + 1 := abs_of_pos (<span class="kw">by</span> <span class="tc">positivity</span>)
+  <span class="kw">have</span> h2 : |c n| / ((n : ℝ) + 1) ≤ |c n| :=
+    div_le_self (abs_nonneg _) (<span class="kw">by</span> <span class="tc">linarith</span> [(Nat.cast_nonneg n : (0 : ℝ) ≤ n)])
+  <span class="tc">rw</span> [abs_mul, abs_div, abs_pow, h1, pow_succ]
+  <span class="kw">calc</span> |c n| / ((n : ℝ) + 1) * (|x - x₀| ^ n * |x - x₀|)
+      ≤ |c n| * (|x - x₀| ^ n * |x - x₀|) := mul_le_mul_of_nonneg_right h2 (<span class="kw">by</span> <span class="tc">positivity</span>)
+    _ = |x - x₀| * (|c n| * |x - x₀| ^ n) := <span class="kw">by</span> <span class="tc">ring</span>
+
+<span class="cm">-- ολοκλήρωση όρο προς όρο: η G(x) = Σ cₙ/(n + 1) (x - x₀)ⁿ⁺¹ έχει παράγωγο f(x)</span>
+<span class="kw">theorem</span> integral_term_by_term (c : ℕ → ℝ) (x₀ x : ℝ)
+    (hx : ‖x - x₀‖ₑ &lt; (FormalMultilinearSeries.ofScalars ℝ c).radius) :
+    HasDerivAt (<span class="kw">fun</span> y =&gt; ∑&#x27; n, c n / (n + 1) * (y - x₀) ^ (n + 1))
+      (∑&#x27; n, c n * (x - x₀) ^ n) x := <span class="kw">by</span>
+  <span class="cm">-- διαλέγουμε r με |x - x₀| &lt; r &lt; R</span>
+  <span class="tc">obtain</span> ⟨r, hr1, hr2⟩ := ENNReal.lt_iff_exists_nnreal_btwn.mp hx
+  <span class="kw">have</span> hxr : |x - x₀| &lt; r := <span class="kw">by</span>
+    <span class="kw">have</span> h : ‖x - x₀‖₊ &lt; r := ENNReal.coe_lt_coe.mp hr1
+    <span class="tc">rw</span> [← Real.norm_eq_abs, ← coe_nnNorm]
+    <span class="tc">exact_mod_cast</span> h
+  <span class="cm">-- η σειρά Σ |cₙ| rⁿ συγκλίνει, γιατί r &lt; R</span>
+  <span class="kw">have</span> hu : Summable (<span class="kw">fun</span> n =&gt; |c n| * (r : ℝ) ^ n) := <span class="kw">by</span>
+    <span class="kw">have</span> h := (FormalMultilinearSeries.ofScalars ℝ c).summable_norm_mul_pow hr2
+    <span class="tc">simpa</span> using h
+  <span class="cm">-- παραγωγίζουμε όρο προς όρο στο διάστημα |y - x₀| &lt; r</span>
+  <span class="tc">refine</span> hasDerivAt_tsum_of_isPreconnected (g := <span class="kw">fun</span> n y =&gt; c n / (n + 1) * (y - x₀) ^ (n + 1))
+    (g&#x27; := <span class="kw">fun</span> n y =&gt; c n * (y - x₀) ^ n) hu Metric.isOpen_ball
+    (convex_ball x₀ r).isPreconnected (<span class="kw">fun</span> n y _ =&gt; ?_) (<span class="kw">fun</span> n y hy =&gt; ?_)
+    (Metric.mem_ball_self (lt_of_le_of_lt (abs_nonneg _) hxr)) ?_ ?_
+  · <span class="cm">-- κάθε όρος cₙ/(n + 1) (y - x₀)ⁿ⁺¹ έχει παράγωγο cₙ (y - x₀)ⁿ</span>
+    <span class="kw">have</span> h := ((hasDerivAt_pow (n + 1) (y - x₀)).comp_sub_const y x₀).const_mul (c n / (n + 1))
+    convert h using 1
+    <span class="tc">rw</span> [Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, ← mul_assoc,
+      div_mul_cancel₀ _ (<span class="kw">by</span> <span class="tc">positivity</span> : (n : ℝ) + 1 ≠ 0)]
+  · <span class="cm">-- φράγμα στο διάστημα: |cₙ (y - x₀)ⁿ| ≤ |cₙ| rⁿ</span>
+    <span class="tc">rw</span> [Metric.mem_ball, Real.dist_eq] <span class="kw">at</span> hy
+    <span class="tc">rw</span> [Real.norm_eq_abs, abs_mul, abs_pow]
+    <span class="tc">exact</span> mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (abs_nonneg _) hy.le n) (abs_nonneg _)
+  · <span class="cm">-- στο κέντρο x₀ όλοι οι όροι είναι 0</span>
+    <span class="tc">simp</span>
+  · <span class="tc">rw</span> [Metric.mem_ball, Real.dist_eq]
+    <span class="tc">exact</span> hxr
+
+<span class="kw">end</span> Κεφ20.OroProsOro
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2020%20%C2%B7%20%CE%A0%CE%B1%CF%81%CE%B1%CE%B3%CF%8E%CE%B3%CE%B9%CF%83%CE%B7%20%CE%BA%CE%B1%CE%B9%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%AE%CF%81%CF%89%CF%83%CE%B7%20%CE%A3%CE%B5%CE%B9%CF%81%CF%8E%CE%BD%20%CE%94%CF%85%CE%BD%CE%AC%CE%BC%CE%B5%CF%89%CE%BD%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2823%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8620.OroProsOro%0Aopen%20Filter%20Topology%0Aopen%20scoped%20NNReal%20ENNReal%0A%0A--%20f%28x%29%20%3D%20%CE%A3%20c%E2%82%99%20%28x%20-%20x%E2%82%80%29%E2%81%BF%2C%20%CE%BA%CE%B1%CE%B9%20R%20%CE%B7%20%CE%B1%CE%BA%CF%84%CE%AF%CE%BD%CE%B1%20%CF%83%CF%8D%CE%B3%CE%BA%CE%BB%CE%B9%CF%83%CE%B7%CF%82%20%CF%84%CE%B7%CF%82%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%CF%82%20%CE%B4%CF%85%CE%BD%CE%AC%CE%BC%CE%B5%CF%89%CE%BD%20%CE%A3%20c%E2%82%99%20y%E2%81%BF%0A--%20%CE%B7%20%CF%80%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CF%83%CE%BC%CE%AD%CE%BD%CE%B7%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%20%CE%A3%20%28n%20%2B%201%29%20c%E2%82%99%E2%82%8A%E2%82%81%20%28x%20-%20x%E2%82%80%29%E2%81%BF%2C%20%CE%B4%CE%B7%CE%BB%CE%B1%CE%B4%CE%AE%20%CE%A3%20n%20c%E2%82%99%20%28x%20-%20x%E2%82%80%29%E2%81%BF%E2%81%BB%C2%B9%2C%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%0Atheorem%20deriv_series_summable%20%28c%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20x%20%3A%20%E2%84%9D%29%0A%20%20%20%20%28hx%20%3A%20%E2%80%96x%20-%20x%E2%82%80%E2%80%96%E2%82%91%20%3C%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.radius%29%20%3A%0A%20%20%20%20Summable%20%28fun%20n%20%3D%3E%20%28n%20%2B%201%29%20*%20c%20%28n%20%2B%201%29%20*%20%28x%20-%20x%E2%82%80%29%20%5E%20n%29%20%3A%3D%20by%0A%20%20set%20p%20%3A%3D%20FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%20with%20hp%0A%20%20have%20hs%20%3A%20Summable%20fun%20n%20%3D%3E%20%28x%20-%20x%E2%82%80%29%20%5E%20n%20%E2%80%A2%20p.derivSeries.coeff%20n%20%3A%3D%20by%0A%20%20%20%20simpa%20using%20p.derivSeries.summable%20%3C%7C%0A%20%20%20%20%20%20Metric.eball_subset_eball%20p.radius_le_radius_derivSeries%20%3C%7C%20by%20simpa%20using%20hx%0A%20%20have%20h1%20%3A%3D%20%28ContinuousLinearMap.apply%20%E2%84%9D%20%E2%84%9D%20%281%20%3A%20%E2%84%9D%29%29.summable%20hs%0A%20%20simp%20only%20%5BContinuousLinearMap.apply_apply%2C%20smul_apply%2C%0A%20%20%20%20FormalMultilinearSeries.derivSeries_coeff_one%2C%20hp%2C%20FormalMultilinearSeries.coeff_ofScalars%2C%0A%20%20%20%20smul_eq_mul%2C%20nsmul_eq_mul%5D%20at%20h1%0A%20%20refine%20h1.congr%20fun%20n%20%3D%3E%20%3F_%0A%20%20push_cast%0A%20%20ring%0A%0A--%20%CF%80%CE%B1%CF%81%CE%B1%CE%B3%CF%8E%CE%B3%CE%B9%CF%83%CE%B7%20%CF%8C%CF%81%CE%BF%20%CF%80%CF%81%CE%BF%CF%82%20%CF%8C%CF%81%CE%BF%3A%20f'%28x%29%20%3D%20%CE%A3%20%28n%20%2B%201%29%20c%E2%82%99%E2%82%8A%E2%82%81%20%28x%20-%20x%E2%82%80%29%E2%81%BF%0Atheorem%20deriv_term_by_term%20%28c%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20x%20%3A%20%E2%84%9D%29%0A%20%20%20%20%28hx%20%3A%20%E2%80%96x%20-%20x%E2%82%80%E2%80%96%E2%82%91%20%3C%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.radius%29%20%3A%0A%20%20%20%20HasDerivAt%20%28fun%20y%20%3D%3E%20%E2%88%91'%20n%2C%20c%20n%20*%20%28y%20-%20x%E2%82%80%29%20%5E%20n%29%0A%20%20%20%20%20%20%28%E2%88%91'%20n%2C%20%28n%20%2B%201%29%20*%20c%20%28n%20%2B%201%29%20*%20%28x%20-%20x%E2%82%80%29%20%5E%20n%29%20x%20%3A%3D%20by%0A%20%20have%20h%20%3A%3D%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.hasDerivAt_sum%20hx%0A%20%20--%20%CF%84%CE%BF%20%CE%AC%CE%B8%CF%81%CE%BF%CE%B9%CF%83%CE%BC%CE%B1%20%CF%84%CE%B7%CF%82%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%CF%82%20%CE%B4%CF%85%CE%BD%CE%AC%CE%BC%CE%B5%CF%89%CE%BD%20%CF%83%CF%84%CE%BF%20y%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%A3%20c%E2%82%99%20y%E2%81%BF%0A%20%20have%20hsum%20%3A%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.sum%20%3D%20fun%20y%20%3D%3E%20%E2%88%91'%20n%2C%20c%20n%20*%20y%20%5E%20n%20%3A%3D%20by%0A%20%20%20%20funext%20y%0A%20%20%20%20simp%20only%20%5BFormalMultilinearSeries.sum%2C%20FormalMultilinearSeries.ofScalars_apply_eq%2C%20smul_eq_mul%5D%0A%20%20rw%20%5Bhsum%5D%20at%20h%0A%20%20--%20%CE%BC%CE%B5%CF%84%CE%B1%CF%84%CF%8C%CF%80%CE%B9%CF%83%CE%B7%3A%20y%20%3D%20x%20-%20x%E2%82%80%0A%20%20have%20h2%20%3A%3D%20h.comp_sub_const%20x%20x%E2%82%80%0A%20%20convert%20h2%20using%201%0A%20%20refine%20tsum_congr%20fun%20n%20%3D%3E%20%3F_%0A%20%20simp%20only%20%5BFormalMultilinearSeries.coeff_ofScalars%2C%20smul_eq_mul%2C%20nsmul_eq_mul%5D%0A%20%20push_cast%0A%20%20ring%0A%0A--%20%CE%B7%20%CE%BF%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CE%BC%CE%AD%CE%BD%CE%B7%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%20%CE%A3%20c%E2%82%99%2F%28n%20%2B%201%29%20%28x%20-%20x%E2%82%80%29%E2%81%BF%E2%81%BA%C2%B9%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%20%CE%B1%CF%80%CE%BF%CE%BB%CF%8D%CF%84%CF%89%CF%82%0Atheorem%20integral_series_summable%20%28c%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20x%20%3A%20%E2%84%9D%29%0A%20%20%20%20%28hx%20%3A%20%E2%80%96x%20-%20x%E2%82%80%E2%80%96%E2%82%91%20%3C%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.radius%29%20%3A%0A%20%20%20%20Summable%20%28fun%20n%20%3D%3E%20%7Cc%20n%20%2F%20%28n%20%2B%201%29%20*%20%28x%20-%20x%E2%82%80%29%20%5E%20%28n%20%2B%201%29%7C%29%20%3A%3D%20by%0A%20%20have%20h%20%3A%3D%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.summable_norm_mul_pow%20hx%0A%20%20simp%20only%20%5BFormalMultilinearSeries.ofScalars_norm%2C%20coe_nnNorm%2C%20Real.norm_eq_abs%5D%20at%20h%0A%20%20refine%20Summable.of_nonneg_of_le%20%28fun%20n%20%3D%3E%20abs_nonneg%20_%29%20%28fun%20n%20%3D%3E%20%3F_%29%20%28h.mul_left%20%7Cx%20-%20x%E2%82%80%7C%29%0A%20%20--%20%7Cc%E2%82%99%2F%28n%20%2B%201%29%7C%20%7Cx%20-%20x%E2%82%80%7C%E2%81%BF%E2%81%BA%C2%B9%20%E2%89%A4%20%7Cx%20-%20x%E2%82%80%7C%20%C2%B7%20%7Cc%E2%82%99%7C%20%7Cx%20-%20x%E2%82%80%7C%E2%81%BF%0A%20%20have%20h1%20%3A%20%7C%28n%20%3A%20%E2%84%9D%29%20%2B%201%7C%20%3D%20%28n%20%3A%20%E2%84%9D%29%20%2B%201%20%3A%3D%20abs_of_pos%20%28by%20positivity%29%0A%20%20have%20h2%20%3A%20%7Cc%20n%7C%20%2F%20%28%28n%20%3A%20%E2%84%9D%29%20%2B%201%29%20%E2%89%A4%20%7Cc%20n%7C%20%3A%3D%0A%20%20%20%20div_le_self%20%28abs_nonneg%20_%29%20%28by%20linarith%20%5B%28Nat.cast_nonneg%20n%20%3A%20%280%20%3A%20%E2%84%9D%29%20%E2%89%A4%20n%29%5D%29%0A%20%20rw%20%5Babs_mul%2C%20abs_div%2C%20abs_pow%2C%20h1%2C%20pow_succ%5D%0A%20%20calc%20%7Cc%20n%7C%20%2F%20%28%28n%20%3A%20%E2%84%9D%29%20%2B%201%29%20*%20%28%7Cx%20-%20x%E2%82%80%7C%20%5E%20n%20*%20%7Cx%20-%20x%E2%82%80%7C%29%0A%20%20%20%20%20%20%E2%89%A4%20%7Cc%20n%7C%20*%20%28%7Cx%20-%20x%E2%82%80%7C%20%5E%20n%20*%20%7Cx%20-%20x%E2%82%80%7C%29%20%3A%3D%20mul_le_mul_of_nonneg_right%20h2%20%28by%20positivity%29%0A%20%20%20%20_%20%3D%20%7Cx%20-%20x%E2%82%80%7C%20*%20%28%7Cc%20n%7C%20*%20%7Cx%20-%20x%E2%82%80%7C%20%5E%20n%29%20%3A%3D%20by%20ring%0A%0A--%20%CE%BF%CE%BB%CE%BF%CE%BA%CE%BB%CE%AE%CF%81%CF%89%CF%83%CE%B7%20%CF%8C%CF%81%CE%BF%20%CF%80%CF%81%CE%BF%CF%82%20%CF%8C%CF%81%CE%BF%3A%20%CE%B7%20G%28x%29%20%3D%20%CE%A3%20c%E2%82%99%2F%28n%20%2B%201%29%20%28x%20-%20x%E2%82%80%29%E2%81%BF%E2%81%BA%C2%B9%20%CE%AD%CF%87%CE%B5%CE%B9%20%CF%80%CE%B1%CF%81%CE%AC%CE%B3%CF%89%CE%B3%CE%BF%20f%28x%29%0Atheorem%20integral_term_by_term%20%28c%20%3A%20%E2%84%95%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20x%20%3A%20%E2%84%9D%29%0A%20%20%20%20%28hx%20%3A%20%E2%80%96x%20-%20x%E2%82%80%E2%80%96%E2%82%91%20%3C%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.radius%29%20%3A%0A%20%20%20%20HasDerivAt%20%28fun%20y%20%3D%3E%20%E2%88%91'%20n%2C%20c%20n%20%2F%20%28n%20%2B%201%29%20*%20%28y%20-%20x%E2%82%80%29%20%5E%20%28n%20%2B%201%29%29%0A%20%20%20%20%20%20%28%E2%88%91'%20n%2C%20c%20n%20*%20%28x%20-%20x%E2%82%80%29%20%5E%20n%29%20x%20%3A%3D%20by%0A%20%20--%20%CE%B4%CE%B9%CE%B1%CE%BB%CE%AD%CE%B3%CE%BF%CF%85%CE%BC%CE%B5%20r%20%CE%BC%CE%B5%20%7Cx%20-%20x%E2%82%80%7C%20%3C%20r%20%3C%20R%0A%20%20obtain%20%E2%9F%A8r%2C%20hr1%2C%20hr2%E2%9F%A9%20%3A%3D%20ENNReal.lt_iff_exists_nnreal_btwn.mp%20hx%0A%20%20have%20hxr%20%3A%20%7Cx%20-%20x%E2%82%80%7C%20%3C%20r%20%3A%3D%20by%0A%20%20%20%20have%20h%20%3A%20%E2%80%96x%20-%20x%E2%82%80%E2%80%96%E2%82%8A%20%3C%20r%20%3A%3D%20ENNReal.coe_lt_coe.mp%20hr1%0A%20%20%20%20rw%20%5B%E2%86%90%20Real.norm_eq_abs%2C%20%E2%86%90%20coe_nnNorm%5D%0A%20%20%20%20exact_mod_cast%20h%0A%20%20--%20%CE%B7%20%CF%83%CE%B5%CE%B9%CF%81%CE%AC%20%CE%A3%20%7Cc%E2%82%99%7C%20r%E2%81%BF%20%CF%83%CF%85%CE%B3%CE%BA%CE%BB%CE%AF%CE%BD%CE%B5%CE%B9%2C%20%CE%B3%CE%B9%CE%B1%CF%84%CE%AF%20r%20%3C%20R%0A%20%20have%20hu%20%3A%20Summable%20%28fun%20n%20%3D%3E%20%7Cc%20n%7C%20*%20%28r%20%3A%20%E2%84%9D%29%20%5E%20n%29%20%3A%3D%20by%0A%20%20%20%20have%20h%20%3A%3D%20%28FormalMultilinearSeries.ofScalars%20%E2%84%9D%20c%29.summable_norm_mul_pow%20hr2%0A%20%20%20%20simpa%20using%20h%0A%20%20--%20%CF%80%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%AF%CE%B6%CE%BF%CF%85%CE%BC%CE%B5%20%CF%8C%CF%81%CE%BF%20%CF%80%CF%81%CE%BF%CF%82%20%CF%8C%CF%81%CE%BF%20%CF%83%CF%84%CE%BF%20%CE%B4%CE%B9%CE%AC%CF%83%CF%84%CE%B7%CE%BC%CE%B1%20%7Cy%20-%20x%E2%82%80%7C%20%3C%20r%0A%20%20refine%20hasDerivAt_tsum_of_isPreconnected%20%28g%20%3A%3D%20fun%20n%20y%20%3D%3E%20c%20n%20%2F%20%28n%20%2B%201%29%20*%20%28y%20-%20x%E2%82%80%29%20%5E%20%28n%20%2B%201%29%29%0A%20%20%20%20%28g'%20%3A%3D%20fun%20n%20y%20%3D%3E%20c%20n%20*%20%28y%20-%20x%E2%82%80%29%20%5E%20n%29%20hu%20Metric.isOpen_ball%0A%20%20%20%20%28convex_ball%20x%E2%82%80%20r%29.isPreconnected%20%28fun%20n%20y%20_%20%3D%3E%20%3F_%29%20%28fun%20n%20y%20hy%20%3D%3E%20%3F_%29%0A%20%20%20%20%28Metric.mem_ball_self%20%28lt_of_le_of_lt%20%28abs_nonneg%20_%29%20hxr%29%29%20%3F_%20%3F_%0A%20%20%C2%B7%20--%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CF%8C%CF%81%CE%BF%CF%82%20c%E2%82%99%2F%28n%20%2B%201%29%20%28y%20-%20x%E2%82%80%29%E2%81%BF%E2%81%BA%C2%B9%20%CE%AD%CF%87%CE%B5%CE%B9%20%CF%80%CE%B1%CF%81%CE%AC%CE%B3%CF%89%CE%B3%CE%BF%20c%E2%82%99%20%28y%20-%20x%E2%82%80%29%E2%81%BF%0A%20%20%20%20have%20h%20%3A%3D%20%28%28hasDerivAt_pow%20%28n%20%2B%201%29%20%28y%20-%20x%E2%82%80%29%29.comp_sub_const%20y%20x%E2%82%80%29.const_mul%20%28c%20n%20%2F%20%28n%20%2B%201%29%29%0A%20%20%20%20convert%20h%20using%201%0A%20%20%20%20rw%20%5BNat.add_sub_cancel%2C%20Nat.cast_add%2C%20Nat.cast_one%2C%20%E2%86%90%20mul_assoc%2C%0A%20%20%20%20%20%20div_mul_cancel%E2%82%80%20_%20%28by%20positivity%20%3A%20%28n%20%3A%20%E2%84%9D%29%20%2B%201%20%E2%89%A0%200%29%5D%0A%20%20%C2%B7%20--%20%CF%86%CF%81%CE%AC%CE%B3%CE%BC%CE%B1%20%CF%83%CF%84%CE%BF%20%CE%B4%CE%B9%CE%AC%CF%83%CF%84%CE%B7%CE%BC%CE%B1%3A%20%7Cc%E2%82%99%20%28y%20-%20x%E2%82%80%29%E2%81%BF%7C%20%E2%89%A4%20%7Cc%E2%82%99%7C%20r%E2%81%BF%0A%20%20%20%20rw%20%5BMetric.mem_ball%2C%20Real.dist_eq%5D%20at%20hy%0A%20%20%20%20rw%20%5BReal.norm_eq_abs%2C%20abs_mul%2C%20abs_pow%5D%0A%20%20%20%20exact%20mul_le_mul_of_nonneg_left%20%28pow_le_pow_left%E2%82%80%20%28abs_nonneg%20_%29%20hy.le%20n%29%20%28abs_nonneg%20_%29%0A%20%20%C2%B7%20--%20%CF%83%CF%84%CE%BF%20%CE%BA%CE%AD%CE%BD%CF%84%CF%81%CE%BF%20x%E2%82%80%20%CF%8C%CE%BB%CE%BF%CE%B9%20%CE%BF%CE%B9%20%CF%8C%CF%81%CE%BF%CE%B9%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%200%0A%20%20%20%20simp%0A%20%20%C2%B7%20rw%20%5BMetric.mem_ball%2C%20Real.dist_eq%5D%0A%20%20%20%20exact%20hxr%0A%0Aend%20%CE%9A%CE%B5%CF%8620.OroProsOro%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Knopp, K. (1990). <em>Theory and Application of Infinite Series</em> (2nd ed.). Dover Publications.</li><li>Φιλίππου, Γ. Ν. (2008). <em>Μαθηματικά Ανώτερης Εκπαίδευσης</em>. Εκδόσεις Ζήτη.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες&middot; επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>
