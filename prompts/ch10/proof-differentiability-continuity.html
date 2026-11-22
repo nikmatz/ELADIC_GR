@@ -2,22 +2,88 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Παραγωγισιμότητα ⇒ Συνέχεια</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
+<p class="sub">Κεφάλαιο 10 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
 <div class="stmt"><span class="lbl">Εκφώνηση</span>Αν η $f$ παραγωγίσιμη στο $x_0$, τότε είναι και συνεχής στο $x_0$. Το αντίστροφο δεν ισχύει: π.χ. η $f(x)=|x|$ είναι συνεχής στο $0$ αλλά όχι παραγωγίσιμη εκεί.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%91%CE%BD%20%CE%B7%20%24f%24%20%CF%80%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%AF%CF%83%CE%B9%CE%BC%CE%B7%20%CF%83%CF%84%CE%BF%20%24x_0%24%2C%20%CF%84%CF%8C%CF%84%CE%B5%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%CF%82%20%CF%83%CF%84%CE%BF%20%24x_0%24.%20%CE%A4%CE%BF%20%CE%B1%CE%BD%CF%84%CE%AF%CF%83%CF%84%CF%81%CE%BF%CF%86%CE%BF%20%CE%B4%CE%B5%CE%BD%20%CE%B9%CF%83%CF%87%CF%8D%CE%B5%CE%B9%3A%20%CF%80.%CF%87.%20%CE%B7%20%24f%28x%29%3D%7Cx%7C%24%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%CF%82%20%CF%83%CF%84%CE%BF%20%240%24%20%CE%B1%CE%BB%CE%BB%CE%AC%20%CF%8C%CF%87%CE%B9%20%CF%80%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%AF%CF%83%CE%B9%CE%BC%CE%B7%20%CE%B5%CE%BA%CE%B5%CE%AF.">ChatGPT</a>
@@ -27,6 +93,122 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Αν η $f$ παραγωγίσιμη στο $x_0$, τότε είναι και συνεχής στο $x_0$. Το αντίστροφο δεν ισχύει: π.χ. η $f(x)=|x|$ είναι συνεχής στο $0$ αλλά όχι παραγωγίσιμη εκεί.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Το θεώρημα και το αντιπαράδειγμα αποδείχθηκαν στον Lean 4 χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 22/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Αν η $f$ είναι παραγωγίσιμη στο $x_0$, τότε είναι συνεχής στο $x_0$</div><pre class="ln"><span class="kw">theorem</span> continuous_of_hasDeriv (f : ℝ → ℝ) (x₀ f&#x27; : ℝ) (hf : HasDerivAt f f&#x27; x₀) :
+    ContinuousAt f x₀</pre></li><li><div class="bk">Εφαρμογή: αν οι $f$ και $g$ είναι παραγωγίσιμες στο $x_0$, η $f+g$ είναι συνεχής στο $x_0$</div><pre class="ln"><span class="kw">theorem</span> sum_continuous (f g : ℝ → ℝ) (x₀ f&#x27; g&#x27; : ℝ) (hf : HasDerivAt f f&#x27; x₀)
+    (hg : HasDerivAt g g&#x27; x₀) : ContinuousAt (<span class="kw">fun</span> x =&gt; f x + g x) x₀</pre></li><li><div class="bk">Το αντίστροφο δεν ισχύει: η $|x|$ είναι συνεχής στο $0$ αλλά όχι παραγωγίσιμη εκεί</div><pre class="ln"><span class="kw">theorem</span> abs_counterexample :
+    ContinuousAt (<span class="kw">fun</span> x : ℝ =&gt; |x|) 0 ∧ ¬ DifferentiableAt ℝ (<span class="kw">fun</span> x : ℝ =&gt; |x|) 0</pre></li></ul>
+<p class="note">Το <code>HasDerivAt f f' x₀</code> σημαίνει ότι η $f$ έχει παράγωγο $f'$ στο $x_0$ και το <code>ContinuousAt f x₀</code> ότι η $f$ είναι συνεχής στο $x_0$. Η Mathlib γράφει τα όρια με την <code>Tendsto</code>: το <code>Tendsto g (𝓝[≠] x₀) (𝓝 L)</code> σημαίνει ότι $g(x)\to L$ όταν $x\to x_0$ με $x\neq x_0$. Η κλίση $\dfrac{f(x)-f(x_0)}{x-x_0}$ γράφεται <code>slope f x₀ x</code>. Η απόδειξη είναι αυτή του βιβλίου: $f(x)-f(x_0)$<wbr>${}=\dfrac{f(x)-f(x_0)}{x-x_0}\,(x-x_0)\to f'\cdot 0$<wbr>${}=0$.</p>
+<h2>2. Βήμα προς βήμα: παραγωγίσιμη $\Rightarrow$ συνεχής</h2>
+<p class="note">Η ιδέα: γράφουμε τη διαφορά $f(x)-f(x_0)$ ως γινόμενο της κλίσης επί $x-x_0$· η κλίση τείνει στο $f'$ και ο δεύτερος παράγοντας στο $0$. Ξεκινάμε από τον στόχο:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>f : ℝ → ℝ
+x₀ f&#x27; : ℝ
+hf : HasDerivAt f f&#x27; x₀
+⊢ ContinuousAt f x₀</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Μετά από κάθε βήμα δείχνουμε μόνο ό,τι άλλαξε.</p>
+<ol class="steps"><li><pre class="ln"><span class="tc">rw</span> [hasDerivAt_iff_tendsto_slope] <span class="kw">at</span> hf</pre><p>Γράφουμε την παράγωγο ως όριο: η κλίση <code>slope f x₀ x</code> τείνει στο $f'$ όταν $x\to x_0$ με $x\neq x_0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>hf : Tendsto (slope f x₀) (𝓝[≠] x₀) (𝓝 f&#x27;)
+⊢ ContinuousAt f x₀</pre></div></li><li><pre class="ln"><span class="kw">have</span> h1 : Tendsto (<span class="kw">fun</span> x =&gt; x - x₀) (𝓝[≠] x₀) (𝓝 0) := <span class="kw">by</span></pre><p>Ενδιάμεσος ισχυρισμός <code>h1</code>: $x-x_0\to 0$ όταν $x\to x_0$ με $x\neq x_0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ Tendsto (fun x =&gt; x - x₀) (𝓝[≠] x₀) (𝓝 0)</pre></div></li><li><pre class="ln"><span class="kw">have</span> h : Tendsto (<span class="kw">fun</span> x =&gt; x - x₀) (𝓝 x₀) (𝓝 (x₀ - x₀)) :=
+  (continuous_id.sub continuous_const).tendsto x₀
+<span class="tc">rw</span> [sub_self] <span class="kw">at</span> h
+<span class="tc">exact</span> h.mono_left nhdsWithin_le_nhds</pre><p>Η $x\mapsto x-x_0$ είναι συνεχής, άρα τείνει στο $x_0-x_0=0$· το ίδιο ισχύει και όταν κρατάμε μόνο τα $x\neq x_0$.</p><div class="goal done"><span>✓ </span>Αυτό το σκέλος ολοκληρώθηκε.</div></li><li><pre class="ln"><span class="kw">have</span> h2 : Tendsto (<span class="kw">fun</span> x =&gt; slope f x₀ x * (x - x₀)) (𝓝[≠] x₀) (𝓝 (f&#x27; * 0)) := hf.mul h1</pre><p>Όριο γινομένου (<code>h2</code>): η κλίση επί $(x-x_0)$ τείνει στο $f'\cdot 0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>f : ℝ → ℝ
+x₀ f&#x27; : ℝ
+hf : Tendsto (slope f x₀) (𝓝[≠] x₀) (𝓝 f&#x27;)
+h1 : Tendsto (fun x =&gt; x - x₀) (𝓝[≠] x₀) (𝓝 0)
+h2 : Tendsto (fun x =&gt; slope f x₀ x * (x - x₀)) (𝓝[≠] x₀) (𝓝 (f&#x27; * 0))
+⊢ ContinuousAt f x₀</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [mul_zero] <span class="kw">at</span> h2</pre><p>Απλοποιούμε: $f'\cdot 0=0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h2 : Tendsto (fun x =&gt; slope f x₀ x * (x - x₀)) (𝓝[≠] x₀) (𝓝 0)
+⊢ ContinuousAt f x₀</pre></div></li><li><pre class="ln"><span class="kw">have</span> h3 : Tendsto (<span class="kw">fun</span> x =&gt; f x - f x₀) (𝓝[≠] x₀) (𝓝 0) := <span class="kw">by</span></pre><p>Ενδιάμεσος ισχυρισμός <code>h3</code>: $f(x)-f(x_0)\to 0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ Tendsto (fun x =&gt; f x - f x₀) (𝓝[≠] x₀) (𝓝 0)</pre></div></li><li><pre class="ln"><span class="tc">apply</span> h2.congr&#x27;</pre><p>Αρκεί οι δύο συναρτήσεις να είναι ίσες για $x$ κοντά στο $x_0$ με $x\neq x_0$· τότε έχουν το ίδιο όριο, το $0$ της <code>h2</code>.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ (fun x =&gt; slope f x₀ x * (x - x₀)) =ᶠ[𝓝[≠] x₀] fun x =&gt; f x - f x₀</pre></div></li><li><pre class="ln"><span class="tc">filter_upwards</span> [self_mem_nhdsWithin] <span class="kw">with</span> x hx</pre><p>Παίρνουμε $x\neq x_0$ (το <code>{x₀}ᶜ</code> είναι το σύνολο των $x\neq x_0$).</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>x : ℝ
+hx : x ∈ {x₀}ᶜ
+⊢ slope f x₀ x * (x - x₀) = f x - f x₀</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [slope_def_field, div_mul_cancel₀ _ (sub_ne_zero.mpr (Set.mem_compl_singleton_iff.mp hx))]</pre><p>Αφού $x-x_0\neq 0$: $\dfrac{f(x)-f(x_0)}{x-x_0}\cdot(x-x_0)$<wbr>${}=f(x)-f(x_0)$.</p><div class="goal done"><span>✓ </span>Αυτό το σκέλος ολοκληρώθηκε.</div></li><li><pre class="ln"><span class="tc">rw</span> [continuousAt_iff_punctured_nhds]</pre><p>Συνέχεια στο $x_0$ σημαίνει $f(x)\to f(x_0)$ όταν $x\to x_0$ με $x\neq x_0$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>f : ℝ → ℝ
+x₀ f&#x27; : ℝ
+hf : Tendsto (slope f x₀) (𝓝[≠] x₀) (𝓝 f&#x27;)
+h1 : Tendsto (fun x =&gt; x - x₀) (𝓝[≠] x₀) (𝓝 0)
+h2 : Tendsto (fun x =&gt; slope f x₀ x * (x - x₀)) (𝓝[≠] x₀) (𝓝 0)
+h3 : Tendsto (fun x =&gt; f x - f x₀) (𝓝[≠] x₀) (𝓝 0)
+⊢ Tendsto f (𝓝[≠] x₀) (𝓝 (f x₀))</pre></div></li><li><pre class="ln"><span class="kw">have</span> h4 := h3.add_const (f x₀)</pre><p>Προσθέτουμε τη σταθερά $f(x_0)$ στο όριο της <code>h3</code>: $f(x)-f(x_0)+f(x_0)\to 0+f(x_0)$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h4 : Tendsto (fun x =&gt; f x - f x₀ + f x₀) (𝓝[≠] x₀) (𝓝 (0 + f x₀))
+⊢ Tendsto f (𝓝[≠] x₀) (𝓝 (f x₀))</pre></div></li><li><pre class="ln"><span class="tc">simpa</span> using h4</pre><p>Απλοποιούμε: $f(x)-f(x_0)+f(x_0)=f(x)$ και $0+f(x_0)=f(x_0)$, που είναι ακριβώς ο στόχος.</p><div class="goal done"><span>✓ </span>Καμία εκκρεμότητα: η απόδειξη ολοκληρώθηκε.</div></li></ol>
+<h2>3. Δοκίμασε εσύ: άθροισμα παραγωγίσιμων</h2>
+<div class="ex"><p>Αν οι $f$ και $g$ είναι παραγωγίσιμες στο $x_0$, δείξε ότι η $f+g$ είναι συνεχής στο $x_0$. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2010%20%C2%B7%20%CE%A0%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CF%83%CE%B9%CE%BC%CF%8C%CF%84%CE%B7%CF%84%CE%B1%20%E2%87%92%20%CE%A3%CF%85%CE%BD%CE%AD%CF%87%CE%B5%CE%B9%CE%B1%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8610.ParagogisimotitaSynexeia%0Aopen%20Filter%20Topology%0A%0Atheorem%20continuous_of_hasDeriv%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20f'%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20HasDerivAt%20f%20f'%20x%E2%82%80%29%20%3A%0A%20%20%20%20ContinuousAt%20f%20x%E2%82%80%20%3A%3D%20by%0A%20%20rw%20%5BhasDerivAt_iff_tendsto_slope%5D%20at%20hf%0A%20%20have%20h1%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20x%20-%20x%E2%82%80%29%20%28%F0%9D%93%9D%5B%E2%89%A0%5D%20x%E2%82%80%29%20%28%F0%9D%93%9D%200%29%20%3A%3D%20by%0A%20%20%20%20have%20h%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20x%20-%20x%E2%82%80%29%20%28%F0%9D%93%9D%20x%E2%82%80%29%20%28%F0%9D%93%9D%20%28x%E2%82%80%20-%20x%E2%82%80%29%29%20%3A%3D%0A%20%20%20%20%20%20%28continuous_id.sub%20continuous_const%29.tendsto%20x%E2%82%80%0A%20%20%20%20rw%20%5Bsub_self%5D%20at%20h%0A%20%20%20%20exact%20h.mono_left%20nhdsWithin_le_nhds%0A%20%20have%20h2%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20slope%20f%20x%E2%82%80%20x%20*%20%28x%20-%20x%E2%82%80%29%29%20%28%F0%9D%93%9D%5B%E2%89%A0%5D%20x%E2%82%80%29%20%28%F0%9D%93%9D%20%28f'%20*%200%29%29%20%3A%3D%20hf.mul%20h1%0A%20%20rw%20%5Bmul_zero%5D%20at%20h2%0A%20%20have%20h3%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20f%20x%20-%20f%20x%E2%82%80%29%20%28%F0%9D%93%9D%5B%E2%89%A0%5D%20x%E2%82%80%29%20%28%F0%9D%93%9D%200%29%20%3A%3D%20by%0A%20%20%20%20apply%20h2.congr'%0A%20%20%20%20filter_upwards%20%5Bself_mem_nhdsWithin%5D%20with%20x%20hx%0A%20%20%20%20rw%20%5Bslope_def_field%2C%20div_mul_cancel%E2%82%80%20_%20%28sub_ne_zero.mpr%20%28Set.mem_compl_singleton_iff.mp%20hx%29%29%5D%0A%20%20rw%20%5BcontinuousAt_iff_punctured_nhds%5D%0A%20%20have%20h4%20%3A%3D%20h3.add_const%20%28f%20x%E2%82%80%29%0A%20%20simpa%20using%20h4%0A%0Atheorem%20sum_continuous%20%28f%20g%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20f'%20g'%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20HasDerivAt%20f%20f'%20x%E2%82%80%29%0A%20%20%20%20%28hg%20%3A%20HasDerivAt%20g%20g'%20x%E2%82%80%29%20%3A%20ContinuousAt%20%28fun%20x%20%3D%3E%20f%20x%20%2B%20g%20x%29%20x%E2%82%80%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%B1%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B7%CF%83%CE%B5%20%CF%84%CE%BF%20sorry%20%CE%BC%CE%B5%20%CF%84%CE%B7%20%CE%B4%CE%B9%CE%BA%CE%AE%20%CF%83%CE%BF%CF%85%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7.%0A%20%20sorry%0A%0Atheorem%20abs_counterexample%20%3A%0A%20%20%20%20ContinuousAt%20%28fun%20x%20%3A%20%E2%84%9D%20%3D%3E%20%7Cx%7C%29%200%20%E2%88%A7%20%C2%AC%20DifferentiableAt%20%E2%84%9D%20%28fun%20x%20%3A%20%E2%84%9D%20%3D%3E%20%7Cx%7C%29%200%20%3A%3D%0A%20%20%E2%9F%A8continuous_abs.continuousAt%2C%20not_differentiableAt_abs_zero%E2%9F%A9%0A%0Aend%20%CE%9A%CE%B5%CF%8610.ParagogisimotitaSynexeia%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Η $f+g$ έχει παράγωγο $f'+g'$ (<code>hf.add hg</code>). Εφάρμοσε το θεώρημα: <code>exact continuous_of_hasDeriv _ x₀ (f' + g') (hf.add hg)</code>.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> sum_continuous (f g : ℝ → ℝ) (x₀ f&#x27; g&#x27; : ℝ) (hf : HasDerivAt f f&#x27; x₀)
+    (hg : HasDerivAt g g&#x27; x₀) : ContinuousAt (<span class="kw">fun</span> x =&gt; f x + g x) x₀ :=
+  continuous_of_hasDeriv _ x₀ (f&#x27; + g&#x27;) (hf.add hg)</pre></div></details>
+</div>
+<h2>4. Στη Mathlib</h2>
+<p class="note">Χρησιμοποιήσαμε τα εξής θεωρήματα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=hasDerivAt_iff_tendsto_slope#doc" target="_blank" rel="noopener"><code>hasDerivAt_iff_tendsto_slope</code></a>: η παράγωγος ως όριο της κλίσης $\dfrac{f(x)-f(x_0)}{x-x_0}$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Filter.Tendsto.mul#doc" target="_blank" rel="noopener"><code>Filter.Tendsto.mul</code></a>: το όριο γινομένου.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Filter.Tendsto.congr%27#doc" target="_blank" rel="noopener"><code>Filter.Tendsto.congr&#x27;</code></a>: συναρτήσεις ίσες κοντά στο σημείο έχουν το ίδιο όριο.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Filter.Tendsto.add_const#doc" target="_blank" rel="noopener"><code>Filter.Tendsto.add_const</code></a>: το όριο αθροίσματος με σταθερά.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=continuousAt_iff_punctured_nhds#doc" target="_blank" rel="noopener"><code>continuousAt_iff_punctured_nhds</code></a>: συνέχεια στο $x_0$ σημαίνει $f(x)\to f(x_0)$ όταν $x\to x_0$ με $x\neq x_0$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=slope_def_field#doc" target="_blank" rel="noopener"><code>slope_def_field</code></a>: ο τύπος της κλίσης, $\dfrac{f(x)-f(x_0)}{x-x_0}$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=div_mul_cancel%E2%82%80#doc" target="_blank" rel="noopener"><code>div_mul_cancel₀</code></a>: $\dfrac{a}{b}\cdot b=a$ όταν $b\neq 0$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.add#doc" target="_blank" rel="noopener"><code>HasDerivAt.add</code></a>: ο κανόνας του αθροίσματος.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=not_differentiableAt_abs_zero#doc" target="_blank" rel="noopener"><code>not_differentiableAt_abs_zero</code></a>: η $|x|$ δεν είναι παραγωγίσιμη στο $0$.</li></ul>
+<h2>5. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (37 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 10 · Παραγωγισιμότητα ⇒ Συνέχεια · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (22/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ10.ParagogisimotitaSynexeia
+<span class="kw">open</span> Filter Topology
+
+<span class="kw">theorem</span> continuous_of_hasDeriv (f : ℝ → ℝ) (x₀ f&#x27; : ℝ) (hf : HasDerivAt f f&#x27; x₀) :
+    ContinuousAt f x₀ := <span class="kw">by</span>
+  <span class="tc">rw</span> [hasDerivAt_iff_tendsto_slope] <span class="kw">at</span> hf
+  <span class="kw">have</span> h1 : Tendsto (<span class="kw">fun</span> x =&gt; x - x₀) (𝓝[≠] x₀) (𝓝 0) := <span class="kw">by</span>
+    <span class="kw">have</span> h : Tendsto (<span class="kw">fun</span> x =&gt; x - x₀) (𝓝 x₀) (𝓝 (x₀ - x₀)) :=
+      (continuous_id.sub continuous_const).tendsto x₀
+    <span class="tc">rw</span> [sub_self] <span class="kw">at</span> h
+    <span class="tc">exact</span> h.mono_left nhdsWithin_le_nhds
+  <span class="kw">have</span> h2 : Tendsto (<span class="kw">fun</span> x =&gt; slope f x₀ x * (x - x₀)) (𝓝[≠] x₀) (𝓝 (f&#x27; * 0)) := hf.mul h1
+  <span class="tc">rw</span> [mul_zero] <span class="kw">at</span> h2
+  <span class="kw">have</span> h3 : Tendsto (<span class="kw">fun</span> x =&gt; f x - f x₀) (𝓝[≠] x₀) (𝓝 0) := <span class="kw">by</span>
+    <span class="tc">apply</span> h2.congr&#x27;
+    <span class="tc">filter_upwards</span> [self_mem_nhdsWithin] <span class="kw">with</span> x hx
+    <span class="tc">rw</span> [slope_def_field, div_mul_cancel₀ _ (sub_ne_zero.mpr (Set.mem_compl_singleton_iff.mp hx))]
+  <span class="tc">rw</span> [continuousAt_iff_punctured_nhds]
+  <span class="kw">have</span> h4 := h3.add_const (f x₀)
+  <span class="tc">simpa</span> using h4
+
+<span class="kw">theorem</span> sum_continuous (f g : ℝ → ℝ) (x₀ f&#x27; g&#x27; : ℝ) (hf : HasDerivAt f f&#x27; x₀)
+    (hg : HasDerivAt g g&#x27; x₀) : ContinuousAt (<span class="kw">fun</span> x =&gt; f x + g x) x₀ :=
+  continuous_of_hasDeriv _ x₀ (f&#x27; + g&#x27;) (hf.add hg)
+
+<span class="kw">theorem</span> abs_counterexample :
+    ContinuousAt (<span class="kw">fun</span> x : ℝ =&gt; |x|) 0 ∧ ¬ DifferentiableAt ℝ (<span class="kw">fun</span> x : ℝ =&gt; |x|) 0 :=
+  ⟨continuous_abs.continuousAt, not_differentiableAt_abs_zero⟩
+
+<span class="kw">end</span> Κεφ10.ParagogisimotitaSynexeia
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2010%20%C2%B7%20%CE%A0%CE%B1%CF%81%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CF%83%CE%B9%CE%BC%CF%8C%CF%84%CE%B7%CF%84%CE%B1%20%E2%87%92%20%CE%A3%CF%85%CE%BD%CE%AD%CF%87%CE%B5%CE%B9%CE%B1%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8610.ParagogisimotitaSynexeia%0Aopen%20Filter%20Topology%0A%0Atheorem%20continuous_of_hasDeriv%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20f'%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20HasDerivAt%20f%20f'%20x%E2%82%80%29%20%3A%0A%20%20%20%20ContinuousAt%20f%20x%E2%82%80%20%3A%3D%20by%0A%20%20rw%20%5BhasDerivAt_iff_tendsto_slope%5D%20at%20hf%0A%20%20have%20h1%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20x%20-%20x%E2%82%80%29%20%28%F0%9D%93%9D%5B%E2%89%A0%5D%20x%E2%82%80%29%20%28%F0%9D%93%9D%200%29%20%3A%3D%20by%0A%20%20%20%20have%20h%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20x%20-%20x%E2%82%80%29%20%28%F0%9D%93%9D%20x%E2%82%80%29%20%28%F0%9D%93%9D%20%28x%E2%82%80%20-%20x%E2%82%80%29%29%20%3A%3D%0A%20%20%20%20%20%20%28continuous_id.sub%20continuous_const%29.tendsto%20x%E2%82%80%0A%20%20%20%20rw%20%5Bsub_self%5D%20at%20h%0A%20%20%20%20exact%20h.mono_left%20nhdsWithin_le_nhds%0A%20%20have%20h2%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20slope%20f%20x%E2%82%80%20x%20*%20%28x%20-%20x%E2%82%80%29%29%20%28%F0%9D%93%9D%5B%E2%89%A0%5D%20x%E2%82%80%29%20%28%F0%9D%93%9D%20%28f'%20*%200%29%29%20%3A%3D%20hf.mul%20h1%0A%20%20rw%20%5Bmul_zero%5D%20at%20h2%0A%20%20have%20h3%20%3A%20Tendsto%20%28fun%20x%20%3D%3E%20f%20x%20-%20f%20x%E2%82%80%29%20%28%F0%9D%93%9D%5B%E2%89%A0%5D%20x%E2%82%80%29%20%28%F0%9D%93%9D%200%29%20%3A%3D%20by%0A%20%20%20%20apply%20h2.congr'%0A%20%20%20%20filter_upwards%20%5Bself_mem_nhdsWithin%5D%20with%20x%20hx%0A%20%20%20%20rw%20%5Bslope_def_field%2C%20div_mul_cancel%E2%82%80%20_%20%28sub_ne_zero.mpr%20%28Set.mem_compl_singleton_iff.mp%20hx%29%29%5D%0A%20%20rw%20%5BcontinuousAt_iff_punctured_nhds%5D%0A%20%20have%20h4%20%3A%3D%20h3.add_const%20%28f%20x%E2%82%80%29%0A%20%20simpa%20using%20h4%0A%0Atheorem%20sum_continuous%20%28f%20g%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28x%E2%82%80%20f'%20g'%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20HasDerivAt%20f%20f'%20x%E2%82%80%29%0A%20%20%20%20%28hg%20%3A%20HasDerivAt%20g%20g'%20x%E2%82%80%29%20%3A%20ContinuousAt%20%28fun%20x%20%3D%3E%20f%20x%20%2B%20g%20x%29%20x%E2%82%80%20%3A%3D%0A%20%20continuous_of_hasDeriv%20_%20x%E2%82%80%20%28f'%20%2B%20g'%29%20%28hf.add%20hg%29%0A%0Atheorem%20abs_counterexample%20%3A%0A%20%20%20%20ContinuousAt%20%28fun%20x%20%3A%20%E2%84%9D%20%3D%3E%20%7Cx%7C%29%200%20%E2%88%A7%20%C2%AC%20DifferentiableAt%20%E2%84%9D%20%28fun%20x%20%3A%20%E2%84%9D%20%3D%3E%20%7Cx%7C%29%200%20%3A%3D%0A%20%20%E2%9F%A8continuous_abs.continuousAt%2C%20not_differentiableAt_abs_zero%E2%9F%A9%0A%0Aend%20%CE%9A%CE%B5%CF%8610.ParagogisimotitaSynexeia%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Stewart, J. (2016). <em>Calculus: Early Transcendentals</em> (8th ed.). Cengage Learning.</li><li>Bartle, R. G., &amp; Sherbert, D. R. (2011). <em>Introduction to Real Analysis</em> (4th ed.). Wiley.</li><li>Rudin, W. (1976). <em>Principles of Mathematical Analysis</em> (3rd ed.). McGraw-Hill.</li><li>Νεγρεπόντης, Σ., Γιωτόπουλος, Σ., &amp; Γιαννακούλιας, Ε. (1999). <em>Απειροστικός Λογισμός</em> (Τόμ. Ι). Εκδόσεις Συμμετρία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>

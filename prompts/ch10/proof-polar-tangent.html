@@ -2,22 +2,88 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Κλίση Εφαπτομένης Πολικής Καμπύλης</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
-<div class="stmt"><span class="lbl">Εκφώνηση</span>Για πολική καμπύλη $r=f(\theta)$ (με $r'=dr/d\theta$): $\dfrac{dy}{dx}=\dfrac{r'\sin\theta+r\cos\theta}{r'\cos\theta-r\sin\theta}$. Η εφαπτομένη είναι οριζόντια αν $r'\sin\theta+r\cos\theta=0$ και $r'\cos\theta-r\sin\theta\ne 0$, και κατακόρυφη αν $r'\cos\theta-r\sin\theta=0$ και $r'\sin\theta+r\cos\theta\ne 0$. Όταν μηδενίζονται και οι δύο (μορφή $0/0$, π.χ. στην ακίδα της καρδιοειδούς) το κριτήριο δεν δίνει συμπέρασμα και χρειάζεται όριο ή ανάπτυγμα ανώτερης τάξης.</div>
+<p class="sub">Κεφάλαιο 10 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
+<div class="stmt"><span class="lbl">Εκφώνηση</span>Για πολική καμπύλη $r=f(\theta)$ (με $r'=dr/d\theta$): $\dfrac{dy}{dx}$<wbr>${}=\dfrac{r'\sin\theta+r\cos\theta}{r'\cos\theta-r\sin\theta}$. Η εφαπτομένη είναι οριζόντια αν $r'\sin\theta+r\cos\theta=0$ και $r'\cos\theta-r\sin\theta\ne 0$, και κατακόρυφη αν $r'\cos\theta-r\sin\theta=0$ και $r'\sin\theta+r\cos\theta\ne 0$. Όταν μηδενίζονται και οι δύο (μορφή $0/0$, π.χ. στην ακίδα της καρδιοειδούς) το κριτήριο δεν δίνει συμπέρασμα και χρειάζεται όριο ή ανάπτυγμα ανώτερης τάξης.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
 <p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%93%CE%B9%CE%B1%20%CF%80%CE%BF%CE%BB%CE%B9%CE%BA%CE%AE%20%CE%BA%CE%B1%CE%BC%CF%80%CF%8D%CE%BB%CE%B7%20%24r%3Df%28%5Ctheta%29%24%20%28%CE%BC%CE%B5%20%24r%27%3Ddr/d%5Ctheta%24%29%3A%20%24%5Cdfrac%7Bdy%7D%7Bdx%7D%3D%5Cdfrac%7Br%27%5Csin%5Ctheta%2Br%5Ccos%5Ctheta%7D%7Br%27%5Ccos%5Ctheta-r%5Csin%5Ctheta%7D%24.%20%CE%97%20%CE%B5%CF%86%CE%B1%CF%80%CF%84%CE%BF%CE%BC%CE%AD%CE%BD%CE%B7%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%BF%CF%81%CE%B9%CE%B6%CF%8C%CE%BD%CF%84%CE%B9%CE%B1%20%CE%B1%CE%BD%20%24r%27%5Csin%5Ctheta%2Br%5Ccos%5Ctheta%3D0%24%20%CE%BA%CE%B1%CE%B9%20%24r%27%5Ccos%5Ctheta-r%5Csin%5Ctheta%5Cne%200%24%2C%20%CE%BA%CE%B1%CE%B9%20%CE%BA%CE%B1%CF%84%CE%B1%CE%BA%CF%8C%CF%81%CF%85%CF%86%CE%B7%20%CE%B1%CE%BD%20%24r%27%5Ccos%5Ctheta-r%5Csin%5Ctheta%3D0%24%20%CE%BA%CE%B1%CE%B9%20%24r%27%5Csin%5Ctheta%2Br%5Ccos%5Ctheta%5Cne%200%24.%20%CE%8C%CF%84%CE%B1%CE%BD%20%CE%BC%CE%B7%CE%B4%CE%B5%CE%BD%CE%AF%CE%B6%CE%BF%CE%BD%CF%84%CE%B1%CE%B9%20%CE%BA%CE%B1%CE%B9%20%CE%BF%CE%B9%20%CE%B4%CF%8D%CE%BF%20%28%CE%BC%CE%BF%CF%81%CF%86%CE%AE%20%240/0%24%2C%20%CF%80.%CF%87.%20%CF%83%CF%84%CE%B7%CE%BD%20%CE%B1%CE%BA%CE%AF%CE%B4%CE%B1%20%CF%84%CE%B7%CF%82%20%CE%BA%CE%B1%CF%81%CE%B4%CE%B9%CE%BF%CE%B5%CE%B9%CE%B4%CE%BF%CF%8D%CF%82%29%20%CF%84%CE%BF%20%CE%BA%CF%81%CE%B9%CF%84%CE%AE%CF%81%CE%B9%CE%BF%20%CE%B4%CE%B5%CE%BD%20%CE%B4%CE%AF%CE%BD%CE%B5%CE%B9%20%CF%83%CF%85%CE%BC%CF%80%CE%AD%CF%81%CE%B1%CF%83%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%87%CF%81%CE%B5%CE%B9%CE%AC%CE%B6%CE%B5%CF%84%CE%B1%CE%B9%20%CF%8C%CF%81%CE%B9%CE%BF%20%CE%AE%20%CE%B1%CE%BD%CE%AC%CF%80%CF%84%CF%85%CE%B3%CE%BC%CE%B1%20%CE%B1%CE%BD%CF%8E%CF%84%CE%B5%CF%81%CE%B7%CF%82%20%CF%84%CE%AC%CE%BE%CE%B7%CF%82.">ChatGPT</a>
@@ -27,6 +93,143 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Για πολική καμπύλη $r=f(\theta)$ (με $r'=dr/d\theta$): $\dfrac{dy}{dx}=\dfrac{r'\sin\theta+r\cos\theta}{r'\cos\theta-r\sin\theta}$. Η εφαπτομένη είναι οριζόντια αν $r'\sin\theta+r\cos\theta=0$ και $r'\cos\theta-r\sin\theta\ne 0$, και κατακόρυφη αν $r'\cos\theta-r\sin\theta=0$ και $r'\sin\theta+r\cos\theta\ne 0$. Όταν μηδενίζονται και οι δύο (μορφή $0/0$, π.χ. στην ακίδα της καρδιοειδούς) το κριτήριο δεν δίνει συμπέρασμα και χρειάζεται όριο ή ανάπτυγμα ανώτερης τάξης.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Ο τύπος της κλίσης και τα κριτήρια για οριζόντια και κατακόρυφη εφαπτομένη αποδείχθηκαν στον Lean 4 χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 22/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Για την καμπύλη $r=r(\theta)$, όταν ο παρονομαστής δεν είναι $0$: $\dfrac{dy}{dx}$<wbr>${}=\dfrac{r'\sin\theta_0+r\cos\theta_0}{r'\cos\theta_0-r\sin\theta_0}$</div><pre class="ln"><span class="kw">theorem</span> polar_slope (r F : ℝ → ℝ) (θ₀ r&#x27; F&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ₀)
+    (hF : HasDerivAt F F&#x27; (r θ₀ * Real.cos θ₀))
+    (hcurve : ∀ᶠ t <span class="kw">in</span> 𝓝 θ₀, r t * Real.sin t = F (r t * Real.cos t))
+    (hden : r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀ ≠ 0) :
+    F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)</pre></li><li><div class="bk">Βοηθητικό: $(r\cos\theta)'$<wbr>${}=r'\cos\theta-r\sin\theta$</div><pre class="ln"><span class="kw">theorem</span> x_deriv (r : ℝ → ℝ) (θ r&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ) :
+    HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.cos t) (r&#x27; * Real.cos θ - r θ * Real.sin θ) θ</pre></li><li><div class="bk">Βοηθητικό: $(r\sin\theta)'$<wbr>${}=r'\sin\theta+r\cos\theta$</div><pre class="ln"><span class="kw">theorem</span> y_deriv (r : ℝ → ℝ) (θ r&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ) :
+    HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.sin t) (r&#x27; * Real.sin θ + r θ * Real.cos θ) θ</pre></li><li><div class="bk">Αν $r'\sin\theta_0+r\cos\theta_0=0$ και $r'\cos\theta_0-r\sin\theta_0\neq 0$, η εφαπτομένη είναι οριζόντια: $\dfrac{dy}{dx}=0$</div><pre class="ln"><span class="kw">theorem</span> polar_horizontal (r F : ℝ → ℝ) (θ₀ r&#x27; F&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ₀)
+    (hF : HasDerivAt F F&#x27; (r θ₀ * Real.cos θ₀))
+    (hcurve : ∀ᶠ t <span class="kw">in</span> 𝓝 θ₀, r t * Real.sin t = F (r t * Real.cos t))
+    (hden : r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀ ≠ 0)
+    (hnum : r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀ = 0) : F&#x27; = 0</pre></li><li><div class="bk">Αν $r'\cos\theta_0-r\sin\theta_0=0$ και $r'\sin\theta_0+r\cos\theta_0\neq 0$, η εφαπτομένη είναι κατακόρυφη: $\dfrac{dx}{dy}=0$</div><pre class="ln"><span class="kw">theorem</span> polar_vertical (r G : ℝ → ℝ) (θ₀ r&#x27; G&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ₀)
+    (hG : HasDerivAt G G&#x27; (r θ₀ * Real.sin θ₀))
+    (hcurve : ∀ᶠ t <span class="kw">in</span> 𝓝 θ₀, r t * Real.cos t = G (r t * Real.sin t))
+    (hnum : r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀ ≠ 0)
+    (hden : r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀ = 0) : G&#x27; = 0</pre></li></ul>
+<p class="note">Η καμπύλη $r=r(\theta)$ γράφεται σε καρτεσιανές συντεταγμένες ως $x(\theta)=r(\theta)\cos\theta$, $y(\theta)=r(\theta)\sin\theta$, δηλαδή είναι παραμετρική καμπύλη με παράμετρο $\theta$. Όπως στις παραμετρικές καμπύλες, υποθέτουμε ότι κοντά στο $\theta_0$ η καμπύλη είναι γράφημα $y=F(x)$ (υπόθεση <code>hcurve</code>) και δείχνουμε ότι η κλίση $F'$ είναι $\dfrac{y'(\theta_0)}{x'(\theta_0)}$. Για την κατακόρυφη εφαπτομένη η καμπύλη γράφεται ως $x=G(y)$ και δείχνουμε ότι $\dfrac{dx}{dy}=G'=0$. Το $r'$ είναι η παράγωγος $\dfrac{dr}{d\theta}$ στο $\theta_0$. Όταν μηδενίζονται και οι δύο παραστάσεις, κανένα από τα δύο κριτήρια δεν εφαρμόζεται, όπως λέει και το βιβλίο.</p>
+<h2>2. Βήμα προς βήμα: η κλίση $\dfrac{dy}{dx}$</h2>
+<p class="note">Η ιδέα: η πολική καμπύλη είναι παραμετρική, με $x(\theta)=r\cos\theta$ και $y(\theta)=r\sin\theta$, οπότε $\dfrac{dy}{dx}$<wbr>${}=\dfrac{y'(\theta_0)}{x'(\theta_0)}$. Ξεκινάμε από τον στόχο:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>r F : ℝ → ℝ
+θ₀ r&#x27; F&#x27; : ℝ
+hr : HasDerivAt r r&#x27; θ₀
+hF : HasDerivAt F F&#x27; (r θ₀ * Real.cos θ₀)
+hcurve : ∀ᶠ (t : ℝ) in 𝓝 θ₀, r t * Real.sin t = F (r t * Real.cos t)
+hden : r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀ ≠ 0
+⊢ F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Μετά από κάθε βήμα δείχνουμε μόνο ό,τι άλλαξε.</p>
+<ol class="steps"><li><pre class="ln"><span class="kw">have</span> hx := x_deriv r θ₀ r&#x27; hr</pre><p>Η $x(\theta)=r(\theta)\cos\theta$ έχει παράγωγο $r'\cos\theta_0-r(\theta_0)\sin\theta_0$ (βοηθητικό <code>x_deriv</code>).</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>hx : HasDerivAt (fun t =&gt; r t * Real.cos t) (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀) θ₀
+⊢ F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)</pre></div></li><li><pre class="ln"><span class="kw">have</span> hy := y_deriv r θ₀ r&#x27; hr</pre><p>Η $y(\theta)=r(\theta)\sin\theta$ έχει παράγωγο $r'\sin\theta_0+r(\theta_0)\cos\theta_0$ (βοηθητικό <code>y_deriv</code>).</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>hy : HasDerivAt (fun t =&gt; r t * Real.sin t) (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) θ₀
+⊢ F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)</pre></div></li><li><pre class="ln"><span class="kw">have</span> h1 := hF.comp θ₀ hx</pre><p>Κανόνας αλυσίδας: η $\theta\mapsto F(x(\theta))$ έχει παράγωγο $F'\cdot x'(\theta_0)$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h1 : HasDerivAt (F ∘ fun t =&gt; r t * Real.cos t) (F&#x27; * (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)) θ₀
+⊢ F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)</pre></div></li><li><pre class="ln"><span class="kw">have</span> h2 : HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.sin t)
+    (F&#x27; * (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)) θ₀ := h1.congr_of_eventuallyEq hcurve</pre><p>Κοντά στο $\theta_0$ ισχύει $y(\theta)=F(x(\theta))$, άρα και η $y$ έχει παράγωγο $F'\cdot x'(\theta_0)$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h2 : HasDerivAt (fun t =&gt; r t * Real.sin t) (F&#x27; * (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)) θ₀
+⊢ F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)</pre></div></li><li><pre class="ln"><span class="kw">have</span> h3 := hy.unique h2</pre><p>Η παράγωγος είναι μοναδική: $y'(\theta_0)=F'\cdot x'(\theta_0)$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>h3 : r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀ = F&#x27; * (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)
+⊢ F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)</pre></div></li><li><pre class="ln"><span class="tc">rw</span> [h3, mul_div_cancel_right₀ _ hden]</pre><p>Επομένως, $F'$<wbr>${}=\dfrac{y'(\theta_0)}{x'(\theta_0)}$, αφού ο παρονομαστής δεν είναι $0$.</p><div class="goal done"><span>✓ </span>Καμία εκκρεμότητα: η απόδειξη ολοκληρώθηκε.</div></li></ol>
+<h2>3. Δοκίμασε εσύ: η παράγωγος της $y(\theta)$</h2>
+<div class="ex"><p>Δείξε ότι η $y(\theta)=r(\theta)\sin\theta$ έχει παράγωγο $r'\sin\theta+r(\theta)\cos\theta$. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2010%20%C2%B7%20%CE%9A%CE%BB%CE%AF%CF%83%CE%B7%20%CE%95%CF%86%CE%B1%CF%80%CF%84%CE%BF%CE%BC%CE%AD%CE%BD%CE%B7%CF%82%20%CE%A0%CE%BF%CE%BB%CE%B9%CE%BA%CE%AE%CF%82%20%CE%9A%CE%B1%CE%BC%CF%80%CF%8D%CE%BB%CE%B7%CF%82%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8610.Poliki%0Aopen%20Filter%20Topology%0A%0Atheorem%20x_deriv%20%28r%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%20r'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%29%20%3A%0A%20%20%20%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.cos%20t%29%20%28r'%20*%20Real.cos%20%CE%B8%20-%20r%20%CE%B8%20*%20Real.sin%20%CE%B8%29%20%CE%B8%20%3A%3D%20by%0A%20%20have%20h%20%3A%3D%20hr.mul%20%28Real.hasDerivAt_cos%20%CE%B8%29%0A%20%20rw%20%5Bshow%20r'%20*%20Real.cos%20%CE%B8%20-%20r%20%CE%B8%20*%20Real.sin%20%CE%B8%20%3D%20r'%20*%20Real.cos%20%CE%B8%20%2B%20r%20%CE%B8%20*%20-Real.sin%20%CE%B8%20by%20ring%5D%0A%20%20exact%20h%0A%0Atheorem%20y_deriv%20%28r%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%20r'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%29%20%3A%0A%20%20%20%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.sin%20t%29%20%28r'%20*%20Real.sin%20%CE%B8%20%2B%20r%20%CE%B8%20*%20Real.cos%20%CE%B8%29%20%CE%B8%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%B1%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B7%CF%83%CE%B5%20%CF%84%CE%BF%20sorry%20%CE%BC%CE%B5%20%CF%84%CE%B7%20%CE%B4%CE%B9%CE%BA%CE%AE%20%CF%83%CE%BF%CF%85%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7.%0A%20%20sorry%0A%0Atheorem%20polar_slope%20%28r%20F%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%E2%82%80%20r'%20F'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%E2%82%80%29%0A%20%20%20%20%28hF%20%3A%20HasDerivAt%20F%20F'%20%28r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%29%0A%20%20%20%20%28hcurve%20%3A%20%E2%88%80%E1%B6%A0%20t%20in%20%F0%9D%93%9D%20%CE%B8%E2%82%80%2C%20r%20t%20*%20Real.sin%20t%20%3D%20F%20%28r%20t%20*%20Real.cos%20t%29%29%0A%20%20%20%20%28hden%20%3A%20r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%20%E2%89%A0%200%29%20%3A%0A%20%20%20%20F'%20%3D%20%28r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%20%2F%20%28r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%29%20%3A%3D%20by%0A%20%20have%20hx%20%3A%3D%20x_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20hy%20%3A%3D%20y_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20h1%20%3A%3D%20hF.comp%20%CE%B8%E2%82%80%20hx%0A%20%20have%20h2%20%3A%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.sin%20t%29%0A%20%20%20%20%20%20%28F'%20*%20%28r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%29%29%20%CE%B8%E2%82%80%20%3A%3D%20h1.congr_of_eventuallyEq%20hcurve%0A%20%20have%20h3%20%3A%3D%20hy.unique%20h2%0A%20%20rw%20%5Bh3%2C%20mul_div_cancel_right%E2%82%80%20_%20hden%5D%0A%0A--%20%CE%BF%CF%81%CE%B9%CE%B6%CF%8C%CE%BD%CF%84%CE%B9%CE%B1%20%CE%B5%CF%86%CE%B1%CF%80%CF%84%CE%BF%CE%BC%CE%AD%CE%BD%CE%B7%0Atheorem%20polar_horizontal%20%28r%20F%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%E2%82%80%20r'%20F'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%E2%82%80%29%0A%20%20%20%20%28hF%20%3A%20HasDerivAt%20F%20F'%20%28r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%29%0A%20%20%20%20%28hcurve%20%3A%20%E2%88%80%E1%B6%A0%20t%20in%20%F0%9D%93%9D%20%CE%B8%E2%82%80%2C%20r%20t%20*%20Real.sin%20t%20%3D%20F%20%28r%20t%20*%20Real.cos%20t%29%29%0A%20%20%20%20%28hden%20%3A%20r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%20%E2%89%A0%200%29%0A%20%20%20%20%28hnum%20%3A%20r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%20%3D%200%29%20%3A%20F'%20%3D%200%20%3A%3D%20by%0A%20%20rw%20%5Bpolar_slope%20r%20F%20%CE%B8%E2%82%80%20r'%20F'%20hr%20hF%20hcurve%20hden%2C%20hnum%2C%20zero_div%5D%0A%0A--%20%CE%BA%CE%B1%CF%84%CE%B1%CE%BA%CF%8C%CF%81%CF%85%CF%86%CE%B7%20%CE%B5%CF%86%CE%B1%CF%80%CF%84%CE%BF%CE%BC%CE%AD%CE%BD%CE%B7%3A%20%CE%B7%20%CE%BA%CE%B1%CE%BC%CF%80%CF%8D%CE%BB%CE%B7%20%CE%B3%CF%81%CE%AC%CF%86%CE%B5%CF%84%CE%B1%CE%B9%20x%20%3D%20G%28y%29%20%CE%BA%CE%B1%CE%B9%20dx%2Fdy%20%3D%200%0Atheorem%20polar_vertical%20%28r%20G%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%E2%82%80%20r'%20G'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%E2%82%80%29%0A%20%20%20%20%28hG%20%3A%20HasDerivAt%20G%20G'%20%28r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%29%29%0A%20%20%20%20%28hcurve%20%3A%20%E2%88%80%E1%B6%A0%20t%20in%20%F0%9D%93%9D%20%CE%B8%E2%82%80%2C%20r%20t%20*%20Real.cos%20t%20%3D%20G%20%28r%20t%20*%20Real.sin%20t%29%29%0A%20%20%20%20%28hnum%20%3A%20r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%20%E2%89%A0%200%29%0A%20%20%20%20%28hden%20%3A%20r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%20%3D%200%29%20%3A%20G'%20%3D%200%20%3A%3D%20by%0A%20%20have%20hx%20%3A%3D%20x_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20hy%20%3A%3D%20y_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20h1%20%3A%3D%20hG.comp_of_eq%20%CE%B8%E2%82%80%20hy%20rfl%0A%20%20have%20h2%20%3A%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.cos%20t%29%0A%20%20%20%20%20%20%28G'%20*%20%28r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%29%20%CE%B8%E2%82%80%20%3A%3D%20h1.congr_of_eventuallyEq%20hcurve%0A%20%20have%20h3%20%3A%3D%20hx.unique%20h2%0A%20%20rw%20%5Bhden%5D%20at%20h3%0A%20%20exact%20%28mul_eq_zero.mp%20h3.symm%29.resolve_right%20hnum%0A%0Aend%20%CE%9A%CE%B5%CF%8610.Poliki%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Κανόνας γινομένου, με $(\sin\theta)'=\cos\theta$: <code>exact hr.mul (Real.hasDerivAt_sin θ)</code>.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> y_deriv (r : ℝ → ℝ) (θ r&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ) :
+    HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.sin t) (r&#x27; * Real.sin θ + r θ * Real.cos θ) θ :=
+  hr.mul (Real.hasDerivAt_sin θ)</pre></div></details>
+</div>
+<h2>4. Στη Mathlib</h2>
+<p class="note">Χρησιμοποιήσαμε τα εξής θεωρήματα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.mul#doc" target="_blank" rel="noopener"><code>HasDerivAt.mul</code></a>: ο κανόνας του γινομένου.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Real.hasDerivAt_sin#doc" target="_blank" rel="noopener"><code>Real.hasDerivAt_sin</code></a>: $(\sin\theta)'=\cos\theta$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Real.hasDerivAt_cos#doc" target="_blank" rel="noopener"><code>Real.hasDerivAt_cos</code></a>: $(\cos\theta)'=-\sin\theta$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.comp#doc" target="_blank" rel="noopener"><code>HasDerivAt.comp</code></a>: ο κανόνας αλυσίδας.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.congr_of_eventuallyEq#doc" target="_blank" rel="noopener"><code>HasDerivAt.congr_of_eventuallyEq</code></a>: συναρτήσεις ίσες κοντά στο σημείο έχουν την ίδια παράγωγο.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.unique#doc" target="_blank" rel="noopener"><code>HasDerivAt.unique</code></a>: η παράγωγος είναι μοναδική.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=mul_div_cancel_right%E2%82%80#doc" target="_blank" rel="noopener"><code>mul_div_cancel_right₀</code></a>: $\dfrac{ab}{b}=a$ όταν $b\neq 0$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.comp_of_eq#doc" target="_blank" rel="noopener"><code>HasDerivAt.comp_of_eq</code></a>: ο κανόνας αλυσίδας, με το σημείο δοσμένο ως ισότητα.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=mul_eq_zero#doc" target="_blank" rel="noopener"><code>mul_eq_zero</code></a>: $ab=0$ ακριβώς όταν $a=0$ ή $b=0$.</li></ul>
+<h2>5. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (57 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 10 · Κλίση Εφαπτομένης Πολικής Καμπύλης · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (22/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ10.Poliki
+<span class="kw">open</span> Filter Topology
+
+<span class="kw">theorem</span> x_deriv (r : ℝ → ℝ) (θ r&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ) :
+    HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.cos t) (r&#x27; * Real.cos θ - r θ * Real.sin θ) θ := <span class="kw">by</span>
+  <span class="kw">have</span> h := hr.mul (Real.hasDerivAt_cos θ)
+  <span class="tc">rw</span> [<span class="kw">show</span> r&#x27; * Real.cos θ - r θ * Real.sin θ = r&#x27; * Real.cos θ + r θ * -Real.sin θ <span class="kw">by</span> <span class="tc">ring</span>]
+  <span class="tc">exact</span> h
+
+<span class="kw">theorem</span> y_deriv (r : ℝ → ℝ) (θ r&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ) :
+    HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.sin t) (r&#x27; * Real.sin θ + r θ * Real.cos θ) θ :=
+  hr.mul (Real.hasDerivAt_sin θ)
+
+<span class="kw">theorem</span> polar_slope (r F : ℝ → ℝ) (θ₀ r&#x27; F&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ₀)
+    (hF : HasDerivAt F F&#x27; (r θ₀ * Real.cos θ₀))
+    (hcurve : ∀ᶠ t <span class="kw">in</span> 𝓝 θ₀, r t * Real.sin t = F (r t * Real.cos t))
+    (hden : r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀ ≠ 0) :
+    F&#x27; = (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀) / (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀) := <span class="kw">by</span>
+  <span class="kw">have</span> hx := x_deriv r θ₀ r&#x27; hr
+  <span class="kw">have</span> hy := y_deriv r θ₀ r&#x27; hr
+  <span class="kw">have</span> h1 := hF.comp θ₀ hx
+  <span class="kw">have</span> h2 : HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.sin t)
+      (F&#x27; * (r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀)) θ₀ := h1.congr_of_eventuallyEq hcurve
+  <span class="kw">have</span> h3 := hy.unique h2
+  <span class="tc">rw</span> [h3, mul_div_cancel_right₀ _ hden]
+
+<span class="cm">-- οριζόντια εφαπτομένη</span>
+<span class="kw">theorem</span> polar_horizontal (r F : ℝ → ℝ) (θ₀ r&#x27; F&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ₀)
+    (hF : HasDerivAt F F&#x27; (r θ₀ * Real.cos θ₀))
+    (hcurve : ∀ᶠ t <span class="kw">in</span> 𝓝 θ₀, r t * Real.sin t = F (r t * Real.cos t))
+    (hden : r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀ ≠ 0)
+    (hnum : r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀ = 0) : F&#x27; = 0 := <span class="kw">by</span>
+  <span class="tc">rw</span> [polar_slope r F θ₀ r&#x27; F&#x27; hr hF hcurve hden, hnum, zero_div]
+
+<span class="cm">-- κατακόρυφη εφαπτομένη: η καμπύλη γράφεται x = G(y) και dx/dy = 0</span>
+<span class="kw">theorem</span> polar_vertical (r G : ℝ → ℝ) (θ₀ r&#x27; G&#x27; : ℝ) (hr : HasDerivAt r r&#x27; θ₀)
+    (hG : HasDerivAt G G&#x27; (r θ₀ * Real.sin θ₀))
+    (hcurve : ∀ᶠ t <span class="kw">in</span> 𝓝 θ₀, r t * Real.cos t = G (r t * Real.sin t))
+    (hnum : r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀ ≠ 0)
+    (hden : r&#x27; * Real.cos θ₀ - r θ₀ * Real.sin θ₀ = 0) : G&#x27; = 0 := <span class="kw">by</span>
+  <span class="kw">have</span> hx := x_deriv r θ₀ r&#x27; hr
+  <span class="kw">have</span> hy := y_deriv r θ₀ r&#x27; hr
+  <span class="kw">have</span> h1 := hG.comp_of_eq θ₀ hy rfl
+  <span class="kw">have</span> h2 : HasDerivAt (<span class="kw">fun</span> t =&gt; r t * Real.cos t)
+      (G&#x27; * (r&#x27; * Real.sin θ₀ + r θ₀ * Real.cos θ₀)) θ₀ := h1.congr_of_eventuallyEq hcurve
+  <span class="kw">have</span> h3 := hx.unique h2
+  <span class="tc">rw</span> [hden] <span class="kw">at</span> h3
+  <span class="tc">exact</span> (mul_eq_zero.mp h3.symm).resolve_right hnum
+
+<span class="kw">end</span> Κεφ10.Poliki
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2010%20%C2%B7%20%CE%9A%CE%BB%CE%AF%CF%83%CE%B7%20%CE%95%CF%86%CE%B1%CF%80%CF%84%CE%BF%CE%BC%CE%AD%CE%BD%CE%B7%CF%82%20%CE%A0%CE%BF%CE%BB%CE%B9%CE%BA%CE%AE%CF%82%20%CE%9A%CE%B1%CE%BC%CF%80%CF%8D%CE%BB%CE%B7%CF%82%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8610.Poliki%0Aopen%20Filter%20Topology%0A%0Atheorem%20x_deriv%20%28r%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%20r'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%29%20%3A%0A%20%20%20%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.cos%20t%29%20%28r'%20*%20Real.cos%20%CE%B8%20-%20r%20%CE%B8%20*%20Real.sin%20%CE%B8%29%20%CE%B8%20%3A%3D%20by%0A%20%20have%20h%20%3A%3D%20hr.mul%20%28Real.hasDerivAt_cos%20%CE%B8%29%0A%20%20rw%20%5Bshow%20r'%20*%20Real.cos%20%CE%B8%20-%20r%20%CE%B8%20*%20Real.sin%20%CE%B8%20%3D%20r'%20*%20Real.cos%20%CE%B8%20%2B%20r%20%CE%B8%20*%20-Real.sin%20%CE%B8%20by%20ring%5D%0A%20%20exact%20h%0A%0Atheorem%20y_deriv%20%28r%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%20r'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%29%20%3A%0A%20%20%20%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.sin%20t%29%20%28r'%20*%20Real.sin%20%CE%B8%20%2B%20r%20%CE%B8%20*%20Real.cos%20%CE%B8%29%20%CE%B8%20%3A%3D%0A%20%20hr.mul%20%28Real.hasDerivAt_sin%20%CE%B8%29%0A%0Atheorem%20polar_slope%20%28r%20F%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%E2%82%80%20r'%20F'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%E2%82%80%29%0A%20%20%20%20%28hF%20%3A%20HasDerivAt%20F%20F'%20%28r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%29%0A%20%20%20%20%28hcurve%20%3A%20%E2%88%80%E1%B6%A0%20t%20in%20%F0%9D%93%9D%20%CE%B8%E2%82%80%2C%20r%20t%20*%20Real.sin%20t%20%3D%20F%20%28r%20t%20*%20Real.cos%20t%29%29%0A%20%20%20%20%28hden%20%3A%20r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%20%E2%89%A0%200%29%20%3A%0A%20%20%20%20F'%20%3D%20%28r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%20%2F%20%28r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%29%20%3A%3D%20by%0A%20%20have%20hx%20%3A%3D%20x_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20hy%20%3A%3D%20y_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20h1%20%3A%3D%20hF.comp%20%CE%B8%E2%82%80%20hx%0A%20%20have%20h2%20%3A%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.sin%20t%29%0A%20%20%20%20%20%20%28F'%20*%20%28r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%29%29%20%CE%B8%E2%82%80%20%3A%3D%20h1.congr_of_eventuallyEq%20hcurve%0A%20%20have%20h3%20%3A%3D%20hy.unique%20h2%0A%20%20rw%20%5Bh3%2C%20mul_div_cancel_right%E2%82%80%20_%20hden%5D%0A%0A--%20%CE%BF%CF%81%CE%B9%CE%B6%CF%8C%CE%BD%CF%84%CE%B9%CE%B1%20%CE%B5%CF%86%CE%B1%CF%80%CF%84%CE%BF%CE%BC%CE%AD%CE%BD%CE%B7%0Atheorem%20polar_horizontal%20%28r%20F%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%E2%82%80%20r'%20F'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%E2%82%80%29%0A%20%20%20%20%28hF%20%3A%20HasDerivAt%20F%20F'%20%28r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%29%0A%20%20%20%20%28hcurve%20%3A%20%E2%88%80%E1%B6%A0%20t%20in%20%F0%9D%93%9D%20%CE%B8%E2%82%80%2C%20r%20t%20*%20Real.sin%20t%20%3D%20F%20%28r%20t%20*%20Real.cos%20t%29%29%0A%20%20%20%20%28hden%20%3A%20r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%20%E2%89%A0%200%29%0A%20%20%20%20%28hnum%20%3A%20r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%20%3D%200%29%20%3A%20F'%20%3D%200%20%3A%3D%20by%0A%20%20rw%20%5Bpolar_slope%20r%20F%20%CE%B8%E2%82%80%20r'%20F'%20hr%20hF%20hcurve%20hden%2C%20hnum%2C%20zero_div%5D%0A%0A--%20%CE%BA%CE%B1%CF%84%CE%B1%CE%BA%CF%8C%CF%81%CF%85%CF%86%CE%B7%20%CE%B5%CF%86%CE%B1%CF%80%CF%84%CE%BF%CE%BC%CE%AD%CE%BD%CE%B7%3A%20%CE%B7%20%CE%BA%CE%B1%CE%BC%CF%80%CF%8D%CE%BB%CE%B7%20%CE%B3%CF%81%CE%AC%CF%86%CE%B5%CF%84%CE%B1%CE%B9%20x%20%3D%20G%28y%29%20%CE%BA%CE%B1%CE%B9%20dx%2Fdy%20%3D%200%0Atheorem%20polar_vertical%20%28r%20G%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28%CE%B8%E2%82%80%20r'%20G'%20%3A%20%E2%84%9D%29%20%28hr%20%3A%20HasDerivAt%20r%20r'%20%CE%B8%E2%82%80%29%0A%20%20%20%20%28hG%20%3A%20HasDerivAt%20G%20G'%20%28r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%29%29%0A%20%20%20%20%28hcurve%20%3A%20%E2%88%80%E1%B6%A0%20t%20in%20%F0%9D%93%9D%20%CE%B8%E2%82%80%2C%20r%20t%20*%20Real.cos%20t%20%3D%20G%20%28r%20t%20*%20Real.sin%20t%29%29%0A%20%20%20%20%28hnum%20%3A%20r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%20%E2%89%A0%200%29%0A%20%20%20%20%28hden%20%3A%20r'%20*%20Real.cos%20%CE%B8%E2%82%80%20-%20r%20%CE%B8%E2%82%80%20*%20Real.sin%20%CE%B8%E2%82%80%20%3D%200%29%20%3A%20G'%20%3D%200%20%3A%3D%20by%0A%20%20have%20hx%20%3A%3D%20x_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20hy%20%3A%3D%20y_deriv%20r%20%CE%B8%E2%82%80%20r'%20hr%0A%20%20have%20h1%20%3A%3D%20hG.comp_of_eq%20%CE%B8%E2%82%80%20hy%20rfl%0A%20%20have%20h2%20%3A%20HasDerivAt%20%28fun%20t%20%3D%3E%20r%20t%20*%20Real.cos%20t%29%0A%20%20%20%20%20%20%28G'%20*%20%28r'%20*%20Real.sin%20%CE%B8%E2%82%80%20%2B%20r%20%CE%B8%E2%82%80%20*%20Real.cos%20%CE%B8%E2%82%80%29%29%20%CE%B8%E2%82%80%20%3A%3D%20h1.congr_of_eventuallyEq%20hcurve%0A%20%20have%20h3%20%3A%3D%20hx.unique%20h2%0A%20%20rw%20%5Bhden%5D%20at%20h3%0A%20%20exact%20%28mul_eq_zero.mp%20h3.symm%29.resolve_right%20hnum%0A%0Aend%20%CE%9A%CE%B5%CF%8610.Poliki%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Stewart, J. (2016). <em>Calculus: Early Transcendentals</em> (8th ed.). Cengage Learning.</li><li>Bartle, R. G., &amp; Sherbert, D. R. (2011). <em>Introduction to Real Analysis</em> (4th ed.). Wiley.</li><li>Rudin, W. (1976). <em>Principles of Mathematical Analysis</em> (3rd ed.). McGraw-Hill.</li><li>Νεγρεπόντης, Σ., Γιωτόπουλος, Σ., &amp; Γιαννακούλιας, Ε. (1999). <em>Απειροστικός Λογισμός</em> (Τόμ. Ι). Εκδόσεις Συμμετρία.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>
