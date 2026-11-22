@@ -2,23 +2,89 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{ignoreHtmlClass:'tex2jax_ignore'},svg:{fontCache:'global'}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222}
+/* VOICE: η ίδια ήρεμη σελίδα του ELADIC_GR, με ένα δεύτερο, ελεγμένο «κανάλι» απόδειξης
+   IDEA: το μωβ πλαίσιο της εκφώνησης του βιβλίου, και δίπλα του ένα πράσινο «σφράγισμα» ελέγχου
+   PICTURE: η απόδειξη ως σκάλα βημάτων, κάθε βήμα με «τι μένει να αποδειχθεί»
+   COLOUR and TYPE: μωβ #521a76 του βιβλίου, πράσινο #17734a μόνο για ό,τι ελέγχθηκε, system-ui + monospace
+   LAYOUT: μία στήλη 640px, όπως οι σημερινές σελίδες· στο κινητό τίποτα δεν ξεχειλίζει */
+:root{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{font-family:system-ui,Arial,sans-serif;max-width:640px;margin:24px auto;padding:0 16px;line-height:1.55;color:#222;background:#fff}
 h1{font-size:19px;margin-bottom:2px}
+h2{font-size:16px;margin:26px 0 8px;color:#17734a}
 .sub{color:#666;font-size:13px;margin-top:0}
 .stmt{background:#f3eef7;border:1.5px solid #521a76;padding:12px 14px;border-radius:8px;margin:16px 0;font-size:15px;color:#222}
 .stmt .lbl,.refs .lbl{display:block;font-weight:700;color:#521a76;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .btns{margin:18px 0 6px}
 .btn{display:inline-block;padding:12px 18px;margin:6px 10px 6px 0;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
-.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d;color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
-.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7}
+.btn.g{background:#10a37f}.btn.c{background:#d97757}.btn.x{background:#111}.btn.p{background:#20808d}
+.btn.p{color:#fff;font-size:15px;padding:12px 18px;margin-top:6px;line-height:1.55}
+.btn.l{background:#17734a}.btn.o{background:#fff;color:#17734a;border:1.5px solid #17734a}
+.p{background:#f5f5f5;padding:12px;border-radius:8px;font-size:13px;color:#444;margin-top:8px;line-height:1.7;overflow-x:auto}
 .refs{margin:18px 0 6px;font-size:13.5px}.refs ul{margin:4px 0 0;padding-left:20px}.refs li{margin:5px 0;color:#333}
 .refs em{font-style:italic}
 small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10px}
+.tabs{display:flex;gap:6px;margin:18px 0 4px;border-bottom:1.5px solid #ddd}
+.tabs button{flex:1 1 0;font:600 14.5px system-ui,Arial,sans-serif;padding:11px 8px;min-height:44px;border:1.5px solid #ddd;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafa;color:#555;cursor:pointer;margin-bottom:-1.5px}
+.tabs button[aria-selected=true]{background:#fff;color:#521a76;border-color:#521a76;border-bottom:1.5px solid #fff}
+.tabs button[data-t=lean][aria-selected=true]{color:#17734a;border-color:#17734a}
+.tabs .ok{display:inline-block;font-size:11.5px;font-weight:700;color:#fff;background:#17734a;border-radius:10px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tabs button:focus-visible{outline:3px solid #8cc9a8;outline-offset:2px}
+.hint{font-size:13.5px;color:#444;background:#eef7f1;border-radius:8px;padding:9px 12px;margin-top:14px}
+.hint a{color:#17734a;font-weight:600}
+.seal{display:flex;gap:10px;align-items:flex-start;background:#eef7f1;border:1.5px solid #17734a;border-radius:8px;padding:11px 13px;margin:16px 0 4px;font-size:14px}
+.seal b{color:#17734a}.seal .ck{flex:none;width:26px;height:26px;border-radius:50%;background:#17734a;color:#fff;font-weight:700;display:grid;place-items:center}
+pre{margin:0;overflow-x:auto}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace}
+code{font-size:.92em;background:#f4f4f6;border-radius:4px;padding:0 4px;overflow-wrap:anywhere}
+.ln{background:#f7f7f9;border:1px solid #e6e6ea;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;white-space:pre}
+.kw{color:#521a76;font-weight:700}.tc{color:#17734a;font-weight:700}.cm{color:#6a737d;font-style:italic}
+ul.pairs{list-style:none;padding:0;margin:8px 0}
+ul.pairs li{border:1px solid #e3e3e8;border-radius:8px;padding:9px 11px;margin:8px 0}
+ul.pairs .bk{font-size:14.5px;margin-bottom:6px}
+ul.pairs .ln{white-space:pre-wrap;overflow-wrap:anywhere}
+ul.pairs .bk::before{content:"Βιβλίο";display:inline-block;font-size:11px;font-weight:700;color:#521a76;border:1px solid #521a76;border-radius:4px;padding:0 5px;margin-right:7px;vertical-align:1px}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#521a76;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ol.steps li::after{content:"";position:absolute;left:13.5px;top:34px;bottom:2px;border-left:1.5px dashed #c9b8d6}
+ol.steps li:last-child::after{display:none}
+ol.steps p{margin:7px 0;font-size:14.5px}
+.goal{border-left:4px solid #521a76;background:#faf8fc;border-radius:0 6px 6px 0;padding:7px 10px;font-size:13px}
+.goal span{display:block;font-size:11.5px;font-weight:700;color:#521a76;margin-bottom:3px}
+.goal pre{font-size:13px;white-space:pre}
+.goal.done{border-color:#17734a;background:#eef7f1;color:#17734a;font-weight:600;font-size:14px}
+.goal.done span{display:inline;color:#17734a;font-size:14px}
+.start{margin:8px 0 14px}
+details{border:1px solid #e3e3e8;border-radius:8px;margin:10px 0;background:#fff}
+details>summary{cursor:pointer;padding:12px 12px;font-weight:600;font-size:14.5px;min-height:44px;line-height:1.45}
+details[open]>summary{border-bottom:1px solid #eee}
+details .in{padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td{border-bottom:1px solid #eee;padding:6px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:10px}
+.calc td:first-child{white-space:nowrap}.calc code{white-space:nowrap;overflow-wrap:normal}
+.ex{background:#fbf9f2;border:1.5px dashed #b9a76a;border-radius:8px;padding:11px 13px;margin:10px 0}
+.ex p{margin:0 0 8px}
+.note{font-size:13.5px;color:#444}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:#666}
+.copy{font:600 13px system-ui,Arial,sans-serif;border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.full{max-height:420px;overflow:auto}
+@media(max-width:600px){.tabs button{font-size:13.5px}.btn{padding:11px 14px}td:first-child{white-space:normal}}
+@media(prefers-reduced-motion:no-preference){.seal .ck{animation:pop .5s ease-out}@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
+.goal .case{display:block;font-style:normal;font-size:11.5px;color:#6b4a86;margin:6px 0 2px}
+ul.mlist{padding-left:20px;margin:8px 0}ul.mlist li{margin:6px 0;font-size:14.5px}ul.mlist a{color:#17734a}
 </style></head><body>
 <h1>Αντικατάσταση σε Ορισμένο Ολοκλήρωμα (Αλλαγή Ορίων)</h1>
-<p class="sub">Απόδειξη με τη βοήθεια Μεγάλου Γλωσσικού Μοντέλου (AI)</p>
-<div class="stmt"><span class="lbl">Εκφώνηση</span>Αν η $g$ έχει συνεχή παράγωγο στο $[a,b]$ και η $f$ είναι συνεχής στο σύνολο τιμών της $g$, τότε $\int_a^b f\bigl(g(x)\bigr)g′(x)\,dx=\int_{g(a)}^{g(b)} f(u)\,du$.</div>
-<p>Διάλεξε βοηθό &mdash; θα ανοίξει με το ερώτημα έτοιμο:</p>
+<p class="sub">Κεφάλαιο 15 · Εξήγηση από Μεγάλο Γλωσσικό Μοντέλο και απόδειξη ελεγμένη από υπολογιστή (Lean)</p>
+<div class="stmt"><span class="lbl">Εκφώνηση</span>Αν η $g$ έχει συνεχή παράγωγο στο $[a,b]$ και η $f$ είναι συνεχής στο σύνολο τιμών της $g$, τότε $\int_a^b f\bigl(g(x)\bigr)g′(x)\,dx$<wbr>${}=\int_{g(a)}^{g(b)} f(u)\,du$.</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="tab-ai" aria-controls="ai" aria-selected="true" data-t="ai">Εξήγηση με ΜΓΜ</button>
+<button role="tab" id="tab-lean" aria-controls="lean" aria-selected="false" data-t="lean">Απόδειξη σε Lean<span class="ok">✓</span></button>
+</div>
+
+<section id="ai" role="tabpanel" aria-labelledby="tab-ai">
+<p>Διάλεξε βοηθό — θα ανοίξει με το ερώτημα έτοιμο:</p>
 <div class="btns">
 <a class="btn g" href="https://chatgpt.com/?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%91%CE%BD%20%CE%B7%20%24g%24%20%CE%AD%CF%87%CE%B5%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%20%CF%80%CE%B1%CF%81%CE%AC%CE%B3%CF%89%CE%B3%CE%BF%20%CF%83%CF%84%CE%BF%20%24%5Ba%2Cb%5D%24%20%CE%BA%CE%B1%CE%B9%20%CE%B7%20%24f%24%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%CF%82%20%CF%83%CF%84%CE%BF%20%CF%83%CF%8D%CE%BD%CE%BF%CE%BB%CE%BF%20%CF%84%CE%B9%CE%BC%CF%8E%CE%BD%20%CF%84%CE%B7%CF%82%20%24g%24%2C%20%CF%84%CF%8C%CF%84%CE%B5%20%24%5Cint_a%5Eb%20f%5Cbigl%28g%28x%29%5Cbigr%29g%E2%80%B2%28x%29%5C%2Cdx%3D%5Cint_%7Bg%28a%29%7D%5E%7Bg%28b%29%7D%20f%28u%29%5C%2Cdu%24.">ChatGPT</a>
 <a class="btn c" href="https://claude.ai/new?q=%CE%94%CF%8E%CF%83%CE%B5%20%CE%BC%CE%B9%CE%B1%20%CE%B1%CF%85%CF%83%CF%84%CE%B7%CF%81%CE%AC%20%CE%BA%CE%B1%CE%B9%20%CE%BC%CE%B1%CE%B8%CE%B7%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CE%AC%20%CF%83%CF%89%CF%83%CF%84%CE%AE%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7%20%CF%80%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%20%CE%B5%CF%80%CE%B9%CF%80%CE%AD%CE%B4%CE%BF%CF%85%2C%20%CE%B1%CE%B9%CF%84%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CF%8E%CE%BD%CF%84%CE%B1%CF%82%20%CE%BA%CE%AC%CE%B8%CE%B5%20%CE%BC%CE%B7%20%CF%80%CF%81%CE%BF%CF%86%CE%B1%CE%BD%CE%AD%CF%82%20%CE%B2%CE%AE%CE%BC%CE%B1.%20%CE%88%CF%80%CE%B5%CE%B9%CF%84%CE%B1%20%CE%B4%CF%8E%CF%83%CE%B5%20%CF%80%CE%B1%CE%B9%CE%B4%CE%B1%CE%B3%CF%89%CE%B3%CE%B9%CE%BA%CE%AD%CF%82%20%CF%80%CF%81%CE%BF%CE%B5%CE%BA%CF%84%CE%AC%CF%83%CE%B5%CE%B9%CF%82%3A%20%CF%84%CE%B7%20%CE%B2%CE%B1%CF%83%CE%B9%CE%BA%CE%AE%20%CE%B9%CE%B4%CE%AD%CE%B1%2C%20%CE%B4%CE%B9%CE%B1%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AE/%CE%B3%CE%B5%CF%89%CE%BC%CE%B5%CF%84%CF%81%CE%B9%CE%BA%CE%AE%20%CE%B5%CF%81%CE%BC%CE%B7%CE%BD%CE%B5%CE%AF%CE%B1%2C%20%CE%AD%CE%BD%CE%B1%20%CE%BB%CF%85%CE%BC%CE%AD%CE%BD%CE%BF%20%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1%20%CE%BA%CE%B1%CE%B9%20%CF%83%CF%85%CF%87%CE%BD%CE%AC%20%CE%BB%CE%AC%CE%B8%CE%B7%20%CF%86%CE%BF%CE%B9%CF%84%CE%B7%CF%84%CF%8E%CE%BD.%20%CE%98%CE%95%CE%A9%CE%A1%CE%97%CE%9C%CE%91%3A%20%CE%91%CE%BD%20%CE%B7%20%24g%24%20%CE%AD%CF%87%CE%B5%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%20%CF%80%CE%B1%CF%81%CE%AC%CE%B3%CF%89%CE%B3%CE%BF%20%CF%83%CF%84%CE%BF%20%24%5Ba%2Cb%5D%24%20%CE%BA%CE%B1%CE%B9%20%CE%B7%20%24f%24%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%CF%82%20%CF%83%CF%84%CE%BF%20%CF%83%CF%8D%CE%BD%CE%BF%CE%BB%CE%BF%20%CF%84%CE%B9%CE%BC%CF%8E%CE%BD%20%CF%84%CE%B7%CF%82%20%24g%24%2C%20%CF%84%CF%8C%CF%84%CE%B5%20%24%5Cint_a%5Eb%20f%5Cbigl%28g%28x%29%5Cbigr%29g%E2%80%B2%28x%29%5C%2Cdx%3D%5Cint_%7Bg%28a%29%7D%5E%7Bg%28b%29%7D%20f%28u%29%5C%2Cdu%24.">Claude</a>
@@ -27,6 +93,122 @@ small{color:#777}footer{margin-top:22px;border-top:1px solid #eee;padding-top:10
 </div>
 <p style="margin-top:16px"><small>Το ερώτημα που θα σταλεί:</small></p>
 <div class="p">Δώσε μια αυστηρά και μαθηματικά σωστή απόδειξη πανεπιστημιακού επιπέδου, αιτιολογώντας κάθε μη προφανές βήμα. Έπειτα δώσε παιδαγωγικές προεκτάσεις: τη βασική ιδέα, διαισθητική/γεωμετρική ερμηνεία, ένα λυμένο παράδειγμα και συχνά λάθη φοιτητών. ΘΕΩΡΗΜΑ: Αν η $g$ έχει συνεχή παράγωγο στο $[a,b]$ και η $f$ είναι συνεχής στο σύνολο τιμών της $g$, τότε $\int_a^b f\bigl(g(x)\bigr)g′(x)\,dx=\int_{g(a)}^{g(b)} f(u)\,du$.</div>
+<p class="hint">Οι απαντήσεις των μοντέλων μπορεί να έχουν λάθη. Για απόδειξη που έχει ελέγξει υπολογιστής βήμα προς βήμα, δες την καρτέλα <a href="#lean" data-go="lean">Απόδειξη σε Lean</a>.</p>
+</section>
+
+<section id="lean" role="tabpanel" aria-labelledby="tab-lean" hidden>
+<div class="seal"><span class="ck" aria-hidden="true">✓</span><div><b>Ελέγχθηκε από υπολογιστή.</b> Ο κανόνας και η εφαρμογή του αποδείχθηκαν στον Lean 4 χωρίς κανένα σφάλμα.<br><small>Lean v4.37.0-rc1 με Mathlib · live.lean-lang.org · 22/11/2026</small></div></div>
+<p class="note">Ο <b>Lean</b> είναι γλώσσα στην οποία γράφουμε μια απόδειξη τόσο αυστηρά, ώστε ο υπολογιστής ελέγχει κάθε βήμα. Αν ένα βήμα δεν προκύπτει από τα προηγούμενα, ο έλεγχος αποτυγχάνει. </p>
+<h2>1. Τι αποδεικνύεται: η διατύπωση στο βιβλίο και στον Lean</h2>
+<ul class="pairs"><li><div class="bk">Αν η $g$ έχει συνεχή παράγωγο στο $[a,b]$ και η $f$ είναι συνεχής, τότε $\int_a^b f\bigl(g(x)\bigr)g'(x)\,dx$<wbr>${}=\int_{g(a)}^{g(b)}f(u)\,du$</div><pre class="ln"><span class="kw">theorem</span> subst_definite (f g g&#x27; : ℝ → ℝ) (a b : ℝ) (hf : Continuous f)
+    (hg : ∀ x ∈ Set.uIcc a b, HasDerivAt g (g&#x27; x) x) (hg&#x27; : ContinuousOn g&#x27; (Set.uIcc a b)) :
+    ∫ x <span class="kw">in</span> a..b, f (g x) * g&#x27; x = ∫ u <span class="kw">in</span> g a..g b, f u</pre></li><li><div class="bk">Εφαρμογή: $\int_a^b f(x+c)\,dx$<wbr>${}=\int_{a+c}^{b+c}f(u)\,du$</div><pre class="ln"><span class="kw">theorem</span> shift (f : ℝ → ℝ) (a b c : ℝ) (hf : Continuous f) :
+    ∫ x <span class="kw">in</span> a..b, f (x + c) = ∫ u <span class="kw">in</span> a + c..b + c, f u</pre></li></ul>
+<p class="note">Για απλότητα παίρνουμε την $f$ συνεχή σε όλο το $\mathbb{R}$, ενώ το βιβλίο ζητά συνέχεια μόνο στο σύνολο τιμών της $g$. Το «η $g$ έχει συνεχή παράγωγο στο $[a,b]$» γράφεται με δύο υποθέσεις: <code>∀ x ∈ Set.uIcc a b, HasDerivAt g (g' x) x</code> και <code>ContinuousOn g' (Set.uIcc a b)</code>. Το <code>Set.uIcc a b</code> είναι το διάστημα με άκρα $a$ και $b$. Η απόδειξη είναι αυτή του βιβλίου: αν η $F$ είναι αντιπαράγωγος της $f$, τότε η $F\bigl(g(x)\bigr)$ είναι αντιπαράγωγος της $f\bigl(g(x)\bigr)g'(x)$.</p>
+<h2>2. Βήμα προς βήμα: αλλαγή ορίων</h2>
+<p class="note">Η ιδέα: με $F(u)=\int_{g(a)}^{u}f(t)\,dt$, η $F\bigl(g(x)\bigr)$ είναι αντιπαράγωγος της $f\bigl(g(x)\bigr)g'(x)$, και το θεμελιώδες θεώρημα δίνει το αποτέλεσμα. Ξεκινάμε από τον στόχο:</p>
+<div class="goal start"><span>Ο στόχος</span><pre>f g g&#x27; : ℝ → ℝ
+a b : ℝ
+hf : Continuous f
+hg : ∀ x ∈ Set.uIcc a b, HasDerivAt g (g&#x27; x) x
+hg&#x27; : ContinuousOn g&#x27; (Set.uIcc a b)
+⊢ ∫ (x : ℝ) in a..b, f (g x) * g&#x27; x = ∫ (u : ℝ) in g a..g b, f u</pre></div>
+<p class="note">Πάνω από το <code>⊢</code> είναι ό,τι ξέρουμε· μετά το <code>⊢</code> είναι ό,τι πρέπει να δείξουμε. Μετά από κάθε βήμα δείχνουμε μόνο ό,τι άλλαξε.</p>
+<ol class="steps"><li><pre class="ln"><span class="cm">-- η F(u) = ∫ f(t) dt από g(a) έως u έχει παράγωγο f(u)</span>
+<span class="kw">have</span> hF : ∀ u, HasDerivAt (<span class="kw">fun</span> u =&gt; ∫ t <span class="kw">in</span> g a..u, f t) (f u) u :=
+  <span class="kw">fun</span> u =&gt; (hf.integral_hasStrictDerivAt (g a) u).hasDerivAt</pre><p>Θεμελιώδες θεώρημα: η $F(u)=\int_{g(a)}^{u}f(t)\,dt$ έχει παράγωγο $f(u)$ σε κάθε $u$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>hF : ∀ (u : ℝ), HasDerivAt (fun u =&gt; ∫ (t : ℝ) in g a..u, f t) (f u) u
+⊢ ∫ (x : ℝ) in a..b, f (g x) * g&#x27; x = ∫ (u : ℝ) in g a..g b, f u</pre></div></li><li><pre class="ln"><span class="cm">-- κανόνας αλυσίδας: (F(g(x)))&#x27; = f(g(x)) g&#x27;(x)</span>
+<span class="kw">have</span> hcomp : ∀ x ∈ Set.uIcc a b,
+    HasDerivAt (<span class="kw">fun</span> x =&gt; ∫ t <span class="kw">in</span> g a..g x, f t) (f (g x) * g&#x27; x) x :=
+  <span class="kw">fun</span> x hx =&gt; (hF (g x)).comp x (hg x hx)</pre><p>Κανόνας αλυσίδας: η $F\bigl(g(x)\bigr)$ έχει παράγωγο $f\bigl(g(x)\bigr)\,g'(x)$ σε κάθε $x$ του διαστήματος.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>hcomp : ∀ x ∈ Set.uIcc a b, HasDerivAt (fun x =&gt; ∫ (t : ℝ) in g a..g x, f t) (f (g x) * g&#x27; x) x
+⊢ ∫ (x : ℝ) in a..b, f (g x) * g&#x27; x = ∫ (u : ℝ) in g a..g b, f u</pre></div></li><li><pre class="ln"><span class="cm">-- η f(g(x)) g&#x27;(x) είναι συνεχής, άρα ολοκληρώσιμη</span>
+<span class="kw">have</span> hgc : ContinuousOn g (Set.uIcc a b) := <span class="kw">fun</span> x hx =&gt; (hg x hx).continuousAt.continuousWithinAt
+<span class="kw">have</span> hint : IntervalIntegrable (<span class="kw">fun</span> x =&gt; f (g x) * g&#x27; x) volume a b :=
+  ((hf.comp_continuousOn hgc).mul hg&#x27;).intervalIntegrable</pre><p>Η $g$ είναι παραγωγίσιμη, άρα συνεχής, και η $f\bigl(g(x)\bigr)g'(x)$ είναι συνεχής, άρα ολοκληρώσιμη.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>hgc : ContinuousOn g (Set.uIcc a b)
+hint : IntervalIntegrable (fun x =&gt; f (g x) * g&#x27; x) volume a b
+⊢ ∫ (x : ℝ) in a..b, f (g x) * g&#x27; x = ∫ (u : ℝ) in g a..g b, f u</pre></div></li><li><pre class="ln"><span class="cm">-- θεμελιώδες θεώρημα: το ολοκλήρωμα είναι F(g(b)) - F(g(a))</span>
+<span class="tc">rw</span> [intervalIntegral.integral_eq_sub_of_hasDerivAt hcomp hint]</pre><p>Θεμελιώδες θεώρημα για την $F\bigl(g(x)\bigr)$: το ολοκλήρωμα ισούται με $F\bigl(g(b)\bigr)-F\bigl(g(a)\bigr)$.</p><div class="goal"><span>Τι μένει να αποδειχθεί</span><pre>⊢ (∫ (t : ℝ) in g a..g b, f t) - ∫ (t : ℝ) in g a..g a, f t = ∫ (u : ℝ) in g a..g b, f u</pre></div></li><li><pre class="ln"><span class="cm">-- F(g(a)) = 0, γιατί τα άκρα είναι ίσα</span>
+<span class="tc">rw</span> [intervalIntegral.integral_same, sub_zero]</pre><p>Το $F\bigl(g(a)\bigr)$<wbr>${}=\int_{g(a)}^{g(a)}f(t)\,dt$ είναι $0$, γιατί τα άκρα είναι ίσα, και μένει $F\bigl(g(b)\bigr)$<wbr>${}=\int_{g(a)}^{g(b)}f(u)\,du$.</p><div class="goal done"><span>✓ </span>Καμία εκκρεμότητα: η απόδειξη ολοκληρώθηκε.</div></li></ol>
+<h2>3. Δοκίμασε εσύ: μετατόπιση</h2>
+<div class="ex"><p>Δείξε ότι $\int_a^b f(x+c)\,dx$<wbr>${}=\int_{a+c}^{b+c}f(u)\,du$, για συνεχή $f$. Άνοιξε την άσκηση στον Lean και αντικατάστησε τη λέξη <code>sorry</code> με τα δικά σου βήματα. Όταν η απόδειξη είναι σωστή, το μήνυμα <i>declaration uses sorry</i> φεύγει και δεν εμφανίζεται κανένα κόκκινο σφάλμα.</p>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2015%20%C2%B7%20%CE%91%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B1%CF%83%CE%B7%20%CF%83%CE%B5%20%CE%9F%CF%81%CE%B9%CF%83%CE%BC%CE%AD%CE%BD%CE%BF%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%AE%CF%81%CF%89%CE%BC%CE%B1%20%28%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE%20%CE%9F%CF%81%CE%AF%CF%89%CE%BD%29%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8615.AntikatastasiOrismeno%0Aopen%20MeasureTheory%0A%0Atheorem%20subst_definite%20%28f%20g%20g'%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28a%20b%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20Continuous%20f%29%0A%20%20%20%20%28hg%20%3A%20%E2%88%80%20x%20%E2%88%88%20Set.uIcc%20a%20b%2C%20HasDerivAt%20g%20%28g'%20x%29%20x%29%20%28hg'%20%3A%20ContinuousOn%20g'%20%28Set.uIcc%20a%20b%29%29%20%3A%0A%20%20%20%20%E2%88%AB%20x%20in%20a..b%2C%20f%20%28g%20x%29%20*%20g'%20x%20%3D%20%E2%88%AB%20u%20in%20g%20a..g%20b%2C%20f%20u%20%3A%3D%20by%0A%20%20--%20%CE%B7%20F%28u%29%20%3D%20%E2%88%AB%20f%28t%29%20dt%20%CE%B1%CF%80%CF%8C%20g%28a%29%20%CE%AD%CF%89%CF%82%20u%20%CE%AD%CF%87%CE%B5%CE%B9%20%CF%80%CE%B1%CF%81%CE%AC%CE%B3%CF%89%CE%B3%CE%BF%20f%28u%29%0A%20%20have%20hF%20%3A%20%E2%88%80%20u%2C%20HasDerivAt%20%28fun%20u%20%3D%3E%20%E2%88%AB%20t%20in%20g%20a..u%2C%20f%20t%29%20%28f%20u%29%20u%20%3A%3D%0A%20%20%20%20fun%20u%20%3D%3E%20%28hf.integral_hasStrictDerivAt%20%28g%20a%29%20u%29.hasDerivAt%0A%20%20--%20%CE%BA%CE%B1%CE%BD%CF%8C%CE%BD%CE%B1%CF%82%20%CE%B1%CE%BB%CF%85%CF%83%CE%AF%CE%B4%CE%B1%CF%82%3A%20%28F%28g%28x%29%29%29'%20%3D%20f%28g%28x%29%29%20g'%28x%29%0A%20%20have%20hcomp%20%3A%20%E2%88%80%20x%20%E2%88%88%20Set.uIcc%20a%20b%2C%0A%20%20%20%20%20%20HasDerivAt%20%28fun%20x%20%3D%3E%20%E2%88%AB%20t%20in%20g%20a..g%20x%2C%20f%20t%29%20%28f%20%28g%20x%29%20*%20g'%20x%29%20x%20%3A%3D%0A%20%20%20%20fun%20x%20hx%20%3D%3E%20%28hF%20%28g%20x%29%29.comp%20x%20%28hg%20x%20hx%29%0A%20%20--%20%CE%B7%20f%28g%28x%29%29%20g'%28x%29%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%CF%82%2C%20%CE%AC%CF%81%CE%B1%20%CE%BF%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%8E%CF%83%CE%B9%CE%BC%CE%B7%0A%20%20have%20hgc%20%3A%20ContinuousOn%20g%20%28Set.uIcc%20a%20b%29%20%3A%3D%20fun%20x%20hx%20%3D%3E%20%28hg%20x%20hx%29.continuousAt.continuousWithinAt%0A%20%20have%20hint%20%3A%20IntervalIntegrable%20%28fun%20x%20%3D%3E%20f%20%28g%20x%29%20*%20g'%20x%29%20volume%20a%20b%20%3A%3D%0A%20%20%20%20%28%28hf.comp_continuousOn%20hgc%29.mul%20hg'%29.intervalIntegrable%0A%20%20--%20%CE%B8%CE%B5%CE%BC%CE%B5%CE%BB%CE%B9%CF%8E%CE%B4%CE%B5%CF%82%20%CE%B8%CE%B5%CF%8E%CF%81%CE%B7%CE%BC%CE%B1%3A%20%CF%84%CE%BF%20%CE%BF%CE%BB%CE%BF%CE%BA%CE%BB%CE%AE%CF%81%CF%89%CE%BC%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20F%28g%28b%29%29%20-%20F%28g%28a%29%29%0A%20%20rw%20%5BintervalIntegral.integral_eq_sub_of_hasDerivAt%20hcomp%20hint%5D%0A%20%20--%20F%28g%28a%29%29%20%3D%200%2C%20%CE%B3%CE%B9%CE%B1%CF%84%CE%AF%20%CF%84%CE%B1%20%CE%AC%CE%BA%CF%81%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%AF%CF%83%CE%B1%0A%20%20rw%20%5BintervalIntegral.integral_same%2C%20sub_zero%5D%0A%0Atheorem%20shift%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28a%20b%20c%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20Continuous%20f%29%20%3A%0A%20%20%20%20%E2%88%AB%20x%20in%20a..b%2C%20f%20%28x%20%2B%20c%29%20%3D%20%E2%88%AB%20u%20in%20a%20%2B%20c..b%20%2B%20c%2C%20f%20u%20%3A%3D%20by%0A%20%20--%20%CE%91%CE%A3%CE%9A%CE%97%CE%A3%CE%97%3A%20%CE%B1%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B7%CF%83%CE%B5%20%CF%84%CE%BF%20sorry%20%CE%BC%CE%B5%20%CF%84%CE%B7%20%CE%B4%CE%B9%CE%BA%CE%AE%20%CF%83%CE%BF%CF%85%20%CE%B1%CF%80%CF%8C%CE%B4%CE%B5%CE%B9%CE%BE%CE%B7.%0A%20%20sorry%0A%0Aend%20%CE%9A%CE%B5%CF%8615.AntikatastasiOrismeno%0A" target="_blank" rel="noopener">Άνοιξε την άσκηση στον Lean</a>
+<details><summary>Υπόδειξη</summary><div class="in"><p class="note">Εφάρμοσε τον κανόνα με $g(x)=x+c$ και $g'(x)=1$: <code>have h := subst_definite f (fun x => x + c) (fun _ => 1) a b hf (fun x _ => (hasDerivAt_id' x).add_const c) continuousOn_const</code>. Στην <code>h</code> η ολοκληρωτέα συνάρτηση έχει τον παράγοντα $1$· σβήσε τον με <code>simp only [mul_one] at h</code> και τελείωσε με <code>exact h</code>.</p></div></details>
+<details><summary>Λύση</summary><div class="in"><pre class="ln"><span class="kw">theorem</span> shift (f : ℝ → ℝ) (a b c : ℝ) (hf : Continuous f) :
+    ∫ x <span class="kw">in</span> a..b, f (x + c) = ∫ u <span class="kw">in</span> a + c..b + c, f u := <span class="kw">by</span>
+  <span class="kw">have</span> h := subst_definite f (<span class="kw">fun</span> x =&gt; x + c) (<span class="kw">fun</span> _ =&gt; 1) a b hf
+    (<span class="kw">fun</span> x _ =&gt; (hasDerivAt_id&#x27; x).add_const c) continuousOn_const
+  <span class="tc">simp</span> only [mul_one] <span class="kw">at</span> h
+  <span class="tc">exact</span> h</pre></div></details>
+</div>
+<h2>4. Στη Mathlib</h2>
+<p class="note">Χρησιμοποιήσαμε τα εξής θεωρήματα:</p>
+<ul class="mlist"><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Continuous.integral_hasStrictDerivAt#doc" target="_blank" rel="noopener"><code>Continuous.integral_hasStrictDerivAt</code></a>: το θεμελιώδες θεώρημα: η $\int_{g(a)}^u f(t)\,dt$ έχει παράγωγο $f(u)$.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.comp#doc" target="_blank" rel="noopener"><code>HasDerivAt.comp</code></a>: ο κανόνας αλυσίδας.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=HasDerivAt.continuousAt#doc" target="_blank" rel="noopener"><code>HasDerivAt.continuousAt</code></a>: παραγωγίσιμη συνάρτηση είναι συνεχής.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Continuous.comp_continuousOn#doc" target="_blank" rel="noopener"><code>Continuous.comp_continuousOn</code></a>: η σύνθεση συνεχών συναρτήσεων είναι συνεχής.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=ContinuousOn.mul#doc" target="_blank" rel="noopener"><code>ContinuousOn.mul</code></a>: το γινόμενο συνεχών συναρτήσεων είναι συνεχές.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=ContinuousOn.intervalIntegrable#doc" target="_blank" rel="noopener"><code>ContinuousOn.intervalIntegrable</code></a>: συνεχής συνάρτηση σε κλειστό διάστημα είναι ολοκληρώσιμη.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=intervalIntegral.integral_eq_sub_of_hasDerivAt#doc" target="_blank" rel="noopener"><code>intervalIntegral.integral_eq_sub_of_hasDerivAt</code></a>: το θεμελιώδες θεώρημα του λογισμού.</li><li><a href="https://leanprover-community.github.io/mathlib4_docs/find/?pattern=intervalIntegral.integral_same#doc" target="_blank" rel="noopener"><code>intervalIntegral.integral_same</code></a>: $\int_a^a f=0$.</li></ul>
+<h2>5. Ολόκληρος ο κώδικας</h2>
+<details><summary>Δες τον κώδικα (37 γραμμές)</summary><div class="in">
+<div class="codebar"><span>Ο κώδικας που ελέγχθηκε</span><button class="copy" type="button" id="copy">Αντιγραφή</button></div>
+<pre class="ln full" id="full"><span class="cm">-- Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026).</span>
+<span class="cm">-- Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού. NewTech Publications.</span>
+<span class="cm">-- Κεφάλαιο 15 · Αντικατάσταση σε Ορισμένο Ολοκλήρωμα (Αλλαγή Ορίων) · ελέγχθηκε με Lean v4.37.0-rc1 και Mathlib (22/11/2026).</span>
+
+<span class="kw">import</span> Mathlib
+
+<span class="kw">namespace</span> Κεφ15.AntikatastasiOrismeno
+<span class="kw">open</span> MeasureTheory
+
+<span class="kw">theorem</span> subst_definite (f g g&#x27; : ℝ → ℝ) (a b : ℝ) (hf : Continuous f)
+    (hg : ∀ x ∈ Set.uIcc a b, HasDerivAt g (g&#x27; x) x) (hg&#x27; : ContinuousOn g&#x27; (Set.uIcc a b)) :
+    ∫ x <span class="kw">in</span> a..b, f (g x) * g&#x27; x = ∫ u <span class="kw">in</span> g a..g b, f u := <span class="kw">by</span>
+  <span class="cm">-- η F(u) = ∫ f(t) dt από g(a) έως u έχει παράγωγο f(u)</span>
+  <span class="kw">have</span> hF : ∀ u, HasDerivAt (<span class="kw">fun</span> u =&gt; ∫ t <span class="kw">in</span> g a..u, f t) (f u) u :=
+    <span class="kw">fun</span> u =&gt; (hf.integral_hasStrictDerivAt (g a) u).hasDerivAt
+  <span class="cm">-- κανόνας αλυσίδας: (F(g(x)))&#x27; = f(g(x)) g&#x27;(x)</span>
+  <span class="kw">have</span> hcomp : ∀ x ∈ Set.uIcc a b,
+      HasDerivAt (<span class="kw">fun</span> x =&gt; ∫ t <span class="kw">in</span> g a..g x, f t) (f (g x) * g&#x27; x) x :=
+    <span class="kw">fun</span> x hx =&gt; (hF (g x)).comp x (hg x hx)
+  <span class="cm">-- η f(g(x)) g&#x27;(x) είναι συνεχής, άρα ολοκληρώσιμη</span>
+  <span class="kw">have</span> hgc : ContinuousOn g (Set.uIcc a b) := <span class="kw">fun</span> x hx =&gt; (hg x hx).continuousAt.continuousWithinAt
+  <span class="kw">have</span> hint : IntervalIntegrable (<span class="kw">fun</span> x =&gt; f (g x) * g&#x27; x) volume a b :=
+    ((hf.comp_continuousOn hgc).mul hg&#x27;).intervalIntegrable
+  <span class="cm">-- θεμελιώδες θεώρημα: το ολοκλήρωμα είναι F(g(b)) - F(g(a))</span>
+  <span class="tc">rw</span> [intervalIntegral.integral_eq_sub_of_hasDerivAt hcomp hint]
+  <span class="cm">-- F(g(a)) = 0, γιατί τα άκρα είναι ίσα</span>
+  <span class="tc">rw</span> [intervalIntegral.integral_same, sub_zero]
+
+<span class="kw">theorem</span> shift (f : ℝ → ℝ) (a b c : ℝ) (hf : Continuous f) :
+    ∫ x <span class="kw">in</span> a..b, f (x + c) = ∫ u <span class="kw">in</span> a + c..b + c, f u := <span class="kw">by</span>
+  <span class="kw">have</span> h := subst_definite f (<span class="kw">fun</span> x =&gt; x + c) (<span class="kw">fun</span> _ =&gt; 1) a b hf
+    (<span class="kw">fun</span> x _ =&gt; (hasDerivAt_id&#x27; x).add_const c) continuousOn_const
+  <span class="tc">simp</span> only [mul_one] <span class="kw">at</span> h
+  <span class="tc">exact</span> h
+
+<span class="kw">end</span> Κεφ15.AntikatastasiOrismeno
+</pre></div></details>
+<a class="btn l" href="https://live.lean-lang.org/#code=--%20%CE%A3%CF%85%CE%BD%CE%BF%CE%B4%CE%B5%CF%85%CF%84%CE%B9%CE%BA%CF%8C%20%CF%88%CE%B7%CF%86%CE%B9%CE%B1%CE%BA%CF%8C%20%CF%85%CE%BB%CE%B9%CE%BA%CF%8C%20%CF%84%CE%BF%CF%85%20%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF%CF%85%3A%20%CE%9C%CE%B1%CF%84%CE%B6%CE%AC%CE%BA%CE%BF%CF%82%2C%20%CE%9D.%20%282026%29.%0A--%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%93%CF%81%CE%B1%CE%BC%CE%BC%CE%B9%CE%BA%CE%AE%CF%82%20%CE%86%CE%BB%CE%B3%CE%B5%CE%B2%CF%81%CE%B1%CF%82%2C%20%CE%94%CE%B9%CE%B1%CF%86%CE%BF%CF%81%CE%B9%CE%BA%CE%BF%CF%8D%20%26%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CF%8D%20%CE%9B%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CE%BF%CF%8D.%20NewTech%20Publications.%0A--%20%CE%9A%CE%B5%CF%86%CE%AC%CE%BB%CE%B1%CE%B9%CE%BF%2015%20%C2%B7%20%CE%91%CE%BD%CF%84%CE%B9%CE%BA%CE%B1%CF%84%CE%AC%CF%83%CF%84%CE%B1%CF%83%CE%B7%20%CF%83%CE%B5%20%CE%9F%CF%81%CE%B9%CF%83%CE%BC%CE%AD%CE%BD%CE%BF%20%CE%9F%CE%BB%CE%BF%CE%BA%CE%BB%CE%AE%CF%81%CF%89%CE%BC%CE%B1%20%28%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE%20%CE%9F%CF%81%CE%AF%CF%89%CE%BD%29%20%C2%B7%20%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%B8%CE%B7%CE%BA%CE%B5%20%CE%BC%CE%B5%20Lean%20v4.37.0-rc1%20%CE%BA%CE%B1%CE%B9%20Mathlib%20%2822%2F11%2F2026%29.%0A%0Aimport%20Mathlib%0A%0Anamespace%20%CE%9A%CE%B5%CF%8615.AntikatastasiOrismeno%0Aopen%20MeasureTheory%0A%0Atheorem%20subst_definite%20%28f%20g%20g'%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28a%20b%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20Continuous%20f%29%0A%20%20%20%20%28hg%20%3A%20%E2%88%80%20x%20%E2%88%88%20Set.uIcc%20a%20b%2C%20HasDerivAt%20g%20%28g'%20x%29%20x%29%20%28hg'%20%3A%20ContinuousOn%20g'%20%28Set.uIcc%20a%20b%29%29%20%3A%0A%20%20%20%20%E2%88%AB%20x%20in%20a..b%2C%20f%20%28g%20x%29%20*%20g'%20x%20%3D%20%E2%88%AB%20u%20in%20g%20a..g%20b%2C%20f%20u%20%3A%3D%20by%0A%20%20--%20%CE%B7%20F%28u%29%20%3D%20%E2%88%AB%20f%28t%29%20dt%20%CE%B1%CF%80%CF%8C%20g%28a%29%20%CE%AD%CF%89%CF%82%20u%20%CE%AD%CF%87%CE%B5%CE%B9%20%CF%80%CE%B1%CF%81%CE%AC%CE%B3%CF%89%CE%B3%CE%BF%20f%28u%29%0A%20%20have%20hF%20%3A%20%E2%88%80%20u%2C%20HasDerivAt%20%28fun%20u%20%3D%3E%20%E2%88%AB%20t%20in%20g%20a..u%2C%20f%20t%29%20%28f%20u%29%20u%20%3A%3D%0A%20%20%20%20fun%20u%20%3D%3E%20%28hf.integral_hasStrictDerivAt%20%28g%20a%29%20u%29.hasDerivAt%0A%20%20--%20%CE%BA%CE%B1%CE%BD%CF%8C%CE%BD%CE%B1%CF%82%20%CE%B1%CE%BB%CF%85%CF%83%CE%AF%CE%B4%CE%B1%CF%82%3A%20%28F%28g%28x%29%29%29'%20%3D%20f%28g%28x%29%29%20g'%28x%29%0A%20%20have%20hcomp%20%3A%20%E2%88%80%20x%20%E2%88%88%20Set.uIcc%20a%20b%2C%0A%20%20%20%20%20%20HasDerivAt%20%28fun%20x%20%3D%3E%20%E2%88%AB%20t%20in%20g%20a..g%20x%2C%20f%20t%29%20%28f%20%28g%20x%29%20*%20g'%20x%29%20x%20%3A%3D%0A%20%20%20%20fun%20x%20hx%20%3D%3E%20%28hF%20%28g%20x%29%29.comp%20x%20%28hg%20x%20hx%29%0A%20%20--%20%CE%B7%20f%28g%28x%29%29%20g'%28x%29%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CF%83%CF%85%CE%BD%CE%B5%CF%87%CE%AE%CF%82%2C%20%CE%AC%CF%81%CE%B1%20%CE%BF%CE%BB%CE%BF%CE%BA%CE%BB%CE%B7%CF%81%CF%8E%CF%83%CE%B9%CE%BC%CE%B7%0A%20%20have%20hgc%20%3A%20ContinuousOn%20g%20%28Set.uIcc%20a%20b%29%20%3A%3D%20fun%20x%20hx%20%3D%3E%20%28hg%20x%20hx%29.continuousAt.continuousWithinAt%0A%20%20have%20hint%20%3A%20IntervalIntegrable%20%28fun%20x%20%3D%3E%20f%20%28g%20x%29%20*%20g'%20x%29%20volume%20a%20b%20%3A%3D%0A%20%20%20%20%28%28hf.comp_continuousOn%20hgc%29.mul%20hg'%29.intervalIntegrable%0A%20%20--%20%CE%B8%CE%B5%CE%BC%CE%B5%CE%BB%CE%B9%CF%8E%CE%B4%CE%B5%CF%82%20%CE%B8%CE%B5%CF%8E%CF%81%CE%B7%CE%BC%CE%B1%3A%20%CF%84%CE%BF%20%CE%BF%CE%BB%CE%BF%CE%BA%CE%BB%CE%AE%CF%81%CF%89%CE%BC%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20F%28g%28b%29%29%20-%20F%28g%28a%29%29%0A%20%20rw%20%5BintervalIntegral.integral_eq_sub_of_hasDerivAt%20hcomp%20hint%5D%0A%20%20--%20F%28g%28a%29%29%20%3D%200%2C%20%CE%B3%CE%B9%CE%B1%CF%84%CE%AF%20%CF%84%CE%B1%20%CE%AC%CE%BA%CF%81%CE%B1%20%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9%20%CE%AF%CF%83%CE%B1%0A%20%20rw%20%5BintervalIntegral.integral_same%2C%20sub_zero%5D%0A%0Atheorem%20shift%20%28f%20%3A%20%E2%84%9D%20%E2%86%92%20%E2%84%9D%29%20%28a%20b%20c%20%3A%20%E2%84%9D%29%20%28hf%20%3A%20Continuous%20f%29%20%3A%0A%20%20%20%20%E2%88%AB%20x%20in%20a..b%2C%20f%20%28x%20%2B%20c%29%20%3D%20%E2%88%AB%20u%20in%20a%20%2B%20c..b%20%2B%20c%2C%20f%20u%20%3A%3D%20by%0A%20%20have%20h%20%3A%3D%20subst_definite%20f%20%28fun%20x%20%3D%3E%20x%20%2B%20c%29%20%28fun%20_%20%3D%3E%201%29%20a%20b%20hf%0A%20%20%20%20%28fun%20x%20_%20%3D%3E%20%28hasDerivAt_id'%20x%29.add_const%20c%29%20continuousOn_const%0A%20%20simp%20only%20%5Bmul_one%5D%20at%20h%0A%20%20exact%20h%0A%0Aend%20%CE%9A%CE%B5%CF%8615.AntikatastasiOrismeno%0A" target="_blank" rel="noopener">Άνοιξέ τον στον Lean</a>
+<p class="note">Ο online editor του Lean δουλεύει καλύτερα σε υπολογιστή. Στο κινητό διάβασε τα βήματα εδώ.</p>
+</section>
+
 <div class="refs tex2jax_ignore"><span class="lbl">Πού θα βρεις την απόδειξη</span><ul><li>Apostol, T. M. (1967). <em>Calculus</em> (2nd ed., Vols. 1&ndash;2). John Wiley &amp; Sons.</li><li>Φιλίππου, Γ. Ν. (2008). <em>Μαθηματικά Ανώτερης Εκπαίδευσης</em>. Εκδόσεις Ζήτη.</li></ul></div>
-<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications. &nbsp;Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες&middot; επαλήθευσε πάντα με βάση τη θεωρία.</small></footer>
+<footer class="tex2jax_ignore"><small>Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ματζάκος, Ν. (2026). <em>Στοιχεία Γραμμικής Άλγεβρας, Διαφορικού &amp; Ολοκληρωτικού Λογισμού</em>. NewTech Publications.<br>Οι απαντήσεις των Μεγάλων Γλωσσικών Μοντέλων δεν είναι εγγυημένες· επαλήθευσε πάντα με βάση τη θεωρία. Η απόδειξη σε Lean ελέγχθηκε από υπολογιστή.</small></footer>
+<script>
+{
+  const tabs = [...document.querySelectorAll('.tabs button')];
+  const show = (t) => {
+    for (const b of tabs) {
+      const on = b.dataset.t === t;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.dataset.t).hidden = !on;
+    }
+    if (t === 'lean' && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([document.getElementById('lean')]).catch(() => {});
+  };
+  for (const b of tabs) b.addEventListener('click', () => { show(b.dataset.t); try { history.replaceState(null, '', '#' + b.dataset.t); } catch (e) {} });
+  for (const a of document.querySelectorAll('[data-go]')) a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.go); document.getElementById('tab-lean').scrollIntoView({block: 'nearest'}); });
+  const start = () => show(location.hash === '#lean' ? 'lean' : 'ai');
+  window.addEventListener('hashchange', start); start();
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById('full').innerText); btn.textContent = 'Αντιγράφηκε ✓'; }
+    catch (e) { btn.textContent = 'Επίλεξε και αντίγραψε χειροκίνητα'; }
+  });
+}
+</script>
 </body></html>
